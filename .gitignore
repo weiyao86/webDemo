@@ -10,4 +10,8 @@
 node_modules
 bootstarp/node_modules
 bootstrap-3.3.5/node_modules
+<<<<<<< HEAD
 jquery.jplayer.2.7.0.demo
+=======
+jquery.jplayer.2.7.0.demo
+>>>>>>> cb690e3a471aa9dc66f7c236bafec2f625372ade
