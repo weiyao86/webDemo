@@ -1,0 +1,7 @@
+﻿{"Data":[
+	    { "id": 1, "pId": 0, "name": "动", "open": false,"differentflag":true,"imageCode":"","groupCode":"" },
+		{ "id": 2, "pId": 1, "name": "动力g", "open": false,"differentflag":true,"imageCode":"","groupCode":"" },
+		{ "id": 4, "pId": 3, "name": "动力产生", "open": false,"differentflag":true,"imageCode":"","groupCode":"" },
+		{ "id": 5, "pId": 4, "name": "动力x", "open": false,"differentflag":true,"imageCode":"","groupCode":"" }
+    ]
+}

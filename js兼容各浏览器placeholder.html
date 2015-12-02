@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>各种测试</title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <style type='text/css'>
+    html,body{margin:0;padding: 0;}
+    .clearfix:before,.clearfix:after{display:table;content: '';}
+    .clearfix:after{clear:both;}
+    .clearfix{*zoom:1;}
+.test{border:1px solid red;}
+.test a{float:left;margin-left: 10px;}
+.test1{table-layout:fixed;border-collapse:collapse;width:100%;}
+.test1 td{border:1px solid black;padding: 10px;}
+    </style>
+
+<script type="text/javascript">
+	
+	$.fn.extend({
+		initPlaceholder: function () {
+            if (!("placeholder" in document.createElement("input"))) {
+            	this.each(function(idx,val){
+
+                var $el = $(this),
+                    placeholder = $el.attr('placeholder'),
+                    _resetPlaceHolder = null,
+                    elId, $label;
+
+                if (placeholder) {
+                    elId = $el.attr("id");
+                    if (!elId) {
+                        var now = new Date();
+                        elId = 'lbl_placeholder' + now.getSeconds() + now.getMilliseconds();
+                        $el.attr("id", elId);
+                    }
+                    $label = $('<label>', {
+                        html: $el.val() ? '' : placeholder,
+                        'for': elId,
+                        css: {
+                            position: 'absolute',
+                            left: $el.position().left,
+                            height: $el.height(),
+                            cursor: 'text',
+                            color: '#C3C3C3'
+                        }
+                    }).insertAfter($el);
+                    _resetPlaceHolder = function (e) {
+                        if ($el.val()) {
+                            $label.html('');
+                        }
+                        else
+                            $label.html(placeholder);
+                       // e && console.log(e.type)
+                       e && $(".test:first").html(e.type);
+                       //$(".test:last").html($("textarea").text());
+                       
+                    };
+                    _resetPlaceHolder();
+                    $el.on('focus blur input keyup propertychange', _resetPlaceHolder);
+                }
+
+                });
+            }
+        }
+	});
+
+$(function(){
+	
+//	$("input,textarea").initPlaceholder();
+    
+    $("#btn").on("click",function(){
+        alert($("textarea").val()+'===='+$("textarea").text());
+    })
+});
+
+</script>
+
+
+</head>
+<body>
+    <table class="test1">
+    <tr>
+    	<td>
+    		<div class="test">a</div>
+    	</td>
+    	<td>
+    		<div class="test">b</div>
+    	</td>
+    	<td>
+    		<div class="test"></div>
+    	</td>
+    	<td>
+    		<div class="test"></div>
+    	</td>
+    	<td>
+    		<div class="test clearfix"><a href="">1_0</a>
+    		<a href="">2_0</a>
+    		<a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a><a href="">3_0</a>
+    		</div>
+    	</td>
+    </tr>
+    </table>
+    <input type="text" placeholder="one">
+    <input type="text"  placeholder="two">
+    <input type="text"  placeholder="three">
+    <input type="text"  placeholder="four">
+    <textarea name="" id="" cols="30" rows="10" placeholder="textarea"></textarea>
+    <input id="btn" type="button" value="button">
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<script src="../Scripts/jquery-1.9.0.js"></script>
+<script src="zclip.js"></script>
+<script>
+    $(document).ready(function() {
+
+  ZeroClipboard.setDefaults({moviePath:"ZeroClipboard.swf"});
+  debugger;
+  var clip = new ZeroClipboard($("#d_clip_button"));
+
+  clip.on("load", function (client) {
+    debugstr("Flash movie loaded and ready.");
+
+    client.on("complete", function (client, args) {
+      debugstr("Copied text to clipboard: " + args.text);
+    });
+  });
+
+  clip.on("noFlash", function (client) {
+    $(".demo-area").hide();
+    debugstr("Your browser has no Flash.");
+  });
+
+  clip.on("wrongFlash", function (client, args) {
+    $(".demo-area").hide();
+    debugstr("Flash 10.0.0+ is required but you are running Flash " + args.flashVersion.replace(/,/g, "."));
+  });
+
+
+  // jquery stuff (optional)
+  function debugstr(text) {
+    $("#d_debug").append($("<p>").text(text));
+  }
+
+  $("#clear-test").on("click", function () {
+    $("#fe_text").val("Copy me!");
+    $("#testarea").val("");
+  });
+
+});
+</script>
+</head>
+<body>
+<div class="demo-area columns">
+            <div class="column one-half">
+              <h2><label for="fe_text">Text to Copy:</label></h2>
+              <textarea id="fe_text" cols="50" rows="3">Copy me!</textarea>
+              <p class="align-right"><button id="d_clip_button" class="my_clip_button" title="Click me to copy to clipboard." data-clipboard-target="fe_text" data-clipboard-text="Default clipboard text from attribute">Copy To Clipboard...</button></p>
+            </div>
+            <div class="column one-half">
+              <h2><label for="testarea">Paste Here:</label></h2>
+              <textarea id="testarea" cols="50" rows="3"></textarea>
+              <p class="align-right"><button id="clear-test">Clear Test Area</button></p>
+            </div>
+          </div>
+          <div id="d_debug"></div>
+</body>
+</html>

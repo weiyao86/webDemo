@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type='text/javascript'>
+
+        $(function () {
+            window.delete_id = function (sender) {
+                alert($(sender).html());
+            }
+            //$("#test").on("click",delete_id);
+        });
+
+
+        //生成题意
+        var arr = [], n = 1000;
+        for (var i = 0; i < n; i++) {
+            arr.push(i + 1);
+        }
+        var num1 = arr.splice(Math.floor(Math.random() * arr.length), 1);
+        var num2 = arr.splice(Math.floor(Math.random() * arr.length), 1);
+        var num3 = arr.splice(Math.floor(Math.random() * arr.length), 1);
+        document.writeln('随机抽掉的3个数是：' + num1 + ' 和 ' + num2 + ' 和 ' + num3 + '<br/><br/>此方法暂有陷,如:三个随机数是连续的,或是开头与结尾或中间连续');
+        document.writeln(arr);
+        arr.sort(function () { return Math.random() > 0.6 });
+
+        /*** 运算开始 ***/
+        arr.sort(function (a, b) { return a - b; });//排序
+        for (i = 1; i < arr.length; i++) {
+             if (arr[i] - arr[i - 1] == 2)
+                document.write('<br />1丢失的数字有 ' + (arr[i] - 1));
+        }
+    </script>
+</head>
+<body>
+    <span id="test" onclick="delete_id(this);"></span>
+    <img src="/webtest/res/aa.jpg" alt="" style="width: 200px; height: 200px; position: absolute; bottom: -250px;" />
+</body>
+</html>

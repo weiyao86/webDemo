@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+
+        window.onload = function () {
+            var str = /^[a-zA-Z1-9]{1,2}$/;
+            alert(str.test("sff"));
+        };
+
+        // 取自 UnderscoreJS 实用框架  
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
+
+        // 添加resize的回调函数，但是只允许它每300毫秒执行一次  
+        window.addEventListener('resize', debounce(function (event) {
+
+            // 这里写resize过程  
+
+        }, 300));
+
+    </script>
+    <style type="text/css">
+        div {
+            margin: 50px auto;
+            width: 400px;
+            height: 200px;
+            background-color: gray;
+        }
+        .atest{
+            border-width:1px 0 0 1px;
+            border-style:solid;
+            border-color: #f00 #aaa #fff red;
+            display:inline-block;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<a class="atest" href="">我是一个小测试</a>
+    <div>
+        在纸上写东西不能像在计算机上写东西一样，可以用撤销键可以按，但当我们想要强调某些东西是被删除的怎么办？那就是使用 标签了
+        <del>test</del>
+        <table>
+            <thead>
+                <tr>
+                    <th>DATE</th>
+                    <th>IP</th>
+                    <th>PV</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2011.3.11</td>
+                    <td>3000</td>
+                    <td>8000</td>
+                </tr>
+            </tbody>
+        </table>
+        <code>text-align:center</code>
+        <pre>{ ( 1 * 102 ) + ( 9 * 101 ) + ( 3 * 100 ) }</pre>
+    </div>
+</body>
+</html>

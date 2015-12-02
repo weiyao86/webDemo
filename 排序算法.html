@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+		var Mysort=(function(){
+			var quickInstance,
+				selectInstance,
+				margeInstance,
+				swap=function(myAarry,firstIndex,secondIndex){
+					if(myAarry.length < 2)return myAarry;
+					var temp = myAarry[firstIndex];
+					myAarry[firstIndex] = myAarry[secondIndex];
+					myAarry[secondIndex] = temp;
+				};
+
+			//选择排序
+			var selectSort=function(){};
+			selectSort.prototype={
+				sort:function(myAarry){
+					var self=this,minIndex;
+					for (var i =0,len= myAarry.length; i<len;i++) {
+						minIndex= i;
+						for (var j = i+1;j<len;j++) {
+							if(myAarry[j]<myAarry[minIndex]){
+								minIndex=j;
+							}
+						};
+						if(minIndex != i){
+							swap(myAarry,i,minIndex);
+						}
+					};
+					return myAarry;
+				}
+			};
+
+			//合并排序
+			var margeSort=function(){};
+			margeSort.prototype={
+				sort:function(myAarry){
+					if(myAarry.length <2)return myAarry;
+					var self=this,
+						middle=Math.floor(myAarry.length/2),
+						left = myAarry.slice(0,middle),
+						right = myAarry.slice(middle),
+						paramsArr = self.merge(self.sort(left),self.sort(right));
+					paramsArr.unshift(0,paramsArr.length);
+					myAarry.splice.apply(myAarry,paramsArr);
+					return myAarry;
+				},
+
+				merge:function(left,right){
+					var result = [],
+						i=0,
+						r=0;
+					while(i<left.length && r < right.length){
+						if(left[i] < right[r]){
+							result.push(left[i++]);
+						}
+						else{
+							result.push(right[r++]);
+						}
+					}
+					return result.concat(left.slice(i)).concat(right.slice(r));
+				}
+			};
+
+
+			//当前排序最快算法
+			var quickSort = function(){};
+			quickSort.prototype={
+				partition:function(myAarry,left,right){
+					var self=this,
+						pivot = myAarry[Math.floor((left+right)/2)],
+						i=left,
+						r=right;
+					while(i <= r){
+						while(myAarry[i] < pivot){
+							i++;
+						}
+						while(myAarry[r] > pivot){
+							r--;
+						}
+						if(i <= r){
+							swap(myAarry,i,r);
+							i++;
+							r--;
+						}
+					}
+					return i;
+				},
+				sort:function(myAarry,left,right){
+					var self=this,index;
+					if(myAarry.length < 2)return myAarry;
+					left = (typeof left !== "number" ? 0 : left);
+					right = (typeof right !== "number" ? myAarry.length-1 : right);
+					index = self.partition(myAarry,left,right);
+					if(left < index -1){
+						self.sort(myAarry,left,index-1);
+					}
+					if(index < right){
+						self.sort(myAarry,index,right);
+					}
+					return myAarry;
+				}
+			};
+
+			return {
+				getQuickInstance:function(args){
+					if(quickInstance === undefined){
+						quickInstance = new quickSort(args);
+					}
+					return quickInstance;
+				},
+				getSelectInstance:function(args){
+					if(selectInstance === undefined){
+						selectInstance = new selectSort(args);
+					}
+					return selectInstance;
+				},getMergeInstance:function(args){
+					if(margeInstance === undefined){
+						margeInstance = new margeSort(args);
+					}
+					return margeInstance;
+				}
+			};
+
+		})();
+
+		//效率最优
+		var quickSort = Mysort.getQuickInstance();
+		var arr = quickSort.sort([5,9,2,6,10]); // [5,9,2,6,10].sort(function(x,y){return x-y;});
+		console.log("快速排序结果:"+arr.join(','));
+
+		//效率稍次
+		var mergeSort = Mysort.getMergeInstance();
+		var merge = mergeSort.sort([15,10,18,2]); 
+		console.log("合并排序结果:"+merge.join(','));
+
+		//效率一般
+		var selectSort = Mysort.getSelectInstance();
+		var arr1 = selectSort.sort([5,9,2,6,3,10]); 
+		console.log("选择排序结果:"+arr1.join(','));
+
+		//冒泡效率最低,一般很少用到生产环境
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+{
+    "brand": {
+        "IsSuccess": true,
+        "Data": {
+            "next": "Series",
+            "code": "Brand",
+            "description": "品牌",
+            "data": [{
+                "Sort": 0,
+                "IcoFileName": "brand1.gif",
+                "CodeDesc": "霸龙重卡",
+                "Code": "霸龙重卡",
+                "Description": "霸龙重卡"
+            }],
+            "listViewInfo": {
+                "textFieldsInfo": [{
+                    "text": "品牌",
+                    "field": "Code"
+                }, {
+                    "text": "描述",
+                    "field": "Description"
+                }],
+                "imageFieldInfo": {
+                    "text": "",
+                    "field": "IcoFileName"
+                },
+                "titleField": "CodeDesc"
+            },
+            "isLeaf": false
+        }
+    },
+    "series": {
+        "IsSuccess": true,
+        "Data": {
+            "next": "year",
+            "code": "Series",
+            "description": "系列",
+            "data": [{
+                "Sort": 0,
+                "IcoFileName": "brand2.gif",
+                "CodeDesc": "霸龙M7系列-牵引车",
+                "Code": "M7",
+                "Description": "霸龙M7系列-牵引车"
+            },{
+                "Sort": 1,
+                "IcoFileName": "brand2.gif",
+                "CodeDesc": "霸龙M5系列",
+                "Code": "M5",
+                "Description": "霸龙M5系列"
+            },{
+                "Sort": 1,
+                "IcoFileName": "brand2.gif",
+                "CodeDesc": "霸龙M3系列",
+                "Code": "M3",
+                "Description": "霸龙M3系列"
+            }],
+            "listViewInfo": {
+                "textFieldsInfo": [{
+                    "text": "系列",
+                    "field": "Code"
+                }, {
+                    "text": "描述",
+                    "field": "Description"
+                }],
+                "imageFieldInfo": {
+                    "text": "",
+                    "field": "IcoFileName"
+                },
+                "titleField": "CodeDesc"
+            },
+            "isLeaf": false
+        }
+    },
+    "year": {
+        "IsSuccess": true,
+        "Data": {
+            "next": "model",
+            "code": "Year",
+            "description": "车系",
+            "data": [{
+                "Sort": 0,
+                "IcoFileName": "brand1.gif",
+                "CodeDesc": "霸龙M7玉柴版",
+                "Code": "霸龙M7玉柴版",
+                "Description": "霸龙M7玉柴版"
+            }],
+            "listViewInfo": {
+                "textFieldsInfo": [{
+                    "text": "车型",
+                    "field": "Code"
+                }, {
+                    "text": "描述",
+                    "field": "Description"
+                }],
+                "imageFieldInfo": {
+                    "text": "",
+                    "field": "IcoFileName"
+                },
+                "titleField": "CodeDesc"
+            },
+            "isLeaf": false
+        }
+    },
+    "model": {
+        "IsSuccess": true,
+        "Data": {
+            "next": "Group",
+            "code": "Model",
+            "description": "车型",
+            "data": [{
+                "Sort": 0,
+                "IcoFileName": "brand2.gif",
+                "CodeDesc": "4M7YM40D33H0AD",
+                "Code": "0A",
+                "Description": "4M7YM40D33H0AD"
+            }],
+            "listViewInfo": {
+                "textFieldsInfo": [{
+                    "text": "车型",
+                    "field": "Code"
+                }, {
+                    "text": "描述",
+                    "field": "Description"
+                }],
+                "imageFieldInfo": {
+                    "text": "",
+                    "field": "IcoFileName"
+                },
+                "titleField": "CodeDesc"
+            },
+            "isLeaf": false
+        }
+    },
+    "shoppingCart": {
+        "IsSuccess": true,
+        "Data": {
+            "Details": [{
+                "PartNumber": "23858829",
+                "Description": "高调器手柄",
+                "Qty": 1,
+                "UnitPkgQty": 1,
+                "Price": "11.26",
+                "Subtotal": 11.26,
+                "PriceList": [{
+                    "PartNumber": "23858829",
+                    "TypeCode": "RMB",
+                    "Price": "11.26"
+                }, {
+                    "PartNumber": "23858829",
+                    "TypeCode": "USD",
+                    "Price": "0"
+                }],
+                "PartExist": true
+            }, {
+                "PartNumber": "23858900",
+                "Description": "前排座椅外侧后脚盖",
+                "Qty": 1,
+                "UnitPkgQty": 1,
+                "Price": "1.21",
+                "Subtotal": 1.21,
+                "PriceList": [{
+                    "PartNumber": "23858900",
+                    "TypeCode": "RMB",
+                    "Price": "1.21"
+                }, {
+                    "PartNumber": "23858900",
+                    "TypeCode": "USD",
+                    "Price": "0"
+                }],
+                "PartExist": true
+            }, {
+                "PartNumber": "23860290",
+                "Description": "前氧传感器总成",
+                "Qty": 1,
+                "UnitPkgQty": 1,
+                "Price": "168.08",
+                "Subtotal": 168.08,
+                "PriceList": [{
+                    "PartNumber": "23860290",
+                    "TypeCode": "RMB",
+                    "Price": "168.08"
+                }],
+                "PartExist": true
+            }],
+            "Amount": 180.55,
+            "Total": 3,
+            "Currency": "￥",
+            "Num": 3,
+            "IsShowPrice": false
+        }
+    },
+    "notice": {
+        "IsSuccess": true,
+        "Data": {
+            "Bulletins": {
+                "Total": 33,
+                "Details": [{
+                    "BulletinCode": "ASE-2014-100",
+                    "Path": "",
+                    "BulletinTitle": "N300 VVT不同供应商零件区分",
+                    "BulletinFileName": "ASE-2014-100.pdf",
+                    "BulletinDate": "2014-11-20",
+                    "ApplicableBook": "N300",
+                    "ApplicablePartNumber": ""
+                }]
+            },
+            "Messages": {
+                "Total": 21,
+                "Details": [{
+                    "Id": "129746",
+                    "MessageTitle": "关于东风柳汽配件流通平台上线通知",
+                    "MessageUrl": "",
+                    "MessageDate": "2013-12-10",
+                    "IsEffective": false,
+                    "IsRead": true,
+                    "IsAutoShow": true
+                }]
+            }
+        }
+    },
+    "history": {
+        "IsSuccess": true,
+        "Data": [{
+            "Id": 75438,
+            "UserName": "test",
+            "BrandCode": "brand",
+            "CatalogCode": "霸龙M7系列-牵引车",
+            "Year": "霸龙M7玉柴版",
+            "ModelCode": "4M7YM40D33H0AD",
+            "GroupCode": "02",
+            "ImageCode": "WU02-003",
+            "CreateDate": "2015-01-26T14:52:41.157",
+            "BrandDesc": "霸龙重卡",
+            "Date": "2015-01-26 14:52:41"
+        }, {
+            "Id": 75438,
+            "UserName": "test",
+            "BrandCode": "brand",
+            "CatalogCode": "霸龙M7系列-牵引车",
+            "Year": "霸龙M7玉柴版",
+            "ModelCode": "4M7YM40D33H0AD",
+            "GroupCode": "02",
+            "ImageCode": "WU02-003",
+            "CreateDate": "2015-01-26T14:52:41.157",
+            "BrandDesc": "霸龙重卡",
+            "Date": "2015-01-26 14:52:41"
+        }]
+    }
+}

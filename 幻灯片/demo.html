@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>网友Adam'分享原创图片幻灯片Jquery插件</title>
+<link href="http://www.jq-school.com/tool/jc/css/public.css" rel="stylesheet" type="text/css" media="all" />
+<style>
+<!--
+#jcImg { width:625px; padding:5px; border:1px solid #ccc; background:#f2f2f2; position:relative; overflow:hidden; } 
+#jcImg ul { width:625px; height:350px; overflow:hidden; position:relative; z-index:0; }
+#jcImg ul li { display:none; width:625px; height:350px; overflow:hidden; position:absolute; left:0; top:0; z-index:0; }
+#smallImg { height:65px;overflow:hidden; margin:5px auto 0; position:relative; width:590px; }
+#jcImg dl { width:9999%; position:relative; }
+#jcImg dd { float:left; width:115px; height:64px; overflow:hidden; margin-right:4px; _display:inline; cursor:pointer; position:relative; }
+#jcImg dd div { position:absolute; background:#000; height:64px; width:115px; }
+#jcImg b { width:14px; height:64px; background:#fff url(img/btn.png) no-repeat; position:absolute; top:360px; z-index:1; cursor:pointer; }
+#jcImg #prev { float:left; left:4px; background-position:0 0; }
+#jcImg #next { float:right; right:4px; background-position:right 0;  }
+#jcImg #prev:hover {  background-position:0 -70px; }
+#jcImg #next:hover {  background-position:right -70px; }
+#imgText { position:absolute; z-index:1; left:5px; top:315px; width:625px; height:40px; display:none; }
+#imgText p,#imgText b { display:block; position:absolute; left:0; top:0; width:591px; line-height:40px; padding:0 17px; height:40px; overflow:hidden; z-index:1; }
+#imgText b { background:#000; z-index:0; }
+#imgText span { color:#fff; text-shadow:1px 1px 0 #000; float:left; font-size:14px; }
+#imgText samp { color:#fff; text-shadow:1px 1px 0 #000; float:right; font-size:13px;  }
+#imgHover { border:4px solid #EC0000; height:56px; width:107px; position:absolute; left:0; top:0; display:none;}
+
+-->
+</style>
+<script src="http://www.jq-school.com/js/jquery-1.7.2.min.js" language="javascript" type="text/javascript"></script>
+<script src="js/jQuery-jcImg.js" language="javascript"></script>
+<script>
+$(function(){
+	$("#jcImg").jcImg({
+		speed : 400, // 动画速度
+		height :64,  // 缩略图高度设置
+		width : 115, // 缩略图宽度设置
+		textBg : .8, // 文本透明度设置
+		page : 5     // 每页缩略图显示个数
+	});
+});
+</script>
+</head>
+
+<body>
+
+<div class="demoTitle">Adam ’ jQuery - jcImg幻灯片效果展示（ 腾讯图片展示 ）</div>
+
+<div id="jcImg" class="TmpStyle">
+	<ul>
+    	<li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t1.jpg" height="350" width="625" title="公安部、重庆市举行周克华案侦破表彰大会" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t2.jpg" height="350" width="625" title="沈阳交警查处“镶钻套牌宝马”" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t3.jpg" height="350" width="625" title="深圳12对新人过山车上办婚礼 神态各异" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t4.jpg" height="350" width="625" title="东亚经贸新闻月度图片精选：男童拍港姐" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t5.jpg" height="350" width="625" title="《活着》：矿山蜕变--“尘肺病”远去" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t6.jpg" height="350" width="625" title="哈尔滨阳明滩大桥引桥坍塌 多人死伤" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t1.jpg" height="350" width="625" title="公安部、重庆市举行周克华案侦破表彰大会" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t2.jpg" height="350" width="625" title="沈阳交警查处“镶钻套牌宝马”" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t3.jpg" height="350" width="625" title="深圳12对新人过山车上办婚礼 神态各异" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t4.jpg" height="350" width="625" title="东亚经贸新闻月度图片精选：男童拍港姐" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t5.jpg" height="350" width="625" title="《活着》：矿山蜕变--“尘肺病”远去" /></a></li>
+        <li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t4.jpg" height="350" width="625" title="东亚经贸新闻月度图片精选：男童拍港姐" /></a></li>
+    	<li><a><img src="http://www.jq-school.com/tool/jc/jQuery-jcImg/img/t1.jpg" height="350" width="625" title="公安部、重庆市举行周克华案侦破表彰大会" /></a></li>
+    </ul>
+</div>
+
+<!-- HTML 结束  -->
+<div id="psWraper">
+    <div id="ps" style=" width:950px;">
+        <div id="psText">
+        	<samp>首先感谢 jQuery-School ( <a>http://www.jq-school.com</a> ) 对 Adam' 的支持！支持原创，支持前端！</samp>
+            <h2>Adam ’ jQuery - jcImg幻灯片效果</h2>
+            
+            <p>jQuery-jcImg（ 腾讯图片展示 ） 调用简单，插件实用！只需修改插件参数 及 CSS便能实现想要的效果！如有宝贵意见请联系Adam ’
+            </p>
+        </div>
+        <h1>jQuery-jcImg插件<p>by Adam ’</p></h1>
+        <dl style="clear:both"> 
+            <h2>* 插件说明 及 相关参数</h2>
+            <dt>jQuery - jcImg v1.43</dt>
+            <dt>Copyright(c) 2012 by Adam ’ </dt>
+            <dt>QQ : 1741498</dt>
+            <dt>E-mail : 1741498@qq.com</dt>
+            <dt>Date: 2012-08-24</dt>
+            
+            <dd><span>sspeed : 400,</span> // 动画速度</dd>
+            <dd><span>sheight :64,</span>  // 缩略图高度设置</dd>
+            <dd><span>swidth : 115,</span> // 缩略图宽度设置</dd>
+            <dd><span>stextBg : .8,</span> // 文本透明度设置</dd>
+            <dd><span>spage : 5</span>     // 每页缩略图显示个数</dd>
+        </dl>
+    </div>
+</div>
+</body>
+</html>

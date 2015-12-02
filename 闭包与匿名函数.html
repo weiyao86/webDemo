@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>闭包与匿名函数</title>
+    <style type="text/css">
+        a {
+            display: inline-block;
+            width: 200px;
+            height: 30px;
+            background-color:red;
+            color:white;
+            font:bold;
+            font-size:15px;
+            line-height:30px;
+            border-bottom:1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <a id="a_id">i am a link</a><br />
+     <a id="a2">i am a addEventListener</a><br />
+     <a id="a1">i am a removeEventListener</a>
+    <script type="text/javascript">
+        var _oevent = {};
+        (function () {
+            var addEvent = function (event, obj, eventFun) { obj.addEventListener(event, eventFun, false) };    //最后个bool参数为true表示在捕获节点调用事件处理程序,为false表示在冒泡节点调用事件
+            var removeEvent = function (event, obj, eventFun) { obj.removeEventListener(event, eventFun, false) };  //添加事件与移除事件所传参数必须一致
+            _oevent.addEvent = addEvent;
+            _oevent.removeEvent = removeEvent;
+        })();
+
+        document.getElementById("a1").addEventListener("click", function () {
+            _oevent.removeEvent("click", document.getElementById("a_id"), tests);
+        });
+        document.getElementById("a2").addEventListener("click", function () {
+            _oevent.addEvent("click", document.getElementById("a_id"), tests);  //通过全局变量使用闭包
+        });
+
+        var tests = function () { alert("test"); }  
+        //_oevent.addEvent("click",document.getElementById("a_id"), tests);
+        /**
+        *** 闭包
+        **/
+        var x = 2, y = 3;
+        var test = function (x, y) { return alert(x + y); }(x, y);
+        x = y = 1;
+        test;   //=5
+        alert(x + y); //=2
+    </script>
+</body>
+</html>

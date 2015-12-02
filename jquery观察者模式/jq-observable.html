@@ -1,0 +1,77 @@
+﻿<!doctypehtml>
+<html>
+<head>
+	<metacharset="UTF-8">
+	<script src="../Scripts/jquery-1.9.0.js"></script>
+	<title>Document</title>
+	<script type='text/javascript'>
+	
+		var $global=$({}),
+			observable={};
+
+		$.subscribe=function(){
+			$global.on.apply($global,arguments);
+		};
+
+		$.publish=function(){
+			$global.trigger.apply($global,arguments);
+		};
+
+		$.unsbuscribe=function(){
+			$global.off.apply($global,arguments);
+		};
+
+
+		$(function(){
+
+			//回调函数
+			var handler=function(e,param){
+				alert('jquery:'+param);
+			};
+
+			//订阅
+			$.subscribe("a",handler);
+
+			//发布
+			$.publish("a",'1');
+
+			//退订
+			$.unsbuscribe('a');
+
+			$.publish("a",'2');
+
+		});
+
+		var obj={
+			publish:function(eventName){
+				var funs = observable[eventName],
+					args = [].slice.call(arguments,1),
+					i=0,l;
+				if(funs){
+					for (l= funs.length; i <l;i++) {
+						funs[i].apply(null,args);
+					}
+				}
+			},
+			subscribe:function(eventName,fn){
+				var funs = observable[eventName],
+					i=0,l;
+				if(!funs) return observable[eventName]=[fn];
+				observable[eventName].push(fn);
+			},
+			unsbuscribe:function(eventName,fn){}
+		};
+
+		obj.subscribe("click",function(a,c){alert(a+'==='+c)});
+		// obj.publish("click",'非jquery调用成功','真的成功了');
+		// obj.publish("click",'我又来调用观察者模式了');
+		
+		obj.subscribe("click",function(){alert('dbclick')});
+		obj.subscribe("click",function(){alert('one dbclick')});
+		obj.publish("click",'a','b');
+	</script>
+</head>
+<body>
+	<h1>jquery实现简单发布-订阅模式</h1>
+</body>
+</html>

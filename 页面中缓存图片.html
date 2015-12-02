@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <style type="text/css">
+        body {
+            margin: 30px;
+            background-color: #E9E9E9;
+        }
+
+        .float {
+            float: left;
+            box-shadow: 2px 2px 3px #aaaaaa;
+            padding: 10px 10px 20px 10px;
+            border-radius: 2%;
+            border: 2px solid gray;
+            overflow: hidden;
+            margin: 30px;
+            -ms-transform: rotate(7deg); /* IE 9 */
+            -moz-transform: rotate(7deg); /* Firefox */
+            -webkit-transform: rotate(7deg); /* Safari and Chrome */
+            -o-transform: rotate(7deg); /* Opera */
+            transform: rotate(7deg);
+        }
+            /*.float:hover {
+            box-shadow: 4px 4px 5px gray;
+            }*/
+
+            .float img {
+                width: 250px;
+                height: 250px;
+            }
+    </style>
+
+    <script type="text/javascript">
+        $.CacheImage = function () {
+            var self = this,
+                $imgList = $("img[data-rollover]");
+            $imgList.each(function (index, val) {
+                var rollover = $(val).attr("data-rollover");
+                (new Image()).src = rollover;
+                $(val).attr("data-rollout", $(val).attr("src"));
+
+                $(val).on("mouseenter mouseleave", function (e) {
+                    if (e.type == "mouseenter") {
+                        $(this).attr("src", $(this).attr("data-rollover"));
+                    }
+                    else if (e.type == "mouseleave") {
+                        $(this).attr("src", $(this).attr("data-rollout"));
+                    }
+                });
+            });
+
+        };
+
+        $(function () {
+            $.CacheImage();
+        });
+
+    </script>
+</head>
+<body>
+    <div class="float">
+        <img src="Res/aa.jpg" data-rollover="Res/DSC_0723.jpg" />
+    </div>
+    <div class="float" style="transform: rotate(8deg);">
+        <img src="Res/DSC_0723.jpg" data-rollover="Res/DSC_0730.jpg" />
+    </div>
+    <div class="float" style="transform: rotate(-7deg);">
+        <img src="Res/DSC_0730.jpg" data-rollover="Res/psb_002.jpg" />
+    </div>
+    <div class="float" style="transform: rotate(8deg);">
+        <img src="Res/psb_002.jpg" data-rollover="Res/IMG_0351.jpg" />
+    </div>
+    <div class="float" style="transform: rotate(-8deg);">
+        <img src="Res/IMG_0351.JPG" data-rollover="Res/DSC_0731.jpg" />
+    </div>
+    <div class="float" style="transform: rotate(8deg);">
+        <img src="Res/DSC_0731.jpg" data-rollover="Res/aa.jpg" />
+    </div>
+</body>
+</html>

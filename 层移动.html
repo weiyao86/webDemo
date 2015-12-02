@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+   
+    <style type="text/css">
+        .divMove
+        {
+            position:absolute;
+            width:200px;
+            height:200px;
+            border-radius:10%;
+            border:1px solid red;
+            display:none;
+        }
+        .top-right
+        {
+            width:200px;
+            height:50px;
+            position:absolute;
+            float:right;
+            right:0px;
+            background-color:gray;
+            border-radius:5%;
+            filter:alpha(opacity=80);
+            display:block;
+        }
+    </style>
+    <!--<script src="Scripts/jquery-1.9.0.js"></script>-->
+    <script src="Scripts/jquery-1.4.1.js"></script>
+     <script src="Scripts/jquery.jgrowl.js"></script>
+    <script src="Scripts/jquery.blockUI.js"></script>
+    <script src="Scripts/plugin.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            String.prototype.test = function (option) {};
+           // Object.prototype.obj = function (option) { alert(option.length) };
+            $("#btnId").click(function () {
+               // $.foo({ title: $("#txtId").val() });
+               // $.jGrowl("ddd"); 消息插件
+                // "ab".test("abc"); string 扩展
+                $.blockUI({
+                    css:{"left":200,"top":150,"border":"none"},
+                    message: $("#divID"),
+                    cursorReset: "default"
+                });
+            });
+
+            $("#btnTest").click(function (e) {
+                $("#divID").block({
+                    css: { "left": -100, "top": -100, "border": "none" },
+                    centerX: false,
+                    centerY: false,    //当弹出基于自定义对象的blockui时设置此两个属性可自定义left ,top值,否则无效
+                    message: $("#divOpenId"),
+                    cursorReset: "default"
+                });
+                $("#divOpenId").mousemove(function (e) {
+                $("#txtId").val(e.pageX + '===' + e.pageY);
+            });
+            });
+            $("#btnId_jw").click(function () {
+                $.jGrowl("ddd");
+            });
+            
+
+          });
+
+    </script>
+    <style type="text/css">
+        #divID
+        {
+            width:300px;
+            height:150px;
+            position:absolute;
+            width:200px;
+            height:200px;
+            border:2px solid black;
+            margin:0px;
+            display:none;
+            background-color:yellow;
+            padding:0px;
+            z-index:1;
+        }
+        #divOpenId
+        {
+             width:500px;
+            height:150px;
+            position:absolute;
+            border:2px solid black;
+            margin:0px;
+            padding:0px;
+            background-color:red;
+            display:none;
+            z-index:2;
+        }
+        
+        .cursorStyle {
+            width:500px;
+            height:500px;
+            background-color:green;
+            /*cursor:url(Res/grabbing.cur),pointer;*/
+        }
+            .cursorStyle:hover {
+                cursor:url(Res/grab.cur),pointer;
+            }
+    </style>
+</head>
+<body>
+<input type ="button" id="btnId" value="TestPlugin" /><br />
+<input id="txtId" type="text" value="" />
+<div id="divID" >
+<input type="button" value="test click" id="btnTest" />
+</div>
+<div id="divOpenId" >this is a open div<input type ="button" id="btnId_jw" value="TestPlugin" /><br />
+</div>
+    <div class="cursorStyle">鼠标指针样式</div>
+</body>
+</html>

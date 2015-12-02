@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        var defaults = {
+            name: "name"
+        };
+        var fun1 = function (instance) {
+            this.opts = defaults;// $.extend(defaults, {});
+            this.opts.instance = instance;
+            //this.opts = instance;  //正确
+            this.init();
+        };
+        fun1.prototype = {
+            init: function () {
+                var self = this;
+                $("#btnTest").on("click", function () {
+                    alert(self.opts.instance.id);
+                });
+            }
+        };
+
+        var fun2 = function (id) {
+            this.id = id;
+        };
+
+        var fun3 = { id: "id" };
+
+        $(function () {
+            var test1 = new fun2(4);
+            var testFun1 = new fun1(test1);
+
+            var test2 = new fun2(6);
+            var testFun2 = new fun1(test2);
+
+            var testFun3 = new fun1(fun3);
+
+        });
+    </script>
+</head>
+<body>
+    <input id="btnTest" data-field="test" type="button" value="btnTest" />
+    <input id="Button1" type="button" value="Button1" />
+    
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="Css/promptMes.css" rel="stylesheet" />
+    <!--<script src="Scripts/jquery-1.9.0.js"></script>-->
+    <script src="Scripts/jquery-1.8.1.min.js"></script>
+    <script src="Scripts/jquery.prompt.js"></script>
+     <script src="Scripts/Plugin/jGrowl/jGrowl-master/jquery.jgrowl.js"></script>
+     <link href="Scripts/Plugin/jGrowl/jGrowl-master/jquery.jgrowl.css" rel="stylesheet" />
+    <script type="text/ecmascript">
+        $(function () {
+                var ur1l ='http://10.0.0.164/citronepc/Order/Export?DealerGroup=sgmw&orderCode=SGMW-20150107105640-7497';
+            $("#btnTest").on("click", function () { 
+                $.promptMes("this is a testthis is a testthis is a testthis is a testthis is a testthis is a testthis is a testthis is a testthis is a test", { default_w: 200 });
+
+                $.jGrowl("&quot;Stick this!&quot;", { sticky: false });
+
+                 alert($("#testScroll").get(0).clientWidth+'==='+$("#testScroll").get(0).scrollWidth);
+                });
+
+            //window.history.forward();
+
+           var rows = document.getElementById('testTb').rows;
+           rows[0].innerHTML='<td>189</td>';
+        });
+
+        var testStr = "abcde abcabcabca this is abcabcabcabcabc";
+        var pattern = /abc{2,3}/ig;
+        var str = "";
+        var result = testStr.match(pattern);
+
+
+
+        var a = 100;
+        var b = 100;
+        var r = 100;
+        for(var times=0; times<60; times++) {
+              var hudu = (2*Math.PI / 360) * 6 * times;
+               var X = a + Math.sin(hudu) * r;
+               var Y = b - Math.cos(hudu) * r    //  注意此处是“-”号，因为我们要得到的Y是相对于（0,0）而言的。
+            console.log("X:" + X + " Y:" + Y);
+        }
+    </script>
+    <style type='text/css'>
+        .myBox{
+            border:1px solid red;
+            width:200px;
+            height:300px;
+        }
+        .clearfix:after,.clearfix:before{content:"";display:table;}
+        .clearfix{clear:both;}
+        .clearfix:after{*zoom:1;}
+    </style>
+</head>
+<body style="height: 1500px;">
+
+<div id='testScroll' style='width:500px;overflow:auto;height:500px;border:1px solid red;padding:10px;'>
+    <div style='width:1000px;overflow:auto;height:500px;border:1px solid blank;'></div>
+</div>
+<div onclick="alert(this.clientHeight);" style='width:500px;border:1px solid red;overflow:hidden;'>
+    <div style='width:50px;height:50px;float:left;border:1px solid green;'>floatA</div>
+    <div style='width:80px;height:80px;float:left;border:1px solid gray;'>floatB</div>
+    <div style='width:100px;height:100px;border:1px solid black;float:left;'>nofloat</div>
+</div>
+    <button id="btnTest" type="button">test</button>
+
+    <a href='http://www.baidu.com'>aaa</a>
+    <table id='testTb'><tr><td>abcd</td><td>322131</td></tr></table>
+</body>
+</html>

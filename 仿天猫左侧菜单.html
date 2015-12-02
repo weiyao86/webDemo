@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>仿天猫左侧分类导航菜单特效</title>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            font-size: 12px;
+        }
+
+        img {
+            border: 0px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        #nav {
+            width: 191px;
+            position: relative;
+            float: left;
+        }
+
+        #cardlist li {
+            border: 1px solid red;
+        }
+
+        #cardlist li.current {
+            width: 191px;
+            height: 41px;
+            line-height: 41px;
+            text-align: center;
+            font-size: 14px;
+            background: url(bg.png) no-repeat;
+        }
+
+        #cardlist li.hover {
+            width: 195px;
+            background: url(bg_cur.png) no-repeat;
+            position: relative;
+            z-index: 10;
+        }
+
+        #cardlist li a {
+            width: 191px;
+            height: 41px;
+        }
+
+        #nav .box {
+            display: none;
+        }
+
+        #nav .showcontent {
+            border: 1px solid #800;
+            display: block;
+            left: 193px;
+            width: 400px;
+            z-index: 5;
+            position: absolute;
+            background: #fff;
+        }
+
+        #nav .show {
+            padding: 10px;
+            display: block;
+        }
+
+        #nav .show ul li {
+            width: auto;
+            float: left;
+            text-align: center;
+            margin-right: 5px;
+            font-size: 14px;
+            height: 25px;
+            line-height: 25px;
+        }
+    </style>
+    <script src="Scripts/jquery-1.4.1.js"></script>
+
+
+    <script type="text/javascript">
+
+
+        //闭包示例
+        function closure(list) {
+            var result = [];
+            var fun = function (li, i) { alert(li + '---' + i); };
+            for (var i = 0, li; li = list[i]; i++) {
+                li.i = i;
+                result["key_" + i] = (function (i) { alert(i+"--处理元素加1＝"+(++i)); })(li);
+            }
+            return result;
+        }
+
+        var test = closure([5, 6, 8]);
+        for (var j = 0, li; li = test[j]; j++) {
+            li();
+        }
+        //闭包示例
+
+
+        $(document).ready(function () {
+
+            $("#cardlist li").each(function (index) {
+
+                $(this).mouseover(function () {
+
+                    //清除没有访问过的层，同时计算当前的相对位置，实现等位置平移效果
+
+                    $("div.box").css({ display: "none" });
+
+                    var height = index * 41 + "px";
+
+                    //显示具体内容效果
+
+                    $("div.box").eq(index).addClass("show showcontent").css({ display: "block", top: height });
+
+                    $(this).addClass("hover");
+
+                    $("#txtTest").val("into");
+
+                }).mouseout(function () {
+
+                    //关闭所有的层效果
+
+                    $("div.box").eq(index).css({ display: "none" });
+
+                    $(this).removeClass("hover");
+                    $("#txtTest").val("li mouseout");
+                });
+
+            });
+
+            $(".box").hover(function () {
+
+                //获取当前选中的状态的时候让其处于显示状态
+
+                $('.box').eq($('.box').index($(this))).addClass("show showcontent").css({ display: "block" });
+
+                //同时添加背景效果
+
+                $("li.current").eq($('.box').index($(this))).addClass("hover");
+                $("#txtTest").val("box 1");
+            }, function () {
+
+                //移除当前效果，同时隐藏内容层
+
+                $("li.current").removeClass("hover");
+
+                $('div.box').css({ display: "none" });
+                $("#txtTest").val("box 2");
+
+            });
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+    <h4 style="height: 30px; line-height: 30px; background: #ccc; width: 191px;">商品列表集合</h4>
+    <input type="text" id="txtTest" />
+    <div id="nav">
+
+        <ul id="cardlist">
+
+            <li class="current"><a href="javascript:void(0)">虚拟</a></li>
+
+            <li class="current"><a href="javascript:void(0)">服装</a></li>
+
+            <li class="current"><a href="javascript:void(0)">鞋包配饰</a></li>
+
+            <li class="current"><a href="javascript:void(0)">户外运动</a> </li>
+
+        </ul>
+
+        <div class="box">
+
+            <h4>话费充值</h4>
+
+            <ul>
+
+                <li><a href="">移动</a></li>
+
+                <li><a href="">电信</a></li>
+
+                <li><a href="">联通</a></li>
+
+                <li><a href="">宽带</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="box">
+
+            <h4>女装</h4>
+
+            <ul>
+
+                <li><a href="">连衣裙</a></li>
+
+                <li><a href="">T恤</a></li>
+
+                <li><a href="">雪纺</a></li>
+
+                <li><a href="">衬衫</a></li>
+
+                <li><a href="">半裙</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="box">
+
+            <h4>女鞋</h4>
+
+            <ul>
+
+                <li><a href="">新品</a></li>
+
+                <li><a href="">单鞋</a></li>
+
+                <li><a href="">凉鞋</a></li>
+
+                <li><a href="">凉拖</a></li>
+
+                <li><a href="">帆布鞋</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="box">
+
+            <h4>运动鞋</h4>
+
+            <ul>
+
+                <li><a href="">板鞋</a></li>
+
+                <li><a href="">凉鞋</a></li>
+
+                <li><a href="">跑步</a></li>
+
+                <li><a href="">登山</a></li>
+
+                <li><a href="">体操</a></li>
+
+                <li><a href="">武术</a></li>
+
+                <li><a href="">篮球</a></li>
+
+                <li><a href="">足球</a></li>
+
+                <li><a href="">休闲</a></li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div style="float: left; width: 500px; height: 300px; background: #ccc;">
+        显示的内容层，用于测试覆盖使用<br />
+        此效果主要还是应用css使元素相互关联，移出LI时同时给显示内容也加上相应的hover事件
+
+    </div>
+
+</body>
+</html>

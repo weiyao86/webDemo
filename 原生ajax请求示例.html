@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script src="Scripts/Plugin/amplify/amplify.js"></script>
+    <script type="text/ecmascript">
+        $(function () {
+
+
+
+            //#region  冒泡排序
+            //quickSort: function (myArray) {
+            //    var self = this,
+            //        len = myArray.length,
+            //    i, j, stop;
+
+            //    for (i = 0; i < len; i++) {
+            //        for (j = 0, stop = len - i; j < stop; j++) {
+            //            if (myArray[j] > myArray[j + 1]) {
+            //                self.swap(myArray, j, j + 1);
+            //            }
+            //        }
+            //    }
+
+            //    return myArray;
+            //},
+
+            //swap: function (myArray, first, second) {
+            //    var self = this;
+            //    var temp = myArray[first];
+            //    myArray[first] = myArray[second];
+            //    myArray[second] = temp;
+
+            //},
+            //#endregion
+
+            //#region快速排序
+            //quickSort: function (myArray, left, right) {
+            //    var self = this;
+            //    if (myArray.length < 2) {
+            //        return myArray;
+            //    }
+            //    left = (typeof left !== "number" ? 0 : left);
+
+            //    right = (typeof right !== "number" ? myArray.length - 1 : right);
+
+            //    var index = self.partition(myArray, left, right);
+
+            //    if (left < index - 1) {
+            //        self.quickSort(myArray, left, index - 1);
+            //    }
+
+            //    if (index < right) {
+            //        self.quickSort(myArray, index, right);
+            //    }
+
+            //    return myArray;
+            //},
+
+            //partition: function (myarray, left, right) {
+            //    var self = this;
+            //    var pivot = myarray[Math.floor((right + left) / 2)],
+            //        i = left,
+            //        j = right;
+            //    while (i <= j) {
+            //        while (myarray[i] < pivot) {
+            //            i++;
+            //        }
+            //        while (myarray[j] > pivot) {
+            //            j--;
+            //        }
+            //        if (i <= j) {
+            //            self.swap(myarray, i, j);
+            //            i++;
+            //            j--;
+            //        }
+            //    }
+            //    return i;
+            //},
+
+            //swap: function (myArray,first,second) {
+            //    var self = this;
+            //    var temp = myArray[first];
+            //    myArray[first] = myArray[second];
+            //    myArray[second] = temp;
+
+            //},
+            //#endregion
+
+
+            //var myClass = function () {
+            //    var standard = {
+            //        createXHR: function () {
+            //            return new XMLHttpRequest();
+            //        }
+            //    };
+            //    var oldXHR = {
+            //        createXHR: function () {
+            //            return ActiveXObject("Microsoft.XMLHTTP");
+            //        }
+            //    };
+            //    var newXHR = {
+            //        createXHR: function () {
+            //            return ActiveXObject("Msxml2.XMLHTTP");
+            //        }
+            //    };
+
+            //    if (standard.createXHR())
+            //        return standard;
+            //    try {
+            //        newXHR.createXHR();
+            //        return newXHR;
+            //    } catch (e) {
+            //        oldXHR.createXHR();
+            //        return oldXHR;
+            //    }
+
+            //}();
+
+            //var xhr = myClass.createXHR();
+            //xhr.open("GET", "data/dataTest.txt");
+            //xhr.onreadystatechange = function (status, a, b, c) {
+            //    if (xhr.readyState === 4 && xhr.status === 200) {
+            //        if (xhr)
+            //            xhr.onreadystatechange = null;
+            //        var data = eval("(" + xhr.responseText + ")");
+            //        var dataJson = $.parseJSON(xhr.responseText);
+            //    }
+            //};
+            //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            //xhr.send("user=我的测试&pwd=password");
+            xhr.send();
+
+
+
+            //$.when(
+            //     $.getJSON("data/dataTest.txt"),
+            //     $.getJSON("data/dataTest.txt", {"test":"this is a test"}),
+            //     $.getJSON("data/dataTest.txt")
+            //    ).then(function (a, b, c,d) {
+            //        alert(b[0]);
+            //    }, function () {
+            //        alert("fail");
+            //    });
+            
+
+          
+            $.getJSON("data/dataTest.txt", function (result) {
+                var data = result.Data,
+                    serverData = result.ServerData,
+                    tempData = [];
+
+                for (var j = 0, val; val = data[j]; j++) {
+                    var flag = true;
+
+                    for (var i in serverData) {
+                        var serverD = serverData[i];
+                        if (serverD == val) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        tempData.push(val);
+                    }
+                }
+                $("#test").html(tempData.join('</br>'));
+
+            });
+
+            $("#grid").find("tr").hover(
+                function () {
+                    $(this).addClass("active-tr");
+                    amplify.publish("topic");
+                },
+                function () {
+                    $(this).removeClass("active-tr");
+                });
+            var str = "scrollWidth:" + $("#grid").get(0).scrollWidth + "clientWidth:" + $("#grid").get(0).clientWidth + "offsetWidth:" + $("#grid").get(0).offsetWidth;
+
+        });
+
+        amplify.subscribe("topic", function () {
+            alert('1');
+        }, 2);
+        amplify.subscribe("topic", function () {
+            alert('2');
+        }, 1);
+
+    </script>
+    <style type="text/css">
+        .active-tr {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    <div id="grid" style="border: 0px solid red; border: 1px solid red; overflow-x: auto; margin: 0 auto;">
+        <table style="border-collapse: collapse; width: 400px;">
+            <tr>
+                <td>abcd</td>
+            </tr>
+            <tr>
+                <td>abcd</td>
+            </tr>
+            <tr>
+                <td>abcd</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        .container-dropdown {
+            position: absolute;
+            box-shadow: 2px 2px 3px #aaaaaa;
+            border-radius: 4px;
+            border: 1px solid gray;
+            height: 200px;
+            font-size: 0.8em;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #CDCDCD;
+        }
+
+        .list-dropdown {
+            width: 100%;
+            margin: 0px;
+            padding: 2%;
+            float: left;
+        }
+
+            .list-dropdown li {
+                list-style: none;
+                width: 96%;
+                margin: 2px 0;
+                float: left;
+                line-height: 25px;
+            }
+
+                .list-dropdown li:hover {
+                    background-color: #00c5ff;
+                    color: white;
+                }
+
+                .list-dropdown li input[type='checkbox'] {
+                    margin-top: 6px;
+                    width: 15px;
+                }
+    </style>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script src="Scripts/Libs/mustache.js"></script>
+    <script type="text/javascript">
+        var data = [
+                { "D": "加速踏板固定螺母加速踏板固定螺母", "Code": "RE1001", "Gauge": "M6×1", "TheoreticalMass": "0.004" },
+                { "D": "固定螺母加速踏板固定螺母", "Code": "RE1002", "Gauge": "M6×1", "TheoreticalMass": "0.004" },
+                { "D": "固定螺母", "Code": "RE1003", "Gauge": "M6×1", "TheoreticalMass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" }
+        ];
+
+        (function ($) {
+            var defaults={
+                 $template:$("#test"),
+                 data:{},
+                 rule:{ "Code": "Code", "Desc": "Desc" },
+                 Mustache:null
+            };
+
+
+            $.fn.dropDownList = function (opts) {
+                var self = this;
+                    self.opts=$.extend({},defaults,opts);
+                    self.$parentContainer = self.wrap("<div></div>").parent();
+                    self.$tempContainer = self.opts.$template.clone().appendTo(self.$parentContainer).removeAttr("id");
+                    self.$fillContainer = self.$tempContainer.find("ul[data-field='container-dropdown']");
+                    self.templateContainer = self.$tempContainer.find("ul>[data-field='container-template-dropdown']").html();
+                    self.tempHtml='<li><input type="checkbox" data-code="{{Code}}" /><span class="literal">{{Desc}}</span><li>';
+
+                bindEvent(self);
+                self.localPosition(self.$tempContainer);
+            };
+
+            $.fn.localPosition = function ($standByContainer,width) {
+                var self = this,
+                    x =self.position().left,
+                    y =self.position().top + self.outerHeight(),
+                    w = width || self.outerWidth();
+                $standByContainer.css({
+                    "left": x,
+                    "top": y,
+                    "width": w
+                }).hide();
+            };
+
+            function loadData(sender){
+                var self=sender,
+                    datalist = mappingJSON(self.opts.data, self.opts.rule, []);
+                if(self.opts.Mustache === undefined){
+                    var list=[];
+                     for(var i =0,l=datalist.length;i<l;i++){
+                        list[list.length]=self.tempHtml.replace(/\{\{(\w+)\}\}/ig,function(allMatch,field,index){
+                            return datalist[i][field];
+                        });
+                     }
+                     tempHtml = list.join('');
+                }else var tempHtml = self.opts.Mustache.render(self.templateContainer, { List: datalist });
+
+                self.$fillContainer.html(tempHtml);
+            }
+
+            function bindEvent(sender) {
+                var self = sender;
+
+                self.$parentContainer.on("mouseenter mouseleave", function (e) {
+                    if (e.type == "mouseleave") self.$tempContainer.slideUp("fast");
+                    else if (e.type == "mouseenter") {
+
+                        self.$tempContainer.slideDown("fast");
+                        loadData(self);
+                    }
+                }).width(self.width());
+
+                self.$tempContainer.on("change click", "li>input[type='checkbox'],li", function (e) {
+                    var $this = $(this),
+                        txtcontent = self.val() ? self.val().split(",") : [],
+                        $ck = $this;
+                    if ($this.prop("tagName") == "LI") $ck = $this.find("input[type='checkbox']");
+                    var curVal = $ck.attr("data-code");
+
+                    if (e.type == "change") {
+                        if ($ck.prop("checked")) {
+                            txtcontent.push(curVal);
+                            self.val(txtcontent.join(","));
+                        } else {
+                            var index = $.inArray(curVal, txtcontent);
+                            index > -1 && txtcontent.splice(index, 1) && self.val(txtcontent.join(","));
+                        }
+                        e.stopPropagation();
+                    }
+                    else if (e.type == "click") {
+                        if (!$ck.prop("checked")) {
+                            txtcontent.push(curVal);
+                            self.val(txtcontent.join(","));
+                            $ck.prop("checked", true);
+                        } else {
+                            var index = $.inArray(curVal, txtcontent);
+                            index > -1 && txtcontent.splice(index, 1) && self.val(txtcontent.join(","));
+                            $ck.prop("checked", false);
+                        }
+                    }
+                });
+
+                    self.attr("readOnly", true);
+            }
+
+            function mappingJSON(data, rule, container) {
+
+                for (var i = 0; i < data.length; i++) {
+                    var temp = {};
+                    var item = data[i];
+
+                    for (var key in item) {
+                        var newKey = rule[key] || key;
+
+                        if ($.type(item[key]) === "array" && item[key].length > 0) {
+                            temp[newKey] = [];
+                            this.mappingJSON(item[key], rule, temp[newKey]);
+                        } else {
+                            temp[newKey] = item[key];
+                        }
+                    }
+                    container.push(temp);
+                }
+
+                    return container;
+            }
+
+        })(jQuery);
+
+
+        $(function () {
+            $("#txtTest").dropDownList({
+                $template:$("#test"),
+                data:data,
+                rule:{ "Code": "Code", "D": "Desc" }
+            });
+            $("#Text1").dropDownList({
+                $template:$("#test"),
+                data:data,
+                rule:{ "Code": "Code", "D": "Desc" },
+                Mustache:Mustache
+            });
+            $("#Text2").dropDownList({
+                $template:$("#test"),
+                data:data,
+                rule:{ "Code": "Code", "D": "Desc" },
+                Mustache:Mustache
+            });
+        });
+
+        var st=[1,2,3,5],str=[19,25];
+        for(var i = 0;i<st.length;i++){
+            for(var j =0;j<str.length;j++){
+                if(str[j] == st[i])st.splice(i,1);
+            }
+        }
+        alert(st.join(','));
+
+    </script>
+
+</head>
+<body style='position:relative;'>
+
+
+
+
+<h3>下拉多选框工具</h3>
+<div style='border:1px solid #cacaca;width:500px;margin:0 auto;'>
+    <input id="txtTest" value="" type="text" /><br />
+    <input id="Text1" value="" type="text" /><br />
+    <input id="Text2" value="" type="text" /><br />
+</div>
+<!--下拉选框模板-->
+    <div id="test" class="container-dropdown" data-action="dropDown" style="display: none;">
+        <ul data-field="container-dropdown" class="list-dropdown">
+            <script type="text/template" data-field="container-template-dropdown">
+                {{#List}}
+                    <li>
+                    <input type="checkbox" data-code="{{Code}}" /><span>
+                    {{Desc}}
+                    </span>
+                    <li>
+                {{/List}}
+            </script>
+        </ul>
+    </div>
+
+<style type="text/css">
+    /*下拉框*/
+.dropdown-panel{width:500px;border:1px solid #DADADA;position: absolute;z-index: 2;color:#666666;}
+.dropdown-panel .row{float:left;width:100%;line-height:30px;}
+.dropdown-panel .even{background:#f8fafa;}
+.dropdown-panel .category{float:left;width:50px;text-indent: 1em;}
+.dropdown-panel .detail{float:left; }
+.dropdown-panel .detail .literal{margin:0 5px;text-decoration: none;}
+.dropdown-panel .detail .literal:hover,.dropdown-panel .detail .selected{color:#71c7af;cursor:pointer;}
+</style>
+
+<!-- <div class="dropdown-panel">
+    <div class="row">
+        <div class="category">A</div>
+        <div class="detail"><a class="literal">xxxx</a><a class="literal">xxxx</a><a class="literal">xxxx</a><a class="literal">xxxx</a></div>
+    </div>
+    <div class="row even">
+        <div class="category">x</div>
+        <div class="detail"><a class="literal">xxxx</a><a class="literal selected">xxxx</a><a class="literal">xxxx</a><a class="literal">xxxx</a></div>
+    </div>
+</div>
+ -->
+<label><a href="http://www.baidu.com">我是label</a></label>
+
+<style type='text/css'>
+    .ul{border:1px solid red;width:500px;}
+    .ul li{
+        list-style:disc inside none;
+    }
+
+</style>
+<ul class="ul">
+    <li title="我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液我是血液">d_1</li>
+    <li>d_2</li>
+    <li>d_3</li>
+    <li>d_4</li>
+    <li>d_5</li>
+</ul>
+
+<div style="line-height:40px;height:40px;border:1px solid red;margin:10px">
+	<span style="border:1px solid;line-height:25px;">
+		adabadasdfasfd
+	</span>
+</div>
+
+<div style="line-height:40px;height:40px;border:1px solid red;">
+	<span style="border:1px solid;">
+		<input type="text" value="taeafasdfasd" style="float:left;">
+	</span>
+</div>
+
+
+<style>
+        #a { float:left; border:1px solid yellow;table-layout: fixed;letter-spacing: 0px; }
+        #b { overflow:hidden; max-width:100px; border:1px solid green; white-space:nowrap; letter-spacing: 0px;table-layout: fixed;float:left;}
+    </style>
+<div id="a">
+        <div id="b">here's a really long string</div>
+        </div>
+<input id='btnT' type="button" value="test">
+<input id='btnT1' type="button" value="clear">
+<script type='text/javascript'>
+	var url = window.location.href;
+	
+	alert(window.location.search);
+$("#btnT").click(function(){
+	window.location.href=window.location.href+"?abc=aa";
+});
+$("#btnT1").click(function(){
+	window.location.search="";
+});
+</script>
+
+</body>
+</html>

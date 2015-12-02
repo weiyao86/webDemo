@@ -1,0 +1,105 @@
+﻿body, html {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Microsoft YaHei',Arial,Helvetica,sans-serif;
+}
+
+.position {
+	position: fixed;		  
+	z-index: 9999;
+}
+
+.top_right {
+	right: 250px;
+	top: 0px;
+}
+
+.rightBottom {
+	right: 25px;
+	bottom: 0px;
+}
+
+.top_left {
+	left: 25px;
+	top: 0px;
+}
+
+.leftBottom {
+	left: 25px;
+	bottom: 0px;
+}
+
+.prompt_center {
+	top: 40%;
+	left: 45%;
+	text-align: center;
+}
+
+.prompt_message {
+	background-color: #333333;
+	border-radius: 3%;
+	color: white;
+	clear: both;
+	font-size: 12px;
+	margin: 2px 0;
+	position: relative;
+	padding: 5px 10px;
+	font-weight: bold;
+	-moz-border-bottom-colors: #fff #ffd800 black;
+	text-align: center;
+	z-index: 9999;
+	overflow: hidden;
+	width: 180px;
+}
+
+.prompt_message_span {
+	float: left;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.prompt_message_span1 {
+	width: 100%;
+	float: left;
+	color:white;
+}
+
+.prompt_message .prompt_message_header {
+	float: left;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: left;
+	color: #2274AC;
+	height: 25px;
+	line-height: 25px;
+}
+
+.prompt_message .prompt_close {
+	font-weight: bold;
+	font-size: 11px;
+	float: right;
+	text-align: right;
+	width: 15px;
+	height: 15px;
+	color: white;
+	cursor: pointer;
+}
+
+.close_defaults {
+	background-color: #333333;
+	border-radius: 3%;
+	color: white;
+	clear: left;
+	margin: 2px 0;
+	position: relative;
+	padding: 5px 10px;
+	font-weight: bold;
+	text-align: center;
+	z-index: 9999;
+	height: 25px;
+	line-height: 25px;
+	cursor: pointer;
+	width: 180px;
+}

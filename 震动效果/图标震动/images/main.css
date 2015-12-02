@@ -1,0 +1,42 @@
+body{
+	background:url(wood-oak.jpg);
+}
+
+.tips{
+	width:650px;
+	margin:110px auto 0;
+	font-family:Verdana, Geneva, sans-serif;
+	color:#FFC;
+	font-size:26px;
+}
+
+.dock{
+	margin:90px auto 0;
+	width:500px; 
+}
+
+.board{
+	float:left;
+	margin-top:-60px;
+	z-index:0;
+}
+
+.rotate{
+	width:70px;
+	height:70px;
+	margin:20px 10px;
+	z-index:1;
+}
+
+.r1{
+	 -moz-transform:rotate(-3deg);
+    -webkit-transform:rotate(-3deg);
+	-o-transform:rotate(-3deg);
+}
+
+.r2{
+	 -moz-transform:rotate(2deg);
+    -webkit-transform:rotate(2deg);
+	-o-transform:rotate(2deg);
+}
+/****一流素材网www.16sucai.com****/

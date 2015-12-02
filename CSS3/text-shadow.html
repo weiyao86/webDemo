@@ -1,0 +1,87 @@
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+html{
+       scrollbar-3dlight-color:#f00;
+       scrollbar-darkshadow-color:#fff;
+       scrollbar-highlight-color:#c0c0c0;
+       scrollbar-shadow-color:#000;
+       scrollbar-arrow-color:#fff;
+       scrollbar-face-color:#808080;
+       scrollbar-track-color:#008800;
+       scrollbar-base-color:#f00;
+}
+body{
+       background:#abdc28;
+       font-family:"microsoft yahei,arial";
+       height: 1500px;
+
+}
+h1{
+       width:800px;
+       margin:200px auto;
+       font-size:100px;
+       color:#fff;
+       text-align:center;
+       text-shadow:
+       0 1px 1px #ddd,
+       0 2px 1px #cdd,
+       0 3px 1px #ccc,
+       0 4px 1px #cbb,
+       0 5px 1px #abb,
+       0 6px 1px #aaa,
+       0 7px 1px #111,
+       0 8px 3px rgba(100,100,100,0.5),
+       0 9px 5px rgba(100,100,100,0.3),
+       0 10px 7px rgba(100,100,100,0.25),
+       0 11px 9px rgba(100,100,100,0.21),
+       0 12px 11px rgba(100,100,100,0.18),
+       0 13px 13px rgba(100,100,100,0.1),
+       0 14px 15px rgba(100,100,100,0.16),
+       0 15px 17px rgba(100,100,100,0.2);
+}
+#test{display:table-cell;*display:block;*position:relative;width:600px;height:200px;text-align:center;vertical-align:middle;border:1px solid red;}
+#test p{*position:absolute;*top:50%;*left:50%;margin:0;}
+#test p img{*position:relative;*top:-50%;*left:-50%;vertical-align:middle;}
+.test-1{overflow:hidden;width:200px;height:50px;font-size:0;line-height:0;color:rgba(0,0,0,0);background:#eee url(../res/icon.png) no-repeat;}
+
+.test li{margin-top:10px;}
+.test .none{text-decoration:none;}
+.test .underline{text-decoration:underline;}
+.test .overline{text-decoration:overline;}
+.test .line-through{text-decoration:line-through;}
+.test .blink{text-decoration:blink;}
+.test .text-decoration-css3{
+       text-decoration:#f00 dotted underline;
+}
+hr{background:#008800;height:3px;}
+</style>
+</head>
+<body>
+        <h1>text-shadow</h1>
+        <div id="test" title="如何让未知尺寸的图片在已知宽高的容器内水平垂直居中">
+               <p><img src="../res/icon1.png" alt="如何让未知尺寸的图片在已知宽高的容器内水平垂直居中"></p>
+        </div>
+<hr>
+       <div class="test-1" title="以图换字之超小字体+文本全透明法">以图换字之超小字体+文本全透明法</div>
+       <hr>
+       <div>
+              <p style="text-transform:none;">none： 无转换 </p>
+              <p style="text-transform:capitalize;">capitalize： 将每个单词的第一个字母转换成大写 what a beautiful today</p>
+              <p style="text-transform:uppercase;">uppercase： 将每个单词转换成大写 what a beautiful today</p>
+              <p style="text-transform:lowercase;">lowercase： 将每个单词转换成小写 what a beautiful today</p>
+       </div>
+<hr>
+       <ul class="test">
+       <li class="none">无装饰文字</li>
+       <li class="underline">带下划线文字</li>
+       <li class="overline">带上划线文字</li>
+       <li class="line-through">带贯穿线文字</li>
+       <li class="blink">带闪烁文字</li>
+       <li class="text-decoration-css3">如果你的浏览器支持text-decoration在CSS3下的改变，将会看到本行文字有一条红色的下划虚线</li>
+       </ul>
+       <hr>
+</body>
+</html>

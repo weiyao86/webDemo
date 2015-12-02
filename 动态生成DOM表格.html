@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+
+        var data = [
+            { "type": "text", "dataField": "code" },
+            { "type": "select", "dataField": "city" },
+            { "type": "textarea", "dataField": "description" }
+        ];
+
+        //根据type生成不同元素
+        function setDomElByType(type, field) {
+            var el;
+            switch (type) {
+                case "text":
+                    el = '<input type=' + type + '  data-field="' + field + '"/>';
+                    break;
+                case "checkbox":
+                    el = '<input type=' + type + ' data-field="' + field + '"></checkbox>';
+                    break;
+                case "select":
+                    el = '<select data-field=' + field + '></select>';
+                    break;
+                case "textarea":
+                    el = '<textarea data-field=' + field + '></textarea>';
+                    break;
+                default:
+                    el = '';
+                    break;
+            }
+            return el;
+        }
+
+        $(function () {
+            for (var i = 0; i < 6; i++) {
+                data.push({ "type": "text", "dataField": "code_" + i });
+            }
+            //每行列数
+            var cols = 4;
+            //返回处理好的table
+            var table = merger(data, cols, function (index, arr) {
+                $(arr).find("select,input,textarea").css("width", 220);
+                return arr;
+            });
+            //将table插入页面指定区域
+            $("body").append(table);
+        });
+
+        /****/
+        function merger(data, colLen, fun) {
+            var arr = [],
+                tdList = [],
+                rowIndex = 0,
+                table = document.createElement("table");
+
+            for (var i = 0, obj; obj = data[i]; i++) {
+                var domType = obj.type,
+                  dataField = obj.dataField,
+                  el = setDomElByType(domType, dataField);
+                if (el)
+                    tdList[i] = '<td>' + el + '</td>';
+            }
+
+            for (var h = 0; h < tdList.length;) {
+                var tds = tdList.slice(h, h + colLen);
+                var tr = table.insertRow();
+                tr.innerHTML = tds.join(' ');
+                table.appendChild(tr);
+                if (typeof fun === "function") {
+                    arr[rowIndex] = fun.call(table, rowIndex, tr);
+                    !arr[rowIndex] && (arr[rowIndex] = tr);
+                    table.removeChild(tr);
+                    table.appendChild(arr[rowIndex]);
+                }
+                h += colLen;
+                rowIndex++;
+            }
+            return table;
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>

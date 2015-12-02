@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script src="Scripts/jquery-1.4.1.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("td").click(function () {
+                var divobj = $("#divcontent");
+                if (!divobj.is(":hidden")) {
+                    var $div = $("<div id='divcontent' style='display:none;border:2px solid red; position:absolute; width:800px;height:200px;'> <ul style='list-style:none;'><li>第一页</li><li>第二页</li><li>第三页</li><li>第四页</li> </ul></div>");
+
+                    $(this).append($div);
+                    $div.show();
+                }
+                else {
+                    $(this).remove($div);
+                }
+            });
+
+
+            bindEvent();
+        });
+        function bindEvent() {
+            $("#txtDrop").bind({
+                mouseover: function () {
+                    if ($("#divcontent").length > 0) {
+                        $("#divcontent").show();
+                        alert('a');
+                    }
+                    else {
+                        alert('b');
+                        var x, y, e, s;
+                        x = $(this).offset().top + $(this).height() + 7;
+                        y = $(this).offset().left;
+                        //                    alert(x + '===' + y);
+                        //                    e = $(this).position().top + $(this).height() + 7;
+                        //                    s = $(this).position().left;
+                        //                    alert(e + '===' + s);
+                        var ulobj = $("<div id='divcontent' style='display:none;border:2px solid red; position:absolute; width:200px;height:200px;'> <ul style='list-style:none;'><li>第一页</li><li>第二页</li><li>第三页</li><li>第四页</li> </ul></div>");
+
+                        $("#divID").append(ulobj);
+                        $("#divcontent").css({ top: x, left: y });
+                        ulobj.show();
+
+
+                        alert($("#divcontent").css("top"));
+
+                    }
+                }
+            })
+            $("#divcontent").bind({
+                mouseout: function () {
+                    $("#divcontent").hide();
+                }
+
+            });
+        }
+        //使用position()方法时事实上是把该元素当绝对定位来处理，获取的是该元素相当于最近的一个拥有绝对或者相对定位的父元素的偏移位置。 
+        //使用position()方法时如果其所有的父元素都为默认定位（static）方式，则其处理方式和offset()一样，是当前窗口的相对偏移
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div id="divID" style="width: 300px; height: 300px; border: 1px solid red;">
+                <input type="text" id="txtDrop" value=""  style="position: relative; top: 20px; left: 30px;"/>
+            </div>
+            <div id='divcontent_test' style='display: none; border: 2px solid red; width: 200px; height: 200px;'>
+                <ul style="list-style: None;">
+                    <li>第一页</li>
+                    <li>第二页</li>
+                    <li>第三页</li>
+                    <li>第四页</li>
+                </ul>
+            </div>
+            <table width="920px" border="1" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="width: 900px;">使用position()方法时事实上是把该元素当绝对定位来处理，获取的是该元素相当于最近的一个拥有绝对或者相对定位的父元素的偏移位置。
+                    </td>
+                </tr>
+                <tr>
+                    <td>使用position()方法时如果其所有的父元素都为默认定位（static）方式，则其处理方式和offset()一样，是当前窗口的相对偏移
+                    </td>
+                </tr>
+                <tr>
+                    <td>使用position()方法时如果其所有的父元素都为默认定位（static）方式，则其处理方式和offset()一样，是当前窗口的相对偏移
+                    </td>
+                </tr>
+                <tr>
+                    <td>使用position()方法时如果其所有的父元素都为默认定位（static）方式，则其处理方式和offset()一样，是当前窗口的相对偏移
+                    </td>
+                </tr>
+                <tr>
+                    <td>使用position()方法时如果其所有的父元素都为默认定位（static）方式，则其处理方式和offset()一样，是当前窗口的相对偏移
+                    </td>
+                </tr>
+                <tr>
+                    <td>使用position()方法时如果其所有的父元素都为默认定位（static）方式，则其处理方式和offset()一样，是当前窗口的相对偏移
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

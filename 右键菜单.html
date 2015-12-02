@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+           
+            //$("#rightTest").on("contextmenu", function (e) {
+            //   // alert(e.type);
+            //    //e.preventDefault();
+            //    //e.cancelable = true;
+            //    e.returnValue = false;
+            //});
+            document.getElementById("rightTest").oncontextmenu = function (e) {
+                alert(e.type);
+                return window.event.returnValue = false;
+                //return false;
+            };
+
+        });
+    </script>
+</head>
+<body>
+    <div id="rightTest" style="width: 500px; height: 400px; border: 1px solid; background-color: gray; color: white;"></div>
+</body>
+</html>

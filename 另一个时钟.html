@@ -1,0 +1,191 @@
+﻿<html>
+<head>
+<script type="text/javascript">
+    function $(id) { return document.getElementById(id); }
+    function $a(id, attr) { return $(id).getAttribute(attr); }
+    function gn() {
+        this.drawpoint = function (p1, parent) {
+            var p = document.createElement("div");
+            p.style.overflow = "hidden";
+            p.style.width = "1px";
+            p.style.height = "1px";
+            p.style.position = "absolute";
+            p.style.top = parseInt(p1.y) + "px";
+            p.style.left = parseInt(p1.x) + "px";
+            p.style.background = p1.color || "#000";
+            ($(parent) || document.body).appendChild(p);
+        }
+        this.drawline = function (p1, p2, color, parent) {
+            if (p1.x == p2.x && p1.y == p2.y) {
+                p1.color = color;
+                this.drawpoint(p1, parent);
+            } else if (p1.x == p2.x) {
+                var startp = p1.y < p2.y ? p1 : p2;
+                var endp = p1.y < p2.y ? p2 : p1;
+                for (var i = startp.y; i <= endp.y; i++) {
+                    this.drawpoint({ "x": p1.x, "y": i, "color": color }, parent);
+                }
+            } else {
+                var x_dis = Math.abs(p1.x - p2.x);
+                var y_dis = Math.abs(p2.y - p1.y);
+                var dis = Math.sqrt(x_dis * x_dis + y_dis * y_dis);
+                if (Math.atan(y_dis / x_dis) < Math.PI / 4) {
+                    var startp = p1.x < p2.x ? p1 : p2;
+                    var endp = p1.x < p2.x ? p2 : p1;
+                    var arc = Math.asin(y_dis / dis);
+                    for (var i = startp.x; i <= endp.x; i++) {
+                        var tmpy = (startp.y - endp.y > 0) ? (startp.y - (i - startp.x) * Math.tan(arc)) : (startp.y + (i - startp.x) * Math.tan(arc));
+                        this.drawpoint({ "x": i, "y": tmpy, "color": color }, parent);
+                    }
+                } else {
+                    var startp = p1.y < p2.y ? p1 : p2;
+                    var endp = p1.y < p2.y ? p2 : p1;
+                    var arc = Math.asin(x_dis / dis);
+                    for (var i = startp.y; i <= endp.y; i++) {
+                        var tmpx = (startp.x - endp.x > 0) ? (startp.x - (i - startp.y) * Math.tan(arc)) : (startp.x + (i - startp.y) * Math.tan(arc));
+                        this.drawpoint({ "x": tmpx, "y": i, "color": color }, parent);
+                    }
+                }
+            }
+        }
+        this.drawcircle = function (p1, parent) {
+            p1.color = p1.color || "#000";
+            var midp = Math.floor(Math.sqrt(2) * p1.r / 2);
+            for (var i = p1.x - midp; i <= p1.x + midp; i++) {
+                var xdis = Math.abs(i - p1.x);
+                var ydis = xdis * Math.tan(Math.acos(xdis / p1.r));
+                if (xdis == 0) { ydis = p1.r; }
+                this.drawpoint({ "x": i, "y": p1.y + ydis, "color": p1.color }, parent);
+                this.drawpoint({ "x": i, "y": p1.y - ydis, "color": p1.color }, parent);
+            }
+            for (var i = p1.y - midp; i <= p1.y + midp; i++) {
+                var ydis = Math.abs(i - p1.y);
+                var xdis = ydis * Math.tan(Math.acos(ydis / p1.r));
+                if (ydis == 0) { xdis = p1.r; }
+                this.drawpoint({ "x": p1.x + xdis, "y": i, "color": p1.color }, parent);
+                this.drawpoint({ "x": p1.x - xdis, "y": i, "color": p1.color }, parent);
+            }
+        }
+    }
+    function movePointer(n, p, n2) {
+        var sec = n % 15 * Math.PI / 30;
+        if (p == "hours") {
+            sec = (n % 12 % 3 + n2 / 60) * Math.PI / 6;
+        }
+        sec_r = timeConfig.pointer[p];
+        sec_x = sec_r * Math.sin(sec);
+        sec_y = sec_r * Math.cos(sec);
+        $(p).innerHTML = "";
+        switch (Math.floor(n / 15)) {
+            case 0:
+                x.drawline(
+                 { "x": timeConfig.x, "y": timeConfig.y },
+                 { "x": timeConfig.x + sec_x, "y": timeConfig.y - sec_y },
+                 "",
+                 p
+                );
+                break;
+            case 1:
+                x.drawline(
+                 { "x": timeConfig.x, "y": timeConfig.y },
+                 { "x": timeConfig.x + sec_y, "y": timeConfig.y + sec_x },
+                 "",
+                 p
+                );
+                break;
+            case 2:
+                x.drawline(
+                 { "x": timeConfig.x, "y": timeConfig.y },
+                 { "x": timeConfig.x - sec_x, "y": timeConfig.y + sec_y },
+                 "",
+                 p
+                );
+                break;
+            case 3:
+                x.drawline(
+                 { "x": timeConfig.x, "y": timeConfig.y },
+                 { "x": timeConfig.x - sec_y, "y": timeConfig.y - sec_x },
+                 "",
+                 p
+                );
+                break;
+        }
+    }
+    function start() {
+        var dt = new Date();
+        movePointer(dt.getSeconds(), "seconds");
+        movePointer(dt.getMinutes(), "minutes");
+        movePointer(dt.getHours(), "hours", dt.getMinutes());
+    }
+</script>
+<style type="text/css">
+.times{position:absolute;top:0px;left:0px;width:100%;height:100%;background:url('');}
+#log{position:absolute;top:187px;left:140px;text-align:center;}
+</style>
+</head>
+<body>
+<div id="hours" class="times"><!--时针--></div>
+<div id="minutes" class="times"><!--分针--></div>
+<div id="seconds" class="times"><!--秒针--></div>
+<div id="log">&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.kutoku.com">KuToKu.com<a></div>
+<script type="text/javascript">
+    var timeConfig = {
+        x: 200,
+        y: 150,
+        r: 100,
+        pointer: {
+            /*指针设置*/
+            "hours": 30,
+            "minutes": 40,
+            "seconds": 75
+        },
+        scale: {
+            /*刻度设置*/
+            "short": 8,
+            "long": 18
+        }
+    };
+    var x = new gn();
+    x.drawcircle({ x: timeConfig.x, y: timeConfig.y, r: timeConfig.r });
+    x.drawcircle({ x: timeConfig.x, y: timeConfig.y, r: 2 });
+    for (var i = 0; i < 60; i++) {
+        /*绘制刻度*/
+        var tmpa = (i % 15) * Math.PI / 30;
+        var sl = timeConfig.scale[(i % 5 == 0) ? "long" : "short"];
+        var r = timeConfig.r;
+        var rdis = timeConfig.r - sl;
+        var xdis = rdis * Math.cos(tmpa);
+        var ydis = rdis * Math.sin(tmpa);
+        var xdis2 = r * Math.cos(tmpa);
+        var ydis2 = r * Math.sin(tmpa);
+        switch (Math.floor(i / 15)) {
+            case 0:
+                x.drawline(
+                 { "x": timeConfig.x + xdis, "y": timeConfig.y - ydis },
+                 { "x": timeConfig.x + xdis2, "y": timeConfig.y - ydis2 }
+                );
+                break;
+            case 1:
+                x.drawline(
+                 { "x": timeConfig.x + ydis, "y": timeConfig.y + xdis },
+                 { "x": timeConfig.x + ydis2, "y": timeConfig.y + xdis2 }
+                );
+                break;
+            case 2:
+                x.drawline(
+                 { "x": timeConfig.x - xdis, "y": timeConfig.y + ydis },
+                 { "x": timeConfig.x - xdis2, "y": timeConfig.y + ydis2 }
+                );
+                break;
+            case 3:
+                x.drawline(
+                 { "x": timeConfig.x - ydis, "y": timeConfig.y - xdis },
+                 { "x": timeConfig.x - ydis2, "y": timeConfig.y - xdis2 }
+                );
+                break;
+        }
+    }
+    setInterval("start()", 1000);
+</script>
+</body>
+</html> 

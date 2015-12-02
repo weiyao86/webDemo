@@ -1,0 +1,236 @@
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>延迟对象应用及物体各方向移动</title>
+		<style type="text/css">
+			
+			.first{
+				background-position: -40px 0px;
+			}
+			.second{
+				background-position: -77px 0px;
+			}
+			.third{
+				background-position: -112px 0px;
+			}
+			.furth{
+				background-position: -154px 0px;
+			}
+			.fifth{
+				background-position: -200px 0px;
+			}
+			.sixth{
+				background-position: -256px 0px;
+			}
+			
+		</style>
+		<script src="Scripts/jquery-1.9.0.js"></script>
+
+		<script type="text/javascript">
+
+		// （1）$.Deferred()生成一个deferred对象。
+
+	// 　　（2）deferred.done()指定操作成功时的回调函数
+
+	// 　　（3）deferred.fail()指定操作失败时的回调函数
+
+	// 　　（4）deferred.promise()没有参数时，作用为保持deferred对象的运行状态不变；接受参数时，作用为在参数对象上部署deferred接口。
+
+	// 　　（5）deferred.resolve()手动改变deferred对象的运行状态为"已完成"，从而立即触发done()方法。
+
+	// 　　（6）$.when()为多个操作指定回调函数。
+
+	// 除了这些方法以外，deferred对象还有三个重要方法，上面的教程中没有涉及到。
+
+	// 　　（7）deferred.then()
+
+	// 有时为了省事，可以把done()和fail()合在一起写，这就是then()方法。
+
+	// 　　$.when($.ajax( "/main.php" ))
+
+	// 　　.then(successFunc, failureFunc );
+
+	// 如果then()有两个参数，那么第一个参数是done()方法的回调函数，第二个参数是fail()方法的回调方法。如果then()只有一个参数，那么等同于done()。
+
+	// 　　（8）deferred.reject()
+
+	// 这个方法与deferred.resolve()正好相反，调用后将deferred对象的运行状态变为"已失败"，从而立即触发fail()方法。
+
+	// 　　（9）deferred.always()
+
+	// 这个方法也是用来指定回调函数的，它的作用是，不管调用的是deferred.resolve()还是deferred.reject()，最后总是执行。
+
+	// 　　$.ajax( "test.html" )
+
+	// 　　.always( function() { alert("已执行！");} );
+
+			$(function(){
+
+				var $promptMsg=$("#prompt_msg");
+				var writeHtml=function(html){
+					$promptMsg.clone().insertAfter($promptMsg).removeAttr("id").html(html);
+				};
+				// deferred 延迟对象 回调函数 done:成功 fail:失败 always:成功或失败都会调用  resolve:已完成状态 
+				var dtd = $.Deferred(),dtd1 = $.Deferred(),dtd2 = $.Deferred();
+				var wait=function(deferred){
+					var later=function(){
+						writeHtml("complete");
+						deferred.resolve();
+					};
+					setTimeout(later,3000);
+					return deferred.promise();
+				},wait2=function(deferred){
+					var later=function(){
+						writeHtml("complete2");
+						deferred.resolve();
+					};
+					setTimeout(later,5000);
+					return deferred.promise();
+				};
+
+				//first method
+				$.when(wait(dtd),wait2(dtd1)).done(function(){
+					
+					writeHtml("执行完毕");
+				});
+
+				// $.when(wait(dtd),wait2(dtd1)).then(function(){
+				// 	alert("执行完毕22");
+				// 	writeHtml("执行完毕");
+				// });
+
+				//second method
+				// jQuery规定，$.Deferred()可以接受一个函数作为参数，该函数将在$.Deferred()返回结果之前执行。并且，$.Deferred()所生成的Deferred对象将作为这个函数的默认参数
+				$.Deferred(wait).done(function(){
+					writeHtml("success");
+				}).fail();
+
+				//third method
+				var wait3 =function(dtd){
+					var later=function(){
+						writeHtml("complete3");
+						dtd.resolve();
+					};
+					setTimeout(later,5000);
+				};
+				dtd2.promise(wait3);
+				wait3.done(function(){
+					writeHtml("success3");
+				}).fail(function(){
+					writeHtml("fail3");
+				});
+				wait3(dtd2);
+
+				var l=1,t=1,w=$(window).width(),h=$(window).height(),num=3,ran=1, x=w-$("#m").width(),y=h-$("#m").height(),symbol=1,symbolt=1,ratio;
+
+				var arr=["first","second","third","fourth","fifth","sixth"],i=0;
+				var m = function(){
+
+					ran=Math.random();
+					var num1=num+num*ran;
+					switch(symbol){
+						case 1:
+							l+=num1;
+							break;
+						case 2:
+							l-=num1;
+							break;
+					}
+					switch(symbolt){
+						case 1:
+							t+=num1;
+							break;
+						case 2:
+							t-=num1;
+							break;
+					}
+					ratio = l/x < t/y ? l/x : t/y;
+					l=x*ratio;
+					t=ratio*y;
+
+					l<1 && (symbol=1);
+					l>x && (l=x) && (symbol=2);
+					t<1 && (symbolt=1);
+					t>y && (t=y) && (symbolt=2);
+
+
+					i++;
+					i>=arr.length && (i=0);
+					//console.log(l+'=='+symbol)
+					$("#m").css({"left":l,"top":t}).removeClass().addClass(arr[i]);
+
+					$("#n").css({"left":l}).removeClass().addClass(arr[i]);
+
+					setTimeout(m,25);
+				};
+
+				m();
+
+
+				//begin  制作可以四处移动的并能斜着移动
+				var len=0,moveX=$("#r").offset().left,moveY=$("#r").offset().top,speed=5;
+				//top:38 bottom:40 left:37 right:39
+				var ct=null,cl=null,ct1=null,clFirst=null,duration=25;
+				$(document).on("keydown",function(e){
+					
+					switch(e.keyCode){
+						case 37:
+							!clFirst && (clFirst=setInterval(function(){moveX-=speed;fun();},duration));
+							break;
+						case 38:
+							!ct1 && (ct1=setInterval(function(){moveY-=speed;fun();},duration));
+							break;
+						case 39:
+							!cl && (cl=setInterval(function(){moveX+=speed;fun();},duration));
+							break;
+						case 40:
+							!ct && (ct=setInterval(function(){moveY+=speed;fun();},duration));
+							break;
+					}
+
+				});
+				$(document).on("keyup",function(e){
+					switch(e.keyCode){
+						case 37:
+							clearInterval(clFirst);
+							clFirst=null;
+							break;
+						case 38:
+							clearInterval(ct1);
+							ct1=null;
+							break;
+						case 39:
+							clearInterval(cl);
+							cl=null;
+							break;
+						case 40:
+							clearInterval(ct);
+							ct=null;
+							break;
+					}
+				});
+				var fun =function(){
+					i++;
+					i>=arr.length && (i=0);
+					$("#r").css({"top":moveY,"left":moveX}).removeClass().addClass(arr[i]);
+				};
+				//end   制作可以四处移动的并能斜着移动
+
+			});
+
+
+	
+		</script>
+
+
+	</head>
+	<body>
+	<div id="prompt_msg" style="border:1px solid red;border-top-width:0;width:500px;margin:0 auto;padding:20px;">Test</div>
+
+	<div id='m' style="width:50px;height:100px;position:absolute;background-image: url('res/person.jpg');">1</div>
+	<div id='n' style="width:50px;height:100px;position:absolute;background-image: url('res/person.jpg');top:120px;">2</div>
+	<div id='r' style="width:50px;height:100px;position:absolute;top:220px;left:0px;background-image: url('res/person.jpg');"></div>
+	</body>
+	</body>
+	</html>

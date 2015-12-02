@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="Scripts/jquery-1.9.0.js"></script>
+<title>圆周运动</title>
+<style>
+body{background:#fff;}
+.container{
+    position:relative;
+    width:300px;
+    height:300px;
+    border:1px solid red;
+    top:300px; left:500px;
+}
+#demo{ width:100px;height:100px;border-radius:100px;border:3px solid #D6D8ED;margin:50px auto;box-shadow:inset 10px 10px 10px #0B090C,inset -10px -10px 10px #0B090C,3px 0px 60px rgba(74,94,157,.8),0px -5px 60px rgba(74,94,157,.8);
+background:#202125; position:absolute;left:100px;}
+
+
+#demo1{ width:50px;height:150px;border-radius:50%;border:3px solid #D6D8ED;margin:80px; box-shadow:inset 10px 10px 10px #0B090C,inset -10px -10px 10px #0B090C,3px 0px 60px rgba(74,94,157,.8),0px -5px 60px rgba(74,94,157,.8);
+background:#202125; position:absolute;left:10px;}
+
+#demo3{ width:50px;height:50px;border-radius:50%;border:3px solid #D6D8ED;margin:0px; box-shadow:inset 10px 10px 10px #0B090C,inset -10px -10px 10px #0B090C,3px 0px 60px rgba(74,94,157,.8),0px -5px 60px rgba(74,94,157,.8);
+background:#202125; position:absolute;left:100px;}
+</style>
+</head>
+
+<body>
+<div style="position:relative;height:1000px;">
+<div class="container">
+<div id="demo">
+</div>
+<div id="demo1">
+</div>
+<div id="demo3">
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function circle(id,R,speed,time){
+        speed=speed||10;
+        time=time;
+        var demo=document.getElementById(id),
+            x=demo.offsetLeft,
+            y=demo.offsetTop,
+            step =1,
+            r=1,
+            c=2*Math.PI/360,
+            hudu,
+            max=360/speed,
+            timer=setInterval(function () {
+
+                if(time!=undefined){
+                setTimeout(function(){clearInterval(timer);},time);
+                }
+
+                r>=R && (r=R);
+
+                step >max && (step=1);
+
+                hudu=c*speed*step;
+
+                demo.style.left = x+ r * Math.sin(hudu)+"px";
+                demo.style.top = y- r * Math.cos(hudu)+"px";
+
+                r++;
+                step++;
+        },15);
+}
+// circle("demo",300,1);
+// circle("demo1",300,2);
+// circle("demo3",300,3);
+
+var i=0,c=0;
+window.onscroll=function(){
+        if(this.timer)
+            clearTimeout(this.timer);
+        i++;
+        this.timer=setTimeout(function(){
+        console.log("我进来 了"+i);
+        },1000)
+    };
+
+    $(function(){
+        $(window).on("scroll",function(){
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if(scrollHeight == scrollTop+windowHeight){
+                c++;
+                $(document.body).append("<h1>我是追加的内容--"+c+"--</h1>");
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

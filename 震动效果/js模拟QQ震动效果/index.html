@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>js模拟QQ震动效果</title>
+<script type="text/javascript" src="js/lanrenzhijia.js"></script>
+</head>
+<style>
+* {
+	padding:0;
+	margin:0
+}
+body {
+	background:#000;
+}
+#d {
+	position:absolute;
+	right:10px;
+	bottom:10px;
+	display:block;
+}
+a, img {
+	border:none;
+}
+</style>
+<body>
+<i id="d"><a target="_blank" href="http://www.lanrenzhijia.com/"><img src="images/lanrenzhijia.jpg" style="border-radius:2px;" /></a></i>
+<script type="text/javascript">
+var ad=document.getElementById('d')
+var LL=ad.offsetLeft
+var TT=ad.offsetTop
+window.onload=function(){
+	window.setInterval(function(){
+		new Shank(ad,20,60,10)
+		},2500)
+	}
+</script>
+</body>
+</html>

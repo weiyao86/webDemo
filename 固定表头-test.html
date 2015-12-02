@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src='Scripts/jquery-1.9.0.js'></script>
+	<style type='text/css'>
+		#scrollTable {
+			width:701px;
+			border: 1px solid #EB8;/*table没有外围的border，只有内部的td或th有border*/
+			background: #FF8C00;
+
+			}
+			#scrollTable table {
+				table-layout:fixed;
+			border-collapse:collapse; /*统一设置两个table为细线表格*/
+			}
+			/*表头 div的第一个子元素**/
+			#scrollTable table.thead{
+			width:100%;
+			}
+			/*表头*/
+			#scrollTable table.thead th{
+			border: 1px solid #EB8;
+			border-right:#C96;
+			color:#fff;
+			background: #FF8C00;/*亮桔黄色*/
+			}
+			#scrollTable div{
+			width:100%;
+			height:200px;
+			overflow:auto;/*必需*/
+			scrollbar-face-color:#EB8;/*那三个小矩形的背景色*/
+			scrollbar-base-color:#ece9d8;/*那三个小矩形的前景色*/
+			scrollbar-arrow-color:#FF8C00;/*上下按钮里三角箭头的颜色*/
+			scrollbar-track-color:#ece9d8;/*滚动条的那个活动块所在的矩形的背景色*/
+			scrollbar-highlight-color:#800040;/*那三个小矩形左上padding的颜色*/
+			scrollbar-shadow-color:#800040;/*那三个小矩形右下padding的颜色*/
+			scrollbar-3dlight-color: #EB8;/*那三个小矩形左上border的颜色*/
+			scrollbar-darkshadow-Color:#EB8;/*那三个小矩形右下border的颜色*/
+			}
+			/*能带滚动条的表身的正体*/
+			#scrollTable table.tbody{
+			width:100%;
+			border: 1px solid #C96;
+			border-right:#B74;
+			color:#666666;
+			background: #ECE9D8;
+			}
+			/*能带滚动条的表身的格子*/
+			#scrollTable table.tbody td{
+			border:1px solid #C96;
+			}
+			.mod-spm{border:1px solid red;width:400px;height:300px;}
+			.child_a,.child_b,.child_c,.child_d{border:1px solid red;width:50px;height:50px;}
+	</style>
+	<script type="text/javascript">
+
+	
+	$(function(){
+		$("#scrollToInner").on("scroll",function(e){
+			$("#innerScroll").scrollTop($(this).scrollTop());
+			console.log($(this).scrollTop());
+			e.preventDefault();
+			e.stopPropagation();
+		})
+
+		var plist = document.getElementsByTagName('p');
+		for (var i = 0; i<plist.length;i++) {
+				// (function(i){
+				// 	plist[i].onclick=function(){
+				// 		alert(i);
+				// 	};
+				// })(i);
+				tt(i,plist[i]);
+			};
+
+		function tt(i,el){
+			el.onclick=function(){
+				alert(i+1);
+			};
+		}
+		
+		var elList = getByCls("mod-spm"),
+			nums=[0,0,0];
+		for(var i=0;i<elList.length;i++){
+			(function(i){
+				elList[i].onmouseover=function(){
+					var self=this;
+					self.timeFlag = window.setInterval(function(){self.children[0].innerHTML=(nums[i]++)+'秒';},1000);
+				};
+				elList[i].onmouseout=function(){
+					clearInterval(this.timeFlag);
+				};
+			})(i);
+		}
+
+		//原生计算在各自范围内恍如鼠标的停留时间
+		function getByCls(cls){
+			var tagList = document.getElementsByTagName("div"),
+				ret=[],
+				el=null,
+				elCls='';
+			for(var i =0;i<tagList.length;i++){
+				el=tagList[i];
+				elCls=el.getAttribute('CLASS');
+				if(elCls && elCls.indexOf(cls)>-1 ){
+					ret[ret.length]=el;
+				}
+			}
+			return ret;
+		}
+		var t =getParamsByUrl();
+		alert(t);
+		//提取url中参数,返回json格式数据
+		function getParamsByUrl(name){
+			var	url=window.location.href+'?ab=1ss&bc=2ddd&cd=3fff',
+				expression=/[?|&](\w+)=([^?|&]+)/ig,
+				result={};
+				//number 1
+				url.replace(/(\w+)=(\w+)/gi,function(a,b,c){
+					result[b]=c;
+				});
+
+				//number 2
+				var arr=[],arrJson={};
+				while((arr=expression.exec(url))!=null){
+					arrJson[arr[1]]=arr[2];
+				}
+				for(var i in arrJson){
+					console.log(i+'=='+arrJson[i]);
+				}
+				return result;
+		}
+
+		
+
+	});
+	window.onerror=function(msg,url,l){
+		var txt="";
+		txt += "msg:"+msg+"\n\n";
+		txt +="url:"+url+"\n\n";
+		txt +="line:"+l+"\n\n";
+		txt +="确认继续,取消刷新本页";
+		if(!confirm(txt)){
+			window.location.href=window.location.href;
+		}
+	}
+	//message("abd");
+	alert(navigator.userAgent);
+	</script>
+</head>
+<body>
+<P>1</P>
+<P>2</P>
+<P>3</P>
+<P>4</P>
+<P>5</P>
+<div class='mod-spm' data-spmid='123'>
+       <div class='child_a'></div>
+       <div class='child_b'></div>
+       <div class='child_c'></div>
+       <div class='child_d'></div>
+    </div>
+    <div class='mod-spm' data-spmid='456'>
+       <div class='child_a'></div>
+       <div class='child_b'></div>
+       <div class='child_c'></div>
+       <div class='child_d'></div>
+    </div>
+    <div class='mod-spm' data-spmid='789'>
+       <div class='child_a'></div>
+       <div class='child_b'></div>
+       <div class='child_c'></div>
+       <div class='child_d'></div>
+    </div>
+<div id='scrollToInner' style='border: 1px solid red;height: 500px;overflow: auto;width: 1000px;'>
+	<div id="scrollTable">
+		<table class="thead">
+			<colgroup>
+			<col width="180px"/>
+			<col width="250px"/>
+			<col width="200px"/>
+			<col/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>名称</th>
+					<th>语法</th>
+					<th>说明</th>
+					<th>例子</th>
+				</tr>
+			</tbody>
+		</table>
+		<div id="innerScroll">
+			<table class="tbody">
+			<colgroup>
+			<col width="180px"/>
+			<col width="250px"/>
+			<col width="200px"/>
+			<col/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<td>名称</td>
+					<td>语法</td>
+					<td>说明</td>
+					<td>例子</td>
+				</tr>
+				<tr>
+					<td>名称</td>
+					<td>语法</td>
+					<td>说明</td>
+					<td>例子</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+
+	</div>
+</body>
+</html>

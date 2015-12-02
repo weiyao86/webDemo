@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-1.9.0.js"></script>
+	<script src="jquery.zclip.js"></script>
+	<script type="text/javascript">
+
+	$(function(){
+		alert($('#content').val())
+		 $("#copy-button").zclip({
+	        path : 'ZeroClipboard.swf',
+	        copy :function(){return $('#content').val()},
+	        beforeCopy:function(){
+	            $('#callback-paragraph').css('background','yellow');
+	            $(this).css('color','orange');
+	        },
+	        afterCopy:function(){
+	            $('#callback-paragraph').css('background','pink');
+	            $(this).css('color','purple');
+	            console.log(arguments)
+	        }
+    });
+	});
+	</script>
+</head>
+<body>
+	<input type='text' id="content" value="abd"/>
+	<button id="copy-button">点击复制该链接</button>
+<div id="callback-paragraph">
+	http://www.sunzhenghua.com/blog点击复制该链接
+	http://www.sunzhenghua.com/bloghttp:点击复制该链接//www.sunzhenghua.com/blog
+</div>
+<input type='text'/>
+</body>
+</html>

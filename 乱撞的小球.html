@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>ggggg</title>
+<link rel="stylesheet" type="text/css" href="">
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<script type="text/javascript">
+
+    //定义全局变量
+    //小球坐标
+    ballX=0;
+    ballY=0;
+    //小球在x,y轴移动的方向
+    directX=1;
+    directY=1;
+    //小球移动
+    function ballMove(){
+        //小球移动
+        ballX+=2*directX;
+        ballY+=2*directY;
+        //同时修改小球的top 和width
+        div2.style.top=ballY+'px';
+        div2.style.left=ballX+'px';
+        //window.alert(div1.offsetWidth);//offsetwidth在JS中是获取元素的宽,对应的还有offsetHeight
+        //判断转向
+        //learInterval(i);
+        if(ballX+div2.offsetWidth>=div1.offsetWidth ||ballX<=0){
+            directX=-directX;
+        }
+        if(ballY+div2.offsetHeight>=div1.offsetHeight || ballY<=0){
+            directY=-directY;
+        }
+    }
+    //定时器
+    var i=setInterval("ballMove()",10);
+</script>
+</head>
+<body>
+    <div id="div1" style="width:400px;height:300px;border:1px solid silver;POSITION: absolute; TOP: 100px">
+        <div id="div2" style="position:absolute;left:0px;top:0px;"><img src="ball.png"></div>
+    </div>
+</body>
+</html>

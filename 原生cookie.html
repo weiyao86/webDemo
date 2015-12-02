@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <script type="text/javascript" src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.cookie.2.2.0.js"></script>
+
+	<script type="text/javascript">
+    $(function(){
+        //var s=$.cookies.get("username");
+        //alert("chrome只支持在线cookie的读取,不支持本地读取:=="+s);
+        //var username = prompt('Please enter your name:', "");
+        //$.cookies.set("username",username);
+    });
+		function getCookie(c_name) {
+            // if (document.cookie.length > 0) {
+            //     c_start = document.cookie.indexOf(c_name + "=")
+            //     if (c_start != -1) {
+            //         c_start = c_start + c_name.length + 1
+            //         c_end = document.cookie.indexOf(";", c_start)
+            //         if (c_end == -1) c_end = document.cookie.length
+            //         return unescape(document.cookie.substring(c_start, c_end))
+            //     }
+            // }
+            // return ""
+
+            var arr,reg=new RegExp("(^|)"+c_name+"=([^;]*)(;|$)");
+		    if(arr=document.cookie.match(reg))
+		        return unescape(arr[2]);
+		    else
+		        return null;
+        }
+
+        function setCookie(c_name, value, expiredays) {
+            var exdate = new Date()
+            exdate.setDate(exdate.getDate() + expiredays)
+            document.cookie = c_name + "=" + escape(value) +
+                ((expiredays == null) ? "" : "; expires=" + exdate.toGMTString())
+        }
+
+        function clearCookie(c_name){
+        	var val = getCookie(c_name),
+        		 exdate = new Date();
+        		 exdate.setDate(exdate.getDate()-1);
+        		 alert(document.cookie);
+        		 document.cookie = c_name + "=" + escape(val) + "; expires=" + exdate.toGMTString();
+        		 alert(document.cookie);
+        }
+
+        function checkCookie() {
+            username = getCookie('username')
+            if (username != null && username != "") {
+                alert('Welcome again ' + username + '!')
+            } else {
+                username = prompt('Please enter your name:', "")
+                if (username != null && username != "") {
+                    setCookie('username', username, 365);
+                    setCookie('username1', username, 365)
+                }
+            }
+        }
+       // window.moveTo(0,0);
+        window.onload=function(){
+        };
+	</script>
+</head>
+<body onload="checkCookie();"><!--  onload="2checkCookie();" -->
+	<input type="button" value="清除cookie" onclick="clearCookie('username');">
+	<blockquote id="myBlockquote" cite="http://www.baidu.com">
+For 50 years, WWF has been protecting the future of nature.
+</blockquote>
+</body>
+</html>

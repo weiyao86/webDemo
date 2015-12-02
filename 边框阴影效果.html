@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible-Patla" content="IE=Edge;"> 
+  <script src="Scripts/jquery-1.9.0.js"></script>
+<title>边框阴影效果</title>
+<style>
+	html,body{margin:0;padding: 0;height: 100%;}
+	body{padding: 80px;}
+	
+	.content{
+		background: #fff;
+		border:1px solid #ccc;
+		width:400px;
+		height:400px;
+		float:left;
+		margin:-1px 0 0 -1px;
+		line-height: 400px;
+		text-align:center;
+		font-size: 100px;
+		color: #fff;
+		font-weight: bold;
+		text-shadow:0 0 5px #fff,0 0 20px #fefcc9,10px -10px 30px #feec85,-20px -20px 40px #ffae34,20px -40px 50px #ec760c,-20px -60px 60px #cd4606,0 -80px 70px #973716,10px -90px 80px #451b0e;
+		position: relative;
+		z-index: 1;
+		overflow: hidden;
+	}
+	.content:hover{
+		box-shadow: 0px 0px 66px 5px rgba(0,0,0,.5);
+		transition:all .2s ease-in;
+		z-index: 2;
+	}
+</style>
+<script type="text/javascript">
+		$(function(){
+		console.log("http://www.baidu.com");
+
+		});
+</script>
+</head>
+
+<body>
+<div class="content">1</div>
+<div class="content">2</div>
+<div class="content">3</div>
+<div class="content">4</div>
+<div class="content">5</div>
+<div class="content">6</div>
+<div class="content">7</div>
+<div class="content">8</div>
+<div class="content">9</div>
+<div class="content">10</div>
+</body>
+</html>

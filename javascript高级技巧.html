@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            //1.惰性实例化
+            //惰性实例化所要解决的问题是这样的：避免了在页面中js初始化执行的时候就实例化了类，如果在页面中没有使用到这个实例化的对象，
+            //那么这就造成了一定的内存的浪费和性能的消耗，那么如果将一些类的实例化推迟到需要使用它的时候才开始去实例化，
+            //那么这就避免了刚才说的问题，做到了“按需供应”，简单代码示例如下
+            var myNamespace = (function () {
+                var Configure = function () {
+                    var privateName = "some's name";
+                    var privateSetName = function (name) {
+                        privateName = name;
+                    }
+                    var privateReturnName = function () {
+                        return privateName;
+                    }
+
+                    return {
+                        setName: function (name) { privateSetName(name); },
+                        getName: function () { return privateReturnName(); }
+                    }
+                }
+                var instances;
+                return {
+                    init: function () {
+                        if (!instances) {
+                            instances = Configure();
+                        }
+                        for (var key in instances) {
+                            if (instances.hasOwnProperty(key)) {
+                                this[key] = instances[key];
+                            }
+                        }
+                        this.init = null;
+                        return this;
+                    }
+                }
+            })();
+
+            //使用方式
+            myNamespace.init();
+            console.log("获取私有名称为:" + myNamespace.getName());
+            //myNamespace.init();  此时再次调用因已设为(this.init=null)报错
+
+            //2.分支
+            //分支技术解决的一个问题是处理浏览器之间兼容性的重复判断的问题。普通解决浏览器之间的兼容性的方式是使用if逻辑来进行特性检测或者能力检测，
+            //来实现根据浏览器不同的实现来实现功能上的兼容，但问题是，每执行一次代码，可能都需要进行一次浏览器兼容性方面的检测，这个是没有必要的，
+            //能否在代码初始化执行的时候就检测浏览器的兼容性，在之后的代码执行过程中，就无需再进行检测了呢？答案是有的，
+            //分支技术就可以解决这个问题（同样，惰性载入函数也可以实现Lazy Definied，这个在后面将会讲到），下面以声明一个XMLHttpRequest实例对象为例子：
+            //分支
+
+            var XHR = function () {
+                var standard = {
+                    createXHR: function () {
+                        return new XMLHttpRequest();
+                    }
+                }
+
+                var newActionXObject = {
+                    createXHR: function () {
+                        return new ActiveXObject("Msxml2.XMLHTTP");
+                    }
+                };
+
+                var oldActiveXObject = {
+                    createXHR: function () {
+                        return new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                };
+                if (standard.createXHR()) {
+                    return standard;
+                }
+                else {
+                    try {
+                        newActionXObject.createXHR();
+                        return newActionXObject;
+                    } catch (e) {
+                        oldActiveXObject.createXHR();
+                        return oldActiveXObject;
+                    }
+                }
+            }();
+
+            //调用
+            //XHR.createXHR();
+
+            //3.惰性载入函数
+            //惰性载入函数就是英文中传说的“Lazy Defined”，它的主要解决的问题也是为了处理兼容性。原理跟分支类似，下面是简单的代码示例：
+
+            var handle = {
+                message: "改变作用域",
+                handlerClick: function (e) {
+                    alert(this.message);
+                }
+            };
+
+            var addEvent = function (el, type, handle) {
+                addEvent = el.attachEvent ? function (el, type, handle) {
+                    el.attachEvent("on" + type, handle, false);
+                } : function (el, type, handle) {
+                    el.addEventListener(type, handle);
+                };
+                addEvent(el, type, handle);
+            };
+
+            var domLazy = document.getElementById("testLazy");
+            //1.  addEvent(domLazy, "click", function (e) { alert((e.target || e.srcElement).innerHTML); })
+            //此处上下文对象为domLazy对象,handle对象中的this.message 为undefined
+            //2.  addEvent(domLazy, "click", handle.handlerClick)
+            //通过bind函数调换上下文对象,或者如此:
+            //3.  addEvent(domLazy, "click", function (e) { handle.handlerClick(e); })
+            // Bind 函数
+            var bind_test = function (fn, context) {
+                return function () {
+                    return fn.apply(context || this, arguments);
+                }
+            };
+            addEvent(domLazy, "click", bind_test(handle.handlerClick, handle));
+
+            //4.函数curry化  利用已有的函数，再创建一个动态的函数，该动态的函数内部还是通过该已有的函数来发生作用，
+            //只是传入更多的参数来简化函数的参数方面的调用
+            (function () {
+                function curry(fn) {
+                    var args = [].slice.call(arguments, 1);
+                    return function () {
+                        return fn.apply(null, args.concat([].slice.call(arguments, 0)));
+                    }
+                }
+
+                function add(num1, num2) {
+                    return num1 + num2;
+                }
+
+                var newMethod = curry(add, 5);
+                alert("this is a new method (result):" + newMethod(6));
+
+            })();
+
+            //5.高级定时器,提到定时器，无非就是利用setTimeout/setInterval了。但问题是定时器并不是相当于新开一个线程来执行js程序，也不会说是在指定的时间间隔内就会一定执行。
+            //指定的时间间隔表示何时将定时器的代码添加到浏览器的执行队列，而不是合适实际执行代码。对此，就有这样的一个问题了：如果代码执行时间超过了定时器指定的时间间隔，
+            //那么在指定的时间里代码还是加入的执行队列，但是并没有执行，这样就会造成了无意义的代码执行，
+            //这也是使用setInterval的弊端。为此，使用setTimeout才能更好的避免这个问题，在代码本身中执行完毕了，
+            //再通过setTimeout来重新设定定时器，把代码加入到执行队列
+            var count = 0,
+                $divLoop = $("#divLoop");
+            window.setTimeout(function () {
+                $divLoop.html("高级定时器:" + count++);
+                if (count <= 10)
+                    setTimeout(arguments.callee, 1000);
+                else
+                    $divLoop.html("高级定时器:执行到10停止");
+            }, 1000);
+
+            //6.模拟类的继承
+            //----保护上下文的构造函数
+
+            var Base = function () { };
+            Base.prototype = {
+                subClass: null,
+                extend: function (subClass) {
+                    var constructor = this;
+                    //baseinstances = new constructor("ss","ss");
+
+                    subClass.prototype = constructor;
+                    subClass.prototype.constructor = subClass;
+                    for (var key in constructor) {
+                        if (!subClass.hasOwnProperty(key)) {
+                            subClass[key] = constructor[key];
+                        }
+                    }
+                    subClass.subClass = subClass.flag;
+                    return subClass;
+                },
+                baseTest: function () {
+                    var self = this;
+                    alert(0)
+                }
+            };
+
+            var invokeBase = {
+                extend: function (subClass) {
+                    var base = new Base();
+                    for (var key in base) {
+                        if (!subClass.hasOwnProperty(key)) {
+                            subClass[key] = base[key];
+                        }
+                    }
+                    return subClass;
+                },
+                test: function () { }
+            };
+
+
+            function myClass(name, size) {
+                if (this instanceof myClass) {
+                    invokeBase.extend(this);
+                    this.name = name;
+                    this.size = size;
+                    this.flag = "first";
+                } else
+                    return new myClass(name, size);
+            }
+            myClass.prototype = {
+                initmyClass: function () { }
+            };
+
+            function myClass1(name, size) {
+                if (this instanceof myClass1) {
+                    sub1.extend(this);
+                    this.name = name;
+                    this.size = size;
+                    this.flag = "second";
+                } else
+                    return new myClass(name, size);
+            }
+
+            function myClass2(name, size) {
+                if (this instanceof myClass2) {
+                    sub2.extend(this);
+                    this.sub2Name = name;
+                    this.sub2Size = size;
+                    this.sub2Flag = "third";
+                    
+                } else
+                    return new myClass(name, size);
+            }
+            myClass2.prototype = {
+                init: function () { }
+            };
+
+            //console.dir(subClass);
+            var sub1 = new myClass();
+            // sub1.baseTest();
+
+            var sub2 = new myClass1();
+            //sub2.baseTest();
+
+            var sub3 = new myClass2();
+            //sub3.baseTest();
+
+            //var sub1 = invokeBase.extend(myClass);
+
+            //var sub2 = myClass.extend(myClass1);
+
+            //var sub3 = myClass1.extend(myClass2);
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+    <div>
+        <h1>javascript高级技巧</h1>
+    </div>
+    <a id="testLazy" style="background-color: gray; color: white;">测试惰性载入函数</a>
+    <div id="divLoop" style="height: 50px; line-height: 50px; overflow: hidden; background-color: gray; color: white;"></div>
+</body>
+</html>
+

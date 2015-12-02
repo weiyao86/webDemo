@@ -1,0 +1,112 @@
+
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript" src="../Scripts/jquery-1.9.0.js"></script>
+   <script type="text/javascript">
+var E = {
+    "on": function (el, type, fun) {
+        if (!el) return;
+        el.addEventListener ? el.addEventListener(type, fun, false) : (el.attachEvent ? el.attachEvent("on" + type, fun) : el["on" + type] = fun);
+    },
+    "une": function (el, type, fun) {
+        el.removeEventListener ? el.removeEventListener(type, fun, false) : (el.detachEvent ? el.detachEvent("on" + type, fun) : el['on' + type] = null);
+    }
+};
+  var count=0;
+window.onload=function(){
+	var doc = window.document;
+  //E.on(doc, "mouseup", mouseup);
+  doc.addEventListener("mouseup", mouseup, false)
+  var count=0;
+  function mouseup(e){
+  	//E.une(document, "mouseup", mouseup);
+  	doc.removeEventListener("mouseup", mouseup, false);
+  	doc.getElementById('testBtn').value=count++;
+  }
+
+  doc.getElementById('testBtn').onclick=function(){
+  	E.on(doc, "mouseup", mouseup);
+  };
+}
+// $(function(){
+// 	function mouseup(e){
+// 	  	$(document).off("mouseup",mouseup);
+// 	  	document.getElementById('testBtn').value=count++;
+//  	 }
+// 	$(document).on("mouseup",mouseup);
+// });
+</script>
+</head>
+<body>
+<style type='text/css'>
+
+	.great-wrap{background: #2581c4;width:605px;min-height:325px;padding:10px;border-radius: 4px;display: none;}
+	.great-wrap p,.great-wrap h6{margin:5px 0;padding: 0;color:#333333;font-size: 14px;}
+	.great-wrap .content{height: 135px;overflow: auto;}
+	.great-wrap .content p{text-indent:2em;}
+	.great-wrap .icon{background:url('../res/great_icon.png') no-repeat #fff;}
+	.great-wrap .wrap-close{text-align:right;background:#fff;margin:0;padding:0;border-radius: 4px 4px 0 0;}
+	.great-wrap .icon-close{background-position: -17px -62px;display: inline-block;width:15px;height:16px;margin:5px 5px 0;}
+	.great-wrap .icon-close:hover{animation:rotation .3s ease-out;}
+	@keyframes rotation{
+		from{transform:rotate(0deg);}
+		to{transform:rotate(90deg);}
+	}
+	.great-wrap .wrap-inner{background:#fff;overflow:auto;height: 235px;padding: 0 10px;}
+	.great-wrap .triangle-img{background: url('../res/triangle.png') no-repeat;height:50px;}
+	.great-wrap .ck-text{text-align:center;color:#fff;font-color:14px;margin:10px 0;}
+	.great-wrap .ck-box{display: inline-block;background-position:-17px -22px;width:15px;height:14px;border:1px solid #fff;border-radius:4px;vertical-align:middle;margin:0 5px;}
+	.great-wrap .checked{background-position: -65px -22px;}
+	
+	.great-wrap .foot {text-align: right;margin-top:20px;}
+	.great-wrap .tel{color:#2581c4;margin:0 5px;}
+
+	.triangle{border-style:solid;margin:0;padding: 0;width:0;height:0;border-width:55px 302px 0;border-color:#fff #2581c4 transparent;}
+	.wrap{width:100%;height:200px;border:1px solid red;color:#fff;}
+	.left{width:200px;background:#8c8c8c;float:left;height:100%;overflow: hidden;}
+	.right{background:#333;height:100%;text-align:right;overflow: hidden;}
+
+	.left-1{background:#000;height:100%;float:right;width:200px;}
+	.right-1{background:#666;height:100%;word-wrap:break-word;}
+	
+	.left-p{float:left;width:200px;height: 150px;background: #f00;margin-left:-100%;}
+	.right-p{float:left;margin-left:-200px; width:200px;height: 150px;background: #66f;}
+	.middle{width:100%;height:150px;background: gray;float:left;}
+	.m{margin:0 200px;}
+
+	body{margin: 0;padding: 0;overflow:hidden;overflow-y:auto;}
+</style>
+
+<div id="wrap" class="great-wrap">
+	<p class="wrap-close"><a href="javascript:;" class="icon icon-close"></a></p>
+	<div class="wrap-inner">
+	<h6>尊敬的用户:</h6>
+	<div class="content">
+	<p>您好!</p>
+	<p>您的五菱售后信息发布系统,还有2个用户帐号未使用,已经帮你开通,详情如下:</p>
+	<p>帐号1:640000002,初始密码与您当前使用帐号(64000001)相同</p>
+	<p>帐号1:640000002,初始密码与您当前使用帐号(64000001)相同</p>
+	<p>详情请电话咨询:<span class="tel">021-20252866、021-50271393</span></p>
+	</div>
+<div class="foot">
+	<p>上海事成软件股份有限公司</p>
+	<p>2015年6月18日</p>
+</div>
+	</div>
+	<div class="triangle"></div>
+	
+	<p class="ck-text"><i class="icon ck-box checked"></i>下次不再显示</p>
+</div>
+
+
+<div style="width:500px;height:500px;border:1px solid red;overflow:hidden;position:relative;height:400px;_padding-top:30px;">
+	<p style="margin:0;height:30px;position:absolute;top:0;">title</p>
+	<div style="overflow:auto;width:100%;position:absolute;left:0;top:30px;right:0;bottom:0;_position:relative;_height:100%;_top:auto;">
+		adfasfas</br>adfasfas</br>adfasfas</br>adfasfas</br>adfasfas</br>adfasfas</br></br>adfasfas</br></br>adfasfas</br></br>adfasfas</br></br>adfasfas</br></br>adfasfas</br></br>adfasfas</br></br>adfasfas</br>adfasfas</br>adfasfas</br>adfasfas</br>
+	123456
+	</div>
+</div>
+</body>
+</html>
+

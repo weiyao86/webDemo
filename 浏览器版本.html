@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            var ua = window.navigator.userAgent;
+            //var msie = ua.indexOf("MSIE");
+            //if (msie)
+            //    alert(parseFloat(ua.substring(msie + 5), ua.indexOf(";", msie)));
+            //else
+            //    alert("failed");
+
+            //var browser = uaMatch(ua);
+            //alert(browser.browser);
+            //alert(browser.version);
+
+            function uaMatch() {
+                ua = ua.toLowerCase();
+
+                var match = /(webkit)[ /]([w.]+)/.exec(ua) ||
+                    /(opera)(?:.*version)?[ /]([w.]+)/.exec(ua) ||
+                    /(msie) ([w.]+)/.exec(ua) ||
+                    !/compatible/.test(ua) && /(mozilla)(?:.*? rv:([w.]+))?/.exec(ua) ||
+                    [];
+
+                return { browser: match[1] || "", version: match[2] || "0" };
+            }
+
+
+            //延迟
+            (function () {
+
+                $.fn.animatePromise = function (prop, spend, easing, callback) {
+                    var el = this;
+                    return $.Deferred(function (defer) {
+                        el.animate(prop, spend, easing, function () {
+                            defer.resolve();
+                            if (callback) {
+                                callback.apply(this, arguments);
+                            }
+                        });
+                    }).promise();
+
+                };
+
+                //var fun1 = $("#d1").animate({
+                //    "width": 10,
+                //    "height": 10
+                //}, 5000), fun2 = $("#d2").animate({
+                //    "width": 10,
+                //    "height": 10
+                //}, 3000), fun3 = $("#d1").fadeOut(5000),
+                //fun4 = $("#d2").fadeOut(3000);
+
+
+                $.when(
+                    { test: "tt" },
+                    $("#d1").fadeOut(5000),
+                    fun4 = $("#d2").fadeOut(3000))
+                    .done(function (x) {
+                        alert(x.test);
+                    });
+
+            })();
+
+            $("#btnOpen").on("click", function () {
+                window.showModalDialog("滑块跟随.html", null);
+            });
+            
+        });
+
+    </script>
+    <style type="text/css">
+        div {
+            width: 600px;
+            height: 50px;
+            border: 1px solid red;
+            border-radius: 4px;
+            background-color: gray;
+        }
+
+        .div1 {
+            width: 800px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="d1" class="div1"></div>
+    <div id="d2"></div>
+    <select id="multiple" multiple="multiple" >
+        <option selected="selected">Multiple</option>
+        <option>Multiple2</option>
+        <option selected="selected">Multiple3</option>
+    </select>
+    <address>此处是地址</address>
+    <button id="btnOpen" type="button" >open</button>
+</body>
+</html>

@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html各种字符转换</title>
+</head>
+<body style="background:url('res/car.jpg');color:#5ff;">
+
+<blockquote class="article_content">
+
+<div class="commonContainer">
+<h2><a name="t0"></a>为什么要用转义字符串？</h2>
+<p><span style="font-size:14px">HTML中<strong><span style="font-size:18px">&lt;，&gt;，&amp;</span></strong>等有特殊含义<strong>（&lt;，&gt;，用于链接签，&amp;用于转义），</strong>不能直接使用。这些符号是不显示在我们最终看到的网页里的，那如果我们希望在网页中显示这些符号，该怎么办呢？
+</span></p>
+<p><span style="font-size:14px">这就要说到HTML转义字符串（Escape Sequence）了。 </span></p>
+<p><a class="f14px" title="常用HTML转义字符,html转义符" href="http://114.xixik.com/character/"><span style="font-size:14px; color:#0065cf">转义字符串</span></a><span style="font-size:14px">（Escape Sequence）也称字符实体(Character Entity)。在HTML中，定义转义字符串的原因有两个：</span></p>
+<p><span style="font-size:14px">第一个原因是像“&lt;”和“&gt;”这类符号已经用来表示HTML标签，因此就不能直接当作文本中的符号来使用。为了在HTML文档中使用这些符号，就需要定义它的转义字符串。当解释程序遇到这类字符串时就把它解释为真实的字符。<strong>在输入转义字符串时，要严格遵守字母大小写的规则</strong>。</span></p>
+<p><span style="font-size:14px">第二个原因是，有些字符在ASCII字符集中没有定义，因此需要使用转义字符串来表示。 </span>
+</p>
+<h2><a name="t1"></a>转义字符串的组成</h2>
+<p><span style="font-size:14px">转义字符串（Escape Sequence），即字符实体（Character Entity）分成三部分：</span></p>
+<p><span style="font-size:14px">第一部分是一个&amp;符号，英文叫ampersand；</span></p>
+<p><span style="font-size:14px">第二部分是实体（Entity）名字或者是#加上实体（Entity）编号；</span></p>
+<p><span style="font-size:14px">第三部分是一个分号。 </span></p>
+<p><span style="font-size:14px">比如，要显示小于号（&lt;），就可以写 &amp;lt; 或者 &amp;#60; 。 </span></p>
+<p><span style="font-size:14px">用实体（Entity）名字的好处是比较好理解，一看lt，大概就猜出是less than的意思，但是其劣势在于并不是所有的浏览器都支持最新的Entity名字。而实体(Entity)编号，各种浏览器都能处理。
+</span></p>
+<p><span style="font-size:14px">提示：<strong>实体名称（Entity）是区分大小写的</strong>。 </span></p>
+<p><span style="font-size:14px">备注：同一个符号，可以用“实体名称”和“实体编号”两种方式引用，“<span style="">实体名称”的优势在于便于记忆，但不能保证所有的浏览器都能顺利识别它，而“实体编号”则没有这种担忧，但它实在不方便记忆</span>。
+</span></p>
+<h2><a name="t2"></a>如何显示空格？</h2>
+<p><span style="font-size:14px">通常情况下，HTML会自动截去多余的空格。不管你加多少空格，都被看做一个空格。比如你在两个字之间加了10个空格，HTML会截去9个空格，只保留一个。<span style="">为了在网页中增加空格，你可以使用&amp;nbsp;表示空格。
+</span></span></p>
+</div>
+<div class="commonContainer">
+<hr>
+<h1><a name="t3"></a>HTML特殊转义字符列表</h1>
+<h2><a name="t4"></a>最常用的字符实体<br>
+Character Entities</h2>
+<span style=""><strong></strong></span><span style=""><strong></strong></span><span style=""><strong></strong></span><table class=" " width="400">
+<tbody>
+<tr>
+<th>显示</th>
+<th>说明</th>
+<th>实体名称</th>
+<th>实体编号</th>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px"></span></td>
+<td><span style="font-size:14px; "><strong>半方大的空白</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;ensp;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#8194;</strong></span></td>
+</tr>
+<tr>
+
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong></strong></span></td>
+<td><span style="font-size:14px; "><strong>全方大的空白</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;emsp;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#8195;</strong></span></td>
+</tr>
+<tr>
+
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong></strong></span></td>
+<td><span style="font-size:14px; "><strong>不断行的空格</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;nbsp;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#160;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>&lt;</strong></span></td>
+<td><span style="font-size:14px; "><strong>小于</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;lt;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#60;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>&gt;</strong></span></td>
+<td><span style="font-size:14px; "><strong>大于</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;gt;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#62;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>&amp;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;符号</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;amp;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#38;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>"</strong></span></td>
+<td><span style="font-size:14px; "><strong>双引号</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;quot;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#34;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>©</strong></span></td>
+<td><span style="font-size:14px; "><strong>版权</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;copy;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#169;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>®</strong></span></td>
+<td><span style="font-size:14px; "><strong>已注册商标</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;reg;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#174;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>™</strong></span></td>
+<td><span style="font-size:14px; "><strong>商标（美国）</strong></span></td>
+<td><span style="font-size:14px; "><strong>™</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#8482;</strong></span></td>
+</tr>
+<tr>
+
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>×</strong></span></td>
+<td><span style="font-size:14px; "><strong>乘号</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;times;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#215;</strong></span></td>
+</tr>
+<tr>
+<td class="key"><span style="font-size:14px; "><strong>÷</strong></span></td>
+<td><span style="font-size:14px; "><strong>除号</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;divide;</strong></span></td>
+<td><span style="font-size:14px; "><strong>&amp;#247;</strong></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="commonContainer">
+<h2><a name="t5"></a>ISO 8859-1 (Latin-1)字符集</h2>
+<p>HTML 4.01 支持 ISO 8859-1 (Latin-1) 字符集。 </p>
+<p>备注：为了方便起见，以下表格中，“实体名称”简称为“名称”，“实体编号”简称为“编号” </p>
+<table class=" " width="778">
+<tbody>
+<tr>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+</tr>
+<tr>
+<td class="key">&nbsp;</td>
+<td>&amp;nbsp;</td>
+<td>&amp;#160;</td>
+<td class="key">¡</td>
+<td>&amp;iexcl;</td>
+<td>&amp;#161;</td>
+<td class="key">¢</td>
+<td>&amp;cent;</td>
+<td>&amp;#162;</td>
+<td class="key">£</td>
+<td>&amp;pound;</td>
+<td>&amp;#163;</td>
+<td class="key">¤</td>
+<td>&amp;curren;</td>
+<td>&amp;#164;</td>
+</tr>
+<tr>
+<td class="key">¥</td>
+<td>&amp;yen;</td>
+<td>&amp;#165;</td>
+<td class="key">¦</td>
+<td>&amp;brvbar;</td>
+<td>&amp;#166;</td>
+<td class="key">§</td>
+<td>&amp;sect;</td>
+<td>&amp;#167;</td>
+<td class="key">¨</td>
+<td>&amp;uml;</td>
+<td>&amp;#168;</td>
+<td class="key">©</td>
+<td>&amp;copy;</td>
+<td>&amp;#169;</td>
+</tr>
+<tr>
+<td class="key">ª</td>
+<td>&amp;ordf;</td>
+<td>&amp;#170;</td>
+<td class="key">«</td>
+<td>&amp;laquo;</td>
+<td>&amp;#171;</td>
+<td class="key">¬</td>
+<td>&amp;not;</td>
+<td>&amp;#172;</td>
+<td class="key">&shy;</td>
+<td>&amp;shy;</td>
+<td>&amp;#173;</td>
+<td class="key">®</td>
+<td>&amp;reg;</td>
+<td>&amp;#174;</td>
+</tr>
+<tr>
+<td class="key">¯</td>
+<td>&amp;macr;</td>
+<td>&amp;#175;</td>
+<td class="key">°</td>
+<td>&amp;deg;</td>
+<td>&amp;#176;</td>
+<td class="key">±</td>
+<td>&amp;plusmn;</td>
+<td>&amp;#177;</td>
+<td class="key">²</td>
+<td>&amp;sup2;</td>
+<td>&amp;#178;</td>
+<td class="key">³</td>
+<td>&amp;sup3;</td>
+<td>&amp;#179;</td>
+</tr>
+<tr>
+<td class="key">´</td>
+<td>&amp;acute;</td>
+<td>&amp;#180;</td>
+<td class="key">µ</td>
+<td>&amp;micro;</td>
+<td>&amp;#181;</td>
+<td class="key">¶</td>
+<td>&amp;para;</td>
+<td>&amp;#182;</td>
+<td class="key">·</td>
+<td>&amp;middot;</td>
+<td>&amp;#183;</td>
+<td class="key">¸</td>
+<td>&amp;cedil;</td>
+<td>&amp;#184;</td>
+</tr>
+<tr>
+<td class="key">¹</td>
+<td>&amp;sup1;</td>
+<td>&amp;#185;</td>
+<td class="key">º</td>
+<td>&amp;ordm;</td>
+<td>&amp;#186;</td>
+<td class="key">»</td>
+<td>&amp;raquo;</td>
+<td>&amp;#187;</td>
+<td class="key">¼</td>
+<td>&amp;frac14;</td>
+<td>&amp;#188;</td>
+<td class="key">½</td>
+<td>&amp;frac12;</td>
+<td>&amp;#189;</td>
+</tr>
+<tr>
+<td class="key">¾</td>
+<td>&amp;frac34;</td>
+<td>&amp;#190;</td>
+<td class="key">¿</td>
+<td>&amp;iquest;</td>
+<td>&amp;#191;</td>
+<td class="key">À</td>
+<td>&amp;Agrave;</td>
+<td>&amp;#192;</td>
+<td class="key">Á</td>
+<td>&amp;Aacute;</td>
+<td>&amp;#193;</td>
+<td class="key">Â</td>
+<td>&amp;Acirc;</td>
+<td>&amp;#194;</td>
+</tr>
+<tr>
+<td class="key">Ã</td>
+<td>&amp;Atilde;</td>
+<td>&amp;#195;</td>
+<td class="key">Ä</td>
+<td>&amp;Auml;</td>
+<td>&amp;#196;</td>
+<td class="key">Å</td>
+<td>&amp;Aring;</td>
+<td>&amp;#197;</td>
+<td class="key">Æ</td>
+<td>&amp;AElig;</td>
+<td>&amp;#198;</td>
+<td class="key">Ç</td>
+<td>&amp;Ccedil;</td>
+<td>&amp;#199;</td>
+</tr>
+<tr>
+<td class="key">È</td>
+<td>&amp;Egrave;</td>
+<td>&amp;#200;</td>
+<td class="key">É</td>
+<td>&amp;Eacute;</td>
+<td>&amp;#201;</td>
+<td class="key">Ê</td>
+<td>&amp;Ecirc;</td>
+<td>&amp;#202;</td>
+<td class="key">Ë</td>
+<td>&amp;Euml;</td>
+<td>&amp;#203;</td>
+<td class="key">Ì</td>
+<td>&amp;Igrave;</td>
+<td>&amp;#204;</td>
+</tr>
+<tr>
+<td class="key">Í</td>
+<td>&amp;Iacute;</td>
+<td>&amp;#205;</td>
+<td class="key">Î</td>
+<td>&amp;Icirc;</td>
+<td>&amp;#206;</td>
+<td class="key">Ï</td>
+<td>&amp;Iuml;</td>
+<td>&amp;#207;</td>
+<td class="key">Ð</td>
+<td>&amp;ETH;</td>
+<td>&amp;#208;</td>
+<td class="key">Ñ</td>
+<td>&amp;Ntilde;</td>
+<td>&amp;#209;</td>
+</tr>
+<tr>
+<td class="key">Ò</td>
+<td>&amp;Ograve;</td>
+<td>&amp;#210;</td>
+<td class="key">Ó</td>
+<td>&amp;Oacute;</td>
+<td>&amp;#211;</td>
+<td class="key">Ô</td>
+<td>&amp;Ocirc;</td>
+<td>&amp;#212;</td>
+<td class="key">Õ</td>
+<td>&amp;Otilde;</td>
+<td>&amp;#213;</td>
+<td class="key">Ö</td>
+<td>&amp;Ouml;</td>
+<td>&amp;#214;</td>
+</tr>
+<tr>
+<td class="key">×</td>
+<td>&amp;times;</td>
+<td>&amp;#215;</td>
+<td class="key">Ø</td>
+<td>&amp;Oslash;</td>
+<td>&amp;#216;</td>
+<td class="key">Ù</td>
+<td>&amp;Ugrave;</td>
+<td>&amp;#217;</td>
+<td class="key">Ú</td>
+<td>&amp;Uacute;</td>
+<td>&amp;#218;</td>
+<td class="key">Û</td>
+<td>&amp;Ucirc;</td>
+<td>&amp;#219;</td>
+</tr>
+<tr>
+<td class="key">Ü</td>
+<td>&amp;Uuml;</td>
+<td>&amp;#220;</td>
+<td class="key">Ý</td>
+<td>&amp;Yacute;</td>
+<td>&amp;#221;</td>
+<td class="key">Þ</td>
+<td>&amp;THORN;</td>
+<td>&amp;#222;</td>
+<td class="key">ß</td>
+<td>&amp;szlig;</td>
+<td>&amp;#223;</td>
+<td class="key">à</td>
+<td>&amp;agrave;</td>
+<td>&amp;#224;</td>
+</tr>
+<tr>
+<td class="key">á</td>
+<td>&amp;aacute;</td>
+<td>&amp;#225;</td>
+<td class="key">â</td>
+<td>&amp;acirc;</td>
+<td>&amp;#226;</td>
+<td class="key">ã</td>
+<td>&amp;atilde;</td>
+<td>&amp;#227;</td>
+<td class="key">ä</td>
+<td>&amp;auml;</td>
+<td>&amp;#228;</td>
+<td class="key">å</td>
+<td>&amp;aring;</td>
+<td>&amp;#229;</td>
+</tr>
+<tr>
+<td class="key">æ</td>
+<td>&amp;aelig;</td>
+<td>&amp;#230;</td>
+<td class="key">ç</td>
+<td>&amp;ccedil;</td>
+<td>&amp;#231;</td>
+<td class="key">è</td>
+<td>&amp;egrave;</td>
+<td>&amp;#232;</td>
+<td class="key">é</td>
+<td>&amp;eacute;</td>
+<td>&amp;#233;</td>
+<td class="key">ê</td>
+<td>&amp;ecirc;</td>
+<td>&amp;#234;</td>
+</tr>
+<tr>
+<td class="key">ë</td>
+<td>&amp;euml;</td>
+<td>&amp;#235;</td>
+<td class="key">ì</td>
+<td>&amp;igrave;</td>
+<td>&amp;#236;</td>
+<td class="key">í</td>
+<td>&amp;iacute;</td>
+<td>&amp;#237;</td>
+<td class="key">î</td>
+<td>&amp;icirc;</td>
+<td>&amp;#238;</td>
+<td class="key">ï</td>
+<td>&amp;iuml;</td>
+<td>&amp;#239;</td>
+</tr>
+<tr>
+<td class="key">ð</td>
+<td>&amp;eth;</td>
+<td>&amp;#240;</td>
+<td class="key">ñ</td>
+<td>&amp;ntilde;</td>
+<td>&amp;#241;</td>
+<td class="key">ò</td>
+<td>&amp;ograve;</td>
+<td>&amp;#242;</td>
+<td class="key">ó</td>
+<td>&amp;oacute;</td>
+<td>&amp;#243;</td>
+<td class="key">ô</td>
+<td>&amp;ocirc;</td>
+<td>&amp;#244;</td>
+</tr>
+<tr>
+<td class="key">õ</td>
+<td>&amp;otilde;</td>
+<td>&amp;#245;</td>
+<td class="key">ö</td>
+<td>&amp;ouml;</td>
+<td>&amp;#246;</td>
+<td class="key">÷</td>
+<td>&amp;divide;</td>
+<td>&amp;#247;</td>
+<td class="key">ø</td>
+<td>&amp;oslash;</td>
+<td>&amp;#248;</td>
+<td class="key">ù</td>
+<td>&amp;ugrave;</td>
+<td>&amp;#249;</td>
+</tr>
+<tr>
+<td class="key">ú</td>
+<td>&amp;uacute;</td>
+<td>&amp;#250;</td>
+<td class="key">û</td>
+<td>&amp;ucirc;</td>
+<td>&amp;#251;</td>
+<td class="key">ü</td>
+<td>&amp;uuml;</td>
+<td>&amp;#252;</td>
+<td class="key">ý</td>
+<td>&amp;yacute;</td>
+<td>&amp;#253;</td>
+<td class="key">þ</td>
+<td>&amp;thorn;</td>
+<td>&amp;#254;</td>
+</tr>
+<tr>
+<td class="key">ÿ</td>
+<td>&amp;yuml;</td>
+<td>&amp;#255;</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="t6"></a>数学和希腊字母标志<br>
+symbols, mathematical symbols, and Greek letters</h2>
+<table class=" " width="778">
+<tbody>
+<tr>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+</tr>
+<tr>
+<td class="key">ƒ</td>
+<td>&amp;fnof;</td>
+<td>&amp;#402;</td>
+<td class="key">Α</td>
+<td>&amp;Alpha;</td>
+<td>&amp;#913;</td>
+<td class="key">Β</td>
+<td>&amp;Beta;</td>
+<td>&amp;#914;</td>
+<td class="key">Γ</td>
+<td>&amp;Gamma;</td>
+<td>&amp;#915;</td>
+<td class="key">Δ</td>
+<td>&amp;Delta;</td>
+<td>&amp;#916;</td>
+</tr>
+<tr>
+<td class="key">Ε</td>
+<td>&amp;Epsilon;</td>
+<td>&amp;#917;</td>
+<td class="key">Ζ</td>
+<td>&amp;Zeta;</td>
+<td>&amp;#918;</td>
+<td class="key">Η</td>
+<td>&amp;Eta;</td>
+<td>&amp;#919;</td>
+<td class="key">Θ</td>
+<td>&amp;Theta;</td>
+<td>&amp;#920;</td>
+<td class="key">Ι</td>
+<td>&amp;Iota;</td>
+<td>&amp;#921;</td>
+</tr>
+<tr>
+<td class="key">Κ</td>
+<td>&amp;Kappa;</td>
+<td>&amp;#922;</td>
+<td class="key">Λ</td>
+<td>&amp;Lambda;</td>
+<td>&amp;#923;</td>
+<td class="key">Μ</td>
+<td>&amp;Mu;</td>
+<td>&amp;#924;</td>
+<td class="key">Ν</td>
+<td>&amp;Nu;</td>
+<td>&amp;#925;</td>
+<td class="key">Ξ</td>
+<td>&amp;Xi;</td>
+<td>&amp;#926;</td>
+</tr>
+<tr>
+<td class="key">Ο</td>
+<td>&amp;Omicron;</td>
+<td>&amp;#927;</td>
+<td class="key">Π</td>
+<td>&amp;Pi;</td>
+<td>&amp;#928;</td>
+<td class="key">Ρ</td>
+<td>&amp;Rho;</td>
+<td>&amp;#929;</td>
+<td class="key">Σ</td>
+<td>&amp;Sigma;</td>
+<td>&amp;#931;</td>
+<td class="key">Τ</td>
+<td>&amp;Tau;</td>
+<td>&amp;#932;</td>
+</tr>
+<tr>
+<td class="key">Υ</td>
+<td>&amp;Upsilon;</td>
+<td>&amp;#933;</td>
+<td class="key">Φ</td>
+<td>&amp;Phi;</td>
+<td>&amp;#934;</td>
+<td class="key">Χ</td>
+<td>&amp;Chi;</td>
+<td>&amp;#935;</td>
+<td class="key">Ψ</td>
+<td>&amp;Psi;</td>
+<td>&amp;#936;</td>
+<td class="key">Ω</td>
+<td>&amp;Omega;</td>
+<td>&amp;#937;</td>
+</tr>
+<tr>
+<td class="key">α</td>
+<td>&amp;alpha;</td>
+<td>&amp;#945;</td>
+<td class="key">β</td>
+<td>&amp;beta;</td>
+<td>&amp;#946;</td>
+<td class="key">γ</td>
+<td>&amp;gamma;</td>
+<td>&amp;#947;</td>
+<td class="key">δ</td>
+<td>&amp;delta;</td>
+<td>&amp;#948;</td>
+<td class="key">ε</td>
+<td>&amp;epsilon;</td>
+<td>&amp;#949;</td>
+</tr>
+<tr>
+<td class="key">ζ</td>
+<td>&amp;zeta;</td>
+<td>&amp;#950;</td>
+<td class="key">η</td>
+<td>&amp;eta;</td>
+<td>&amp;#951;</td>
+<td class="key">θ</td>
+<td>&amp;theta;</td>
+<td>&amp;#952;</td>
+<td class="key">ι</td>
+<td>&amp;iota;</td>
+<td>&amp;#953;</td>
+<td class="key">κ</td>
+<td>&amp;kappa;</td>
+<td>&amp;#954;</td>
+</tr>
+<tr>
+<td class="key">λ</td>
+<td>&amp;lambda;</td>
+<td>&amp;#955;</td>
+<td class="key">μ</td>
+<td>&amp;mu;</td>
+<td>&amp;#956;</td>
+<td class="key">ν</td>
+<td>&amp;nu;</td>
+<td>&amp;#957;</td>
+<td class="key">ξ</td>
+<td>&amp;xi;</td>
+<td>&amp;#958;</td>
+<td class="key">ο</td>
+<td>&amp;omicron;</td>
+<td>&amp;#959;</td>
+</tr>
+<tr>
+<td class="key">π</td>
+<td>&amp;pi;</td>
+<td>&amp;#960;</td>
+<td class="key">ρ</td>
+<td>&amp;rho;</td>
+<td>&amp;#961;</td>
+<td class="key">ς</td>
+<td>&amp;sigmaf;</td>
+<td>&amp;#962;</td>
+<td class="key">σ</td>
+<td>&amp;sigma;</td>
+<td>&amp;#963;</td>
+<td class="key">τ</td>
+<td>&amp;tau;</td>
+<td>&amp;#964;</td>
+</tr>
+<tr>
+<td class="key">υ</td>
+<td>&amp;upsilon;</td>
+<td>&amp;#965;</td>
+<td class="key">φ</td>
+<td>&amp;phi;</td>
+<td>&amp;#966;</td>
+<td class="key">χ</td>
+<td>&amp;chi;</td>
+<td>&amp;#967;</td>
+<td class="key">ψ</td>
+<td>&amp;psi;</td>
+<td>&amp;#968;</td>
+<td class="key">ω</td>
+<td>&amp;omega;</td>
+<td>&amp;#969;</td>
+</tr>
+<tr>
+<td class="key">?</td>
+<td>&amp;thetasym;</td>
+<td>&amp;#977;</td>
+<td class="key">?</td>
+<td>&amp;upsih;</td>
+<td>&amp;#978;</td>
+<td class="key">?</td>
+<td>&amp;piv;</td>
+<td>&amp;#982;</td>
+<td class="key">•</td>
+<td>&amp;bull;</td>
+<td>&amp;#8226;</td>
+<td class="key">…</td>
+<td>&amp;hellip;</td>
+<td>&amp;#8230;</td>
+</tr>
+<tr>
+<td class="key">′</td>
+<td>&amp;prime;</td>
+<td>&amp;#8242;</td>
+<td class="key">″</td>
+<td>&amp;Prime;</td>
+<td>&amp;#8243;</td>
+<td class="key">‾</td>
+<td>&amp;oline;</td>
+<td>&amp;#8254;</td>
+<td class="key">⁄</td>
+<td>&amp;frasl;</td>
+<td>&amp;#8260;</td>
+<td class="key">℘</td>
+<td>&amp;weierp;</td>
+<td>&amp;#8472;</td>
+</tr>
+<tr>
+<td class="key">ℑ</td>
+<td>&amp;image;</td>
+<td>&amp;#8465;</td>
+<td class="key">ℜ</td>
+<td>&amp;real;</td>
+<td>&amp;#8476;</td>
+<td class="key">™</td>
+<td>&amp;trade;</td>
+<td>&amp;#8482;</td>
+<td class="key">ℵ</td>
+<td>&amp;alefsym;</td>
+<td>&amp;#8501;</td>
+<td class="key">←</td>
+<td>&amp;larr;</td>
+<td>&amp;#8592;</td>
+</tr>
+<tr>
+<td class="key">↑</td>
+<td>&amp;uarr;</td>
+<td>&amp;#8593;</td>
+<td class="key">→</td>
+<td>&amp;rarr;</td>
+<td>&amp;#8594;</td>
+<td class="key">↓</td>
+<td>&amp;darr;</td>
+<td>&amp;#8595;</td>
+<td class="key">↔</td>
+<td>&amp;harr;</td>
+<td>&amp;#8596;</td>
+<td class="key">↵</td>
+<td>&amp;crarr;</td>
+<td>&amp;#8629;</td>
+</tr>
+<tr>
+<td class="key">⇐</td>
+<td>&amp;lArr;</td>
+<td>&amp;#8656;</td>
+<td class="key">⇑</td>
+<td>&amp;uArr;</td>
+<td>&amp;#8657;</td>
+<td class="key">⇒</td>
+<td>&amp;rArr;</td>
+<td>&amp;#8658;</td>
+<td class="key">⇓</td>
+<td>&amp;dArr;</td>
+<td>&amp;#8659;</td>
+<td class="key">⇔</td>
+<td>&amp;hArr;</td>
+<td>&amp;#8660;</td>
+</tr>
+<tr>
+<td class="key">∀</td>
+<td>&amp;forall;</td>
+<td>&amp;#8704;</td>
+<td class="key">∂</td>
+<td>&amp;part;</td>
+<td>&amp;#8706;</td>
+<td class="key">∃</td>
+<td>&amp;exist;</td>
+<td>&amp;#8707;</td>
+<td class="key">∅</td>
+<td>&amp;empty;</td>
+<td>&amp;#8709;</td>
+<td class="key">∇</td>
+<td>&amp;nabla;</td>
+<td>&amp;#8711;</td>
+</tr>
+<tr>
+<td class="key">∈</td>
+<td>&amp;isin;</td>
+<td>&amp;#8712;</td>
+<td class="key">∉</td>
+<td>&amp;notin;</td>
+<td>&amp;#8713;</td>
+<td class="key">∋</td>
+<td>&amp;ni;</td>
+<td>&amp;#8715;</td>
+<td class="key">∏</td>
+<td>&amp;prod;</td>
+<td>&amp;#8719;</td>
+<td class="key">∑</td>
+<td>&amp;sum;</td>
+<td>&amp;#8721;</td>
+</tr>
+<tr>
+<td class="key">−</td>
+<td>&amp;minus;</td>
+<td>&amp;#8722;</td>
+<td class="key">∗</td>
+<td>&amp;lowast;</td>
+<td>&amp;#8727;</td>
+<td class="key">√</td>
+<td>&amp;radic;</td>
+<td>&amp;#8730;</td>
+<td class="key">∝</td>
+<td>&amp;prop;</td>
+<td>&amp;#8733;</td>
+<td class="key">∞</td>
+<td>&amp;infin;</td>
+<td>&amp;#8734;</td>
+</tr>
+<tr>
+<td class="key">∠</td>
+<td>&amp;ang;</td>
+<td>&amp;#8736;</td>
+<td class="key">∧</td>
+<td>&amp;and;</td>
+<td>&amp;#8743;</td>
+<td class="key">∨</td>
+<td>&amp;or;</td>
+<td>&amp;#8744;</td>
+<td class="key">∩</td>
+<td>&amp;cap;</td>
+<td>&amp;#8745;</td>
+<td class="key">∪</td>
+<td>&amp;cup;</td>
+<td>&amp;#8746;</td>
+</tr>
+<tr>
+<td class="key">∫</td>
+<td>&amp;int;</td>
+<td>&amp;#8747;</td>
+<td class="key">∴</td>
+<td>&amp;there4;</td>
+<td>&amp;#8756;</td>
+<td class="key">∼</td>
+<td>&amp;sim;</td>
+<td>&amp;#8764;</td>
+<td class="key">∝</td>
+<td>&amp;cong;</td>
+<td>&amp;#8773;</td>
+<td class="key">≈</td>
+<td>&amp;asymp;</td>
+<td>&amp;#8776;</td>
+</tr>
+<tr>
+<td class="key">≠</td>
+<td>&amp;ne;</td>
+<td>&amp;#8800;</td>
+<td class="key">≡</td>
+<td>&amp;equiv;</td>
+<td>&amp;#8801;</td>
+<td class="key">≤</td>
+<td>&amp;le;</td>
+<td>&amp;#8804;</td>
+<td class="key">≥</td>
+<td>&amp;ge;</td>
+<td>&amp;#8805;</td>
+<td class="key">⊂</td>
+<td>&amp;sub;</td>
+<td>&amp;#8834;</td>
+</tr>
+<tr>
+<td class="key">⊃</td>
+<td>&amp;sup;</td>
+<td>&amp;#8835;</td>
+<td class="key">⊄</td>
+<td>&amp;nsub;</td>
+<td>&amp;#8836;</td>
+<td class="key">⊆</td>
+<td>&amp;sube;</td>
+<td>&amp;#8838;</td>
+<td class="key">⊇</td>
+<td>&amp;supe;</td>
+<td>&amp;#8839;</td>
+<td class="key">⊕</td>
+<td>&amp;oplus;</td>
+<td>&amp;#8853;</td>
+</tr>
+<tr>
+<td class="key">⊗</td>
+<td>&amp;otimes;</td>
+<td>&amp;#8855;</td>
+<td class="key">⊥</td>
+<td>&amp;perp;</td>
+<td>&amp;#8869;</td>
+<td class="key">⋅</td>
+<td>&amp;sdot;</td>
+<td>&amp;#8901;</td>
+<td class="key">?</td>
+<td>&amp;lceil;</td>
+<td>&amp;#8968;</td>
+<td class="key">?</td>
+<td>&amp;rceil;</td>
+<td>&amp;#8969;</td>
+</tr>
+<tr>
+<td class="key">?</td>
+<td>&amp;lfloor;</td>
+<td>&amp;#8970;</td>
+<td class="key">?</td>
+<td>&amp;rfloor;</td>
+<td>&amp;#8971;</td>
+<td class="key">?</td>
+<td>&amp;lang;</td>
+<td>&amp;#9001;</td>
+<td class="key">?</td>
+<td>&amp;rang;</td>
+<td>&amp;#9002;</td>
+<td class="key">◊</td>
+<td>&amp;loz;</td>
+<td>&amp;#9674;</td>
+</tr>
+<tr>
+<td class="key">♠</td>
+<td>&amp;spades;</td>
+<td>&amp;#9824;</td>
+<td class="key">♣</td>
+<td>&amp;clubs;</td>
+<td>&amp;#9827;</td>
+<td class="key">♥</td>
+<td>&amp;hearts;</td>
+<td>&amp;#9829;</td>
+<td class="key">♦</td>
+<td>&amp;diams;</td>
+<td>&amp;#9830;</td>
+</tr>
+</tbody>
+</table>
+<h2><a name="t7"></a>重要的国际标记<br>
+markup-significant and internationalization characters</h2>
+<table class=" " width="778">
+<tbody>
+<tr>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+<th>显示</th>
+<th>名称</th>
+<th>编号</th>
+</tr>
+<tr>
+<td class="key">"</td>
+<td>&amp;quot;</td>
+<td>&amp;#34;</td>
+<td class="key">&amp;</td>
+<td>&amp;amp;</td>
+<td>&amp;#38;</td>
+<td class="key">&lt;</td>
+<td>&amp;lt;</td>
+<td>&amp;#60;</td>
+<td class="key">&gt;</td>
+<td>&amp;gt;</td>
+<td>&amp;#62;</td>
+<td class="key">Œ</td>
+<td>&amp;OElig;</td>
+<td>&amp;#338;</td>
+</tr>
+<tr>
+<td class="key">œ</td>
+<td>&amp;oelig;</td>
+<td>&amp;#339;</td>
+<td class="key">Š</td>
+<td>&amp;Scaron;</td>
+<td>&amp;#352;</td>
+<td class="key">š</td>
+<td>&amp;scaron;</td>
+<td>&amp;#353;</td>
+<td class="key">Ÿ</td>
+<td>&amp;Yuml;</td>
+<td>&amp;#376;</td>
+<td class="key">ˆ</td>
+<td>&amp;circ;</td>
+<td>&amp;#710;</td>
+</tr>
+<tr>
+<td class="key">˜</td>
+<td>&amp;tilde;</td>
+<td>&amp;#732;</td>
+<td class="key">&ensp;</td>
+<td>&amp;ensp;</td>
+<td>&amp;#8194;</td>
+<td class="key">&emsp;</td>
+<td>&amp;emsp;</td>
+<td>&amp;#8195;</td>
+<td class="key">&thinsp;</td>
+<td>&amp;thinsp;</td>
+<td>&amp;#8201;</td>
+<td class="key">&zwnj;</td>
+<td>&amp;zwnj;</td>
+<td>&amp;#8204;</td>
+</tr>
+<tr>
+<td class="key">&zwj;</td>
+<td>&amp;zwj;</td>
+<td>&amp;#8205;</td>
+<td class="key">&lrm;</td>
+<td>&amp;lrm;</td>
+<td>&amp;#8206;</td>
+<td class="key">&rlm;</td>
+<td>&amp;rlm;</td>
+<td>&amp;#8207;</td>
+<td class="key">–</td>
+<td>&amp;ndash;</td>
+<td>&amp;#8211;</td>
+<td class="key">—</td>
+<td>&amp;mdash;</td>
+<td>&amp;#8212;</td>
+</tr>
+<tr>
+<td class="key">‘</td>
+<td>&amp;lsquo;</td>
+<td>&amp;#8216;</td>
+<td class="key">’</td>
+<td>&amp;rsquo;</td>
+<td>&amp;#8217;</td>
+<td class="key">‚</td>
+<td>&amp;sbquo;</td>
+<td>&amp;#8218;</td>
+<td class="key">“</td>
+<td>&amp;ldquo;</td>
+<td>&amp;#8220;</td>
+<td class="key">”</td>
+<td>&amp;rdquo;</td>
+<td>&amp;#8221;</td>
+</tr>
+<tr>
+<td class="key">„</td>
+<td>&amp;bdquo;</td>
+<td>&amp;#8222;</td>
+<td class="key">†</td>
+<td>&amp;dagger;</td>
+<td>&amp;#8224;</td>
+<td class="key">‡</td>
+<td>&amp;Dagger;</td>
+<td>&amp;#8225;</td>
+<td class="key">‰</td>
+<td>&amp;permil;</td>
+<td>&amp;#8240;</td>
+<td class="key">‹</td>
+<td>&amp;lsaquo;</td>
+<td>&amp;#8249;</td>
+</tr>
+<tr>
+<td class="key">›</td>
+<td>&amp;rsaquo;</td>
+<td>&amp;#8250;</td>
+<td class="key">€</td>
+<td>&amp;euro;</td>
+<td>&amp;#8364;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="commonContainer">
+<hr>
+<h2><a name="t8"></a>JavaScript转义符</h2>
+<table class=" " width="480">
+<tbody>
+<tr>
+<th width="35%"><span style="font-size:14px; ">转义序列</span></th>
+<th width="65%"><span style="font-size:14px; ">字符</span></th>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\b</span></td>
+<td width="65%"><span style="font-size:14px; ">退格</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\f</span></td>
+<td width="65%"><span style="font-size:14px; ">走纸换页</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\n</span></td>
+<td width="65%"><span style="font-size:14px; ">换行</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\r</span></td>
+<td width="65%"><span style="font-size:14px; ">回车</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\t</span></td>
+<td width="65%"><span style="font-size:14px; ">横向跳格 (Ctrl-I)</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\'</span></td>
+<td width="65%"><span style="font-size:14px; ">单引号</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\"</span></td>
+<td width="65%"><span style="font-size:14px; ">双引号</span></td>
+</tr>
+<tr valign="top">
+<td width="35%"><span style="font-size:14px; ">\\</span></td>
+<td width="65%"><span style="font-size:14px; ">反斜杠</span></td>
+</tr>
+</tbody>
+</table>
+<p><span style="font-size:14px">编程的时候要注意特殊字符的问题，很多运行时出现的问题都是因为特殊字符的出现而引起的。 </span>
+</p>
+<p><span style="font-size:14px">注意，由于反斜杠本身用作转义符，因此不能直接在脚本中键入一个反斜杠。如果要产生一个反斜杠，必须一起键入两个反斜杠 (\\)。
+</span></p>
+</div>
+<div class="commonContainer">
+<hr>
+<p></p>
+<h2 align="left"><a name="t9"></a><strong>编码转换</strong>（to Unicode）</h2>
+<p></p>
+<p></p>
+<p></p>
+<p>（程序代码来源于网络） </p>
+<p></p>
+<p><strong>Js版 </strong></p>
+<pre>&lt;script&gt;
+&nbsp;&nbsp;&nbsp;&nbsp; test = "你好abc"
+&nbsp;&nbsp;&nbsp;&nbsp; str = ""
+&nbsp;&nbsp;&nbsp;&nbsp; for( i=0;&nbsp;&nbsp;&nbsp; i&lt;test.length; i++ )
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;  temp = test.charCodeAt(i).toString(16);
+&nbsp;&nbsp;&nbsp;&nbsp;  str&nbsp;&nbsp;&nbsp; += "\\u"+ new Array(5-String(temp).length).join("0") +temp;
+&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp; document.write (str)
+&lt;/script&gt;</pre>
+<br>
+<br>
+<p><strong>vbs版</strong></p>
+<br>
+<pre>Function Unicode(str1)
+&nbsp;&nbsp;&nbsp;&nbsp; Dim str,temp
+&nbsp;&nbsp;&nbsp;&nbsp; str = ""
+&nbsp;&nbsp;&nbsp;&nbsp; For i=1&nbsp;&nbsp;&nbsp; to len(str1)
+&nbsp;&nbsp;&nbsp;&nbsp;  temp = Hex(AscW(Mid(str1,i,1)))
+&nbsp;&nbsp;&nbsp;&nbsp;  If len(temp) &lt; 5 Then&nbsp;&nbsp;&nbsp; temp = right("0000" &amp; temp, 4)
+&nbsp;&nbsp;&nbsp;&nbsp;  str = str &amp; "\u" &amp; temp
+&nbsp;&nbsp;&nbsp;&nbsp; Next
+&nbsp;&nbsp;&nbsp;&nbsp; Unicode = str
+End Function</pre>
+<br>
+<br>
+<p></p>
+<pre>Function htmlentities(str)
+&nbsp;&nbsp;&nbsp;&nbsp; For i = 1 to Len(str)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; char = mid(str, i, 1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If Ascw(char) &gt; 128 then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; htmlentities = htmlentities &amp; "&amp;#" &amp; Ascw(char) &amp; ";"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; htmlentities = htmlentities &amp; char
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End if
+&nbsp;&nbsp;&nbsp;&nbsp; Next
+End Function</pre>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p><strong>coldfusion<span class="Section1" style="layout-grid:15.6pt none">版</span></strong></p>
+<p></p>
+<pre>function nochaoscode(str)
+{
+&nbsp;&nbsp;&nbsp;&nbsp; var new_str = “”;
+&nbsp;&nbsp;&nbsp;&nbsp; for(i=1; i lte len(str);i=i+1){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(asc(mid(str,i,1)) lt 128){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new_str = new_str &amp; mid(str,i,1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new_str = new_str &amp; “&amp;##” &amp; asc(mid(str,i,1));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp; return new_str;
+}</pre>
+<p></p>
+<hr>
+<p></p>
+<p><span style="font-size:14px">附：</span></p>
+<p><span style="font-size:14px">在php中我们可以用mbstring的mb_convert_encoding函数实现这个正向及反向的转化。 如：</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px">mb_convert_encoding ("你好", "HTML-ENTITIES", "gb2312"); //输出：&amp;#20320;&amp;#22909;
+</span></p>
+<p><span style="font-size:14px">mb_convert_encoding ("&amp;#20320;&amp;#22909;", "gb2312", "HTML-ENTITIES"); //输出：你好
+</span></p>
+<p><span style="font-size:14px"></span></p>
+<p><span style="font-size:14px">如果需要对整个页面转化，则只需要在php文件的头部加上这三行代码：</span></p>
+<p><span style="font-size:14px"></span></p>
+<p><span style="font-size:14px">mb_internal_encoding("gb2312"); // 这里的gb2312是你网站原来的编码
+</span></p>
+<p><span style="font-size:14px">mb_http_output("HTML-ENTITIES"); </span></p>
+<p><span style="font-size:14px">ob_start('mb_output_handler'); </span></p>
+</div>
+    
+</blockquote>
+</body>
+</html>

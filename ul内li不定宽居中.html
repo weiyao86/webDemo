@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+     <script src="Scripts/jquery-1.9.0.js"></script>
+     <script type="text/javascript">
+     		$(function(){
+     			// setInterval(function(){
+     			// 	$("#tt").scrollLeft($("#tt").scrollLeft()+50);
+     			// 	console.log($("#tt")[0].scrollWidth)
+     			// },1000)
+     			var key = "sl";
+     			var reg1 = new RegExp("/?|/&sl=","i");
+     			var linf="http://www.baidu.com/sabad.jsp?af=f&slf=1,2,3;4,5,6";
+     			alert(reg1.test(linf));
+     		});
+
+   //   		var key="fc";
+			// var reg =  new RegExp("[?&]"+key+"=([^&]*).*","i");
+
+			// var str = "http://www.baidu.coj?sf=45662&fc=23";
+			// //var r=reg.exec(str)[1];
+			// // console.log(r);
+			//  var ret = 'ab,cd';
+			// reg = new RegExp(key+"=([^&]*)","i");
+			// str = str.replace(reg,function(a,b,c){return a+ret;});
+			// console.log(str);
+
+     </script>
+
+    <style type='text/css'>
+        #macji { position: relative; width: 100%;background-color: #eee; text-align: center;  }
+            #macji .macji-skin { /*  float:left;
+		    position:relative;
+		    margin:0;
+		    margin:0;
+		    left:50%;*/ }
+                #macji .macji-skin li { /* position:relative;
+		    list-style:none;
+		    right:50%;
+		    float:left;
+		    margin:10px;
+		    padding:0 10px;
+		    border:solid 1px #000;
+		    line-height:60px;*/ display: inline-block; *display: inline; zoom: 1;margin:5px; }
+        .uploadFile { width: 200px; background-image: url('Res/tree.jpg'); }
+        input { vertical-align: middle; margin: 0; padding: 0; }
+        .file-box { position: relative; width: 340px; }
+        .txt { height: 22px; border: 1px solid #cdcdcd; width: 180px; }
+        .btn { background-color: #FFF; border: 1px solid #CDCDCD; height: 24px; width: 70px; }
+        .file { position: absolute; top: 0; right: 80px; height: 24px; filter: alpha(opacity:0); opacity: 0; width: 260px; }
+
+        /*上传*/
+        .export-cls { background-image: url("images/btn_bg.png"); border: 1px solid #65666d; border-radius: 4px; color: #fff; display: inline-block; padding: 3px 10px; position: relative; text-align: center; width: 70px; }
+            .export-cls:hover { background-image: url(images/btn_paging_enabled.png); border: 1px solid #0088f2; text-decoration: none; }
+            .export-cls span { color: red; }
+        .export-cls-btn { color: #ffffff; background-color: #FFF; border: 1px solid #CDCDCD; height: 24px; width: 70px; vertical-align: middle; margin: 0; padding: 0; border-radius: 4px; }
+        .export-cls-file { position: absolute; top: 0; left: 0px; height: 24px; filter: alpha(opacity:0); opacity: 0; width: 70px; }
+
+        ul li:nth-child(2n+1) { color: red; }
+		li{border:5px solid red;transition:all .5s ease-out .1;}
+        /*li:hover{font-size: 26px;transition:all .5s ease-in .1;}*/
+       .a{ width:200px; height:100px;} 
+.b{ padding:20%; background-color:red; } 
+    </style>
+</head>
+<body>
+<div class="a"><div class="b"></div></div>
+    <a>ABCD</a>
+    <div id="macji">
+        <ul class="macji-skin">
+            <li>列表一</li>
+            <li>列表二</li>
+            <li>列表三</li>
+            <li>列表三</li>
+        </ul>
+    </div>
+    <h1>*********************************************华丽的分割线*********************************************</h1>
+    <h2 style='color: red;'>改变上传file控件style</h2>
+
+
+    <div class="file-box">
+        <form action="" method="post" enctype="multipart/form-data" id='form'>
+            <input type='text' name='textfield' id='textfield' class='txt' />
+            <input type='button' class='btn' value='浏览...' />
+            <input type="file" name="fileField" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+            <input type="submit" name="submit" class="btn" value="上传" />
+
+            <input type="button" id='jsReset' class="btn" value="jsreset" onclick="jsReset1();" />
+            <input type="button" id='testBtn' class="btn" value="open" onclick="testBtn1();" />
+        </form>
+    </div>
+    <script type='text/javascript'>
+        var form = document.getElementById('form').innerHTML;
+        function testBtn1() {
+            alert(document.getElementById('fileField').value);
+        };
+        function jsReset1() {
+            //document.getElementById("form").reset();
+            document.getElementById('form').innerHTML = form;
+        };
+    </script>
+
+
+
+    <div class="export-cls">
+        <form action="" method="post" enctype="multipart/form-data">
+            <span>我是上传</span>
+            <input type="file" name="fileField" class="export-cls-file" size="28" onchange="alert(this.value);" onclick="this.value = ''; alert(this.value);" />
+        </form>
+    </div>
+
+    <div id="tt"  style="border:1px solid red;width:500px;overflow:hidden;">
+    	<div style="border:1px solid;width:700px;">aabbbddddwewqqwer454646asfsa</div>
+    </div>
+
+
+    <div style="width:35px;height:100px;border:1px solid red;line-height:100px;padding:1px 0;">
+    	<!-- <i style="width:20px;height:20px;border:1px solid gray;display:block;">afsa</i> -->
+    	<i style="width:20px;height:20px;border:1px solid gray;display:inline-block;*vertical-align:middle;*zoom:1;">a</i>
+    </div>
+
+    <div class="verticalLine">
+	some other content	
+	</div>
+</body>
+</html>

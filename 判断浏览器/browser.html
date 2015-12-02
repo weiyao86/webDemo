@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript">
+	var lte9=true;
+	window.onload=function(){
+
+
+
+		var BrowserDetect = {
+        init: function() {
+            this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+            this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || "an unknown version";
+            this.OS = this.searchString(this.dataOS) || "an unknown OS";
+        },
+        searchString: function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var dataString = data[i].string;
+                var dataProp = data[i].prop;
+                
+                this.versionSearchString = data[i].versionSearch || data[i].identity;
+                if (dataString) {
+                    if (dataString.indexOf(data[i].subString) != -1)
+                        return data[i].identity;
+                } else if (dataProp)
+                    return data[i].identity;
+            }
+        },
+        searchVersion: function(dataString) {
+            var index = dataString.indexOf(this.versionSearchString);
+            if (index == -1) return;
+            return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
+        },
+        dataBrowser: [{
+            string: navigator.userAgent,
+            subString: "Chrome",
+            identity: "Chrome"
+        }, {
+            string: navigator.userAgent,
+            subString: "OmniWeb",
+            versionSearch: "OmniWeb/",
+            identity: "OmniWeb"
+        }, {
+            string: navigator.vendor,
+            subString: "Apple",
+            identity: "Safari",
+            versionSearch: "Version"
+        }, {
+            prop: window.opera,
+            identity: "Opera",
+            versionSearch: "Version"
+        }, {
+            string: navigator.vendor,
+            subString: "iCab",
+            identity: "iCab"
+        }, {
+            string: navigator.vendor,
+            subString: "KDE",
+            identity: "Konqueror"
+        }, {
+            string: navigator.userAgent,
+            subString: "Firefox",
+            identity: "Firefox"
+        }, {
+            string: navigator.vendor,
+            subString: "Camino",
+            identity: "Camino"
+        }, { // for newer Netscapes (6+)
+            string: navigator.userAgent,
+            subString: "Netscape",
+            identity: "Netscape"
+        }, {
+            string: navigator.userAgent,
+            subString: "MSIE",
+            identity: "Explorer",
+            versionSearch: "MSIE"
+        }, {
+            string: navigator.userAgent,
+            subString: "Gecko",
+            identity: "Mozilla",
+            versionSearch: "rv"
+        }, { // for older Netscapes (4-)
+            string: navigator.userAgent,
+            subString: "Mozilla",
+            identity: "Netscape",
+            versionSearch: "Mozilla"
+        }],
+        dataOS: [{
+            string: navigator.platform,
+            subString: "Win",
+            identity: "Windows"
+        }, {
+            string: navigator.platform,
+            subString: "Mac",
+            identity: "Mac"
+        }, {
+            string: navigator.userAgent,
+            subString: "iPhone",
+            identity: "iPhone/iPod"
+        }, {
+            string: navigator.platform,
+            subString: "Linux",
+            identity: "Linux"
+        }]
+
+    };
+
+    BrowserDetect.init();
+    var str="浏览器:"+BrowserDetect.browser+"<br/>浏览器版本:"+BrowserDetect.version;
+    document.getElementById("p").innerHTML=str;
+
+    document.getElementById("btn").onclick=function(){
+    	debugger;
+    	copycode(document.getElementById("p"));
+
+    };
+    function copycode(obj){
+	    	if(window.getSelection) {
+			var sel = window.getSelection();
+			if (sel.setBaseAndExtent) {
+				sel.setBaseAndExtent(obj, 0, obj, 1);
+			} else {
+				var rng = document.createRange();
+				rng.selectNodeContents(obj);
+				sel.addRange(rng);
+			}
+		} else {
+			var rng = document.body.createTextRange();
+			rng.moveToElementText(obj);
+			rng.select();
+		}
+    }
+}
+	</script>
+	<!--[if lt IE 9]>
+	<script type='text/javascript'>
+		lte9=false;
+	</script>
+	<![endif]-->
+	<script type='text/javascript'>
+		alert("你的浏览器版本低于IE9");
+
+	</script>
+</head>
+
+<body>
+	<p id="p"></p>
+	<input type="button" id="btn" value="TEST">
+
+	<div style="border:1px solid red;width:500px;height;300px;float:left;">
+		<img src="../res/psb.jpg" alt="" style="width:200px;height:200px;float:left;"/><div style="margin:0;padding:0;word-wrap:break-wrap;word-break:break-all;"><p>654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6</p>asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asfasdfasfasfdasfasfasdfasfdasf</div>
+
+	</div>
+
+</body>
+</html>

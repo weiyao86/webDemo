@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        .test {
+            width: 100px;
+            height: 30px;
+            /*border: 1px outset black;*/
+            line-height: 30px;
+            margin:200px 0px 0px 300px;
+        }
+
+        .test input {
+            width: 100px;
+            height: 30px;
+        }
+        .upTriangle {
+        width:0;
+        height:0;
+        line-height:0;
+        font-size:0;
+        border-width:15px;
+        border-style:solid;
+        border-color:transparent transparent #000 transparent;
+        }
+        .downTriangle {
+        width:0;
+        height:0;
+        line-height:0;
+        font-size:0;
+        border-width:15px;
+        border-style:solid;
+        border-color: red transparent transparent transparent;
+        }
+    </style>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").on("click", function () {
+                window.opener = null;
+                window.open("", "_self");
+                window.close();
+            });
+        });
+        window.onload = function () {
+            var shakeClsTiem = null;
+            function shake(e, distance, time, callback) {
+                if (typeof e == "string") e = document.getElementById(e);
+                if (!distance) distance = 3;
+                if (!time) time = 500;
+                var nativeCss = e.style.cssText,
+                    _left = parseInt(e.style.left),
+                    _top = parseInt(e.style.top),
+                    start = (new Date).getTime(),
+                    style=e.currentStyle || window.getComputedStyle(e,null);
+
+                 style.position === "static" && (e.style.position = "relative");
+                 clearTimeout(shakeClsTiem);
+                 animate();
+                function animate() {
+                    var now = (new Date).getTime();
+                    var fragin = now - start;
+                    var f = fragin / time;
+                    if (f < 1) {
+                        //弧度=2*Math.PI/360
+                        //30度角的弧度=2*Math.PI/360*30
+                        //角度与弧度换算:角度=(弧度*180)/Math.PI
+                        //弧度=(角度/180)*Math.PI
+                        var fudu =f*Math.PI*15; //f * 15 * Math.PI;
+                        var x = distance * Math.sin(fudu);
+                        var y = distance * Math.cos(fudu);
+                        e.style.left =  x + "px";
+                        e.style.top = y + "px";
+                        console.log("x:"+x+",f:"+f);
+                        shakeClsTiem = setTimeout(animate, Math.min(25, time - fragin));
+
+                    } else {
+                        e.style.cssText = nativeCss;
+                        //alert("完成！");
+                    }
+
+                }
+            }
+
+            document.getElementById("shake").onclick = function () {
+                shake("test");
+            }
+            //document.addEventListener("contextmenu", function (e) {
+
+            //   // alert(e.type);
+            //    //window.event.returnValue = false;
+            //    //window.event.cancelBubble = true;
+            //    if (e.preventDefault) e.preventDefault();
+           
+            //});
+            //document.attachEvent("oncontextmenu", function (evt) {
+            //   //阻止右键默认菜单
+            //    var e = evt || window.event;
+
+            //    if (e.preventDefault) {
+            //        e.preventDefault();
+            //    }
+
+            //    if (e.stopPropagation) {
+            //        e.stopPropagation();
+            //    } else {
+            //        e.returnValue = false; // 解决IE8右键弹出
+            //        e.cancelBubble = true;
+            //    }
+            //});
+        };
+
+
+
+
+        // /\[-(    (?:   (?!-\]).  )*   )/
+        // 
+        // var test = "start[-wwnvse12:3-]s-]end";
+        // var newTest= test.replace(/\[-(.*)-\]/g,"<ww>$1</ww>");
+        // alert(newTest);
+        // window.open();
+    </script>
+</head>
+<body>
+
+    <div id="tt" class="test">
+        <input type="text" id="test" />
+    </div>
+    <a href="../Index.aspx?code=">dfdsf</a>
+    <div class="upTriangle"></div>
+     <div class="downTriangle"></div>
+     <input type="checkbox" data-field="IsFsvw"/>
+    <label>aabb</label>
+    <input id="btn" type="button" value="close" />
+    <input type="button" id='shake' value='shake'>
+</body>
+</html>

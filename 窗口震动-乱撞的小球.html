@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type='text/css'>
+	html,body{width:100%;height:100%;overflow: auto;}
+		.div{width:200px;padding-left:20px;border:1px solid red;
+			filter:wave(add=false,freq=1,lightstrength=50,phase=50,strngth=10);}
+	</style>
+	<script type='text/javascript'>
+	//IE
+	function falp_xy(n){
+
+		if(window.moveTo){
+			for(var i=0;i<10;i++){
+				for(var j =n;j>0;j--){
+					window.moveTo(0,i);
+					window.moveTo(i,0);
+					window.moveTo(0,-i);
+					window.moveTo(-i,0);
+				}
+			}
+		}
+	}
+	window.onload=function(){
+		document.getElementById("testInput").select();//选中文字
+		var tDiv=document.getElementById("testDiv");
+		console.dir(window);
+		// alert(tDiv.currentStyle ? tDiv.currentStyle.width : window.getComputedStyle(tDiv,null).width+'---width');
+		// alert(tDiv.clientWidth+'---clicnetWidth包含padding');
+		// alert(tDiv.offsetWidth+'---offsetWidth包含padding+border');
+
+		
+		_$("btnSt").onclick=function(){
+			var index,text,val;
+			while(_$("st1").selectedIndex!=-1){
+				index=_$("st1").selectedIndex;
+				text = _$("st1").options[index].text;
+				val= _$("st1").options[index].value;
+				_$("st2").add(new Option(text,val,false,true));
+				_$("st1").remove(index);
+
+			}
+		};
+
+		_$("st2").onchange=function(){
+			_$("testDiv").innerHTML=this.options[this.options.selectedIndex].value;
+		}
+		_$("st2").onkeypress=function(e){
+			var opt=this.options.selectedIndex;
+			this.options[opt]=new Option(ok = (this.options[opt]) ? this.options[opt].innerText+String.fromCharCode(e.keyCode):String.fromCharCode(e.keyCode),ok);
+			this.selectedIndex=opt;
+		}
+
+		_$("st2").onkeyup=function(e){
+			var index=this.options.selectedIndex;
+			if(index>-1){
+				if(e.keyCode === 8){
+					var sl=this.options[index].innerText.length;
+					this.options[index].innerText=this.options[index].innerText.substring(0,sl-1);
+					if(!this.options[index].innerText){
+						this.remove(index);
+						this.selectedIndex=0;
+					}
+				}
+			}
+		}
+
+
+		function _$(st){
+			return document.getElementById(st);
+		}
+
+		function deng(){
+			var deng=_$("deng"),
+				deng1=_$("deng1"),
+				col=['#ffcc00','#3333ff','#ffaa00','#ff0000','#00cc00','#cc33ff','#ff99aa','#0000ff','#00ff00'],
+				colLen=col.length,
+				name=name1='这行字带有霓虹灯效果,共有'+colLen+'种色彩!',
+				nlen=name.length,
+				ic=0,
+				ic1=0,
+				strName,strName1;
+				function Dcolor(){
+					strName=strName1='';
+					for(var i=0;i<nlen;i++){
+						ic=Math.floor(Math.random()*colLen);
+						strName+='<span style="color:'+col[ic]+';">'+name.substr(i,1)+'</span>';
+					}
+					
+					ic1++;
+					ic1=ic1>nlen-1 ? 0 : ic1;
+					strName1=name1.substr(0,ic1)+'<span style="color:'+col[ic]+';font-size:20px;">'+name1.substr(ic1,1)+'</span>'+name1.substr(ic1+1,nlen-ic1);
+					deng.innerHTML = strName;
+					deng1.innerHTML = strName1;
+
+					setTimeout(Dcolor,500);
+				}
+				Dcolor();
+		}
+
+		deng();
+
+		//move ball
+		var smallball =_$("move_small_ball"),clone=null,doc=document.body ? document.body :document.documentElement;
+		for(var i = 1;i<=10;i++){
+			clone=smallball.cloneNode(false);
+			smallball.parentNode.appendChild(clone,smallball);
+			clone.id='move_small_ball'+i;
+			clone.innerHTML=i;
+			clone.style.display='block';
+			var w=h=Math.floor(Math.random()*(320-80)+80);
+			clone.style.width=w+'px';
+			clone.style.height=h+'px';
+			var l=parseInt(doc.clientWidth)-parseInt(clone.offsetWidth);
+			var t=parseInt(doc.clientHeight)-parseInt(clone.offsetHeight);
+			clone.style.left=Math.random()*(l-w-10)+w+'px';
+			clone.style.top=Math.random()*(t-h-10)+h+'px';
+			clone.style.borderRadius=w/2+'px';
+			clone.style.backgroundColor=getRadColor(1);
+			clone.style.textAlign='center';
+			clone.style.lineHeight=w+'px';
+			clone.style.color='#fff';
+			clone.style.fontSize='40px';
+			console.log(clone.style.left+'\\'+i+'\\'+clone.style.top+'===');
+			new moveBall({el:clone,step:i%2 ? i : -i});//getRad(i%2 ? i+1 : -i-1)
+		}
+		//smallball.style.display='none';
+	}
+	function getRadColor(r){
+    		return '#'+getRad(r)+getRad(r)+getRad(r);
+    }
+    function getRad(r){
+    		return Math.floor(Math.random()*(10-r)+r);
+    }
+	//Element.prototype.moveBall=moveBall;
+	function bind(fn,context){
+		var ags=[].slice.call(arguments,1);
+		 if(!Function.prototype.bind){
+			return function(){
+				return fn.apply(context || this,ags.concat(arguments));
+			};
+		}
+		return fn.bind(context || this);
+	}
+	function getStyle(el){
+			return el.currentStyle ? el.currentStyle : window.getComputedStyle(el,null);
+		};
+
+    var moveBall=function(opts){this.init(opts);};
+    moveBall.prototype={
+    	init:function(opts){
+    		var self=this;
+    			self.stepx=self.stepy=opts.step ? opts.step : 1;
+    			self.ballx=0;
+    			self.doc=document.body ? document.body :document.documentElement;
+    			self.bally=0;
+    			self.cw=self.doc.clientWidth;
+    			self.ch=self.doc.clientHeight;
+    			self.el=opts.el;
+    			self.move();
+    	},
+    	move:function(){
+    		var self=this,
+    			elStyle=getStyle(self.el),
+				l=parseInt(elStyle.left),
+				t=parseInt(elStyle.top);
+
+				if(l+self.el.offsetWidth+self.stepx>=self.cw || l <0){
+					self.stepx=-self.stepx;
+				}else{
+					// self.stepx++;
+				}
+				if(t+self.el.offsetHeight+self.stepy>=self.ch || t <0){
+					self.stepy=-self.stepy;
+				}else{
+					// self.stepy+=1;
+				}
+				self.el.style.top=t+self.stepy+'px';
+				self.el.style.left=l+self.stepx+'px';
+				l=parseInt(elStyle.left);
+				t=parseInt(elStyle.top);
+				//console.log(self.el.style.top+'==='+self.el.style.left+'==='+self.el);
+				setTimeout(bind(self.move,self),25);
+    	},
+    	changerim:function(){
+    		return Math.floor(Math.random()*r);
+    	}
+    };
+	var getDate=function(){
+		var d = new Date(),
+		y=d.getFullYear(),
+		m=d.getMonth()+1,
+		day=d.getDate(),
+		h=d.getHours(),
+		mm=d.getMinutes(),
+		second=d.getSeconds(),
+		milliseconds=d.getMilliseconds(),
+		ret;
+		m.length<1 && (m='0'+m);
+		day.length<1 && (day='0'+day);
+		mm.length<1 && (mm='0'+mm);
+		second.length<1 && (second='0'+second);
+		milliseconds.length<1 && (milliseconds='0'+fffff);
+		//document.title=y+'-'+m+'-'+day+'  '+h+':'+mm+':'+second+'  '+milliseconds;
+		ret=(new Date()).toLocaleString();
+		document.title=ret;
+		window.status=ret+'---最后修改时间:'+document.lastModified;
+		setTimeout(getDate,1000);
+	};
+		getDate();
+
+	</script>
+</head>
+<body>
+<div id='testDiv' class='div'>abc</div>
+<div id='searchChild'><input type='text' value='ttttttt'></div>
+<input id='testInput' type="password" value='stop copy|cut|paste' style='font-family:Wingdings;' oncopy='return false;' oncut='return false;' onpaste='return false;'>stop copy|cut|paste
+<input type="button" value='全屏震动' onclick='falp_xy(5);'>
+<img src="res/img_0351.jpg" alt="" usemap='#myMap' style='width:300px;height:300px;'>
+<map name="myMap" id="myMap">
+	<area shape="rect" coords="0,0,200,100" onclick="javascript:alert('click');" alt="300,400">
+</map>
+<select name="" id="st1" multiple style='width:100px;height:100px;background:#000;color:#fff;'>
+	<option value="1-0">1</option>
+	<option value="2-0">2</option>
+	<option value="3-0">3</option>
+	<option value="4-0">4</option>
+	<option value="5-0">5</option>
+</select>
+<input type="button" value="leftToRightAndEdit" id="btnSt">
+<select name="" id="st2" multiple style='width:100px;height:100px;'>
+	<option value="01-1">01</option>
+	<option value="02-1">02</option>
+	<option value="03-1">03</option>
+	<option value="04-1">04</option>
+	<option value="05-1">05</option>
+</select>
+<div id='deng' style='border:1px solid #898989;'>
+</div>
+<div id='deng1' style='border:1px solid #898989;'>
+</div>
+
+<div id='move_small_ball' style='width:100px;height:100px;display:none;position:absolute;top:0px;left:0px;background:#ffaa00;border-radius:50px;line-height:100px;text-align:center;border:1px solid #ffacca;padding:0px;'>我是源小球</div>
+</body>
+</html>

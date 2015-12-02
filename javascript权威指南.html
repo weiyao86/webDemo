@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript">
+        (function () {
+            document.writeln(Object(null)+'正常</br>');
+            document.writeln(Object(undefined) + '正常</br>');
+            document.writeln(new String(undefined) + '正常</br>');
+            //alert(undefined.toString() + '异常');
+            var bol = new Boolean(false);
+            document.writeln(bol+"</br>");
+            document.writeln({ x: 1, y: 2 }.toString()+"</br>");
+            document.writeln(["a", "2",32,5,63,5].toString() + "</br>");
+            document.writeln([1, 2, 2, 56, 3].join("_number_") + "</br>");
+            function test() { alert('EVAL 执行代码');}
+            eval(test());
+        })();
+
+        //array test
+        var arr = ['jake', 'shirly', 'lily', 'liming'],
+            arr_1 = [23, 25, 54, 63, 20],
+            printStr = [];
+        var tempConcat = arr.concat(arr_1);  //concat -- 衔接数组,返回一个新数组
+        document.write(tempConcat.join("===>") + "</br>concat -- 衔接数组,返回一个新数组");
+        var tempEvery = arr.every(function (val, index, source) {
+            if (val === "jake") return true;
+        });
+        document.write(tempEvery + "</br>every -- 对数组的每个元素调用函数时都返回真值返回true否则返回一个false");
+
+        
+
+
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>

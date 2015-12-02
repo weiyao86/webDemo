@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WEI.YAO视差</title>
+	 <link rel="stylesheet" type="text/css" href="css/example.css" />
+	 <script type="text/javascript" src="../Scripts/jquery-1.9.0.min.js"></script>
+	 <script type="text/javascript" src="../Scripts/rotation.js"></script>
+	 <style type="text/css">
+
+	 </style>
+	 <script type="text/javascript">
+	 		$(function(){
+
+	 			var rotation = new Rotation({
+	 				singleShow: true, //是否渐隐渐现
+					isPause: true, //是否暂停标记
+					isFullScreen:true, //整屏滚动
+					rotScope: 'pxs_container', //最外层窗口
+					ltArrow: 'arrow_lt', //左箭头
+					rtArrow: 'arrow_rt', //右箭头
+					scopePanel: 'rotation_panel', //包裹轮播区域的容器
+					rotContent: 'rotation_ad', //轮播区域
+					spheric: 'rotation_spheric', //圆点按钮
+					distance: 3 * 1000, //循环定时间隔
+					roundCls: "focus-selected", //圆点选中样式
+					parallaxId:"parallaxId",	//视差底图容器
+					pxsThumbnails:"pxs_thumbnails"　//小图
+			 	});
+	 		});
+
+	 </script>
+</head>
+<body>
+		<div class="wrapper">
+			<h1>Parallax Slider </h1>
+		</div>
+
+		<div id="pxs_container" class="pxs_container">
+			<div id="parallaxId" class="pxs_bg">
+				<div class="pxs_bg1"></div>
+				<div class="pxs_bg2"></div>
+				<div class="pxs_bg3"></div>
+			</div>
+			<!-- <div class="pxs_loading">Loading images...</div> -->
+			<div id="rotation_panel" class="pxs_slider_wrapper">
+				<ul id="rotation_ad" class="pxs_slider">
+					<li><img src="images/1.jpg" alt="First Image" /></li>
+					<li><img src="images/2.jpg" alt="Second Image" /></li>
+					<li><img src="images/3.jpg" alt="Third Image" /></li>
+					<li><img src="images/4.jpg" alt="Forth Image" /></li>
+					<li><img src="images/5.jpg" alt="Fifth Image" /></li>
+					<li><img src="images/6.jpg" alt="Sixth Image" /></li>
+				</ul>
+				<div class="pxs_navigation">
+					<span class="pxs_next" id="arrow_rt" ></span>
+					<span class="pxs_prev" id="arrow_lt"></span>
+				</div>
+				<ul id="pxs_thumbnails" class="pxs_thumbnails">
+					<li><img src="images/thumbs/1.jpg" alt="First Image" /></li>
+					<li><img src="images/thumbs/2.jpg" alt="Second Image" /></li>
+					<li><img src="images/thumbs/3.jpg" alt="Third Image" /></li>
+					<li><img src="images/thumbs/4.jpg" alt="Forth Image" /></li>
+					<li><img src="images/thumbs/5.jpg" alt="Fifth Image" /></li>
+					<li><img src="images/thumbs/6.jpg" alt="Sixth Image" /></li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer-banner" style="width:728px; margin:30px auto"></div>
+</body>
+</html>

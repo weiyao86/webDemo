@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--定时刷新页面,加入url可跳转 <meta http-equiv="refresh" content="10;url=http://www.myWeb.com" /> -->
+    <!--<meta http-equiv="refresh" content="10" />-->
+    <title>每10s刷新页面</title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script src="Scripts/Plugin/blockUI/jquery.blockUI.js"></script>
+    <script type="text/javascript">
+        function log(msg) {
+            //console.log(msg);
+        }
+        //#region
+        //(function () {
+        //    function Y() { this.y = 99; }
+
+        //    var obj = new Y();
+        //    log(obj.constructor);//Y
+        //    log(obj.hasOwnProperty('constructor'));//false
+        //    log(obj.__proto__.hasOwnProperty('constructor'));//true
+        //})();
+
+        //(function () {
+        //    function Y() { this.y = 99; }
+        //    function X() { this.x = 88; }
+        //    Y.prototype = new X();
+        //    var obj = new Y();
+        //    log(obj.constructor); //X
+        //    log(obj.hasOwnProperty('constructor'));//false
+        //    log(obj.__proto__.hasOwnProperty('constructor'));//false
+        //    log(obj.__proto__.__proto__.hasOwnProperty('constructor'));//false
+        //    log("访问对象时，对于 obj.__proto__.x=value 则必定有 obj.x=value，obj.constructor.prototype 上的属性将被保存在obj.__proto__中。")
+
+        //})();
+        //(function () {
+        //    function Y() { this.y = 99; }
+        //    Y.prototype = { a: 11 };
+        //    var obj = new Y();
+        //    log(obj.a);
+
+        //    alert(obj instanceof Y);
+
+        //    Y.prototype.a = 12;
+        //    log(obj.a);
+        //    log([obj.a, obj.__proto__.a, obj.y, obj.__proto__.y]);
+        //    log("/*12,12,99,obj.__proto__.y 是 undefined，y 属性是由对象构造器直接产生的而不是从原形链继承来的*/");
+        //    Y.prototype = { b: 11 };
+        //    log(obj.b);
+        //    log(obj.a);
+        //    log("  new 运算构造obj对象之后，obj访问继承来的属性时，是通过__proto__ 访问的，而不是通过obj.constructor.prototype 访问，因此，如果修改obj.constructor.prototype指向另一个对象，并不会影响obj继承原有的属性");
+
+
+        //})();
+
+
+        ////实现类式继承   example extend base
+        //(function () {
+
+        //    var Base = function () { this.baseName = "i'm is Base construct Name"; };
+        //    Base.prototype = {
+        //        extend: function (subInstance) {
+        //            var self = this;
+
+        //            //类式继承
+        //            if (typeof subInstance == "function") {
+        //                var fun = function () { };
+        //                fun.prototype = self;
+        //                subInstance.prototype = new fun();
+        //                subInstance.constructor = subInstance;
+        //                subInstance.parent = self;
+        //            } else if (typeof subInstance == "object") {//原型多重继承
+        //                for (var k in self) {
+        //                    if (!subInstance[k])
+        //                        subInstance[k] = self[k];
+        //                }
+        //            } else
+        //                throw new Error('FATAL ERROR:"Function.prototype.extend" expects a function or object');
+        //        },
+        //        getName: function () {
+        //            alert("get");
+        //        },
+        //        test: function () {
+        //            alert("test");
+        //        }
+        //    };
+
+        //    //保护上下文的构造函数
+        //    function myClass() {
+        //        //当前对象是否是Base的实例
+        //        if (this instanceof Base) {
+        //            this.baseName = "保护上下文的构造函数";
+        //        }
+        //        else return new Base();
+        //    }
+
+        //    var myBase = myClass(),
+        //        obj = {};
+
+        //    function subClass() {
+        //        this.getName = "getName";
+        //    }
+        //    function subTest() {
+        //        this.getTest = "getTest";
+        //    }
+        //    myBase.extend(subClass.prototype);
+        //    var sub = new subClass();
+        //    sub.test();
+        //    log('sub子类可以调用父类(Base)的方法 Base.test()');
+        //    sub.extend(subTest);
+        //    log('subTest子类继承父类(sub)并将parent用来保存父类属性或方法');
+        //    var subTest = new subTest();
+        //    sub.extend(subTest);
+        //    subTest.test();
+        //    log('subTest子类实例化后继承父类(sub)直接调用方法  sub.test()');
+        //    log("---------------------------------分割线---------------------------------");
+
+        //})();
+        //#endregion
+
+
+        //生成GUID  获取当前焦点元素
+        $(function () {
+            var navigator = "",
+                allFocus = $(":focus");
+            var getGUID = function () {
+                var guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0, v = c == 'x' ? r : r & 0x3 | 0x8; return v.toString(16); })
+                return guid;
+            };
+            setInterval(function () {
+                if ($(":focus").size() == 0) return;
+                if (navigator == $(":focus").prop("data-guid")) return;
+                var guid = getGUID();
+                $(":focus").prop("data-guid", guid);
+                navigator = guid;
+                $("#testP").html("当前焦点元素是:" + $(":focus").val());
+            }, 300);
+
+
+
+
+
+            //#region
+            //恢复默认事件
+            var flag = true;
+            $("#testBtn").on("click", function () {
+                $("#P1").html("当前选中的文字:" + document.getSelection());
+                if (flag) {
+                    $("#baidu").on("click", prevTest);
+                    flag = false;
+                } else {
+                    $("#baidu").off("click", prevTest);
+                    flag = true;
+                }
+            });
+            var prevTest = function (e) {
+                alert('f')
+                e.preventDefault();
+            };
+
+            //document.onselectstart = function () { return false }; //禁止选中文字
+            //document.unselectable = 'on'; // 禁止获取焦点
+            //document.style.MozUserSelect = 'none'; // 禁止火狐选中文字
+
+            //#endregion
+
+            (function ($) {
+                $.fn.extend({
+                    "selectText": function (value) {
+                        value = $.extend({
+                            "delays": 800
+                        }, value);
+                        var $this = $(this);
+
+                        //鼠标抬起进，获取选择文字的字数。并根据字数，是否显示弹出层
+                        $this.mouseup(function (event) {
+
+                            //IE和火狐兼容性的处理函数。
+                            function selectText() {
+                                if (document.selection) {
+                                    return document.selection.createRange().text;// IE
+                                } else {
+                                    return window.getSelection().toString(); //标准
+                                }
+                            }
+
+                            var str = selectText();
+
+                            var l = event.clientX;
+                            var t = event.clientY;
+
+                            if (str.length > 10) {
+                                $this.next("div").html(str).css({ "top": t + 10, "left": l + 10 }).delay(value.delays).fadeIn();
+                            }
+                        });
+
+                        //点击文档任何位置，让显示的层消失
+                        $(document).click(function () {
+                            $this.next("div").fadeOut();
+                        })
+
+                        //阻止冒泡，防止第一次选中文字时，由于冒泡，而触发了$(document).click事件    
+                        $this.click(function (event) {
+                            event.stopPropagation();
+                        });
+
+                        return $this;
+                    }
+                })
+            })(jQuery)
+
+            //选择高亮文字
+            $("strong").selectText();
+
+            //$.growlUI("aaaa","bbbb");
+        });
+        
+    </script>
+    <style type="text/css">
+        /*::-moz-selection {
+            background: #FCB301;
+            color: #fff;
+        }
+
+        ::selection {
+            background: #FCB301;
+            color: #fff;
+        } 改变背景色*/
+    </style>
+</head>
+<body>
+    <strong id="str">如果你不是经常去使用，constructor、prototype、isPrototypeOf、instanceof、in 、hasOwnProperty等等很容易在概念上混淆，本文将对此作区分
+
+constructor：对象构造器。
+
+prototype：访问对象构造器的原型，只有函数才具有这个属性。
+
+isPrototypeOf：如果对象 A 存在于 对象obj的原形链中，则 A.isPrototypeOf(obj)返回true，而obj必定继承了A 的属性。
+
+__proto__：访问对象的原型链在当前对象的上一级对象，即对象的父级对象，非W3C 或 ECMAscript 标准，是浏览器对原型继承的一种实现手段，存在于firefox 和 chrome ，IE下不存在这个属性。
+
+在对象的继承关系中，对象obj的构造器 constructor 其实是存在于原型链中的，
+
+即 obj.constructor 实际上是 obj.__proto__.constructor,  obj.hasOwnProperty('constructor');  为 false
+    </strong>
+    <div style="width:500px;height:200px;border:1px solid red;border-radius:4px;display:none;position:absolute;"></div>
+    <input type="text" value="11" />
+    <input type="text" value="22" />
+    <input type="text" value="33" />
+    <p id="testP"></p>
+    <p id="P1">当前选中的文字:</p>
+
+    <a id="baidu" target="_blank" href="http://www.baidu.com">恢复默认事件</a>
+
+    <button id="testBtn">testBtn</button>
+</body>
+</html>

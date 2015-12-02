@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS实现的图片加载进度条_网页代码站(http://www.frontopen.com</title>
+    <script>
+        var l = 0;
+        var sum = 0;
+        var imgs = new Array();
+        function chk() {
+            l--;
+            console.log(l);
+            document.getElementById("aa").innerText = "" + ((sum - l) * 100 / sum) + "%"
+            if (l == 0) {
+                for (var i = 0; i < sum; i++) {
+                    var image = document.createElement("img");
+                    image.src = imgs[i].src;
+                    document.body.appendChild(image);
+                }
+            }
+        }
+        //if (document.images) {
+        //    imgs[0] = new Image()
+        //    imgs[1] = new Image()
+        //    imgs[2] = new Image()
+        //    imgs[3] = new Image()
+        //    imgs[4] = new Image()
+        //    imgs[5] = new Image()
+        //    imgs[6] = new Image()
+        //    imgs[7] = new Image()
+        //    imgs[0].src = "Res/DSC_0723.jpg";
+        //    imgs[1].src = "Res/DSC_0730.jpg";
+        //    imgs[2].src = "Res/DSC_0731.jpg";
+        //    imgs[3].src = "Res/psb_002.jpg";
+        //    imgs[4].src = "Res/psb_003.jpg";
+        //    imgs[5].src = "Res/psb_004.jpg";
+        //    imgs[6].src = "Res/psb_005.jpg";
+        //    imgs[7].src = "Res/psb_006.jpg";
+        //}
+
+    </script>
+    <body>
+        <div id="aa">0%</div>
+        <input type="button" id='btnTest' value='测试图片缓存' />
+        <input type="button" id='btnTest1' value='替换图片' />
+        <script type='text/javascript'>
+            sum = l = imgs.length;
+            for (var i = 0; i < l; i++) {
+                //imgs[i].onload = chk;
+                //imgs[i].onerror = chk;//无论图片是否加载成功，都执行指定方法
+            }
+            window.onload = function () {
+                var btn1 = document.getElementById('btnTest');
+                var btn2 = document.getElementById('btnTest1');
+                var img = new Image(), count = 1;
+
+                btn1.onclick = function () {
+                    count > 3 && (count = 1);
+                    img = new Image();
+                    img.src = "Res/psb_00" + (++count) + ".jpg";
+
+
+                    if (img.complete || typeof img.complete === undefined) {
+                        alert('部分IE和opera缓存后不会触 发load事件 我是complete:' + img.src);
+                        return;
+                    }
+                    img.onload = function () {
+                        alert("我是onload:" + img.src);
+                    }
+                    img.onerror = function () {
+                        alert("我是onerror:" + img.src);
+                    }
+                }
+                btn2.onclick = function () {
+                    var image = document.createElement("img");
+                    image.src = "Res/psb_00" + (count++) + ".jpg";
+                    img.src = "Res/psb_00" + (count++) + ".jpg";
+                    document.body.insertBefore(image, document.body.childNodes[0]);
+                };
+            }
+        </script>
+        <div style='position:absolute;top:50%;width:100%;border:1px solid red;'>
+        	<div style='position:relative;top:-50%;width:100%;border:1px solid;height:100px;'>
+        		-50
+        	</div>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/Libs/jquery-1.8.1.min.js"></script>
+    <style type="text/css">
+        #demo15 {
+            position: relative;
+        }
+
+            #demo15:after {
+                border: 10px solid transparent;
+                border-left: 10px solid #f00;
+                width: 0;
+                height: 0;
+                position: absolute;
+                content: ' ';
+            }
+
+        #demo16 {
+            position: relative;
+        }
+
+            #demo16:after, #demo16:before {
+                border: 10px solid transparent;
+                border-left: 10px solid #fff;
+                width: 0;
+                height: 0;
+                position: absolute;
+                top: 0;
+                right: -20px;
+                content: ' ';
+            }
+
+            #demo16:before {
+                border-left-color: #f00;
+                right: -21px;
+            }
+
+        #demo17 {
+            font-size: 10px;
+            height: 24px;
+        }
+
+            #demo17 li {
+                float: left;
+                position: relative;
+                list-style: none;
+                margin: 0 20px 12px -19px;
+                border-top: solid 1px #ddd;
+                border-bottom: solid 1px #ddd;
+                padding-left: 12px;
+            }
+
+                #demo17 li:after, #demo17 li:before {
+                    border: 10px solid transparent;
+                    border-left: 10px solid #fff;
+                    width: 0;
+                    height: 0;
+                    position: absolute;
+                    top: 0;
+                    right: -18px;
+                    content: ' ';
+                }
+
+                #demo17 li:before {
+                    border-left-color: #ddd;
+                    right: -19px;
+                }
+
+        #demo {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            position: relative;
+            border: 4px solid #333;
+        }
+
+            #demo:after, #demo:before {
+                border: solid transparent;
+                content: ' ';
+                height: 0;
+                left: 100%;
+                position: absolute;
+                width: 0;
+            }
+
+            #demo:after {
+                border-width: 9px;
+                border-left-color: #ccc;
+                top: 15px;
+            }
+
+            #demo:before {
+                border-width: 14px;
+                border-left-color: #333;
+                top: 10px;
+            }
+
+        #demo11 {
+            border: 10px solid #000;
+            border-left-color: #f00;
+            width: 10px;
+            height: 10px;
+        }
+
+        .disabled {
+            pointer-events: none;
+            /*元素不再是鼠标事件的目标 pointer-events:visiblePainted; */
+        }
+
+        #container {
+            -webkit-border-radius: 4px 3px 6px 10px;
+            -moz-border-radius: 4px 3px 6px 10px;
+            -o-border-radius: 4px 3px 6px 10px;
+            border-radius:100px;/* 4px 3px 6px 10px;*/
+            background-color: gray;
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+
+        /* alternative syntax broken into each line */
+        /*#container {
+            -webkit-border-top-left-radius: 4px;
+            -webkit-border-top-rightright-radius: 3px;
+            -webkit-border-bottom-rightright-radius: 6px;
+            -webkit-border-bottom-left-radius: 10px;
+            -moz-border-radius-topleft: 4px;
+            -moz-border-radius-topright: 3px;
+            -moz-border-radius-bottomright: 6px;
+            -moz-border-radius-bottomleft: 10px;
+        }*/
+
+        img.polaroid {
+            background: #000; /*Change this to a background image or remove*/
+            border: solid #fff;
+            border-width: 6px 6px 20px 6px;
+            box-shadow: 1px 1px 15px #333; /* Standard blur at 5px. Increase for more depth * 
+    -webkit-box-shadow:1px 1px 5px #333;
+    -moz-box-shadow:1px 1px 5px #333; 
+    height:200px; /*Set to height of your image or desired div*/
+            width: 200px; /*Set to width of your image or desired div*/
+        }
+
+        a:link {
+            color: blue;
+        }
+
+        a:visited {
+            color: gray; /*purple;*/
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        a:active {
+            color: yellow;
+        }
+
+        html{
+            background: url('Res/aa.png') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .container-test {
+            height: 300px;
+            border: 1px solid #999;
+            min-height: 6.5em;
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+
+        });
+    </script>
+</head>
+<body>
+
+    <!--内容垂直集中
+　　相对于内容在水平位置，内容在垂直方向是不好把控的，尤其当考虑到滚动条这些因素时。这段纯CSS代码可以很好的工作-->
+    <div class="container-test"> 内容垂直集中</div>
+
+    <!--CSS3的全屏背景效果  ---html
+　　如果你想使用大图片作为网站背景，并希望在页面滚动时保持固定，该代码片段非常适合，不过这段代码无法在旧的浏览器上工作-->
+
+    <!--　为图片创建拍立得效果边框
+　　运用下面代码可以在图片上实现拍立得相片效果——一大片白色边框和细微的阴影。你需要修改图片的宽度/高度值来与你的网站布局相匹配。-->
+    <img class="polaroid" src="Res/aa.png" />
+
+    <!--锚链接伪类选择器-->
+    <a href="#">锚链接伪类选择器</a>
+    <a>锚链接伪类选择器</a>
+
+
+    <div id="container">i am test </div>
+    <div>
+        <!--文字内容>-->
+        <span id="demo15">文字内容</span><br />
+        <span id="demo16">文字内容</span><br />
+        <ul id="demo17">
+            <li>文字内容 Tab1</li>
+            <li>文字内容 Tab2</li>
+            <li>文字内容 Tab3</li>
+        </ul>
+
+        <div id="demo"></div>
+        <div id="demo11"></div>
+        <input type="text" class="disabled" value="this is a text" />
+
+    </div>
+</body>
+</html>

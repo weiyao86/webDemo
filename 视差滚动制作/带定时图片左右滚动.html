@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<script type="text/javascript" src="../Scripts/jquery-1.9.0.min.js"></script>
+	 <script type="text/javascript" src="../Scripts/rotation.js"></script>
+	 <script type="text/javascript">
+	 	$(function(){
+
+	 		var firstAdOpts={
+	 			singleShow:true,
+				isFullScreen:false,
+				isPause:true,
+				rotScope:'rotation_ad_scope',
+				ltArrow: 'rotation_link_lt', //左箭头
+				rtArrow: 'rotation_link_rt', //右箭头
+				scopePanel: 'rotation_panel', //包裹轮播区域的容器
+				rotContent: 'rotation_ad', //轮播区域
+				spheric: 'rotation_spheric'
+			};
+			var secondAdOpts={
+				singleShow:true,
+				isPause:true,
+				isFullScreen:false,
+				ltArrow: 'brand_link_lt', //左箭头
+				rtArrow: 'brand_link_rt', //右箭头
+				scopePanel: 'rotation_brand_panel', //包裹轮播区域的容器
+				rotContent: 'rotation_brand_ad', //轮播区域
+				spheric: 'rotation_brand_spheric' //圆点按钮
+			};
+
+			var threeAdOpts={
+				isFullScreen:false,
+				singleShow:false, //move
+				ltArrow: 'brand_lt', //左箭头
+				rtArrow: 'brand_rt', //右箭头
+				scopePanel: 'make_hot_panel', //包裹轮播区域的容器
+				rotContent: 'make_hot', //轮播区域
+				spheric: '' //圆点按钮
+			};
+
+			var firstAd=new Rotation(firstAdOpts);
+			var secondAd=new Rotation(secondAdOpts);
+			var threeAd=new Rotation(threeAdOpts);
+	 	});
+
+	 </script>
+</head>
+<body>
+
+<div class="page-center content clearfix">
+
+	<!--右侧广告位-->
+	<div class="main-scope">
+		<!--first-->
+			<div id="rotation_ad_scope" class="rotation-common rotation">
+				<div id="rotation_link_lt" class="lt-arrow-ps"> <i class="icon lt"></i>
+				</div>
+				<div id="rotation_link_rt" class="rt-arrow-ps"> <i class="icon rt"></i>
+				</div>
+				<div id="rotation_panel" class="rotation">
+					<ul id="rotation_ad" class="ad-imgs">
+						<li>
+							<a href="javascript:;" title="1.jpg">
+								<img src="images/1.jpg"></a>
+						</li>
+						<li>
+							<a href="javascript:;" title="2.jpg">
+								<img src="images/2.jpg"></a>
+						</li>
+						<li>
+							<a href="javascript:;" title="3.jpg">
+								<img src="images/3.jpg"></a>
+						</li>
+						<li>
+							<a href="javascript:;" title="4.jpg">
+								<img src="images/4.jpg"></a>
+						</li>
+						<li>
+							<a href="javascript:;" title="5.jpg">
+								<img src="images/5.jpg"></a>
+						</li>
+					</ul>
+				</div>
+				<div class="focus-position">
+					<ul class="point" id="rotation_spheric">
+						<!-- <li>
+						<a class="icon round-icon" href="javascript:;"></a>
+					</li>
+					-->
+					</ul>
+				</div>
+			</div>
+		<!--second-->
+		<div class="rotation-common rotation-second">
+			<div id="brand_link_lt" class="lt-arrow">
+				<i class="icon lt-gray"></i>
+			</div>
+			<div id="rotation_brand_panel" class="rotation-scope">
+				<ul id="rotation_brand_ad" class="ad-imgs-second">
+					<li class="single" data-id="1">
+						<ul class="clearfix">
+							<li>
+								<a href="javascript:;" title="1.jpg">
+									<img src="images/1.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="2.jpg">
+									<img src="images/2.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="3.jpg">
+									<img src="images/3.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="4.jpg">
+									<img src="images/4.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+						</ul>
+					</li>
+					<li class="single" data-id="2">
+						<ul class="clearfix">
+							<li>
+								<a href="javascript:;" title="1.jpg">
+									<img src="images/1.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="2.jpg">
+									<img src="images/2.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="3.jpg">
+									<img src="images/3.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="4.jpg">
+									<img src="images/4.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+						</ul>
+					</li>
+					<li class="single" data-id="3">
+						<ul class="clearfix">
+							<li>
+								<a href="javascript:;" title="1.jpg">
+									<img src="images/1.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="2.jpg">
+									<img src="images/2.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="3.jpg">
+									<img src="images/3.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="4.jpg">
+									<img src="images/4.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+							<li>
+								<a href="javascript:;" title="5.jpg">
+									<img src="images/5.jpg"></a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div id="brand_link_rt" class="rt-arrow">
+				<i class="icon rt-gray"></i>
+			</div>
+			<div class="focus">
+				<ul id="rotation_brand_spheric" class="point">
+					<!-- <li>
+					<a class="icon round-icon" href="javascript:;"></a>
+				</li>
+				-->
+				</ul>
+			</div>
+		</div>
+
+		<div class="major clearfix">
+				<div id="brand_lt" class="lt-arrow-icon">
+					<i class="icon lt-gray"></i>
+				</div>
+				<div id="make_hot_panel" class="brand-img-scope">
+					<ul id="make_hot" class="rotation-scope">
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/1.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/2.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/3.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/4.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/5.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/6.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/1.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;" title="" >
+								<img src="images/2.jpg" alt="{{name}}">
+								<span title="name">abc</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div id="brand_rt" class="rt-arrow-icon">
+					<i class="icon rt-gray"></i>
+				</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

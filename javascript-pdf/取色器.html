@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type='text/javascript'>
+	var write=document.write,
+		h=["FF","CC","99","66","33","00"];
+
+	function action(RGB){
+		parent.window.returnValue='#'+RGB;
+		window.close();
+	}
+
+	function Mcell(R,G,B){
+		write('<td bgcolor="#'+R+G+B+'">');
+		write('<a href="#" onClick="action("'+(R+G+B)+'")">');
+		write('<img border=0 height=12 width=12 alt=\'#'+R+G+B+'\'>');
+		write('</a>');
+		write('</td>');
+	}
+
+	function Mtr(R,B){
+		write('<tr>');
+		for(var i=0;i<6;++i){
+			Mcell(R,h[i],B);
+		}
+		write('</tr>');
+	}
+
+	function Mtable(B){
+		write('<table cellpadding=0 cellspacing=0 border=0>');
+		for(var i=0;i<6;++i){
+			Mtr(h[i],B);
+		}
+		write('</table>')
+	}	
+
+	function Mcube(){
+
+		write('<table cellpadding=0 cellspacing=0 border=0><tr>');
+		for(var i=0;i<6;++i){
+			if(i%3==0){
+				write('<tr>');
+			}
+			write('<td bgcolor="#ffffff">');
+			Mtable(h[i]);
+			write('</td>');
+		}
+		if(i%3==0){
+			write('</tr>');
+		}
+		write('</tr></table>');
+	}
+	Mcube();
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

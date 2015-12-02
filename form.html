@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var $form = $("<form>", {
+                id: "export-form",
+                method: "post"
+            });
+            //$form = $("#testForm");
+            $form.appendTo("body");
+            $("#test").on("click", function () {
+                var str = "export-form";
+                
+                var el = $(':input[form=' + str + ']').get();
+                alert(el);
+                $form.submit(function () {
+                    alert("fff");
+                });
+
+            });
+
+            $("#testForm").on("submit", function () {
+                alert("fff");
+                return false;
+            });
+            
+        });
+    </script>
+</head>
+<body>
+    <!--<form id="testForm" action="鼠标拖动层.aspx" method="post"></form>-->
+    <button id="test" type="button">submit</button>
+</body>
+</html>

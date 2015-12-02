@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font: normal 14px/24px "\5FAE\8F6F\96C5\9ED1";
+        }
+        /* mydiv */
+        .mydiv {
+            margin: 100px auto 0;
+            line-height: 40px;
+            position: relative;
+            padding: 0 40px;
+            float: left;
+        }
+
+            .mydiv a {
+                height: 40px;
+                text-decoration: none;
+                color: #000;
+                float: left;
+            }
+
+                .mydiv a span {
+                    background-color: #fff;
+                    display: block;
+                    float: left;
+                    height: 40px;
+                    position: relative;
+                    padding: 0 13px;
+                    cursor: pointer;
+                }
+                /* 对于这个 我很费解 在IETester测试的时候 必须给a:hover 设置给 a 没有的属性*/
+                .mydiv a:hover {
+                    _display: block;
+                }
+
+                    .mydiv a:hover span {
+                        top: -6px;
+                        background-color: #FFD204;
+                        text-shadow: 0 0 10px #000;
+                    }
+
+                    .mydiv a:hover i, .mydiv a:hover b {
+                       position: absolute;
+                        border: 3px solid #fff;
+                        width: 0;
+                        height: 0;
+                        line-height: 0;
+                        bottom: -6px;
+                        font-style: normal;
+                        font-weight: normal;
+                    }
+
+                    .mydiv a:hover i {
+                        left: 0px;
+                        border-color: #9B8651 #9B8651 #fff #fff;
+                    }
+
+                    .mydiv a:hover b {
+                        right: 0;
+                        border-color: #9B8651 #fff #fff #9B8651;
+                    }
+
+        .item {
+            border: 20px solid #fff;
+            border-left-color: #000;
+            position: absolute;
+            line-height: 0;
+            left: 0;
+            top: 0;
+        }
+
+        .item2 {
+            border-left-color: #fff;
+            border-right-color: #000;
+            right: 0;
+            left: auto;
+        }
+    </style>
+
+  
+</head>
+<body>
+   <div style="border-width:50px;width:0px;height:0px;border-color:red;border-right-color:black;border-style:dashed;word-wrap:break-word;">
+    </div>
+
+    <div style="width: 650px; margin: 0 auto">
+
+
+        <div class="mydiv">
+            <span class="item"></span>
+            <a href="http://www.xwcms.net/"><span><i></i>xHTML+CSS<b></b></span></a>
+            <a href="http://www.xwcms.net/"><span><i></i>HTML5+CSS<b></b></span></a>
+            <a href="http://www.xwcms.net/"><span><i></i>javaScript<b></b></span></a>
+            <a href="http://www.xwcms.net/"><span><i></i>JQuery<b></b></span></a>
+            <span class="item item2"></span>
+        </div>
+
+
+    </div>
+    <br />
+    <div style="width: 600px; margin: 0 auto; text-align: center; font-size: 12px;">
+        <p>由xw素材网整理，查看更多特效：【<a href="http://www.xwcms.net/" target="_blank">xw素材网</a>】</p>
+        <p>＊尊重他人劳动成果，转载请自觉注明出处！注：此代码仅供学习交流</p>
+        <p></p>
+    </div>
+
+
+</body>
+</html>

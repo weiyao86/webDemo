@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="content-type" charset="utf-8" />
+    <script src="Scripts/jquery-1.9.0.js" charset="utf-8"></script>
+    <script src="Scripts/Plugin/blockUI/jquery.blockUI.js"></script>
+<!--     <script src="Scripts/Plugin/blockUI/block_test.js"></script>-->
+    <style type="text/css">
+        .test {
+            width: 1200px;
+            height: 600px;
+            background-color: gray;
+            display: none;
+            position:relative;
+        }
+
+        .testCh {
+            width: 600px;
+            height: 400px;
+            background-color: red;
+            display: none;
+            position:absolute;
+        }
+
+        .testCh1 {
+            width: 300px;
+            height: 200px;
+            background-color: black;
+            display: none;
+        }
+
+        .testCh2 {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        <!--若是层上弹层,其中给blockui的css添加属性时需保证宽和高都非0-->
+        $(function () {
+            var $test = $("#test"),
+                $test1 = $("#test1"),
+                $test2 = $("#test2"),
+                 $test3 = $("#test3");
+            $("#Button3").on("click", function () {
+                $.blockUI({
+                    message: $("#test"),
+                    css: {
+                        width: $test.width(),
+                        height: $test.height(),
+                        left: ($(window).width() - $test.width()) / 2,
+                        top: ($(window).height() - $test.height()) / 2
+                    }
+                });
+            });
+
+            $("#btnTest").on("click", function () {
+                $test.block({
+                    message: $test1,
+                    css: {
+                        width: $test1.width(),
+                        height: $test1.height(),
+                        left: ($(window).width() - $test1.width()) / 2,
+                        top: ($(window).height() - $test1.height()) / 2
+                    }
+                });
+            });
+
+
+            $("#btnTest1").on("click", function () {
+                $test1.block({
+                    message: $test2,
+                    css: {
+                        width: $test2.width(),
+                        height: $test2.height(),
+                        left: ($(window).width() - $test2.width()) / 2,
+                        top: ($(window).height() - $test2.height()) / 2
+                    }
+                });
+            });
+
+            $("#btnTest2").on("click", function () {
+                $test2.block({
+                    message: $test3,
+                    css: {
+                        width: $test3.width(),
+                        height: $test3.height(),
+                        left: ($(window).width() - $test3.width()) / 2,
+                        top: ($(window).height() - $test3.height()) / 2
+                    }
+                });
+            });
+
+
+            $("#Button5,#Button4,#Button1").on("click", function () {
+                $.unblockUI();
+            });
+
+
+            //背景利用闭包方式渐变
+            var fade=function(node){
+                var level=1,
+                    step=function(){
+                        var hex = level.toString(16);
+                        node.style.backgroundColor='#FFFF'+hex+hex;
+                        if(level<15){
+                            level++;
+                            setTimeout(step,100);
+                        }
+                    };
+                setTimeout(step,100);
+            };
+            fade(document.body);
+        });
+    </script>
+</head>
+<body style="height: 1500px;">
+    <div style="width: 2000px;"></div>
+    <button id="Button3">弹出一层</button>
+    <div id="test" class="test">
+        <button id="btnTest">弹出二层</button>
+        <button id="Button5">关闭</button>
+        <!--<div style="position: relative; left: 510px; top: 281px; height: 35px; line-height: 35px; background-color: black; width: 180px; color: white;">拖动中...</div>-->
+    </div>
+    <div id="test1" class="testCh">
+        <button id="btnTest1">弹出二层</button>
+        <button id="Button4">关闭</button>
+    </div>
+    <div id="test2" class="testCh1">
+        <div data-action="drag" style="color:white;">sub</div>
+        <button id="btnTest2">弹出三层</button>
+        <button id="Button1">关闭</button>
+    </div>
+    <div id="test3" class="testCh2">
+        abcdd
+    </div>
+</body>
+</html>

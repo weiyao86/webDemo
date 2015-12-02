@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.4.1.js"></script>
+    <script src="Scripts/myMenuAim.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var data = {
+                "tree": [
+                { id: 1, pId: 0, name: "文件夹" },
+                { id: 11, pId: 1, name: "收件箱" },
+                { id: 111, pId: 11, name: "收件箱1" },
+                { id: 112, pId: 111, name: "收件箱2" },
+                { id: 113, pId: 112, name: "收件箱3" },
+                { id: 114, pId: 113, name: "收件箱4" },
+                { id: 12, pId: 1, name: "垃圾邮件" },
+                { id: 13, pId: 1, name: "草稿" },
+                { id: 14, pId: 1, name: "已发送邮件" },
+                { id: 15, pId: 1, name: "已删除邮件" },
+                { id: 3, pId: 0, name: "快速视图" },
+                { id: 31, pId: 3, name: "文档" },
+                { id: 32, pId: 3, name: "照片" }],
+                "ulId": "ulid"
+            };
+            var my = new MyMenuAim(data);
+        });
+
+
+
+    </script>
+
+</head>
+<body>
+    <div style="width: 100%; height: 500px; border: 1px solid red;">
+        <ul class="ulid" id="ulid"></ul>
+    </div>
+ 
+</body>
+</html>

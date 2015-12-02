@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script type='text/javascript'>
+        
+        window.onload=function(){
+                document.getElementById('test').onclick=function(){
+                        window.location.replace("text-shadow.html");
+                }
+        }
+</script>
+<style type="text/css">
+* {
+        padding: 0;
+        margin: 0;
+}
+html {
+        _overflow: auto;
+}
+body {
+        _width: expression(this.parentNode.clientWidth);
+}
+html,
+body {
+        height: 100%;
+}
+.section {
+        min-height: 100%;
+        _height: 100%;
+}
+.footer {
+        height: 60px;
+        background: #000;
+        margin-top: -60px;
+        width:100%;
+        position: fixed;
+        bottom: 0;
+        color: #FFF;
+}
+</style>
+</head>
+
+<body>
+<div class="section">
+        <p>asdkjla</p>
+        <p>asdkjla</p>
+        <p>asdkjla</p>
+        <input type="button" id="test" value="test">
+</div>
+<div class="footer">我这里是footer</div>
+</body>
+</html>

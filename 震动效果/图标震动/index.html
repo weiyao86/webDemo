@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图标振动效果jQuery代码下载-素材中国一流素材网www.16sucai.com</title>
+<script src="js/jquery-1.5.1.min.js"></script>
+
+<script>
+$(function(){
+		 function state1(){
+			 $(".rotate").removeClass("r2"); 
+			 $(".rotate").addClass("r1");
+			 setTimeout(state2,90);
+		 }
+		function state2(){	   
+		     $(".rotate").removeClass("r1");
+		     $(".rotate").addClass("r2"); 
+			 setTimeout(state1,90);
+		}
+		state1();
+
+		//时钟制作思路:一分钟为60秒，一个圆为360°，所以平均每秒的转动角度为 360°/60 = 6°；
+		var a = 100;
+		var b = 100;
+		var r = 100;
+		for(var times=0; times<60; times++) {
+		      var hudu = (2*Math.PI / 360) * 6 * times;
+		       var X = a + Math.sin(hudu) * r;
+		       var Y = b - Math.cos(hudu) * r    //  注意此处是“-”号，因为我们要得到的Y是相对于（0,0）而言的。
+		        console.log("X:" + X + " Y:" + Y);
+		}
+})
+</script>
+<link href="images/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="dock">
+      <img src="images/Chrome.png" class="rotate" alt="图标振动效果"/>
+      <img src="images/FireFox.png" class="rotate" alt="图标振动效果"/>
+      <img src="images/IE.png" class="rotate" alt="图标振动效果"/>
+      <img src="images/Opera.png" class="rotate" alt="图标振动效果"/>
+      <img src="images/Safari.png" class="rotate" alt="图标振动效果"/>
+</div>
+<img  class="board" src="images/woodboard1.png" />
+</div>
+
+</body>
+</html>

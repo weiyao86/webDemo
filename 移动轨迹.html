@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <style type="text/css">
+        .divMove {
+            width: 200px;
+            height: 100px;
+            margin-right: 20px;
+            top: 100px;
+            border: 1px solid red;
+            float: left;
+            position: relative;
+            border-radius: 4%;
+            background-color: green;
+            z-index: 0;
+        }
+
+        #div_mouse {
+            width: 200px;
+            height: 100px;
+            top: 300px;
+            left: 200px;
+            border: 1px solid red;
+            filter: alpha(opacity=50);
+            float: left;
+            position: absolute;
+            border-radius: 4%;
+            background-color: green;
+            z-index: 2;
+        }
+
+        #div_mouseMove {
+            width: 200px;
+            height: 100px;
+            top: 300px;
+            left: 500px;
+            border: 1px solid red;
+            float: left;
+            position: absolute;
+            border-radius: 4%;
+            background-color: green;
+            z-index: 1;
+        }
+
+        .divMove span {
+            margin: 20px 70px;
+            display: inline-block;
+            float: left;
+            border: 2px solid black;
+        }
+
+        .divDock {
+            background-color: gray;
+            width: 200px;
+            height: 100px;
+            position: absolute;
+            left: 1000px;
+            top: 500px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            //alert("x" in {x:2});   //检测 属性X是否存在于对象中
+            //alert(3 in [3,4,9]);  //in 检测索引是否在数组中存在
+            //var d = new Date();
+            //alert(d instanceof Date);
+            //function testInstanceof() { return "instanceof"; }
+            //alert(testInstanceof instanceof Function);
+            //var array = [2, 3, 5];
+            //alert(array instanceof Array);   //instanceof 检测是否是类的实例
+            //function star() { alert("success"); }
+            //1 == 1 && star();
+            //alert(5 % 3); //求余 2
+
+
+            //star instanceof Function && star();
+
+            $("<span id='divtestID'>aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbccccccccccccccccdddddddddddeeeeeeeeeeee</span>").appendTo("body");
+            alert($("#divtestID").height() + '====' + $("#divtestID").width());
+
+
+            var targetX = 0, targetY = 0, nativeX = 0, nativeY = 0;
+
+            $(document).find("div:odd").css({ "backgroundColor": "yellow" });
+
+
+            // from current postion move to appoint postion  
+            function moveToAppoint(flag, $tarObj, $dock) {
+
+                if (!flag)
+                    return;
+                $tarObj.each(function (index, val) {
+
+                    $("#Text1").val(count++);
+                    var $this = $(val);
+                    var $move = $this.clone();
+
+                    var dorkOffset = $dock.offset();
+                    $move.css({ "position": "absolute", "left": $this.offset().left, "top": $this.offset().top }).appendTo("document,body");
+
+                    var moveOffset = $move.position();// $move.offset();
+
+                    $move.animate({ left: dorkOffset.left, top: -1, width: 30, height: 30, "borderRadius": "50%" }).css({ "background": "red" }).delay(100).slideDown({ left: dorkOffset.left, top: 0 })
+                            .delay(100).animate({ left: dorkOffset.left, top: dorkOffset.top - 50 }, 500,
+                       function () { $(this).css({ "filter": "alpha(opacity=70)" }) })
+                       .animate({ left: dorkOffset.left, top: dorkOffset.top }, function () {
+                           $(this).remove();
+                       });
+
+                });
+            }
+
+            $(".divMove").eq(0).click(function () {
+                var $this = $(this);
+                realize($this, true)
+            });
+
+            //同级元素按顺序执行动画
+            function realize($this, flag) {
+
+                var divNext = $this.next();
+                if (flag) {
+                    moveToAppoint(true, $this, $(".divDock"));
+                    setTimeout(function () { realize($this, false); }, 1000);
+                }
+                else if (divNext.length > 0) {
+                    moveToAppoint(true, divNext, $(".divDock"));
+                    setTimeout(function () { realize(divNext, false); }, 1000);
+                }
+                else {
+
+                    var d = $this.parent();
+                    setTimeout(function () { realize($this.parent().children().first(), $(".divDock"), true); }, 1000);
+                }
+            }
+
+            var count = 0;
+            //setInterval(function () { moveToAppoint(true, $(".divMove")); }, 2000);
+
+
+
+
+            //层移动
+            $("#div_mouse").bind("mousedown", function (e) { move(e, this); });
+            function move(e, sender) {
+                targetX = e.clientX;// $(sender).offset().left;
+                targetY = e.clientY;// $(sender).offset().top;
+                nativeX = e.clientX - (e.clientX - $(sender).offset().left);
+                nativeY = e.clientY - (e.clientY - $(sender).offset().top);
+                $(document).bind({
+                    mousemove: function (e) {
+                        var left = nativeX + e.clientX - targetX;
+                        var top = nativeY + e.clientY - targetY;
+                        $("#txtTestId").val(nativeX + "-----" + e.clientX);
+                        $(sender).css({ "left": left + "px", "top": top + "px" });
+                    },
+                    mouseup: function () {
+                        $(document).unbind(" mousemove");
+                    }
+                });
+            }
+
+            //单击移动到指定位置
+            $("#div_mouseMove").bind({
+                mousedown: function (e) {
+
+                    var $cloneObj = $(this).clone();
+                    $cloneObj.appendTo("document,body");
+                    move_Toappoint(e, $cloneObj, $("#div_Dock"));
+                }//,
+                //click: function () {
+                //    alert("ff");
+                //    moveToAppoint(true, $(this), $(".divDock"));
+                //}
+            });
+            //clone and drag to  appoint scope for element 
+            function move_Toappoint(e, sender, dock) {
+                targetX = e.clientX;
+                targetY = e.clientY;
+                nativeX = e.clientX - (e.clientX - $(sender).offset().left);
+                nativeY = e.clientY - (e.clientY - $(sender).offset().top);
+                $(document).bind({
+                    mousemove: function (e) {
+                        var left = nativeX + e.clientX - targetX;
+                        var top = nativeY + e.clientY - targetY;
+                        $("#txtTestId").val($(sender).offset().left + "-----" + top);
+                        $(sender).css({ "left": left + "px", "top": top + "px" });
+                    },
+                    mouseup: function () {
+
+                        var targetOffset = $(sender).offset(), otherOffset = $(dock).offset();
+                        var flagLeft = (targetOffset.left + $(sender).width() > otherOffset.left) && (targetOffset.left < otherOffset.left + $(dock).width());
+                        var flagtop = (targetOffset.top + $(sender).height() > otherOffset.top) && (targetOffset.top < otherOffset.top + $(dock).height());
+                        $("#txtTestId").val(flagLeft + "-----" + flagtop);
+                        if (flagLeft && flagtop) {
+                            $(sender).css("filter", "alpha(opacity=60)").animate({ "left": otherOffset.left, "top": otherOffset.top }, 1000).fadeOut(2000, function () {
+                                $(sender).remove();
+                            });
+                        }
+                        else
+                            $(sender).remove();
+                        $(document).unbind(" mousemove");
+
+                    }
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <div id="div_Id">
+
+        <div id="div_autoMove" class="divMove">
+            <span>
+                <input type="button" value="div_autoMove" /></span>
+        </div>
+        <div id="div1" class="divMove">
+            <span>
+                <input type="button" value="div_autoMove_1" /></span>
+        </div>
+        <div id="div2" class="divMove">
+            <span>
+                <input type="button" value="div_autoMove_2" /></span>
+        </div>
+        <div id="div3" class="divMove">
+            <span>
+                <input type="button" value="div_autoMove_3" /></span>
+        </div>
+    </div>
+    <div id="div_mouse">
+        <span>
+            <input type="button" value="MouseMove" /></span>
+    </div>
+
+    <div id="div_mouseMove">
+        <span>
+            <input type="button" value="MouseMoveAppendAppoint" /></span>
+    </div>
+
+    <div id="div_Dock" class="divDock">
+        <input type="text" value="" id="txtTestId" />
+    </div>
+    <input type="text" value="" id="Text1" />
+</body>
+</html>

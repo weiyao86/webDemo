@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*CSS*/
+        .wap1{ background:red; width:1004px; text-align:center; line-height:28px; font-size:12px; font-family:Arial, Helvetica, sans-serif;}
+        .con1{ text-align:left; width:500px; height:400px; margin:0px auto; padding:100px 50px;
+            background:rgba(255, 255, 255, 0.8) none repeat scroll 0 0 !important;/*实现FF背景透明，文字不透明*/
+            filter:Alpha(opacity=80); background:#fff;/*实现IE背景透明*/}
+        .con1 p{ position:relative;}/*实现IE文字不透明*/
+
+        .wap2{ background:red; width:1004px; height:400px; text-align:center; line-height:28px; font-size:12px; font-family:Arial, Helvetica, sans-serif; position:relative; }
+        .con2{ text-align:left; width:500px; height:400px; margin:0px auto; padding:100px 50px; position:absolute; left:0; top:0; background:#fff;  opacity:0.8; filter:Alpha(opacity=80);  }
+        .p2{ position:absolute; top:0; left:0; }
+    </style>
+
+    <script type="text/javascript">
+    	// 这个demo主要目的是比较arguments、函数定义和函数声明三种方式的一个优先级，从结果知道输出的是通过函数声明的方式定义的函数，从上一个实例得出的结论是arguments中变量会覆盖var方式定义的变量，这里arguments中的变量又被函数定义的方法覆盖了，那我们可以得到这样一个结论：将函数声明为变量(var t = function(){})的方式优先级最高，在预处理阶段被初始化，执行时会先被arguments中的变量覆盖，最后被通过函数定义(function t(){})创建的变量覆盖，这一过程完毕后程序才开始执行。
+    	function bar(t){
+    		t();
+    		
+    		function t(){alert(2)};
+    		var t =function(){alert(3);};
+    	}
+    	bar(function(){alert(1);});
+
+    	
+    </script>
+</head>
+<body>
+<!-- <div>方法一</div>
+<div class="wap1">
+    <div class="con1">
+        <p>CSS实现背景透明，文字不透明（各浏览器兼容）CSS实现背景透明
+        </p>
+    </div>
+</div>
+
+
+<div>方法二</div>
+<div class="wap2">
+    <div class="con2">
+
+    </div>
+    <p class="p2">
+        CSS实现背景透明，文字不透明（各浏览器兼容）CSS实现背景透明
+    </p>
+</div>
+ -->
+
+	<div style="width:300px;border:1px solid red;">
+		<!-- <img src="res/dsc_0723.jpg" alt="图片" width="150" heigth="150" style="float:left;"/> -->
+		<div style="width:150px;height:150px;float:left;">abcd</div>
+		<div>
+文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕文字环绕</div>
+</div>
+</body>
+</html>

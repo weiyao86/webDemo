@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        var _layer;
+        _layer = function (seletor, content) {
+            return new _layer.init(seletor, content);
+        };
+        _layer.prototype = {
+            init: function (seletor, content) {
+                var self = this,
+                    rquickExpr = /^(?:#([\w-]+)|\.([\w-]+)|(\w+))$/,
+                    elem,
+                    match;
+                if (!seletor)
+                    return this;
+
+
+            }
+        };
+
+
+        $(function () {
+
+            var c = $(".btn_b");
+           //$("#t1").focus();
+           //选中全部
+            document.execCommand("SelectAll");
+            //打开文件
+           document.execCommand("Open");
+            //网页另存为...
+            document.execCommand("SaveAs");
+            //据说是将定位的元素可拖动?
+           document.execCommand("2D-Position","false","true");
+
+            document.execCommand("CreateLink","false","http://www.baidu.com");
+            document.execCommand("Bold","false",null);
+            //$("#t2").focus();
+            //document.execCommand("Paste");
+            //
+            //
+            //
+            var docElem = window.document;
+            var iframe = docElem.createElement("iframe");
+            iframe.height = iframe.width =150;
+            docElem.body.appendChild(iframe);
+
+            if (iframe.contentWindow){
+                    iframe = iframe.contentWindow;
+            }else{
+                    if (iframe.contentDocument && iframe.contentDocument.document){
+                            iframe = iframe.contentDocument.document;
+                    }else{
+                            iframe = iframe.contentDocument;
+                    }
+            }
+
+            var img = document.createElement("img");
+            img.src = "res/IMG_0461.png";
+            iframe.document.open();
+            iframe.document.appendChild(img);
+            iframe.document.close();
+
+        });
+
+        function moveWin()
+          {
+              myWindow.moveTo(0,100);
+              myWindow.focus();
+          }
+        myWindow=window.open(window.location.href,'','width=200,height=100')
+        myWindow.document.write("This is 'myWindow'")
+    </script>
+</head>
+<body>
+    <div id="test">abcddd
+    <input type="text" id="t1" value="t11"><input type="text" id="t2" value="t22">
+    <input type="checkBox" id="id_1" checked="true">
+    <input type="button" value="Move 'myWindow'" onclick="moveWin()" />
+    </div>
+</body>
+</html>

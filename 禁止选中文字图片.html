@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	 <script src="Scripts/jquery-1.8.1.min.js"></script>
+	 <style type="text/css">
+		.unselectable{
+			-moz-user-select:none;
+			-webkit-user-select:none;
+			-ms-user-select:none;
+			user-select:none;
+			-webkit-user-drag:none;
+			user-drag:none;
+		}
+	</style>
+	<script type='text/javascript'>
+		$(function(){
+		
+			 $("#show_img_scope_info").add($("#txt_test")).addClass("unselectable").attr('unselectable', 'on').attr('draggable', false).on('dragstart', function () { return false; });
+		});
+	</script>
+</head>
+<body>
+	<img id='show_img_scope_info' src='res/psb_002.jpg'/>
+	<input id='txt_test' type="text" value='选不中我选不中我也拉不黑我.....' style="width:300px;">
+</body>
+</html>

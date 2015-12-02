@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	 <script src="Scripts/jquery-1.9.0.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#testBtn").on("click",function(){
+					var iframe=document.createElement("iframe");
+					//$("body").append(iframe);
+					// document.body.appendChild(iframe);
+					// iframe.id='a';
+					// iframe.name='a';
+					// iframe.src = "http://www.baidu.com";
+					
+					// if (document.frames) {
+	    //             	document.frames[id].name = id;
+	    //        		}
+	    // 			iframe=$('<iframe name="ee">');
+	    // 			iframe.attr("id",'a');
+	    // 			iframe.attr("name",'a');
+	    // 			iframe.appendTo("body");
+					// $(iframe).on("load",function(){
+					// 	alert('success11');
+					// });
+					var id='ff';
+					 var $iframe = $('<iframe name="' + id + '">');
+			            $iframe.attr({
+			                "id": id,
+			                "src": "http://localhost/citronepc/Order/Export?DealerGroup=sgmw&orderCode=SGMW-20141223172723-9869"
+			            });
+			            $("body").append($iframe);
+
+			            $iframe.on("load", function () {
+			                alert('t');
+			               
+			            });
+					
+				});
+
+			});
+			// window.onload=function(){
+			// 	var iframeHtml =document.createElement('iframe'),
+			// 		doc = document.body || document.documentElement;
+			// 	iframeHtml.src="iframe-sub.html";
+			// 	iframeHtml.id="iframeId";
+				
+			// 	on(iframeHtml,"load",function(){
+			// 		iframeLoad();
+			// 	});
+			// 	doc.appendChild(iframeHtml);
+
+			// };
+			// function iframeLoad(){
+			// 	alert("iframe加载完成");
+			// }
+			// function on(el,type,fun){
+
+			// 	if(window.attachEvent){
+			// 		el.attachEvent("on"+type,fun);
+			// 	}else if(window.addEventListener){
+			// 		el.addEventListener(type,fun,false);
+			// 	}
+			// }
+		</script>
+		<style type="text/css">
+			.deform{
+
+			}
+		</style>
+</head>
+<body>
+<p>当前是主窗体</p>
+<div></div>
+<input type="button" id="testBtn" value='iframe'/>
+</body>
+</html>

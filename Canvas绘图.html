@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--<meta http-equiv="refresh" content="20">-->
+    <!--自动刷新页面 -->
+    <!--<meta http-equiv="refresh" content="100;url=http://www.jb51.net">-->
+    <!--其中100指隔100秒后跳转到http://www.jb51.net页面 -->
+    <style type="text/css">
+        .tab1 { width: 300px; height: auto; border-collapse: collapse; }
+
+            .tab1 td, .tab1 th { border: 1px solid #ccc; padding: 5px; }
+        /* 利用表格样式 border-spacing:0px; 和表格与单元格背景色的不同来实现细边框。
+                 IE7及更早浏览器不支持border-spacing属性，可以通过table的标签属性cellspacing来替代。*/
+        .tab2 { width: 300px; height: 200px; background-color: #ccc; border-spacing: 1px; }
+
+            .tab2 td, .tab2 th { background-color: #fff; }
+
+        .toTop { position: fixed; border-radius: 50%; background-color: gray; right: 200px; bottom: 200px; box-shadow: 4px 5px 3px #808080; width: 80px; height: 80px; line-height: 80px; }
+        canvas { border: 1px solid #999; }
+    </style>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script src="Scripts/Libs/jquery.extend.js"></script>
+
+    <!--[if lt IE 9]>
+     <script src="Scripts/html5.js"></script>
+    <script src="Scripts/excanvas.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        $(function () {
+            //距形
+            var canvas = document.getElementById("square");
+            canvas.width = 20;// default width=350 height=140 canvas.setAttribute("width",'20')
+            canvas.setAttribute("height", '20');
+            var context = canvas.getContext("2d");
+            context.fillStyle = "#f00";
+
+            context.fillRect(0, 0, 20, 20);
+
+            //将canvas图像路径赋给Img显示 lt it 9 no support
+            var url = canvas.toDataURL(["image/jpeg"]);  //default png
+            $("#canvas_img").attr("src", url)
+
+            //圆形
+            var canvas1 = document.getElementById("circle");
+            context = canvas1.getContext("2d");
+            context.beginPath();
+            context.arc(15, 15, 15, 0, 2 * Math.PI, true);
+            context.fillStyle = "#00f";
+            context.closePath();
+            context.fill();
+
+            //线条
+            var canvasLine = document.getElementById("line");
+            context = canvasLine.getContext("2d");
+            context.moveTo(10, 10);
+            context.lineTo(150, 50);
+            context.lineTo(10, 50);
+            context.lineCap = 'round';//square (default butt)
+            context.lineJoin = 'round';// (default miter 尖角) bevel
+            context.lineWidth = '6';
+            context.stroke();
+
+            //渐变色
+            //线条
+            var canvasColor = document.getElementById("color");
+            context = canvasColor.getContext("2d");
+            var grd = context.createLinearGradient(0, 0, 175, 0);
+            grd.addColorStop(0, 'black');
+            grd.addColorStop(1, 'white');
+            context.fillStyle = grd;
+            context.fillRect(10, 20, 175, 55);
+
+            var canvasImg = document.getElementById("img_test");
+            context = canvasImg.getContext("2d");
+            //图像加载是异步,因此需要在图像加载完成后再code
+            preImage('res/psb_002.jpg', function () {
+                context.drawImage(this, 0, 0);
+            });
+
+            //重复图像,视频,画布...createPattern
+            var canvasRepeat = document.getElementById("canvas_img_t");
+            var ctx = canvasRepeat.getContext("2d");
+            preImage('res/tab-close.gif', function () {
+                var pat = ctx.createPattern(this, "repeat-x");
+                ctx.rect(0, 0, 120, 50);
+                ctx.fillStyle = pat;
+                ctx.fill();
+            });
+
+            //直线间的弧线
+            var canvasArc = document.getElementById("canvas_arc"),
+                ctxArc = canvasArc.getContext("2d");
+            ctxArc.beginPath();
+            ctxArc.moveTo(20, 20);
+            ctxArc.lineTo(120, 20);
+            ctxArc.arcTo(170, 20, 170, 70, 50);
+            ctxArc.lineTo(170, 120);
+            ctxArc.stroke();
+            //旋转弧度
+            //如需将角度转换为弧度，请使用 degrees*Math.PI/180 公式进行计算。
+            // 举例：如需旋转 5 度，可规定下面的公式：5*Math.PI/180。
+            var canvasRotate = document.getElementById("canvas_rotate"),
+                angle = 1,
+                ctxRotate = canvasRotate.getContext("2d");
+            var stest = setInterval(function () {
+                if (angle > 360) { return window.clearInterval(stest); }
+                console.log(angle);
+                ctxRotate.rotate(angle * Math.PI / 180);
+                ctxRotate.fillRect(300, 0, 10, 10);
+                angle++;
+            }, 100);
+
+
+            (function () {
+                //BY FORMAT DATE CUSTOM 
+                var $date = $("#now-date");
+                var now, date;
+                var forDate = function () {
+                    now = new Date();
+                    date = now.dateFormat("yyyy/MM/dd hh:mm:ss");
+                    $date.html(date);
+                }
+
+                setInterval(forDate, 1000);
+
+                //数组计算值
+                // console.log([1, 2, 2, 3].reduce(function (x, y) {
+                //     return x * y;
+                // }));
+                // //从右到左缩减数组
+                //  console.log([1, 2, 2, 3].reduceRight(function (x, y) {
+                //     return x / y;
+                // }));
+            })();
+        });
+
+
+        (function () {
+            function a(x, y, z, e) {
+                console.log("Function" + a.length);//形参
+                console.log("arguments" + arguments.length); //实参
+
+                a.caller;
+            }
+            a(2, 2, 3);
+
+        })();
+
+        function preImage(url, callback) {
+            var img = new Image();
+            img.src = url;
+            if (img.complete) {
+                return callback.call(img);
+            }
+            img.onload = function () {
+                callback.call(img);
+            };
+        }
+
+
+    </script>
+</head>
+<body style="height: 1500px;">
+    <!--begin canvas scope-->
+    <canvas id="square">square</canvas>
+    <img src="" id="canvas_img" />
+    <canvas id="circle">circle</canvas>
+    <canvas id="line">线</canvas>
+    <canvas id="color">渐变色</canvas>
+    <canvas id="img_test">将图片置于画布中</canvas>
+    <canvas id="canvas_img_t">图片重复</canvas>
+    <canvas id="canvas_arc">两条切线间添加弧线</canvas>
+    <canvas id="canvas_rotate">旋转角度</canvas>
+    <!--end canvas scope-->
+
+    <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2q2-s-Sju7Wasa__tam7r661t7Wus6y-9Lm1t-S5tA" style="text-decoration: none;">
+        <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" /></a>
+  
+    <label id="now-date"></label>
+    <div id="toTop" class="toTop">
+        To Top
+    </div>
+</body>
+</html>

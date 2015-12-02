@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        .noneHeight {
+            height: 4em;
+            line-height: 4em;
+            overflow: hidden;
+            border: 1px solid red;
+        }
+        .multi-line {
+            padding-top:20px;
+            padding-bottom:20px;
+            border: 1px solid gray;
+            width:200px;
+        }
+        .tb{
+            width:500px;height:300px;table-layout:fixed;border-collapse:collapse;
+        }
+        .tb td{
+            border:1px solid #ccc;
+        }
+    </style>
+    <script type='text/javascript'>
+    window.onload=function(){
+        var btn = document.getElementById('btnOpen');
+       
+        if(btn.attachEvent)
+             btn.attachEvent("onclick",open);
+         else if(btn.addEventListener)
+            btn.addEventListener("click",open,false);
+        function open(){
+             var w=window.screen.width,
+                h=window.screen.height;
+            window.showModalDialog('Canvas绘图.html','','dialogWidth='+w+'px;dialogHeight='+h+'px');
+        }
+        var cls=["FF","CC",99,66,33,00];
+        
+
+    };
+    </script>
+</head>
+<body>
+<input id='btnOpen' type='button' value="弹出模式窗口"/>
+    <div class="noneHeight" title='&#10 1. 同时支持块级和内联极元素;&#13 2. 支持所有浏览器;&#13 缺点：;&#10 1. 只能显示一行;'>
+        单行内容的居中
+         <!--     优点：
+        1. 同时支持块级和内联极元素
+        2. 支持所有浏览器
+        缺点：
+        1. 只能显示一行
+        2. IE中不支持img等的居中
+        要注意的是：
+        1. 使用相对高度定义你的 height 和 line-height
+        2. 不想毁了你的布局的话，overflow: hidden 一定要-->
+    </div>
+    <div class="multi-line">多行内容居中，且容器高度可变
+            <!--优点：
+            1. 同时支持块级和内联极元素
+            2. 支持非文本内容
+            3. 支持所有浏览器
+            缺点：容器不能固定高度-->
+
+    </div>
+
+</body>
+</html>

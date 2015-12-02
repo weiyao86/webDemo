@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/Libs/json2.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function () {
+
+            
+            //var div = document.getElementsByTagName("div");
+            //var field = div[0].getAttribute("data-field");
+            //field = JSON.stringify(field);
+            //alert(field);
+            //field=JSON.parse(field);
+            //alert(field);
+
+            var myThing = "{\"nullable\":false,\"customExp\":\"/^[1-9]+\\d*(?:\\.[1-9]+\\d*)*$\"/\"}";
+
+
+            var t = myThing.match(/,\"customExp:(.)*}$/);   //myThing.replace(/,\"customExp(.)*/, '}');
+            alert(t);
+
+            var reg = new RegExp('o', 'g'),
+                regW = /o/,
+                regWg=/o/g,
+                str = "hello wrold";
+            //测试字符串中是否存在正则表达式的匹配,返回boolean类型
+            //reg.test(str);
+            //返回数组类型(还有index input属性)
+            var r = reg.exec(str);
+            alert(r[0]);
+            //除了正则的方法外,有些字符串也可传入RegExp对象作为参数
+            //search() 方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。
+            //search() 方法不执行全局匹配，它将忽略标志 g。它同时忽略 regexp 的 lastIndex 属性，
+            //并且总是从字符串的开始进行检索，这意味着它总是返回 stringObject 的第一个匹配的位置
+            str.search(reg);
+            //match() 方法将检索字符串 str，以找到一个或多个与 regexp 匹配的文本。但regexp是否具有标志 g对结果影响很大。
+            var m1 = str.match(regW);
+            var m2 = str.match(regWg);
+            //关于strng对象的replace方法，我们最常用的时传入两个字符串的做法，但这种做法有个缺陷，只能replace一次
+            //replace方法的第一个参数还可以传入RegExp对象，传入正则表达式可以时replace方法更加强大灵活
+            str.replace(regW, 'replace');
+            //如果replace方法的第一个参数传入的是带分组的正则表达式，我们在第二个参数中可以使用$1...$9来获取相应分组内容，
+            //比如希望把字符串 1<%2%>34<%567%>89 的<%x%>换为$#x#$，我们可以这样
+            '1<%2%>34<%567%>89'.replace(/<%(\d+)%>/g, '@#$1#@');
+            //"1@#2#@34@#567#@89"
+            //第一个参数很简单，是匹配字符串
+            //第二个参数是正则表达式分组内容，没有分组则没有该参数
+            //第三个参数是匹配项在字符串中的index
+            //第四个参数则是原字符串
+            str.replace(regW, function (a, b, c, d) { });
+            //拆分成数组
+            str.split(' ');
+        };
+
+    </script>
+</head>
+<body>
+    <a href="http://www.cnblogs.com/dolphinX/p/3486136.html" target="_blank">参考网页</a>
+    <div data-field='{"row":"/^[1-9]+\d*(?:\.[1-9]+\d*)*$/"}'></div>
+</body>
+</html>

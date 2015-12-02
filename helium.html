@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="检测无用CSS工具/helium-css-master/helium.js"></script>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+
+        //对于setTimeout ,setInterval 参数只能传递字符串不能传递对象,做如下扩展,添加回调的方式
+        var _setTime = setTimeout;
+        window.setTimeout = function (callback, time, variable) {
+            var args =[].slice.call(arguments,2);
+            var cb = function () {
+                callback.apply(null, args);
+            };
+            _setTime(cb, time);
+        }
+        function add(obj) {
+            alert(obj.name);
+        }
+        window.setTimeout(add, 3000, {name:"zhangshan"});
+
+
+        $(function () {
+            //window.addEventListener('load', function () {
+            //    helium.init();
+
+            //    setTimeout(function () {
+            //        if (document.querySelector('#cssdetectTextarea')) {
+            //            document.querySelector('#cssdetectTextarea').innerHTML = '';
+            //        }
+            //    }, 1000);
+            //}, false);
+            $("#test").on("click", function (e) {
+                $("body").append($(this).attr("href"));
+                //e.preventDefault();
+                return false;
+            });
+            $(document).on("keyup", function (e) { alert(e.keyCode); });
+
+            var slt = document.getElementById("slt");
+            slt[1].style.backgroundColor = "red";
+            for (var i = 0; i < slt.length; i++) {
+                var option = slt[i];
+
+                (function (a) {
+                    option.onclick = function () {
+                        alert(a);
+                    };
+                })(i);
+            }
+
+            function applySt(variable) {
+                alert(variable);
+            }
+           
+            window.setInterval('move()', 1000);
+
+        });
+        function move() {
+            var container = document.getElementById("contain");
+            container.appendChild(container.firstChild);
+        }
+        
+    </script>
+    <style type="text/css">
+        #newslist {
+            background: #f7f7f7;
+            border: 1px solid silver;
+            padding: 1px;
+            height: 20px;
+            line-height: 20px;
+            width: 300px;
+        }
+
+        #contain {
+            font-size: 12px;
+            overflow: hidden;
+            list-style: none;
+            width: 300px;
+            height: 20px;
+            margin: 0px;
+            padding: 0;
+        }
+
+            #contain li {
+                height: 20px;
+                line-height: 20px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+    </style>
+</head>
+<body>
+    <a id="test" href="#">aaaaaaaaaaaaa</a>
+    <select id="slt">
+        <option value="a">aaa</option>
+        <option value="b">bbb</option>
+    </select>
+    <div id="newslist">
+        <ul id="contain">
+            <li><a href="http:/www.iwcn.net">温岚 - 屋顶(左右摆动)</a></li>
+            <li><a href="http:/www.iwcn.net">范玮琪 - 那些花儿</a></li>
+            <li><a href="http:/www.iwcn.net">张韶涵 - 娃娃</a></li>
+            <li><a href="http:/www.iwcn.net">孙楠&韩红 - 美丽的神话</a></li>
+            <li><a href="http:/www.iwcn.net">张信哲 - 白月光</a></li>
+        </ul>
+    </div>
+</body>
+</html>

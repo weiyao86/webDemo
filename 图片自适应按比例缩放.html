@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.0.js?_"+(new Date().getTime())></script>
+    <script type="text/javascript">
+        $.fn.extend({
+            // 图片加载成功
+            imagesLoaded: function (callback) {
+                var elems = this.filter('img'),
+                    len = elems.length,
+                    blank = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                elems.bind('load.imgloaded', function () {
+                    //图片加载完成并且图片路径非blank时调用回调,如果多张图则多张图全部加载完成后再调用回调
+                    
+                    if (--len <= 0 && this.src !== blank) {
+                        elems.unbind('load.imgloaded');
+                        callback.call(elems, this);
+                    }
+                }).each(function () {
+                    // cached images don't fire load sometimes, so we reset src.
+                    // 图片有时加载成功时不能清除缓存,所以我们重置路径
+                    if (this.complete || this.complete === undefined) {
+                        var src = this.src;
+                        // webkit hack from 
+                        // data uri bypasses webkit log warning (thx doug jones)
+                        this.src = blank;
+                        this.src = src;
+                    }
+                });
+
+                return this;
+            },
+
+            //此方法图片外部有容器时设置显示位置(居中显示)设置样式调整
+            adaptive: function () {
+                var self = this;
+                if (this.each) {
+                    return this.each(function (index, val) {
+
+                        var autoResizeImg = function () {
+                            var self = $(val),
+                                curWidth = self.parent().width() || self.width(),
+                                curHeight = self.parent().height() || self.height();
+
+                            var nativeImg = new Image();
+                            nativeImg.src = self.attr("src");
+
+                            var nativeWidth = nativeImg.width,
+                                nativeHeight = nativeImg.height,
+                                wRatio = curWidth / nativeWidth,
+                                hRatio = curHeight / nativeHeight,
+                                Ratio = 1;
+                            if (curWidth == 0 && curHeight == 0)
+                                Ratio = 1;
+                            else if (curWidth == 0) {
+                                if (hRatio < 1)
+                                    Ratio = hRatio;
+                            }
+                            else if (curHeight == 0) {
+                                if (wRatio < 1)
+                                    Ratio = wRatio;
+                            }
+                            else if (wRatio < 1 || hRatio < 1) {
+                                Ratio = wRatio <= hRatio ? wRatio : hRatio;
+                            }
+                            if (Ratio < 1) {
+                                nativeWidth = nativeWidth * Ratio;
+                                nativeHeight = nativeHeight * Ratio;
+                            }
+
+                            $(val).width(nativeWidth);
+                            $(val).height(nativeHeight);
+                            if ($(val).parent()) {
+                                $(val).css({
+                                    position: "relative",
+                                    left: ($(val).parent().width() - $(val).width()) / 2,
+                                    top: ($(val).parent().height() - $(val).height()) / 2
+                                });
+                            }
+                        }
+                        $(val).imagesLoaded(function () {
+                            autoResizeImg();
+                        });
+                    });
+                }
+            },
+
+            //此方法需要显示设置图片按什么尺寸进行缩放或图片默认有设置尺寸($("img").width())
+            autoResize: function (opts) {
+                var defaults = {
+                    width: 250,
+                    height: 250
+                },
+                opts = $.extend(true, {}, defaults, opts || {});
+                if (this.each) {
+                    return this.each(function (index, val) {
+                        var image = function () {
+                            var img = new Image(),
+                                self = $(val);
+                            img.src = self.attr("src");
+                            var nativeW = img.width,
+                                nativeH = img.height,
+                                curW = self.width() || opts.width,
+                                curH = self.height() || opts.height;
+                            if (nativeW && nativeH) {
+                                var ratio = 1;
+                                if (curW / nativeW < curH / nativeH) {
+                                    ratio = curW / nativeW
+                                } else
+                                    ratio = curH / nativeH
+                                if (ratio < 1) {
+                                    $(val).width(nativeW * ratio);
+                                    $(val).height(nativeH * ratio);
+                                }
+                            }
+                        }
+                        $(val).imagesLoaded(function () {
+                            image();
+                        });
+                    });
+                }
+            }
+        });
+
+
+
+        $(function () {
+            // $("#Img1").adaptive();
+            // alert($("#Img1").height() + '===' + $("#Img1").get(0).height);
+
+            $("img").imagesLoaded(function(){alert('success')});
+        });
+
+
+
+    </script>
+</head>
+<body>
+    <img src="res/psb.jpg" alt="" />
+    <div>
+        <img id="testImg" src="res/psb_002.jpg" alt="" style="width: 350px; height: 200px;" />
+        <img id="testImg1" src="res/psb_003.jpg" alt="" width="100" height="20" />
+        <img id="Img1" src="res/psb_004.jpg" alt="" style="width: 350px; height: 200px;" />
+    </div>
+
+</body>
+</html>

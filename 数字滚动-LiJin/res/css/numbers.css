@@ -1,0 +1,35 @@
+﻿body, html {
+	margin: 0px;
+	padding: 0px;
+}
+
+.backNumImg {
+	width: 390px;
+	height: 48px;
+	line-height: 55px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -27px -225px;
+	overflow: hidden;
+}
+
+	.backNumImg .container {
+		height: 100%;
+		margin-left: -55px;
+		background: url('../image/nobj.png') no-repeat;
+	}
+
+		.backNumImg .container img {
+			float: left;
+			width: 40px;
+			height: 100%;
+			/*background-attachment:fixed;*/
+			background-image: url('../image/jodometer-numbers-color.png');
+		}
+
+		.backNumImg .container .middle, .backNumImg .container .last {
+			float: left;
+			height: 100%;
+			margin-left: 13px;
+		}

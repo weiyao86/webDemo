@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="res/css/numbers.css" rel="stylesheet" />
+    <script src="res/js/jquery-1.8.1.min.js"></script>
+    <script src="res/js/jquery-plugin-backgroundPosition.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //1 484 101 147
+            var $imgList = $("#container img"),
+                backsPosition = {
+                    "0": { x: "0px", y: "-55px" },
+                    "1": { x: "0px", y: "-108px" },
+                    "2": { x: "0px", y: "-162px" },
+                    "3": { x: "0px", y: "-216px" },
+                    "4": { x: "0px", y: "-267px" },
+                    "5": { x: "0px", y: "-320px" },
+                    "6": { x: "0px", y: "-374px" },
+                    "7": { x: "0px", y: "-427px" },
+                    "8": { x: "0px", y: "-479px" },
+                    "9": { x: "0px", y: "-532px" }
+                };
+            (function () {
+                var showNumber = function () {
+                    $.get("http://www.xtools.cn:1900", function () {
+                        var jdNum = jd.substr(1).split("");
+                        console.log(jd.substr(1));
+                        $imgList.each(function (index, val) {
+                            var field = $(val).attr("data-field");
+                            calc($(val), field, jdNum);
+                        });
+                    }, "script");
+                }
+                var calc = function ($val, field, jdNum) {
+                    for (var i = 0, j; j = jdNum[i]; i++) {
+                        if (i + 1 == field) {
+                            if ($val.prop("data-val") && $val.prop("data-val") == j) {
+                                break;
+                            }
+                            $val.stop(false, true).animate({
+                                "backgroundPosition": backsPosition[j].x + " " + backsPosition[j].y
+                            }, "2000", function () {
+                                console.log("backgroundPosition:" + backsPosition[j].x + " " + backsPosition[j].y + "----" + $val.attr("data-field") + "---x:" + backsPosition[j].x + "---y:" + backsPosition[j].y);
+                            }).prop("data-val", j);
+
+                            break;
+                        }
+                    }
+                }
+                var clear;
+                $("#test").toggle(
+                     function () {
+                         $(this).html("结束");
+                         clear = window.setInterval(showNumber, 2000);
+                     },
+                    function () {
+                        $(this).html("开始接收");
+                        window.clearInterval(clear);
+                    }
+                   );
+            })();
+
+
+
+
+            (function () {
+                //测试绑定作用域
+                var test = {
+                    name: "this is a name",
+                    init: function () {
+                        var self = this;
+                        alert(self.name);
+                    }
+                };
+
+                $("#Button1").on("click", bindTest(test.init, test));
+
+                function bindTest(fn, container) {
+                    return function () {
+                        return fn.apply(container || this, arguments);
+                    }
+                }
+            })();
+        });
+
+
+    </script>
+</head>
+<body>
+    <button id="test" type="button">开始接收</button>
+    <button id="Button1" type="button">test</button>
+    <div class="backNumImg">
+        <div class="container" id="container">
+            <img style="width: 55px;" />
+            <img data-field="1" />
+            <img data-field="2" />
+            <img data-field="3" />
+            <div class="middle">
+                <img data-field="4" />
+                <img data-field="5" />
+                <img data-field="6" />
+            </div>
+            <div class="last">
+                <img data-field="7" />
+                <img data-field="8" />
+                <img data-field="9" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

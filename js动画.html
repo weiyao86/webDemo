@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script>
+function rand(min,max){
+return Math.round(min+(Math.random()*(max-min)));
+};
+var fade = function(element, transparency, speed, callback){//透明度渐变：transparency:透明度 0(全透)-100(不透)；speed:速度1-100，默认为1
+	if(typeof(element)=='string')element=document.getElementById(element);
+	if(!element.effect){
+		element.effect = {};
+		element.effect.fade=0;
+	}
+	clearInterval(element.effect.fade);
+	var speed=speed||1;
+	var start=(function(elem){
+		var alpha;
+		if(navigator.userAgent.toLowerCase().indexOf('msie') != -1){
+				alpha=elem.currentStyle.filter.indexOf("opacity=") >= 0?(parseFloat( elem.currentStyle.filter.match(/opacity=([^)]*)/)[1] )) + '':
+				'100';
+		}else{
+				alpha=100*elem.ownerDocument.defaultView.getComputedStyle(elem,null)['opacity'];
+		}
+		return alpha;
+	})(element);
+	if(window.console&&window.console.log)console.log('start: '+start+" end: "+transparency);
+	element.effect.fade = setInterval(function(){
+		start = start < transparency ? Math.min(start + speed, transparency) : Math.max(start - speed, transparency);
+		element.style.opacity =  start / 100;
+		element.style.filter = 'alpha(opacity=' + start + ')';
+		if(Math.round(start) == transparency){
+			element.style.opacity =  transparency / 100;
+			element.style.filter = 'alpha(opacity=' + transparency + ')';
+			clearInterval(element.effect.fade);
+			if(callback)callback.call(element);
+		}
+	}, 20);
+};
+var move = function(element, position, speed, callback){//移动到指定位置，position:移动到指定left及top 格式{left:120, top:340}或{left:120}或{top:340}；speed:速度 1-100，默认为10
+	if(typeof(element)=='string')element=document.getElementById(element);
+	if(!element.effect){
+		element.effect = {};
+		element.effect.move=0;
+	}
+	clearInterval(element.effect.move);
+	var speed=speed||10;
+	var start=(function(elem){
+		var	posi = {left:elem.offsetLeft, top:elem.offsetTop};
+		while(elem = elem.offsetParent){
+			posi.left += elem.offsetLeft;
+			posi.top += elem.offsetTop;
+		};
+		return posi;
+	})(element);
+	element.style.position = 'absolute';
+	var	style = element.style;
+	var styleArr=[];
+	if(typeof(position.left)=='number')styleArr.push('left');
+	if(typeof(position.top)=='number')styleArr.push('top');
+	element.effect.move = setInterval(function(){
+		for(var i=0;i<styleArr.length;i++){
+			start[styleArr[i]] += (position[styleArr[i]] - start[styleArr[i]]) * speed/100;
+			style[styleArr[i]] = start[styleArr[i]] + 'px';
+		}
+		for(var i=0;i<styleArr.length;i++){
+			if(Math.round(start[styleArr[i]]) == position[styleArr[i]]){
+				if(i!=styleArr.length-1)continue;
+			}else{
+				break;
+			}
+			for(var i=0;i<styleArr.length;i++)style[styleArr[i]] = position[styleArr[i]] + 'px';
+			clearInterval(element.effect.move);
+			if(callback)callback.call(element);
+		}
+	}, 20);
+};
+var resize = function(element, size, speed, callback){//长宽渐变：size:要改变到的尺寸 格式 {width:400, height:250}或{width:400}或{height:250}；speed:速度 1-100，默认为10
+	if(typeof(element)=='string')element=document.getElementById(element);
+	if(!element.effect){
+		element.effect = {};
+		element.effect.resize=0;
+	}
+	clearInterval(element.effect.resize);
+	var speed=speed||10;
+	var	start = {width:element.offsetWidth, height:element.offsetHeight};
+	var styleArr=[];
+	if(!(navigator.userAgent.toLowerCase().indexOf('msie') != -1&&document.compatMode == 'BackCompat')){
+		//除了ie下border-content式盒模型情况外，需要对size加以修正
+		var CStyle=document.defaultView?document.defaultView.getComputedStyle(element,null):element.currentStyle;
+		if(typeof(size.width)=='number'){
+			styleArr.push('width');
+			size.width=size.width-CStyle.paddingLeft.replace(/\D/g,'')-CStyle.paddingRight.replace(/\D/g,'');
+		}
+		if(typeof(size.height)=='number'){
+			styleArr.push('height');
+			size.height=size.height-CStyle.paddingTop.replace(/\D/g,'')-CStyle.paddingBottom.replace(/\D/g,'');
+		}
+	}
+	element.style.overflow = 'hidden';
+	var	style = element.style;
+	element.effect.resize = setInterval(function(){
+		for(var i=0;i<styleArr.length;i++){
+			start[styleArr[i]] += (size[styleArr[i]] - start[styleArr[i]]) * speed/100;
+			style[styleArr[i]] = start[styleArr[i]] + 'px';
+		}
+		for(var i=0;i<styleArr.length;i++){
+			if(Math.round(start[styleArr[i]]) == size[styleArr[i]]){
+				if(i!=styleArr.length-1)continue;
+			}else{
+				break;
+			}
+			for(var i=0;i<styleArr.length;i++)style[styleArr[i]] = size[styleArr[i]] + 'px';
+			clearInterval(element.effect.resize);
+			if(callback)callback.call(element);
+		}
+	}, 20);
+};
+</script></head>
+<body>
+	<div id="testDiv" style="position:absolute; right:100px; top:50px; background-color:#abc; width:100px; height:50px;padding:10px;" onclick="alert(this.style.filter)">
+		<div style="background-color:#369; height:100%;"></div>
+	</div>
+	<br/>
+	动画测试
+	<input type="button" value="改变大小"
+onClick="resize('testDiv', {width:rand(60,600),height:rand(30,300)})" />
+	<input type="button" value="改变宽度"
+onClick="resize('testDiv', {width:rand(60,600)})" />
+	<input type="button" value="改变高度"
+onClick="resize('testDiv', {height:rand(30,300)})" />
+
+	<input type="button" value="移动位置"
+onClick="move('testDiv', {left:rand(40,600),top:rand(40,400)})" />
+	<input type="button" value="水平移动"
+onClick="move('testDiv', {left:rand(40,600)})" />
+	<input type="button" value="垂直移动"
+onClick="move('testDiv', {top:rand(40,400)})" />
+
+	<input type="button" value="透明度变化"
+onClick="fade('testDiv', rand(5,100))" />
+
+	<input type="button" value="还原"
+onClick="var ele=document.getElementById('testDiv');clearInterval(ele.effect.move);clearInterval(ele.effect.fade);clearInterval(ele.effect.resize);ele.style.cssText='position:absolute; right:100px; top:50px; background-color:#abc; width:100px; height:50px;padding:10px;'" />
+</body>
+</html>

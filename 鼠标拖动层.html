@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>鼠标拖动层(可任意绑定DIV标签)（一） </title>
+    <script src="Scripts/myJsClass.js"></script>
+    <script src="Scripts/jquery-1.4.1.js"></script>
+    <script type="text/javascript">
+        //封装JS类
+        $(document).ready(function () {
+            //
+            //var o = new myClass();
+            //
+            var o = new my();
+            o.init();
+            o.load();
+            //var or = new Moduls.myClassTest();
+            //or.init();
+            //or.load();
+            //alert(or.name + "==" + or.age);
+            ////
+            //var oe = new Moduls.youClassTest();
+            //oe.init();
+            ////
+            //var ot = new my();
+            //ot.init();
+
+        });
+        /*
+        鼠标拖动层(可任意绑定DIV标签)（一）
+        作者:Anlige
+        联系方式:1034555083/zhanghuiguoanlige@126.com
+ 
+        调用方法:var myDrag=new Endrag(source,target,offSetX, offSetY);
+        参数说明:source--鼠标动作绑定对象;target--操作目标对象(要移动的对象);offSetX--横坐标偏移;offSetY--纵坐标偏移
+        说明:通过多次调用本方法绑定多个对象的拖动
+        */
+        funs = {
+            index: 100,
+            getFocus: function (target) {
+                if (target.style.zIndex != this.index) {
+                    this.index += 2;
+                    var idx = this.index;
+                    target.style.zIndex = idx;
+                }
+            },
+            abs: function (element) {
+                var result = { x: element.offsetLeft, y: element.offsetTop };
+                element = element.offsetParent;
+                while (element) {
+                    result.x += element.offsetLeft;
+                    result.y += element.offsetTop;
+                    element = element.offsetParent;
+                }
+                return result;
+            }
+        };
+
+        //声明类
+        //var Moduls = Moduls || {};
+        ////模块
+        //(function () {
+
+        ////初始化类
+        //    Moduls.myClass = function (config) {
+        //        this.id = config.id;
+        //        this.name = config.name;
+
+        //    };
+        //    //类 的方法体
+        //    Moduls.myClass.prototype = {
+
+        //        init: function () {
+        //            alert(this.name);
+        //        },
+        //        render: function(p) {
+        //        }
+        //    }
+        //   })();
+
+        //        window.onload = function () {
+        //            //loadClass();
+        //            //alert('ab');
+        //            alert(navigator.appName);
+        //            var config = { "id": "001", "name": "zhangsang" };
+        //            var myClass = new Moduls.myClass(config);
+        //            myClass.render("10001");
+
+        //        }
+        //navigator.appName:返回浏览器的名称,在基于Netscape的浏览器中，这个属性的值是”Netscape”。在IE中，这个属性的值是”Microsoft Internet Explorer”。其他浏览器可以正确地表示自己或者伪装成其他的浏览器以达到兼容性
+        function Endrag(source, target, offSetX, offSetY) {
+
+            source = typeof (source) == "object" ? source : document.getElementById(source);
+            target = typeof (target) == "object" ? target : document.getElementById(target);
+            var x0 = 0, y0 = 0, x1 = 0, y1 = 0, moveable = false, index = 100, NS = (navigator.appName == 'Netscape');
+            offSetX = typeof (offSetX) == "undefined" ? 0 : offSetX;
+            offSetY = typeof (offSetY) == "undefined" ? 0 : offSetY;
+            source.onmousedown = function (e) {
+
+                e = e ? e : (window.event ? window.event : null);
+                funs.getFocus(target);
+                var s = NS ? 1 : 0;
+                if (e.button == s) {//(NS ? 0 : 1)
+                    if (!NS) { this.setCapture() }
+                    x0 = e.clientX;
+                    y0 = e.clientY;
+                    x1 = parseInt(funs.abs(target).x);
+                    y1 = parseInt(funs.abs(target).y);
+                    moveable = true;
+                }
+            };
+            //拖动; 
+            source.onmousemove = function (e) {
+                e = e ? e : (window.event ? window.event : null);
+                if (moveable) {
+                    target.style.left = (x1 + e.clientX - x0 - offSetX) + "px";
+                    target.style.top = (y1 + e.clientY - y0 - offSetY) + "px";
+                }
+            };
+            //停止拖动; 
+            source.onmouseup = function (e) {
+                if (moveable) {
+                    if (!NS) { this.releaseCapture(); }
+                    moveable = false;
+                }
+            };
+        }//
+    </script>
+</head>
+<body onload="var i=new Endrag('hand','MoveDiv',0,0);var j=new Endrag('Div1','Div1',0,0);">
+    <div id="MoveDiv" style="position: absolute; left: 200px; top: 50px; width: 400px; height: 200px; border: 1px #dddddd solid;">
+        <div id="hand" style="line-height: 25px; text-align: center; background: #f00">
+            这个用子标签操作父标签
+        </div>
+        调用方法<br />
+        var i=new Endrag('hand','MoveDiv',0,0);<br />
+        第一个参数为源标签对象或对象id属性；第二个参数为要移动的目标对象或对象id属性；第3、4个参数为偏移值，供最后调整用;<br />
+        鼠标指针在红色区域才有效
+    </div>
+    <div id="Div1" style="background: #ffffff; position: absolute; left: 400px; top: 300px; width: 300px; height: 200px; border: 1px #dddddd solid;">
+        <div id="Div2" style="line-height: 25px; text-align: center; background: #f00">
+            这个用自标签操作自己
+        </div>
+        调用方法<br />
+        var j=new Endrag('Div1','Div1',0,0);<br />
+        第一个参数为源标签对象或对象id属性；第二个参数为要移动的目标对象或对象id属性；第3、4个参数为偏移值，供最后调整用；<br />
+        鼠标指针在Div1标签内就有效
+    </div>
+</body>
+</html>

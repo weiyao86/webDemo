@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+ul,ol,input,p{outline: none;margin:0;padding: 0;}
+input{padding: 2px 0;}
+.autocomplete-container{position:absolute;border:1px solid #ccc;height:200px;overflow:auto;display:none;font-family: 'Microsoft YaHei,Verdana,Arial,Helvetica,AppleGothic,sans-serif'}
+.autocomplete-ul{list-style: none;}
+.autocomplete-ul li{padding:5px;font-size:12px;}
+.autocomplete-ul li:nth-child(2n){background: #f2f2f2;}
+.autocomplete-ul li:hover{background: #d0cfcf;}
+.autocomplete-ul li.check{background: #ffe48d;}
+
+.autocomplete-block-msg{position: absolute;display: table;width: 100%;height: 100%;top:0;left:0;*position: absolute;*top:50%;*height:auto;z-index: 5;}
+.autocomplete-block-msg .block-panel{position: relative;display: table-cell;vertical-align:middle; *position: relative;*top:-50%;}
+.autocomplete-block-msg .block-panel .block-panel-content{margin:0 auto;background:#fff;color:#000;text-align:center;width:100px;border:2px solid #8c8c8c;border-radius:4px;}
