@@ -1,0 +1,13 @@
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+*.zip
+*.rar
+*.bak
+*.log
+node_modules
+bootstarp/node_modules
+bootstrap-3.3.5/node_modules
+jquery.jplayer.2.7.0.demo
