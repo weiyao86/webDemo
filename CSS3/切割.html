@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+		 .bb, .bb::before, .bb::after ,.bb1, .bb1::before, .bb1::after{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 50%;
+        }
+
+         .bb {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            color: #69ca62;
+            line-height: 200px;
+            text-align: center;
+            font-size: 20px;
+            box-shadow: inset 0 0 0 1px rgba(105, 202, 98, 0.5);
+        }
+
+         .bb::before, .bb::after {
+            content: '';
+            z-index: -1;
+            margin: -5%;
+            box-shadow: inset 0 0 0 2px;
+            animation: clipMe 8s linear infinite;
+        }
+
+         .bb::before {
+
+            animation-delay: -4s;
+        }
+
+        @keyframes clipMe {
+            0%, 100% {
+                clip: rect(0px, 220px, 2px ,0px);
+            }
+            25% {
+                clip: rect(0px, 2px, 220px, 0px);
+            }
+            50% {
+                clip: rect(218px, 220px, 220px, 0px);
+            }
+            75% {
+                clip: rect(0px, 220px, 220px, 218px);
+            }
+
+        }
+
+
+         .bb1 {
+            width: 150px;
+            height: 150px;
+            margin: auto;
+            color: #69ca62;
+            line-height: 150px;
+            text-align: center;
+            font-size:80px;
+            box-shadow: inset 0 0 0 1px rgba(105, 202, 98, 0.5);
+        }
+
+         .bb1::before, .bb1::after {
+            content: '';
+            z-index: -1;
+            margin: -5%;
+            box-shadow: inset 0 0 0 2px;
+            animation: clipMe_one 8s linear infinite;
+        }
+
+         .bb1::before {
+
+            animation-delay: -4s;
+        }
+
+        @keyframes clipMe_one {
+            0%, 100% {
+                clip: rect(0px, 170px, 2px ,0px);
+            }
+            75% {
+                clip: rect(0px, 2px, 170px, 0px);
+            }
+            50% {
+                clip: rect(168px, 170px, 170px, 0px);
+            }
+            25% {
+                clip: rect(0px, 170px, 170px, 168px);
+            }
+        }
+
+	.clip{
+		 position: absolute;
+	            top: 10px;
+	            left: 10px;
+	            background: #eef;
+	            border:1px solid red;
+	            margin:auto;
+	            width:300px;
+	            height:300px;
+	            text-align: center;
+	            line-height: 300px;
+	            clip:rect(30px 30px 50px auto);
+
+		}
+
+		.clip1{
+		 position: absolute;
+	            top: 10px;
+	            right: 10px;
+	            background: #eef;
+	            border:1px solid red;
+	            margin:auto;
+	            width:300px;
+	            height:300px;
+
+		}
+
+		.test{
+			width:300px;
+            height:300px;
+            border:1px solid red;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 300px;
+            font-size:150px;
+            box-shadow: inset 0 0 10px rgba(255,0,0,.6);
+			animation: animate 4s linear infinite;
+		}
+
+		@keyframes animate{
+            0% {
+                 transform:rotate(60deg);
+            }
+            20% {
+                 transform:rotate(120deg);
+            }
+            40% {
+                 transform:rotate(180deg);
+            }
+            60% {
+                 transform:rotate(240deg);
+            }
+            80% {
+                 transform:rotate(300deg);
+            }
+            100%{
+                transform:rotate(360deg);
+            }
+		}
+	</style>
+</head>
+<body>
+<div class="test">test</div>
+<div class="bb">Loading..</div>
+<div class="bb1"></div>
+<div class="clip">看看被剪切后的效果</div>
+<div class="clip1">		
+	<p>上-左 方位的裁剪：从0开始剪裁直到设定值，即 上-左 方位的auto值等同于0； </p>
+	<p>右-下 方位的裁剪：从设定值开始剪裁直到最右边和最下边，即 右-下 方位的auto值为盒子的实际宽度和高度；</p></div>
+</body>
+</html>
