@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src='js/lib/jquery-1.8.2.js'></script>
+    <style type='text/css'>
+		body {padding:0;margin:0;}
+		html,body{height:100%;}
+    </style>
+    <script type='text/javascript'>
+        $(function () {
+
+            //$("#imgTest").on("load", function () {
+            //    alert('load');
+            //}).attr("src", "style/res/images/01.jpg");
+
+            var count = 1,
+            btnTest = document.getElementById("btnTest");
+
+            btnTest.onclick = function myfunction() {
+                count > 4 && (count = 1);
+                //img.src = "style/res/images/0" + (count++) + ".jpg";
+                img = new Image()
+                img.src = "style/res/images/01.jpg";
+                finish(img);
+            }
+
+            function finish(img) {
+
+                if (img.complete || typeof img.complete === undefined) {
+                    return alert('cache:--width:' + img.width);
+                }
+                img.onload = function () {
+                    alert('load' + img.src);
+                };
+            }
+            var rect = document.getElementById("rect"), distance = 1, c = null;
+
+            c = setInterval(function () {
+                //rect.style.width = distance + '%';
+                $(rect).animate({ width: distance + '%' });
+                //distance == 100 && clearInterval(c);
+                distance < 100 && (distance += Math.floor(Math.random() * (10 - 1) + 1));
+                distance >= 100 && (distance = 0);
+            }, 35);
+        });
+
+    </script>
+</head>
+<body>
+    <!-- <img id='imgTest' src="style/res/images/04.jpg" alt=""> -->
+    <input type="button" value="TEST" id="btnTest" />
+    <div style="width: 80%; height:20px; position: fixed; top: 45%; left: 10%; background:#898989;border-radius:4px;">
+        <div id="rect" style="background: url('style/res/images/arrow.jpg') repeat scroll center center; height: 100%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;">我是调皮的进度条</div>
+    </div>
+    <img src="style/res/images/13221810.gif" alt="">
+<!-- 
+    <div style='width:100%;position:absolute;top:50%;border:1px solid red;'>
+    	<div style='position:relative;top:-50%;width:100%;border:1px solid black;'>
+    		
+    	关于 CSS 的未知高度水平垂直居中问题 keleyi.com关于 CSS 的未知高度水平垂直居中问题 keleyi.com关于 CSS 的未知高度水平垂直居中问题 keleyi.com关于 CSS 的未知高度水平垂直居中问题 keleyi.com关于 CSS 的未知高度水平垂直居中问题 keleyi.com关于 CSS 的未知高度水平垂直居中问题 keleyi.com关于 CSS 的未知高度水平垂直居中问题 keleyi.com <a href="http://keleyi.com/a/bjac/gbb2ftv3.htm">原文</a><br />
+    	</div>
+    </div> -->
+</body>
+</html>

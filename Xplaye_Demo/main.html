@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Xplaye</title>
+	<link rel="stylesheet" href="style/main.css">
+	<script type="text/javascript">
+	var num =1;
+	function addEvent(obj,type,fn){
+		if(obj.addEventListener){
+			obj.addEventListener(type,fn,false);
+		}else{
+			if(!obj.events)obj.events={};
+			if(!obj.events[type]){
+					obj.events[type]=[];
+					//obj["on"+type] && (obj.events[type][0]=fn);
+				}
+			obj.events[type][num++]=fn;
+			obj["on"+type]=function(){
+				for(var i in obj.events[type]){
+					obj.events[type][i]();
+				}
+			};
+
+		}
+	}
+
+	window.onload=function(){
+		var btn = document.getElementById('BtnTest');
+		addEvent(btn,"click",fn1);
+		addEvent(btn,"click",fn2);
+		addEvent(btn,"click",fn3);
+
+		function fn1(){
+			alert('1');
+		}
+		function fn2(){
+			alert('2');
+		}
+
+		function fn3(){
+			alert('3');
+		}
+
+
+	}
+
+	</script>
+</head>
+<body>
+	<div class='great-wrap'></div>
+	<footer>bb</footer>
+	<input type="button" value="BtnTest" id="BtnTest">
+</body>
+</html>
