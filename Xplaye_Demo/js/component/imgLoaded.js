@@ -13,7 +13,6 @@
 
 // blank image data-uri bypasses webkit log warning (thx doug jones)
 var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-var cd=0;
 $.fn.imagesLoaded = function(callback) {
 	var $this = this,
 		deferred = $.isFunction($.Deferred) ? $.Deferred() : 0,
@@ -207,6 +206,8 @@ ImgLoaded = null;
 			style.position = "absolute";
 			style.top = 0;
 			style.left = 0;
+			style.right=0;
+			style.bottom=0;
 			style.width = self.getGlobalSize().bodyW + "px";
 			style.height = self.getGlobalSize().bodyH + "px";
 			style.zIndex = 9999;
@@ -295,34 +296,28 @@ ImgLoaded = null;
 				broken = [],
 				speed;
 
-			$imgSrcList.imagesLoaded().done(function() {
+			$imgSrcList.imagesLoaded().done(function($that) {
 				console.log('done');
-			}).fail(function() {
-				console.log('fail')
+			}).fail(function($that, $proper, $broken) {
+				var brokenList = [];
+				$.each($broken, function(idx, val) {
+					brokenList[idx] = "\n\t图片：" + $(val).attr("src") + "加载失败!";
+				});
+				brokenList.length && console.log(brokenList.join(''));
 			}).progress(function(isBroken, $images, $proper, $broken) {
 				speed = ($proper.length + $broken.length) / $images.length * 100;
-				broken = $broken.get();
-
-				// bar.style.width = speed + "%"
-				// var broken = $.data($broken.get(0), 'imagesLoaded');
-				//console.log('abcd'+$images.length+'====='+($proper.length + $broken.length));
-			}).always(function() {
+			}).always(function($that, $poper, $broker) {
 				speed = 100;
 				$rotateImg.adaptive();
 				$("#pxs_thumbnails").adaptive();
 			});
-var c=0;
+
 			clear = setInterval(function() {
-				
+
 				if (speed == undefined) return;
 				if (self.counter <= speed) {
 					bar.style.width = (++self.counter) + "%";
 				} else if (speed == 100) {
-					var brokenList = [];
-					$.each(broken, function(idx, val) {
-						brokenList[idx] = "\n\t\n\t图片：" + $.data($(val).get(0), 'imagesLoaded').src + "加载失败!";
-					});
-					brokenList.length && alert(brokenList.join(''));
 					self.unblockUI();
 					self.unprogressBar();
 					setTimeout(function() {
