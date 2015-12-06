@@ -151,7 +151,7 @@ img { border:none; }
 		$img.imagesLoaded({
 			progress: function(isbroker, $images, $proper, $broker) {
 				speed = ($proper.length + $broker.length) / $images.length * 100;
-				console.log("共" + $images.length + "张图片，正在加载第" + ($proper.length + $broker.length) + "张")
+				console.log("共" + $images.length + "张图片，正在加载第" + ($proper.length + $broker.length) + "张"+speed)
 			},
 			done: function($that) {
 				console.log("success");
