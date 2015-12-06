@@ -273,7 +273,7 @@ ImgLoaded = null;
 			//style.backgroundColor = "#898989";
 			style.borderRadius = "4px";
 			doc.body.appendChild(self.BARPANEL);
-			self.BARPANEL.innerHTML = "<div id='rect' style='background:#f00 url(../style/res/images/arrow.jpg) repeat scroll center center; height: 30%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;'></div>";
+			self.BARPANEL.innerHTML = "<div id='rect' style='background:#f00 url(../style/res/images/arrow.jpg) repeat scroll center center; height: 30%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;box-shadow:0 0 25px;'></div>";
 		},
 
 		progress: function() {

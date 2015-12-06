@@ -45,6 +45,16 @@ img { border:none; }
 	position: fixed;bottom:-40px;line-height:40px;border-radius: 4px;box-shadow: inset 0 0 10px rgba(0,0,0,.5);text-shadow:1px 1px 1px rgba(0,0,0,.3);font-size: 24px;color:#fff;background: #99f;width:100%;z-index: 3;transition:all 1s ease-in 0s;
 }
 .fixed-bg-self{;bottom:0;transition:all .4s ease-in 0s}
+.made{
+	position: fixed;
+	top:0;
+	left:0;
+	right: 0;
+	bottom: 0;
+	background: #000;
+	opacity: .95;
+	z-index: 1000;
+}
 </style>
 </head>
 
@@ -107,79 +117,158 @@ img { border:none; }
 
 <div id="showImg" class="show"></div>
 <div class="fixed-bottom"></div>
+<div class="made"></div>
 
     <script src="Scripts/Libs/jquery-1.8.1.min.js"></script>
     <script src="Scripts/Plugin/Loupe.js"></script>
+    <script src="Scripts/Plugin/imageLoaded.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		var lis = $(".case-list li"),timer=null;
+	var lis = $(".case-list li"),
+		timer = null,
+		barpanel = null,
+		speed, counter = 0;
 
-		function waterfall(){
-			var cases = $(".case-list li");
-			var case_h = [[],[],[],[]];
-			var sum = [0,0,0,0];
-			var step;
-			$.each(cases, function(i){
-				var m = i%4;
-				step = Math.floor(i/4);
-				cases.eq(i).css("left", 220*m+"px");
-				case_h[m].push(cases.eq(i).outerHeight(true));
-				if(!step){
-					cases.eq(i).css("top", "0");
-				}else{
-					var num = 0;
-					for(var n=0; n<step; n++){
-						num += case_h[m][n]+20;
-					}
-					cases.eq(i).css("top", num+"px");
-				}
-			});
-		
-			$(case_h).each(function(i){
-				$(case_h[i]).each(function(j){
-					sum[i] += case_h[i][j];
+	function createProgress() {
+		barpanel = document.createElement("div");
+		var style = barpanel.style;
+		style.width = "100%";
+		style.height = "20px";
+		style.position = "fixed";
+		style.zIndex = 10000;
+		style.top = "70%";
+		style.left = "0";
+		//style.backgroundColor = "#898989";
+		style.borderRadius = "4px";
+		document.body.appendChild(barpanel);
+		barpanel.innerHTML = "<div id='rect' style='background:#ccc url(res/arrow.jpg) repeat scroll center center; height: 30%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;box-shadow:0 0 20px;'></div>";
+	}
+	createProgress();
+
+	function showmade($img) {
+		$(".made").show();
+
+		$img.imagesLoaded({
+			progress: function(isbroker, $images, $proper, $broker) {
+				speed = ($proper.length + $broker.length) / $images.length * 100;
+				console.log("共" + $images.length + "张图片，正在加载第" + ($proper.length + $broker.length) + "张")
+			},
+			done: function($that) {
+				console.log("success");
+			},
+			always: function(isbroker, $images, $proper, $broker) {
+				var clear = setInterval(function() {
+
+					if (speed == undefined) return;
+					if (counter <= speed) {
+						barpanel.childNodes[0].style.width = (counter++) + "%";
+					} else if (speed == 100) {
+						$(".made").hide();
+						$(barpanel).hide();
+						clearInterval(clear);
+					} else clearInterval(clear);
+				}, 30);
+
+			},
+			fail: function($that, $proper, $broken) {
+				var arr = [];
+				$broken.each(function(idx, val) {
+					arr.push(val.src);
 				});
-			});
-			cases.parent().css({"height": sum.sort(function(a,b){return a<b?a:-1})[0]+(step+1)*20+100+"px"});
-			console.log(sum);
-			 $.Loupe(".case-list",{
-		 			large:"#large",
-	                fixed: "#showImg",
-	                isScroll:false,
-	                isBackground:true,
-	                isShowInnerImg:true,
-	                iscursorFollow:true,
-	                filter:['default.png']
-	            });
-		}
+				$fail.html(arr.join("<br/>"));
 
-		$(window).on("scroll",function(){
-		 	var wh=$(this).height(),
-			 	wsh=$(this).scrollTop(),
-			 	dh=$(document).height();
+			}
+		});
+	}
 
-			 if(dh == (wh+wsh)){
-			 	if(timer){
-			 		window.clearTimeout(timer);
-			 	}
-			 	$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
-			 	timer = window.setTimeout(function(){
-
-			 		var $clone =lis.clone().removeAttr("style");
-			 		$clone.sort(function(a,b){
-			 			var rad=Math.random();
-			 			return rad >0.5;
-			 		});
-
-			 		$(".case-list").append($clone);
-			 		waterfall();
-			 		$(".fixed-bottom").removeClass("fixed-bg-self");
-			 	},2000);
-			 }
+	function waterfall() {
+		var cases = $(".case-list li");
+		var case_h = [
+			[],
+			[],
+			[],
+			[]
+		];
+		var sum = [0, 0, 0, 0];
+		var step;
+		$.each(cases, function(i) {
+			var m = i % 4;
+			step = Math.floor(i / 4);
+			cases.eq(i).css("left", 220 * m + "px");
+			case_h[m].push(cases.eq(i).outerHeight(true));
+			if (!step) {
+				cases.eq(i).css("top", "0");
+			} else {
+				var num = 0;
+				for (var n = 0; n < step; n++) {
+					num += case_h[m][n] + 20;
+				}
+				cases.eq(i).css("top", num + "px");
+			}
 		});
 
-		waterfall();
+		$(case_h).each(function(i) {
+			$(case_h[i]).each(function(j) {
+				sum[i] += case_h[i][j];
+			});
+		});
+		cases.parent().css({
+			"height": sum.sort(function(a, b) {
+				return a < b ? a : -1
+			})[0] + (step + 1) * 20 + 100 + "px"
+		});
+		console.log(sum);
+		$.Loupe(".case-list", {
+			large: "#large",
+			fixed: "#showImg",
+			isScroll: false,
+			isBackground: true,
+			isShowInnerImg: true,
+			iscursorFollow: true,
+			filter: ['default.png']
+		});
+	}
+
+	$(window).on("scroll", function() {
+		var wh = $(this).height(),
+			wsh = $(this).scrollTop(),
+			dh = $(document).height();
+
+		if (dh == (wh + wsh)) {
+			if (timer) {
+				window.clearTimeout(timer);
+			}
+			$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
+			timer = window.setTimeout(function() {
+				var  $clone;
+				var later = function() {
+					var deferred=$.Deferred();
+					setTimeout(function() {
+						$clone = lis.clone().removeAttr("style");
+						$clone.sort(function(a, b) {
+							var rad = Math.random();
+							return rad > 0.5;
+						});
+
+						$(".case-list").append($clone);
+						deferred.resolve();
+					}, 200);
+					return deferred.promise();
+				};
+
+				$.when(later()).then(function() {
+					showmade($clone.find("img"));
+					waterfall();
+					$(".fixed-bottom").removeClass("fixed-bg-self");
+				});
+			}, 2000);
+		}
 	});
+
+	showmade($("img"));
+
+	waterfall();
+});
 
 	</script>
 </body>
