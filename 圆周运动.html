@@ -43,7 +43,7 @@ function circle(id,R,speed,time){
         var demo=document.getElementById(id),
             x=demo.offsetLeft,
             y=demo.offsetTop,
-            step =1,
+            step =3,
             r=1,
             c=2*Math.PI/360,
             hudu,
@@ -67,32 +67,10 @@ function circle(id,R,speed,time){
                 step++;
         },15);
 }
-// circle("demo",300,1);
-// circle("demo1",300,2);
-// circle("demo3",300,3);
+circle("demo",300,1);
+circle("demo1",300,2);
+circle("demo3",300,3);
 
-var i=0,c=0;
-window.onscroll=function(){
-        if(this.timer)
-            clearTimeout(this.timer);
-        i++;
-        this.timer=setTimeout(function(){
-        console.log("我进来 了"+i);
-        },1000)
-    };
-
-    $(function(){
-        $(window).on("scroll",function(){
-            var scrollTop = $(this).scrollTop();
-            var scrollHeight = $(document).height();
-            var windowHeight = $(this).height();
-            if(scrollHeight == scrollTop+windowHeight){
-                c++;
-                $(document.body).append("<h1>我是追加的内容--"+c+"--</h1>");
-            }
-        });
-
-    });
 </script>
 
 </body>
