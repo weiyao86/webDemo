@@ -55,6 +55,43 @@ img { border:none; }
 	opacity: .95;
 	z-index: 1000;
 }
+
+.loading,.loading:after,.loading:before{
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
+            z-index: 1000;
+            color:#fff;
+        }
+        .loading{width:100px;height:100px;text-align: center;line-height: 100px;font-size: 20px;}
+        .loading:after,.loading:before{
+            border-radius: 110%;
+            border:10px solid transparent;
+            border-top-color:#fff;
+            width:100px;
+            height:100px;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0) inset;
+            content: "";
+        }
+        .loading:before{
+             border-color:#888;
+            /*animation:before 1s linear infinite;*/
+        }
+        .loading:after{
+            animation:before 1s linear infinite;
+        }
+
+        @keyframes before{
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
+         @keyframes after{
+            0%{transform:rotate(360deg);}
+            100%{transform:rotate(0deg);}
+        }
 </style>
 </head>
 
@@ -111,164 +148,176 @@ img { border:none; }
 		<li data-field="loupe"><img src="res/psb_025.jpg" alt="psb_025.jpg" data-target="self"></li>
 		<li data-field="loupe"><img src="res/psb_026.jpg" alt="psb_026.jpg" data-target="self"></li>
 		<li data-field="loupe"><img src="res/psb_027.jpg" alt="psb_027.jpg" data-target="self"></li>
-		<li data-field="loupe"><img src="res/psb_028.jpg" alt="psb_028.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="res/psb_0285.jpg" alt="psb_028.jpg" data-target="self"></li>
 	</ul>
 </div>
 
 <div id="showImg" class="show"></div>
 <div class="fixed-bottom"></div>
 <div class="made"></div>
-
+<div class="loading">Loading..</div>
     <script src="Scripts/Libs/jquery-1.8.1.min.js"></script>
     <script src="Scripts/Plugin/Loupe.js"></script>
     <script src="Scripts/Plugin/imageLoaded.js"></script>
 	<script type="text/javascript">
-	$(function(){
-	var lis = $(".case-list li"),
-		timer = null,
-		barpanel = null,
-		speed, counter = 0;
+	$(function() {
+		var lis = $(".case-list li"),
+			timer = null,
+			barpanel = null,
+			speed, counter = 0;
 
-	function createProgress() {
-		barpanel = document.createElement("div");
-		var style = barpanel.style;
-		style.width = "100%";
-		style.height = "20px";
-		style.position = "fixed";
-		style.zIndex = 10000;
-		style.top = "70%";
-		style.left = "0";
-		//style.backgroundColor = "#898989";
-		style.borderRadius = "4px";
-		document.body.appendChild(barpanel);
-		barpanel.innerHTML = "<div id='rect' style='background:#ccc url(res/arrow.jpg) repeat scroll center center; height: 30%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;box-shadow:0 0 20px;'></div>";
-	}
-	createProgress();
-
-	function showmade($img) {
-		$(".made").show();
-
-		$img.imagesLoaded({
-			progress: function(isbroker, $images, $proper, $broker) {
-				speed = ($proper.length + $broker.length) / $images.length * 100;
-				console.log("共" + $images.length + "张图片，正在加载第" + ($proper.length + $broker.length) + "张"+speed)
-			},
-			done: function($that) {
-				console.log("success");
-			},
-			always: function(isbroker, $images, $proper, $broker) {
-				var clear = setInterval(function() {
-
-					if (speed == undefined) return;
-					if (counter <= speed) {
-						barpanel.childNodes[0].style.width = (counter++) + "%";
-					} else if (speed == 100) {
-						$(".made").hide();
-						$(barpanel).hide();
-						clearInterval(clear);
-					} else clearInterval(clear);
-				}, 30);
-
-			},
-			fail: function($that, $proper, $broken) {
-				var arr = [];
-				$broken.each(function(idx, val) {
-					arr.push(val.src);
-				});
-				$fail.html(arr.join("<br/>"));
-
-			}
-		});
-	}
-
-	function waterfall() {
-		var cases = $(".case-list li");
-		var case_h = [
-			[],
-			[],
-			[],
-			[]
-		];
-		var sum = [0, 0, 0, 0];
-		var step;
-		$.each(cases, function(i) {
-			var m = i % 4;
-			step = Math.floor(i / 4);
-			cases.eq(i).css("left", 220 * m + "px");
-			case_h[m].push(cases.eq(i).outerHeight(true));
-			if (!step) {
-				cases.eq(i).css("top", "0");
-			} else {
-				var num = 0;
-				for (var n = 0; n < step; n++) {
-					num += case_h[m][n] + 20;
-				}
-				cases.eq(i).css("top", num + "px");
-			}
-		});
-
-		$(case_h).each(function(i) {
-			$(case_h[i]).each(function(j) {
-				sum[i] += case_h[i][j];
-			});
-		});
-		cases.parent().css({
-			"height": sum.sort(function(a, b) {
-				return a < b ? a : -1
-			})[0] + (step + 1) * 20 + 100 + "px"
-		});
-		console.log(sum);
-		$.Loupe(".case-list", {
-			large: "#large",
-			fixed: "#showImg",
-			isScroll: false,
-			isBackground: true,
-			isShowInnerImg: true,
-			iscursorFollow: true,
-			filter: ['default.png']
-		});
-	}
-
-	$(window).on("scroll", function() {
-		var wh = $(this).height(),
-			wsh = $(this).scrollTop(),
-			dh = $(document).height();
-
-		if (dh == (wh + wsh)) {
-			if (timer) {
-				window.clearTimeout(timer);
-			}
-			$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
-			timer = window.setTimeout(function() {
-				var  $clone;
-				var later = function() {
-					var deferred=$.Deferred();
-					setTimeout(function() {
-						$clone = lis.clone().removeAttr("style");
-						$clone.sort(function(a, b) {
-							var rad = Math.random();
-							return rad > 0.5;
-						});
-
-						$(".case-list").append($clone);
-						deferred.resolve();
-					}, 200);
-					return deferred.promise();
-				};
-
-				$.when(later()).then(function() {
-					showmade($clone.find("img"));
-					waterfall();
-					$(".fixed-bottom").removeClass("fixed-bg-self");
-				});
-			}, 2000);
+		function createProgress() {
+			barpanel = document.createElement("div");
+			var style = barpanel.style;
+			style.width = "100%";
+			style.height = "20px";
+			style.position = "fixed";
+			style.zIndex = 10000;
+			style.top = "70%";
+			style.left = "0";
+			//style.backgroundColor = "#898989";
+			style.borderRadius = "4px";
+			document.body.appendChild(barpanel);
+			barpanel.innerHTML = "<div id='rect' style='background:#ccc url(res/arrow.jpg) repeat scroll center center; height: 30%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;box-shadow:0 0 20px;'></div>";
 		}
+
+		function showmade($img) {
+
+
+			$img.imagesLoaded({
+				progress: function(isbroker, $images, $proper, $broker) {
+					speed = ($proper.length + $broker.length) / $images.length * 100;
+					console.log("共" + $images.length + "张图片，正在加载第" + ($proper.length + $broker.length) + "张" + speed)
+				},
+				done: function($that) {
+					console.log("success");
+				},
+				always: function(isbroker, $images, $proper, $broker) {
+					var clear = setInterval(function() {
+
+						if (speed == undefined) return;
+						if (counter <= speed) {
+							barpanel.childNodes[0].style.width = (counter++) + "%";
+						} else if (speed == 100) {
+							$(".made").add($(".loading")).fadeOut();
+
+							$(barpanel).hide().children().width(0);
+							counter = 0;
+							clearInterval(clear);
+
+						} else clearInterval(clear);
+					}, 30);
+
+				},
+				fail: function($that, $proper, $broken) {
+					var arr = [];
+					$broken.each(function(idx, val) {
+						arr.push(val.src);
+					});
+					console.log(arr.join("\n\t"));
+
+				}
+			});
+		}
+
+		function waterfall() {
+			var cases = $(".case-list li");
+			var case_h = [
+				[],
+				[],
+				[],
+				[]
+			];
+			var sum = [0, 0, 0, 0];
+			var step;
+			$.each(cases, function(i) {
+				var m = i % 4;
+				step = Math.floor(i / 4);
+				cases.eq(i).css("left", 220 * m + "px");
+				case_h[m].push(cases.eq(i).outerHeight(true));
+				if (!step) {
+					cases.eq(i).css("top", "0");
+				} else {
+					var num = 0;
+					for (var n = 0; n < step; n++) {
+						num += case_h[m][n] + 20;
+					}
+					cases.eq(i).css("top", num + "px");
+				}
+			});
+
+			$(case_h).each(function(i) {
+				$(case_h[i]).each(function(j) {
+					sum[i] += case_h[i][j];
+				});
+			});
+			cases.parent().css({
+				"height": sum.sort(function(a, b) {
+					return a < b ? a : -1
+				})[0] + (step + 1) * 20 + 100 + "px"
+			});
+			console.log(sum);
+			$.Loupe(".case-list", {
+				large: "#large",
+				fixed: "#showImg",
+				isScroll: false,
+				isBackground: true,
+				isShowInnerImg: true,
+				iscursorFollow: true,
+				filter: ['default.png']
+			});
+		}
+
+		$(window).on("scroll", function() {
+			var wh = $(this).height(),
+				wsh = $(this).scrollTop(),
+				dh = $(document).height();
+
+			if (dh == (wh + wsh)) {
+				if (timer) {
+					window.clearTimeout(timer);
+				}
+				$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
+				$(".made").add($(".loading")).add($(barpanel)).fadeIn();
+				timer = window.setTimeout(function() {
+					var $clone;
+					var later = function() {
+						var deferred = $.Deferred();
+							setTimeout(function() {
+								$clone = lis.clone().removeAttr("style");
+								$clone.sort(function(a, b) {
+									var rad = Math.random();
+									return rad > 0.5;
+								});
+								$clone.find("img").each(function(idx, val) {
+									var src = $(val).attr("src") + "?_dc" + Math.random() * (100 - 20 + 1) + 20;
+									$(val).attr("src", src);
+								});
+
+								$(".case-list").append($clone);
+								deferred.resolve();
+							}, 200);
+						return deferred.promise();
+					};
+
+					$.when(later()).then(function() {
+						
+						showmade($clone.find("img"));
+						waterfall();
+						$(".fixed-bottom").removeClass("fixed-bg-self");
+					});
+				}, 2000);
+			}
+		});
+
+		createProgress();
+
+		$(".made").add($(".loading")).fadeIn();
+
+		showmade($("img"));
+
+		waterfall();
 	});
-
-	showmade($("img"));
-
-	waterfall();
-});
 
 	</script>
 </body>
