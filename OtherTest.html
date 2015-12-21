@@ -1,30 +1,95 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible-Patla" content="IE=Edge;"> 
-  	<script src="Scripts/jquery-1.9.0.js"></script>
-	<title>Document</title>
-	<style type="text/css">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="main.css">
+  <script src='http://code.jquery.com/jquery-latest.js'></script>
+ <style type="text/css">
+ body{background:green;}
+.loader
+ {
+  font-size: 90px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin: 33% auto;
+  position: relative;
+  -webkit-animation: load6 1.7s infinite ease;
+  animation: load6 1.7s infinite ease;
+}
+@-webkit-keyframes load6 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
+-0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
+-0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
+  }
+  5%,
+  95% {
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
+-0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
+-0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
+  }
+  30% {
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.51em -0.66em 0 
+-0.42em #ffffff, -0.75em -0.36em 0 -0.44em #ffffff, -0.83em -0.03em 0 
+-0.46em #ffffff, -0.81em 0.21em 0 -0.477em #ffffff;
+  }
+  55% {
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.29em -0.78em 0 
+-0.42em #ffffff, -0.43em -0.72em 0 -0.44em #ffffff, -0.52em -0.65em 0 
+-0.46em #ffffff, -0.57em -0.61em 0 -0.477em #ffffff;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
+-0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
+-0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
+  }
+}
+@keyframes load6 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
+-0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
+-0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
+  }
+  5%,
+  95% {
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
+-0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
+-0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
+  }
+  30% {
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.51em -0.66em 0 
+-0.42em #ffffff, -0.75em -0.36em 0 -0.44em #ffffff, -0.83em -0.03em 0 
+-0.46em #ffffff, -0.81em 0.21em 0 -0.477em #ffffff;
+  }
+  55% {
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.29em -0.78em 0 
+-0.42em #ffffff, -0.43em -0.72em 0 -0.44em #ffffff, -0.52em -0.65em 0 
+-0.46em #ffffff, -0.57em -0.61em 0 -0.477em #ffffff;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
+-0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
+-0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
+  }
+}
 
-		ul{margin:0 auto;padding:0;width:50%;}
-		li{list-style: none;;display: inline-block;padding: 5px;position: relative;*display:inline;*zoom:1}
-		a{text-decoration:none;color:#c88;}
-		a:after{position: absolute;top:100%;left:50%;content: "";width:0;background: #f00;height:2px;}
-		a:hover:after{
-			width:100%;
-			left:0;
-			transition:all .2s linear .3s;
-		}
-	</style>
+
+
+ </style>
 </head>
+
 <body>
-	<ul>
-		<li><a href="#">All</a></li>
-		<li><a href="#">Product</a></li>
-		<li><a href="#">News</a></li>
-		<li><a href="#">About</a></li>
-		<li><a href="#">Help</a></li>
-	</ul>
+<div class="loader"></div>
 </body>
 </html>
