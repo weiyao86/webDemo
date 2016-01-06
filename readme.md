@@ -106,6 +106,6 @@
 　　例如，你可以运行如下命令获取对config命令的手册页帮助:
 　　$ git help config
 	</pre>
-    颜色对照表 <a href="http://bl.ocks.org/weiyao86/raw/78fc81d5b20fbd9008a4/" target="_blank"></a>	
+     <a href="http://bl.ocks.org/weiyao86/raw/78fc81d5b20fbd9008a4/" target="_blank">颜色对照表</a>	
 </body>
 </html>
