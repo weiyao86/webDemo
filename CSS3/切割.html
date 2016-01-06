@@ -11,7 +11,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            border-radius: 50%;
+            /*border-radius: 50%;*/
         }
 
          .bb {
@@ -28,7 +28,7 @@
          .bb::before, .bb::after {
             content: '';
             z-index: -1;
-            margin: -5%;
+           /* margin: -5%;*/
             box-shadow: inset 0 0 0 2px;
             animation: clipMe 8s linear infinite;
         }
@@ -39,7 +39,19 @@
         }
 
         @keyframes clipMe {
-            0%, 100% {
+              0%, 100% {
+                clip: rect(0px, 200px, 2px ,0px);
+            }
+            25% {
+                clip: rect(0px, 2px, 200px, 0px);
+            }
+            50% {
+                clip: rect(198px, 200px, 200px, 0px);
+            }
+            75% {
+                clip: rect(0px, 200px, 200px, 198px);
+            }
+          /*  0%, 100% {
                 clip: rect(0px, 220px, 2px ,0px);
             }
             25% {
@@ -50,7 +62,7 @@
             }
             75% {
                 clip: rect(0px, 220px, 220px, 218px);
-            }
+            }*/
 
         }
 
@@ -169,7 +181,7 @@
 
 <div class="test">test</div>
 <div class="bb">Loading..</div>
-<div class="bb1"></div>
+<!-- <div class="bb1"></div> -->
 <div class="clip">看看被剪切后的效果</div>
 <div class="clip1">		
 	<p>上-左 方位的裁剪：从0开始剪裁直到设定值，即 上-左 方位的auto值等同于0； </p>

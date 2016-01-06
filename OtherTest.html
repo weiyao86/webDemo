@@ -1,55 +1,39 @@
 ﻿<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-cn">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible-Patla" content="IE=Edge;"> 
-  <script src="Scripts/jquery-1.9.0.js"></script>
-<title>布局上下固定中间自适应</title>
+<meta charset="utf-8" />
+<title>background-clip_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-	html,body{margin:0;padding: 0;height: 100%;}
-	body{padding: 80px;}
-	
-	.content{
-		background: #fff;
-		border:1px solid #ccc;
-		width:400px;
-		height:400px;
-		float:left;
-		margin:-1px 0 0 -1px;
-		line-height: 400px;
-		text-align:center;
-		font-size: 100px;
-		color: #fff;
-		font-weight: bold;
-		text-shadow:0 0 5px #fff,0 0 20px #fefcc9,10px -10px 30px #feec85,-20px -20px 40px #ffae34,20px -40px 50px #ec760c,-20px -60px 60px #cd4606,0 -80px 70px #973716,10px -90px 80px #451b0e;
-		position: relative;
-		z-index: 1;
-		overflow: hidden;
-	}
-	.content:hover{
-		box-shadow: 0px 0px 66px 5px rgba(0,0,0,.5);
-		transition:all .3s ease-in;
-		z-index: 2;
-	}
+h1{font-size:20px;}
+h2{font-size:16px;}
+p{width:200px;height:200px;margin:0;padding:20px;border:10px dashed #666;background:#aaa url(skin/p_103x196_1.jpg) no-repeat;}
+.border-box p{background-clip:border-box;}
+.padding-box p{background-clip:padding-box;}
+.content-box p{background-clip:content-box;}
+.text p{width:auto;height:auto;background-repeat:repeat;-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:bold;font-size:120px;}
 </style>
-<script type="text/javascript">
-		$(function(){
-		console.log("http://www.baidu.com");
-
-		});
-</script>
 </head>
-
 <body>
-<div class="content">1</div>
-<div class="content">2</div>
-<div class="content">3</div>
-<div class="content">4</div>
-<div class="content">5</div>
-<div class="content">6</div>
-<div class="content">7</div>
-<div class="content">8</div>
-<div class="content">9</div>
-<div class="content">10</div>
+<h1>background-clip</h1>
+<ul class="test">
+	<li class="border-box">
+		<h2>border-box</h2>
+		<p>从border区域（不含border）开始向外裁剪背景</p>
+	</li>
+	<li class="padding-box">
+		<h2>padding-box</h2>
+		<p>从padding区域（不含padding）开始向外裁剪背景</p>
+	</li>
+	<li class="content-box">
+		<h2>content-box</h2>
+		<p>从content区域开始向外裁剪背景</p>
+	</li>
+	<li class="text">
+		<h2>text</h2>
+		<p>从前景内容的形状作为裁剪区域向外裁剪背景</p>
+	</li>
+</ul>
 </body>
 </html>
+			
