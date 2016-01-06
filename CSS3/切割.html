@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>clip2</title>
 	<style>
 
 		 .bb, .bb::before, .bb::after ,.bb1, .bb1::before, .bb1::after{
@@ -142,10 +142,10 @@
             line-height: 300px;
             font-size:150px;
             box-shadow: inset 0 0 10px rgba(255,0,0,.6);
+            -webkit-animation: animate 4s linear infinite;
 			animation: animate 4s linear infinite;
 		}
-
-		@keyframes animate{
+        @keyframes animate{
             0% {
                  transform:rotate(60deg);
             }
@@ -163,6 +163,16 @@
             }
             100%{
                 transform:rotate(360deg);
+            }
+        }
+
+		@-webkit-keyframes animate{
+            0% {
+                 opacity:.2;
+            }
+            
+            100%{
+                opacity:1
             }
 		}
 	</style>

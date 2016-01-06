@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible-Patla" content="IE=Edge;"> 
+  	<script src="Scripts/jquery-1.9.0.js"></script>
+	<title>菜单下划线横条效果</title>
+	<style type="text/css">
+
+		ul{margin:0 auto;padding:0;width:50%;}
+		li{list-style: none;;display: inline-block;padding: 5px;position: relative;*display:inline;*zoom:1}
+		a{text-decoration:none;color:#c88;}
+		a:after{position: absolute;top:100%;left:50%;content: "";width:0;background: #f00;height:2px;}
+		a:hover:after{
+			width:100%;
+			left:0;
+			transition:all .2s linear .3s;
+		}
+		
+	</style>
+</head>
+<body>
+	<ul>
+		<li><a href="#">All</a></li>
+		<li><a href="#">Product</a></li>
+		<li><a href="#">News</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Help</a></li>
+	</ul>
+</body>
+</html>

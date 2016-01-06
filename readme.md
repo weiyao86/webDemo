@@ -33,7 +33,7 @@
 		<dd>
 			出现orign exists问题: git remote rm origin  --  git remote add origin https://github.com/weiyao86/TestTool.git  --git push -u origin master
 		</dd>
-		<dt>以上仅简单粗暴解决部分问题,后期使用跟进,未续</dt>
+		<dt>以上仅简单粗暴解决部分问题,后期使用跟进,待续</dt>
 	</dl>
 	<pre>
 		github常见操作和常见错误！错误提示：fatal: remote origin already exists.
@@ -106,5 +106,6 @@
 　　例如，你可以运行如下命令获取对config命令的手册页帮助:
 　　$ git help config
 	</pre>
+     <a href="http://bl.ocks.org/weiyao86/raw/78fc81d5b20fbd9008a4/" target="_blank">颜色对照表</a>	
 </body>
 </html>

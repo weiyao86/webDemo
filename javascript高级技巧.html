@@ -11,29 +11,33 @@
         }
     </style>
     <script type="text/javascript">
-        window.onload = function () {
+        window.onload = function() {
             //1.惰性实例化
             //惰性实例化所要解决的问题是这样的：避免了在页面中js初始化执行的时候就实例化了类，如果在页面中没有使用到这个实例化的对象，
             //那么这就造成了一定的内存的浪费和性能的消耗，那么如果将一些类的实例化推迟到需要使用它的时候才开始去实例化，
             //那么这就避免了刚才说的问题，做到了“按需供应”，简单代码示例如下
-            var myNamespace = (function () {
-                var Configure = function () {
+            var myNamespace = (function() {
+                var Configure = function() {
                     var privateName = "some's name";
-                    var privateSetName = function (name) {
+                    var privateSetName = function(name) {
                         privateName = name;
                     }
-                    var privateReturnName = function () {
+                    var privateReturnName = function() {
                         return privateName;
                     }
 
                     return {
-                        setName: function (name) { privateSetName(name); },
-                        getName: function () { return privateReturnName(); }
+                        setName: function(name) {
+                            privateSetName(name);
+                        },
+                        getName: function() {
+                            return privateReturnName();
+                        }
                     }
                 }
                 var instances;
                 return {
-                    init: function () {
+                    init: function() {
                         if (!instances) {
                             instances = Configure();
                         }
@@ -60,28 +64,27 @@
             //分支技术就可以解决这个问题（同样，惰性载入函数也可以实现Lazy Definied，这个在后面将会讲到），下面以声明一个XMLHttpRequest实例对象为例子：
             //分支
 
-            var XHR = function () {
+            var XHR = function() {
                 var standard = {
-                    createXHR: function () {
+                    createXHR: function() {
                         return new XMLHttpRequest();
                     }
                 }
 
                 var newActionXObject = {
-                    createXHR: function () {
+                    createXHR: function() {
                         return new ActiveXObject("Msxml2.XMLHTTP");
                     }
                 };
 
                 var oldActiveXObject = {
-                    createXHR: function () {
+                    createXHR: function() {
                         return new ActiveXObject("Microsoft.XMLHTTP");
                     }
                 };
                 if (standard.createXHR()) {
                     return standard;
-                }
-                else {
+                } else {
                     try {
                         newActionXObject.createXHR();
                         return newActionXObject;
@@ -100,15 +103,15 @@
 
             var handle = {
                 message: "改变作用域",
-                handlerClick: function (e) {
+                handlerClick: function(e) {
                     alert(this.message);
                 }
             };
 
-            var addEvent = function (el, type, handle) {
-                addEvent = el.attachEvent ? function (el, type, handle) {
+            var addEvent = function(el, type, handle) {
+                addEvent = el.attachEvent ? function(el, type, handle) {
                     el.attachEvent("on" + type, handle, false);
-                } : function (el, type, handle) {
+                } : function(el, type, handle) {
                     el.addEventListener(type, handle);
                 };
                 addEvent(el, type, handle);
@@ -121,8 +124,8 @@
             //通过bind函数调换上下文对象,或者如此:
             //3.  addEvent(domLazy, "click", function (e) { handle.handlerClick(e); })
             // Bind 函数
-            var bind_test = function (fn, context) {
-                return function () {
+            var bind_test = function(fn, context) {
+                return function() {
                     return fn.apply(context || this, arguments);
                 }
             };
@@ -130,10 +133,10 @@
 
             //4.函数curry化  利用已有的函数，再创建一个动态的函数，该动态的函数内部还是通过该已有的函数来发生作用，
             //只是传入更多的参数来简化函数的参数方面的调用
-            (function () {
+            (function() {
                 function curry(fn) {
                     var args = [].slice.call(arguments, 1);
-                    return function () {
+                    return function() {
                         return fn.apply(null, args.concat([].slice.call(arguments, 0)));
                     }
                 }
@@ -154,7 +157,7 @@
             //再通过setTimeout来重新设定定时器，把代码加入到执行队列
             var count = 0,
                 $divLoop = $("#divLoop");
-            window.setTimeout(function () {
+            window.setTimeout(function() {
                 $divLoop.html("高级定时器:" + count++);
                 if (count <= 10)
                     setTimeout(arguments.callee, 1000);
@@ -165,10 +168,10 @@
             //6.模拟类的继承
             //----保护上下文的构造函数
 
-            var Base = function () { };
+            var Base = function() {};
             Base.prototype = {
                 subClass: null,
-                extend: function (subClass) {
+                extend: function(subClass) {
                     var constructor = this;
                     //baseinstances = new constructor("ss","ss");
 
@@ -182,14 +185,14 @@
                     subClass.subClass = subClass.flag;
                     return subClass;
                 },
-                baseTest: function () {
+                baseTest: function() {
                     var self = this;
                     alert(0)
                 }
             };
 
             var invokeBase = {
-                extend: function (subClass) {
+                extend: function(subClass) {
                     var base = new Base();
                     for (var key in base) {
                         if (!subClass.hasOwnProperty(key)) {
@@ -198,7 +201,7 @@
                     }
                     return subClass;
                 },
-                test: function () { }
+                test: function() {}
             };
 
 
@@ -212,7 +215,7 @@
                     return new myClass(name, size);
             }
             myClass.prototype = {
-                initmyClass: function () { }
+                initmyClass: function() {}
             };
 
             function myClass1(name, size) {
@@ -231,12 +234,12 @@
                     this.sub2Name = name;
                     this.sub2Size = size;
                     this.sub2Flag = "third";
-                    
+
                 } else
                     return new myClass(name, size);
             }
             myClass2.prototype = {
-                init: function () { }
+                init: function() {}
             };
 
             //console.dir(subClass);
@@ -254,7 +257,6 @@
             //var sub2 = myClass.extend(myClass1);
 
             //var sub3 = myClass1.extend(myClass2);
-
 
         }
 
