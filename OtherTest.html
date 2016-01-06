@@ -2,94 +2,77 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="main.css">
-  <script src='http://code.jquery.com/jquery-latest.js'></script>
+<!--   <link rel="stylesheet" href="main.css">
+  <script src='http://code.jquery.com/jquery-latest.js'></script> -->
+
+  <script>
+
+  var arr = [5, 6,3,0, 5,0, 3, 6],
+    i = 1,
+    j = 0,
+    el,temp=[];
+    arr.sort();
+  for (; el = arr[i]; i++) {
+    if(el === arr[i-1]){
+      j=temp.push(i);
+    }
+  }
+  while(j--){
+    arr.splice(temp[j],1);
+  }
+  console.log(arr);
+
+
+
+  </script>
  <style type="text/css">
- body{background:green;}
-.loader
+
+.flag-new
  {
-  font-size: 90px;
-  text-indent: -9999em;
   overflow: hidden;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  margin: 33% auto;
-  position: relative;
-  -webkit-animation: load6 1.7s infinite ease;
-  animation: load6 1.7s infinite ease;
+  width: 50px;
+  height: 16px;
+  background:#f00;
+  color:#fff;
+  position:relative;
+  font-size:12px;
+  font-weight:bold;
+  text-align: center;
 }
-@-webkit-keyframes load6 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
--0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
--0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
-  }
-  5%,
-  95% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
--0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
--0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
-  }
-  30% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.51em -0.66em 0 
--0.42em #ffffff, -0.75em -0.36em 0 -0.44em #ffffff, -0.83em -0.03em 0 
--0.46em #ffffff, -0.81em 0.21em 0 -0.477em #ffffff;
-  }
-  55% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.29em -0.78em 0 
--0.42em #ffffff, -0.43em -0.72em 0 -0.44em #ffffff, -0.52em -0.65em 0 
--0.46em #ffffff, -0.57em -0.61em 0 -0.477em #ffffff;
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
--0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
--0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
-  }
+.flag-new:before{
+  content:"";
+  display: block;
+  position:absolute;
+  top:0;
+  border-style:solid;
+  border-color:#fff #f00 #f00 #fff;
+  border-width:8px 5px;
 }
-@keyframes load6 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
--0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
--0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
-  }
-  5%,
-  95% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
--0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
--0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
-  }
-  30% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.51em -0.66em 0 
--0.42em #ffffff, -0.75em -0.36em 0 -0.44em #ffffff, -0.83em -0.03em 0 
--0.46em #ffffff, -0.81em 0.21em 0 -0.477em #ffffff;
-  }
-  55% {
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.29em -0.78em 0 
--0.42em #ffffff, -0.43em -0.72em 0 -0.44em #ffffff, -0.52em -0.65em 0 
--0.46em #ffffff, -0.57em -0.61em 0 -0.477em #ffffff;
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-    box-shadow: -0.11em -0.83em 0 -0.4em #ffffff, -0.11em -0.83em 0 
--0.42em #ffffff, -0.11em -0.83em 0 -0.44em #ffffff, -0.11em -0.83em 0 
--0.46em #ffffff, -0.11em -0.83em 0 -0.477em #ffffff;
-  }
+.flag-new span{
+  margin-left:10px;
+  line-height: 16px;
+  display: inline-block;
 }
-
-
+.ps{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#eec;
+}
+body{
+  background:red;
+}
 
  </style>
+
+ <script>
+
+ </script>
 </head>
 
 <body>
-<div class="loader"></div>
+<!-- <div class="ps">wwwwwwwwwwwwwwwwww</div> -->
 </body>
 </html>
