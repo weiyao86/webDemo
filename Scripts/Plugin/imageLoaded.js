@@ -70,7 +70,7 @@ var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAO
 					var src = el.src;
 
 					var cached = $.data(el, "imagesLoaded");
-					if (cached && cache.src === src) {
+					if (cached && cached.src === src) {
 						imgLoaded(el, cached.isbroker);
 						return;
 					}
