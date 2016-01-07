@@ -108,29 +108,37 @@
     };
 
     BrowserDetect.init();
-    var str="浏览器:"+BrowserDetect.browser+"<br/>浏览器版本:"+BrowserDetect.version;
-    document.getElementById("p").innerHTML=str;
+    var str = "浏览器:" + BrowserDetect.browser + "<br/>浏览器版本:" + BrowserDetect.version;
+    document.getElementById("p").innerHTML = str;
 
-    document.getElementById("btn").onclick=function(){
-    	debugger;
-    	copycode(document.getElementById("p"));
+    document.getElementById("btn").onclick = function() {
+        copycode(document.getElementById("p"));
 
     };
-    function copycode(obj){
-	    	if(window.getSelection) {
-			var sel = window.getSelection();
-			if (sel.setBaseAndExtent) {
-				sel.setBaseAndExtent(obj, 0, obj, 1);
-			} else {
-				var rng = document.createRange();
-				rng.selectNodeContents(obj);
-				sel.addRange(rng);
-			}
-		} else {
-			var rng = document.body.createTextRange();
-			rng.moveToElementText(obj);
-			rng.select();
-		}
+    document.getElementById("showselection").onclick = function() {
+           if (window.getSelection) {
+            alert('当前选中:\n\t' + window.getSelection());
+        } else {
+            alert('当前选中:\n\t' + document.body.createTextRange().text);
+        }
+    };
+
+    function copycode(obj) {
+        if (window.getSelection) {
+            var sel = window.getSelection();
+            var rng = document.createRange();
+            rng.selectNodeContents(obj);
+            sel.removeAllRanges();
+            sel.addRange(rng);
+
+            // if (sel.setBaseAndExtent) {
+            //     sel.setBaseAndExtent(obj,0, obj, 1); //chrome ???
+            // }
+        } else {
+            var rng = document.body.createTextRange();
+            rng.moveToElementText(obj);
+            rng.select();
+        }
     }
 }
 	</script>
@@ -140,17 +148,18 @@
 	</script>
 	<![endif]-->
 	<script type='text/javascript'>
-		alert("你的浏览器版本低于IE9");
-
 	</script>
 </head>
 
 <body>
 	<p id="p"></p>
-	<input type="button" id="btn" value="TEST">
+	<input type="button" id="btn" value="Selection">
+    <input type="button" id="showselection" value="ShowSelection">
 
 	<div style="border:1px solid red;width:500px;height;300px;float:left;">
-		<img src="../res/psb.jpg" alt="" style="width:200px;height:200px;float:left;"/><div style="margin:0;padding:0;word-wrap:break-wrap;word-break:break-all;"><p>654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6</p>asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asf654sdf6as4df6asdfasfd6asfd65464613213a4df6a4sdf6as4df6asfasdfasfasfdasfasfasdfasfdasf</div>
+		<img src="../res/psb.jpg" alt="" style="width:200px;height:200px;float:left;"/><div style="margin:0;padding:0;word-wrap:break-wrap;word-break:break-all;">
+            <p>你可知mykao不是我真姓,我离开你太久了母亲,啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦你可知mykao不是我真姓,我离开你太久了母亲,啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦你可知mykao不是我真姓,我离开你太久了母亲,啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦你可知mykao不是我真姓,我离开你太久了母亲,啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦你可知mykao不是我真姓,我离开你太久了母亲,啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦你可知mykao不是我真姓,我离开你太久了母亲,啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</p>
+        </div>  
 
 	</div>
 
