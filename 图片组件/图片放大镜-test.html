@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片放大镜-test</title>
+	 <script src="../Scripts/jquery-1.9.0.js"></script>
+	 <script src="../Scripts/Plugin/mousewheel/jquery.mousewheel.min.js"></script>
+	 <script src="js/main.js"></script>
+	<link rel="stylesheet" href="styles/css/zoom.css">
+	<script>
+		$(function() {
+			$.Zoom("",function(){alert(1)});
+		});
+	</script>
+
+</head>
+<body>
+	<div id="wrap" class="wrap">
+		<div id="wrap_inner" class="wrap-inner"><img src="../Res/car.jpg" alt="" class="wrap-img"></div>
+	</div>
+	<input id="up" type="button" value="up">
+	<input id="down" type="button" value="down">
+	<input id="reset" type="button" value="reset">
+</body>
+</html>

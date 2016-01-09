@@ -102,6 +102,38 @@ module.exports = function(grunt) {
                     }
                 }]
             }
+        },
+
+
+        sass: {
+            dist: {
+                options: {
+                    sourcemap: 'none',
+                    style: 'compact'
+                },
+                expand: true,
+                cwd: '图片组件/',
+                src: '*.scss',
+                ext: '.css',
+                dest: '图片组件/styles/css/'
+            }
+        },
+
+        //监听模式
+        watch: {
+            css: {
+                files: ["图片组件/styles/css/*.css"],
+                options: {
+                    livereload: true
+                }
+            },
+            sass: {
+                files: ['图片组件/*.scss'],
+                tasks: ['sass'],
+                options: {
+                    livereload: false
+                }
+            }
         }
 
     });
@@ -109,6 +141,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['concat','uglify','cssmin']);
+    grunt.registerTask('default', ['concat','uglify','cssmin','sass']);
+    grunt.registerTask('watch-ck', ['watch']);
 };

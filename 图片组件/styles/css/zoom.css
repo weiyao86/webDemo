@@ -1,0 +1,7 @@
+html { font-family: 'Microsoft Yahei'; font-size: 16px; }
+
+.wrap .wrap-inner { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+
+.wrap { position: absolute; border: 1px solid #ff8800; width: 500px; height: 500px; top: 50%; left: 50%; margin: -250px 0 0 -250px; }
+.wrap .wrap-inner { border: 1px solid #008888; overflow: hidden; }
+.wrap .wrap-inner img { border: none; position: absolute; }
