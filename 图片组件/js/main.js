@@ -56,15 +56,15 @@
 			}
 		});
 
-		$btnUp.on("click", function() {
+		$btnUp.click(function() {
 			zoomImg(1);
 		});
 
-		$btnDown.on("click", function() {
+		$btnDown.click(function() {
 			zoomImg(-1);
 		});
 
-		$btnReset.on("click",function(){
+		$btnReset.click(function(){
 			$img.css({
 				width: originAttr.width,
 				height: originAttr.height,
