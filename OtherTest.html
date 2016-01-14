@@ -3,16 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+	<script src="Scripts/jquery-1.9.0.js"></script>
+	<script>
+	$(function(){
+		var url = "http://image.baidu.com/search/index?tn=baiduimage&ps=1&ct=201326592&lm=-1&cl=2&nc=1&ie=utf-8&word=animal";
+		$.get(url,function(){
+			console.log(arguments)
+		});
+	});
 
+
+
+	</script>
+
+
+
+	<style type="text/css">
+	ul{
+		margin:0;
+		padding:0;
+		list-style: none;
+	}
+	.li-float{
+		float:left;
+		max-width:300px;
+		border:1px solid red;
+	}
+	#btn{padding:0 20px;}
+	</style>
 </head>
 <body>
   <input id="btn" type="button" value="btn">
     <script>
-    var btn = document.getElementById("btn");
-    btn.onclick=function(){alert(1)}
-    btn.onclick=function(){alert(2)}
-    btn.attachEvent("onclick",function(){alert(3);})
+
 
   </script>
+
+
+	<ul>
+		<li class="li-float">1-1q我们是共茜卉铁;时营地</li>
+		<li class="li-float">2-2q我们是共茜卉铁;时营地</li>
+		<li class="li-float">3-3q我们是共茜卉铁;时营地</li>
+		<li class="li-float">4-4q我们是共茜卉铁;时营地</li>
+		<li class="li-float">5-5q我们是共茜卉铁;时营地</li>
+	</ul>
 </body>
 </html>
