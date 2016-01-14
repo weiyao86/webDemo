@@ -4,48 +4,60 @@
   <meta charset="UTF-8">
   <title>Document</title>
 	<script src="Scripts/jquery-1.9.0.js"></script>
-	<script>
-	$(function(){
-		var url = "http://image.baidu.com/search/index?tn=baiduimage&ps=1&ct=201326592&lm=-1&cl=2&nc=1&ie=utf-8&word=animal";
-		$.get(url,function(){
-			console.log(arguments)
-		});
-	});
-
-
-
-	</script>
-
-
-
-	<style type="text/css">
-	ul{
-		margin:0;
-		padding:0;
-		list-style: none;
-	}
-	.li-float{
-		float:left;
-		max-width:300px;
-		border:1px solid red;
-	}
-	#btn{padding:0 20px;}
-	</style>
 </head>
 <body>
   <input id="btn" type="button" value="btn">
-    <script>
-
+   <div style="position:relative;padding-top:50px;">
+<div class="divWrap" id="move1" style="width: 200px; height: 200px; background: Green; border: 1px solid red; position: absolute; top: 100px; left: 100px; cursor: move; -moz-user-select: none; -webkit-user-select: none;"></div>
+<div class="divWrap" style="width: 200px; height: 200px; background: brown; border: 1px solid red; position: absolute; top: 300px; left: 100px;">
+  <h3 id="move2" style="height: 45px; line-height: 45px; font-size: 18px; background: red; margin: 0; cursor: move; -moz-user-select: none; -webkit-user-select: none;">Title--Move</h3>
+</div>
+</div>
+ <script>
+(function($) {
+  $.fn.dragDiv = function(divWrap) {
+    return this.each(function() {
+      var $divMove = $(this);//鼠标可拖拽区域
+      var $divWrap = divWrap ? $divMove.parents(divWrap) : $divMove;//整个移动区域
+      var mX = 0, mY = 0;//定义鼠标X轴Y轴
+      var dX = 0, dY = 0;//定义div左、上位置
+      var isDown = false;//mousedown标记
+      if(document.attachEvent) {//ie的事件监听，拖拽div时禁止选中内容，firefox与chrome已在css中设置过-moz-user-select: none; -webkit-user-select: none;
+        $divMove[0].attachEvent('onselectstart', function() {
+          return false;
+        });
+      }
+      $divMove.mousedown(function(event) {
+        var event = event || window.event;
+        mX = event.pageX;
+        mY = event.pageY;
+        dX = $divWrap[0].offsetLeft;
+        dY = $divWrap[0].offsetTop;
+        isDown = true;//鼠标拖拽启动
+      });
+      $(document).mousemove(function(event) {
+        var event = event || window.event;
+        var x = event.pageX;//鼠标滑动时的X轴
+        var y = event.pageY;//鼠标滑动时的Y轴
+        if(isDown) {
+          $divWrap.css({"left": x - mX + dX, "top": y - mY + dY});//div动态位置赋值
+        }
+      });
+      $divMove.mouseup(function() {
+        isDown = false;//鼠标拖拽结束
+      });
+    });
+  };
+})(jQuery);
+//
+$(document).ready(function() {
+  $("#move1").dragDiv();//拖拽整个div
+  $("#move2").dragDiv(".divWrap");//拖拽div头部
+});
 
   </script>
 
 
-	<ul>
-		<li class="li-float">1-1q我们是共茜卉铁;时营地</li>
-		<li class="li-float">2-2q我们是共茜卉铁;时营地</li>
-		<li class="li-float">3-3q我们是共茜卉铁;时营地</li>
-		<li class="li-float">4-4q我们是共茜卉铁;时营地</li>
-		<li class="li-float">5-5q我们是共茜卉铁;时营地</li>
-	</ul>
+
 </body>
 </html>

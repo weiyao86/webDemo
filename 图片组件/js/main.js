@@ -148,21 +148,25 @@
 		function drag(target, e) {
 			var $target = $(target),
 				parentOffset = {
-					top: e.pageY - $target.offset().top,
-					left: e.pageX - $target.offset().left
+					top: e.pageY - $target.position().top,
+					left: e.pageX - $target.position().left
 				},
-				maxX = $operator.width() - $target.width(),
-				maxY = $operator.height() - $target.height();
-
+				maxX = $operator.width() - $target.width()-2,
+				maxY = $operator.height() - $target.height()-2;
+			if (window.attachEvent) {
+				$target.on('selectstart', function() {
+					return false;
+					//拖拽div时禁止选中内容
+					//-moz-user-select: none; -webkit-user-select: none;
+				});
+			}
 			$(document).on({
 				"mousemove.drag": function(evt) {
 					var px = evt.pageX,
 						py = evt.pageY,
 						pos = $target.position(),
-						disX = px - parentOffset.left,
-						disY = py - parentOffset.top,
-						moveDisX = disX, // - $target.width() / 2, //(disX - pos.left - pos.left),
-						moveDisY = disY; //- $target.height() / 2; //(disY - pos.top - pos.left);
+						moveDisX = px - parentOffset.left,
+						moveDisY = py - parentOffset.top;
 
 					moveDisX < 0 && (moveDisX = 0);
 					moveDisX > maxX && (moveDisX = maxX);
@@ -175,7 +179,6 @@
 						top: moveDisY,
 						left: moveDisX
 					});
-					//console.log(pos.left + '=====' + moveDisY);
 					evt.preventDefault();
 				},
 				"mouseup.drag": function(e) {
