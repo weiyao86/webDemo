@@ -32,10 +32,13 @@
 			//operator
 			$operator = $("#operator"),
 			$snapHandle = $("#snap_handle"),
+			//slidbar
+			$slidebar = $("#slidebar"),
 			$originImg = $("img[data-high-res-src]"),
 			wrapInnerLeft = $wrapInner.offset().left,
 			wrapInnerTop = $wrapInner.offset().top,
 			$img = $wrapInner.children(),
+			globalRatioX, globalRatioY,
 			iw, ih, rw, rh, it, il, dir;
 
 		$img.on("mousewheel", function(e) {
@@ -43,22 +46,22 @@
 			//console.log($img.width());
 		});
 
-		$img.on({
-			"mousemove.drag": function(e) {
-				var $target = $(this),
-					$parent = $target.parent(),
-					distance = 1,
-					dirX = (e.pageX - $parent.offset().left) / $parent.width() >= 0.5 ? -distance : distance,
-					dirY = (e.pageY - $parent.offset().top) / $parent.height() >= 0.5 ? -distance : distance;
+		// $img.on({
+		// 	"mousemove.drag": function(e) {
+		// 		var $target = $(this),
+		// 			$parent = $target.parent(),
+		// 			distance = 1,
+		// 			dirX = (e.pageX - $parent.offset().left) / $parent.width() >= 0.5 ? -distance : distance,
+		// 			dirY = (e.pageY - $parent.offset().top) / $parent.height() >= 0.5 ? -distance : distance;
 
-				var dirX = $target.position().left + dirX;
-				var dirY = $target.position().top + dirY;
-				$target.css({
-					left: dirX,
-					top: dirY
-				});
-			}
-		});
+		// 		var dirX = $target.position().left + dirX;
+		// 		var dirY = $target.position().top + dirY;
+		// 		$target.css({
+		// 			left: dirX,
+		// 			top: dirY
+		// 		});
+		// 	}
+		// });
 
 		$btnUp.click(function() {
 			zoomImg(1);
@@ -79,16 +82,46 @@
 		});
 
 		$snapHandle.on("mousedown", function(e) {
-			drag(this, e);
+			drag(this, $operator, e, {
+				move: function(evt, objs) {
+
+					$img.css({
+						left: objs.disX * -globalRatioX - 2,
+						top: objs.disY * -globalRatioY - 2
+					});
+				}
+			});
+			e.preventDefault();
+		});
+
+		$slidebar.on("mousedown", function(e) {
+			drag(this, $(this).parent(), e, {
+				move: function(evt, objs) {
+					var ratio = objs.moveDisX / ($operator.width());
+
+					$snapHandle.css({
+						width: $operator.width() * ratio,
+						height: $operator.height() * ratio
+					});
+				}
+			});
 			e.preventDefault();
 		});
 
 		var setSnapSize = function(val) {
+			globalRatioX = val.width / $operator.width();
+			globalRatioY = val.height / $operator.height();
 			$snapHandle.css({
-				width: val.width / $operator.width() * 5,
-				height: val.height / $operator.height() * 5
+				width: $operator.width() / globalRatioX,
+				height: $operator.height() / globalRatioX
+			});
+
+			var $slideParent = $slidebar.parent();
+			$slidebar.css({
+				width: $slideParent.width() / globalRatioX
 			});
 		};
+
 		$originImg.load(function() {
 			setSnapSize(this);
 
@@ -145,40 +178,51 @@
 			});
 		}
 
-		function drag(target, e) {
+		function drag(target, $operator, e, callback) {
 			var $target = $(target),
-				parentOffset = {
+				pos = {
 					top: e.pageY - $target.position().top,
 					left: e.pageX - $target.position().left
 				},
-				maxX = $operator.width() - $target.width()-2,
-				maxY = $operator.height() - $target.height()-2;
+				maxX = $operator.width() - $target.outerWidth(),
+				maxY = $operator.height() - $target.outerHeight();
 			if (window.attachEvent) {
-				$target.on('selectstart', function() {
+				$target.one('selectstart', function() {
 					return false;
 					//拖拽div时禁止选中内容
 					//-moz-user-select: none; -webkit-user-select: none;
+				});
+			} else {
+				$target.css({
+					"-moz-user-select": 'none',
+					"-webkit-user-select": 'none'
 				});
 			}
 			$(document).on({
 				"mousemove.drag": function(evt) {
 					var px = evt.pageX,
 						py = evt.pageY,
-						pos = $target.position(),
-						moveDisX = px - parentOffset.left,
-						moveDisY = py - parentOffset.top;
+						moveDisX = px - pos.left,
+						moveDisY = py - pos.top;
 
 					moveDisX < 0 && (moveDisX = 0);
 					moveDisX > maxX && (moveDisX = maxX);
 					moveDisY < 0 && (moveDisY = 0);
 					moveDisY > maxY && (moveDisY = maxY);
 
-
-
 					$target.css({
 						top: moveDisY,
 						left: moveDisX
 					});
+					if (callback && typeof callback.move) {
+						callback.move.call(null, evt, {
+							moveDisX: moveDisX + $target.width(),
+							moveDisY: moveDisY + $target.height(),
+							disX: moveDisX,
+							disY: moveDisY
+						});
+					}
+
 					evt.preventDefault();
 				},
 				"mouseup.drag": function(e) {

@@ -38,11 +38,11 @@ html {
     width: 240px;
     padding-top: 20px;
     border: 1px solid #ccc;
-    background:#ff8800;
+    background:#ccc;
     z-index: 2;
+    opacity:.7;
     .w-operator-inner{
     	position:relative;
-    	height:200px;
     	img{
     		border: none;
     		width:100%;
@@ -60,7 +60,13 @@ html {
 }
 
 .w-operator-bottom{
-    background:#fff;
+	position:relative;
 	height:20px;
-	border:1px solid #ff8800;
+	.slidebar{
+		position:absolute;
+		width:50px;
+		height:100%;
+		box-shadow:0 0 1px rgba(255,255,255,.5);
+		background:rgba(255,255,255,1);
+	}
 }
