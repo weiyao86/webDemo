@@ -8,6 +8,8 @@
 
 	var defaults = {
 			ratio: 1.1,
+			maxRatio: Math.pow(1.1, 10), //最大可放大N倍
+			minRatio: Math.pow(1.1, 10),//最大可缩小N倍
 			wrap: 'wrap',
 			wrapInner: 'wrap_inner',
 			up: 'up',
@@ -136,6 +138,7 @@
 			$slidebar.css({
 				width: $slideParent.width() / globalRatioX
 			});
+
 		};
 
 		$originImg.load(function() {
@@ -154,6 +157,7 @@
 		}).attr("src", $originImg.attr("data-high-res-src"));
 
 		function zoomImg(direction, e) {
+			var percent;
 			dir = direction;
 			iw = $img.width();
 			ih = $img.height();
@@ -169,12 +173,16 @@
 			if (dir > 0) {
 				rw = iw * opts.ratio;
 				rh = ih * opts.ratio;
-				console.log(rw + '*****************');
+				percent = rw / originAttr.width;
 			} else {
 				rw = iw / opts.ratio;
 				rh = ih / opts.ratio;
-				console.log(rw + '/////////////////');
+				percent = originAttr.width / rw;
 			}
+
+			console.log(percent +'---------'+ opts.maxRatio +'---------'+ opts.minRatio);
+			if (percent > opts.maxRatio || percent > opts.minRatio) return;
+
 			if (e && e.pageX) {
 				var dirL = e.pageX - wrapInnerLeft;
 				var dirT = e.pageY - wrapInnerTop;

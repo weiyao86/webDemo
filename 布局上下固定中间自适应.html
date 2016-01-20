@@ -6,7 +6,7 @@
   <script src="Scripts/jquery-1.9.0.js"></script>
 <title>布局上下固定中间自适应</title>
 <style>
-	html,body{margin:0;padding: 0;height: 100%;}
+	html,body{margin:0;padding: 0;height: 100%;text-align:center;}
 	/*IE6*/
 	html{_padding: 80px 0 80px;color:#fff; }
 	
@@ -19,16 +19,16 @@
 		left:0;
 	}
 	#content{
-		background:black;
-		position: fixed;
-		top:80px;
-		bottom: 80px;
+		background:#ccc;
+		position: absolute;
+		top:60px;
+		bottom: 60px;
 		width:100%;
 		overflow: auto;
+		color:#000;
 		_position:relative;
 		_height:100%;
 		_top:0;
-		border:1px solid red;
 	}
 	#content:hover{
 
