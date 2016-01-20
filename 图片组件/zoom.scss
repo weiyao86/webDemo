@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
     font-family: 'Microsoft Yahei';
     font-size: 16px;
@@ -69,4 +70,14 @@ html {
 		box-shadow:0 0 1px rgba(255,255,255,.5);
 		background:rgba(255,255,255,1);
 	}
+}
+/**
+ * 模糊效果
+ */
+.blur { 
+    -webkit-filter: blur(10px); /* Chrome, Opera */
+       -moz-filter: blur(10px);
+        -ms-filter: blur(10px);
+            filter: blur(10px);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
 }

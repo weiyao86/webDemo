@@ -38,6 +38,8 @@
 			wrapInnerLeft = $wrapInner.offset().left,
 			wrapInnerTop = $wrapInner.offset().top,
 			$img = $wrapInner.children(),
+			operatorW = $operator.width(),
+			operatorH = $operator.height(),
 			globalRatioX, globalRatioY,
 			iw, ih, rw, rh, it, il, dir;
 
@@ -93,27 +95,41 @@
 			});
 			e.preventDefault();
 		});
-
+		var dir,
+			dirNum;
 		$slidebar.on("mousedown", function(e) {
+
 			drag(this, $(this).parent(), e, {
 				move: function(evt, objs) {
-					var ratio = objs.moveDisX / ($operator.width());
+					var ratio = objs.disX / (operatorW);
 
 					$snapHandle.css({
-						width: $operator.width() * ratio,
-						height: $operator.height() * ratio
+						width: operatorW - operatorW * ratio - 2,
+						height: operatorH - operatorH * ratio - 2
 					});
+
+					if (dir) {
+
+						if (objs.disX > dir)
+							dirNum = 1;
+						else {
+							dirNum = -1;
+						}
+						dir > 0 && objs.moveDisX < operatorW && (zoomImg(dirNum), console.log(dirNum + '==='));
+						$("#test").html(objs.disX + '====================' + dirNum);
+					}
+					dir = objs.disX;
 				}
 			});
 			e.preventDefault();
 		});
 
 		var setSnapSize = function(val) {
-			globalRatioX = val.width / $operator.width();
-			globalRatioY = val.height / $operator.height();
+			globalRatioX = val.width / operatorW;
+			globalRatioY = val.height / operatorH;
 			$snapHandle.css({
-				width: $operator.width() / globalRatioX,
-				height: $operator.height() / globalRatioX
+				width: operatorW - 2,
+				height: operatorH - 2 // / globalRatioX
 			});
 
 			var $slideParent = $slidebar.parent();
@@ -153,9 +169,11 @@
 			if (dir > 0) {
 				rw = iw * opts.ratio;
 				rh = ih * opts.ratio;
+				console.log(rw + '*****************');
 			} else {
 				rw = iw / opts.ratio;
 				rh = ih / opts.ratio;
+				console.log(rw + '/////////////////');
 			}
 			if (e && e.pageX) {
 				var dirL = e.pageX - wrapInnerLeft;
@@ -169,7 +187,6 @@
 				it = ($wrapInner.height() - rh) / 2;
 			}
 
-			console.log(it);
 			$img.css({
 				width: rw,
 				height: rh,
@@ -178,14 +195,14 @@
 			});
 		}
 
-		function drag(target, $operator, e, callback) {
+		function drag(target, $parent, e, callback) {
 			var $target = $(target),
 				pos = {
 					top: e.pageY - $target.position().top,
 					left: e.pageX - $target.position().left
 				},
-				maxX = $operator.width() - $target.outerWidth(),
-				maxY = $operator.height() - $target.outerHeight();
+				maxX = $parent.width() - $target.outerWidth(),
+				maxY = $parent.height() - $target.outerHeight();
 			if (window.attachEvent) {
 				$target.one('selectstart', function() {
 					return false;
