@@ -8,33 +8,532 @@
 .wrap{margin:10px 0;font-size:16px;width:300px;height:200px;border:1px solid red;
       filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);/*0-3 0-360*/
 }
-
+  canvas{
+    background: #fff;
+    border:1px solid #ccc;
+    width:700px;
+    height:500px;
+    float:left;
+    margin:-1px 0 0 -1px;
+    text-align:center;
+    font-size: 100px;
+    color: #fff;
+    font-weight: bold;
+    text-shadow:0 0 5px #fff,0 0 20px #fefcc9,10px -10px 30px #feec85,-20px -20px 40px #ffae34,20px -40px 50px #ec760c,-20px -60px 60px #cd4606,0 -80px 70px #973716,10px -90px 80px #451b0e;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  canvas:hover{
+    box-shadow: 0px 0px 66px 5px rgba(0,0,0,.5);
+    transition:all .2s ease-in;
+    z-index: 2;
+  }
 </style>
 <script type="text/javascript">
-  window.onload=function(){
-    var btn=document.getElementById("btn"),
-    wrap=document.getElementById("wrap"),
-    c=0;
+  window.onload = function() {
+    var btn = document.getElementById("btn"),
+      wrap = document.getElementById("wrap"),
+      cvs = document.getElementById("test"),
+      c = 1;
 
-    btn.onclick=function(){
-      c > 3 && (c=0);
-      var deg = 90*c+"deg";
-      wrap.style["transform"]="rotate("+deg+")";
-      wrap.style.filter = "progid:DXImageTransform.Microsoft.BasicImage(rotation="+c+")";
+    btn.onclick = function() {
+      c > 3 && (c = 0);
+      var deg = 90 * c + "deg";
+      wrap.style["transform"] = "rotate(" + deg + ")";
+      wrap.style.filter = "progid:DXImageTransform.Microsoft.BasicImage(rotation=" + c + ")";
       c++;
     };
+
+    if (cvs.getContext) {
+      var ctx = cvs.getContext("2d");
+      if (ctx == null) return;
+
+      //canvas提供了三种方法绘制矩形：fillRect-strokeRect-clearRect
+      //fillRect()函数绘制了一个边长为100px的黑色正方形。clearRect()函数从正方形的中心开始擦除了一个60*60px的正方形，接着strokeRect()在清除区域内生成一个50*50的正方形边框
+      // (W-w)/2+x   45=(120-50)/2+10
+      ctx.fillRect(10, 0, 120, 100);
+      ctx.clearRect(45, 25, 50, 50);
+      ctx.strokeRect(50, 30, 40, 40);
+
+      //三角形1
+      ctx.beginPath();
+      ctx.moveTo(140, 50);
+      ctx.lineTo(180, 70);
+      ctx.lineTo(180, 30);
+      ctx.closePath();
+      ctx.stroke();
+
+      //三角形2 fill 会自动填充不需closePath
+      ctx.beginPath();
+      ctx.moveTo(200, 50);
+      ctx.lineTo(250, 75);
+      ctx.lineTo(250, 25);
+      ctx.fill();
+
+      //来个笑脸
+      ctx.beginPath();
+      //ctx.moveTo(300,50);
+      ctx.arc(300, 50, 40, 0, Math.PI * 2, true);
+
+      ctx.moveTo(330, 50);
+      ctx.arc(300, 50, 30, 0, Math.PI, false); // 口(顺时针)
+
+      ctx.moveTo(285, 35);
+      ctx.arc(280, 35, 5, 0, Math.PI * 2, true);
+      ctx.moveTo(325, 35);
+      ctx.arc(320, 35, 5, 0, Math.PI * 2, true);
+
+      ctx.stroke();
+
+    } else {
+      alert("unsupported canvas");
+    }
+
+
+    draw();
+
+    function draw() {
+      var canvas = document.getElementById('demo');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        for (var i = 0; i < 4; i++) {
+          for (var j = 0; j < 3; j++) {
+            ctx.beginPath();
+            var x = 25 + j * 50; // x 坐标值
+            var y = 25 + i * 50; // y 坐标值
+            var radius = 20; // 圆弧半径
+            var startAngle = 0; // 开始点
+            var endAngle = Math.PI + (Math.PI * j) / 2; // 结束点
+            var anticlockwise = i % 2 == 0 ? false : true; // 顺时针或逆时针
+
+            ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+            if (i > 1) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+          }
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(235, 0);
+        ctx.quadraticCurveTo(215, 35, 235, 70);
+        ctx.moveTo(235, 70);
+        ctx.quadraticCurveTo(245, 100, 215, 100);
+        ctx.stroke();
+      }
+    }
+    game();
+
+    function game() {
+      var canvas = document.getElementById('general');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        roundedRect(ctx, 12, 12, 350, 350, 15);
+        roundedRect(ctx, 20, 20, 334, 334, 9);
+        roundedRect(ctx, 53, 53, 49, 33, 10);
+        roundedRect(ctx, 53, 119, 49, 16, 6);
+        roundedRect(ctx, 135, 53, 49, 33, 10);
+        roundedRect(ctx, 135, 119, 25, 49, 10);
+
+        ctx.beginPath();
+        ctx.arc(37, 37, 13,-Math.PI /5, Math.PI /5, true);
+        ctx.lineTo(31, 37);
+        ctx.fill();
+
+        for (var i = 0; i < 18; i++) {
+          ctx.fillRect(51 + i * 16, 35, 4, 4);
+        }
+
+        for (i = 0; i < 16; i++) {
+          ctx.fillRect(115, 51 + i * 16, 4, 4);
+        }
+
+        for (i = 0; i < 18; i++) {
+          ctx.fillRect(51 + i * 16, 99, 4, 4);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(83, 116);
+        ctx.lineTo(83, 102);
+        ctx.bezierCurveTo(83, 94, 89, 88, 97, 88);
+        ctx.bezierCurveTo(105, 88, 111, 94, 111, 102);
+        ctx.lineTo(111, 116);
+        ctx.lineTo(106.333, 111.333);
+        ctx.lineTo(101.666, 116);
+        ctx.lineTo(97, 111.333);
+        ctx.lineTo(92.333, 116);
+        ctx.lineTo(87.666, 111.333);
+        ctx.lineTo(83, 116);
+        ctx.fill();
+
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.moveTo(91, 96);
+        ctx.bezierCurveTo(88, 96, 87, 99, 87, 101);
+        ctx.bezierCurveTo(87, 103, 88, 106, 91, 106);
+        ctx.bezierCurveTo(94, 106, 95, 103, 95, 101);
+        ctx.bezierCurveTo(95, 99, 94, 96, 91, 96);
+        ctx.moveTo(103, 96);
+        ctx.bezierCurveTo(100, 96, 99, 99, 99, 101);
+        ctx.bezierCurveTo(99, 103, 100, 106, 103, 106);
+        ctx.bezierCurveTo(106, 106, 107, 103, 107, 101);
+        ctx.bezierCurveTo(107, 99, 106, 96, 103, 96);
+        ctx.fill();
+
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.arc(101, 102, 2, 0, Math.PI * 2, true);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(89, 102, 2, 0, Math.PI * 2, true);
+        ctx.fill();
+      }
+    }
+
+
+
+    //生成通用圆角距形
+    function roundedRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + radius);
+      ctx.lineTo(x, y + height - radius);
+      ctx.quadraticCurveTo(x, y + height, x + radius, y + height);
+      ctx.moveTo(x + radius, y + height);
+      ctx.lineTo(x + width - radius, y + height);
+      ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
+
+      ctx.moveTo(x + width, y + height - radius);
+      ctx.lineTo(x + width, y + radius);
+      ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
+
+      ctx.moveTo(x + width - radius, y);
+      ctx.lineTo(x + radius, y);
+      ctx.quadraticCurveTo(x, y, x, y + radius);
+
+      ctx.stroke();
+
+    }
+
+
+    colors();
+
+    function colors() {
+      var canvas = document.getElementById('colors');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        for (var i = 0; i < 6; i++) {
+          for (var j = 0; j < 6; j++) {
+            ctx.fillStyle = "rgb(" + Math.floor(255 - 255 / 6 * i) + ',' + Math.floor(255 - 255 / 6 * j) + ",0)";
+            ctx.fillRect(j * 25, i * 25, 25, 25);
+          }
+        }
+      }
+    }
+
+    circle();
+
+    function circle() {
+      var canvas = document.getElementById('circle');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        for (var i = 0; i < 6; i++) {
+          for (var j = 0; j < 6; j++) {
+            ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / 6 * i) + ',' + Math.floor(255 - 255 / 6 * j) + ",0)";
+            ctx.beginPath();
+            ctx.arc(12.5+j * 25, 12.5+i * 25,10,0,Math.PI*2,true);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    line();
+
+    function line() {
+      var canvas = document.getElementById('line');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        var lineCap = ['butt','round','square'],
+            lineJoin =['round','bevel','miter'];
+        //最左边的线用了默认的 butt 。可以注意到它是与辅助线齐平的。中间的是 round 的效果，端点处加上了半径为一半线宽的半圆。右边的是 square 的效果，端点处加上了等宽且高度为一半线宽的方块。
+        ctx.font="20px Times New Roman";
+        ctx.fillText("最左边的线用了默认的 butt 。可以注意到它是与辅助线齐平的。 中间的是",20,150);
+        ctx.fillText(" round 的效果，端点处加上了半径为一半线宽的半圆。右边的是",20,170);
+        ctx.fillText(" square 的效果，端点处加上了等宽且高度为一半线宽的方块。",20,190);
+        for (var i = 0; i < lineCap.length; i++) {
+            ctx.lineWidth=15;
+            ctx.lineCap=lineCap[i];
+            ctx.beginPath();
+            ctx.moveTo(20+i*30,20);
+            ctx.lineTo(20+i*30,100);
+            ctx.stroke();
+          }
+
+        for (var i = 0; i < lineJoin.length; i++) {
+            ctx.lineWidth=10;
+            ctx.lineJoin=lineJoin[i];
+
+            ctx.beginPath();
+            ctx.moveTo(140,10+i*40);
+            ctx.lineTo(150,30+i*40);
+            ctx.lineTo(160,10+i*40);
+            ctx.lineTo(170,30+i*40);
+            ctx.lineTo(180,10+i*40);
+            ctx.lineTo(190,30+i*40);
+            ctx.lineTo(200,10+i*40);
+            ctx.stroke();
+          }
+      }
+    }
+
+    gradient();
+    function gradient() {
+      var canvas = document.getElementById('gradient');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d'),
+            linegradient=ctx.createLinearGradient(20,100,300,100),
+            linegradient2=ctx.createLinearGradient(500,100,300,100),
+            radialgradient=ctx.createRadialGradient(80,300,20,80,300,40),
+            radialgradient2=ctx.createRadialGradient(260,320,30,250,320,50),
+            radialgradient3=ctx.createRadialGradient(150,380,40,150,400,90);
+        
+        ctx.font="20px Times New Roman";
+        ctx.fillText("渐变的背景",20,80);
+        linegradient.addColorStop(0,"#fff");
+        linegradient.addColorStop(0.4,"#ff0");
+        linegradient.addColorStop(0.6,"#000");
+        linegradient.addColorStop(0.8,"#f00");
+        linegradient.addColorStop(1,"#f80");
+        ctx.fillStyle=linegradient;
+        ctx.fillRect(20,100,300,100);
+
+        ctx.fillText("渐变的边框",350,80);
+        linegradient2.addColorStop(0,"#f80");
+        linegradient2.addColorStop(0.5,"#ff0");
+        linegradient2.addColorStop(1,"#fc0");
+        ctx.strokeStyle=linegradient2;
+        ctx.strokeRect(350,100,300,100);
+
+
+         radialgradient.addColorStop(0,"#A7D30C");
+         radialgradient.addColorStop(0.9,"#019F62");
+         radialgradient.addColorStop(1,"rgba(1,159,98,0)");
+         ctx.fillStyle=radialgradient;
+         ctx.fillRect(0,250,500,300);
+
+         radialgradient2.addColorStop(0,"#FF5F98");
+         radialgradient2.addColorStop(0.75,"#FF0188");
+         radialgradient2.addColorStop(1,"rgba(255,1,136,0)");
+         ctx.fillStyle=radialgradient2;
+         ctx.fillRect(0,250,500,300);
+
+
+
+         radialgradient3.addColorStop(0,"#ccc");
+         radialgradient3.addColorStop(0.9,"#E4C700");
+         radialgradient3.addColorStop(1,"rgba(228,199,0,0)");
+         ctx.fillStyle=radialgradient3;
+         ctx.fillRect(20,250,500,300);
+
+         ctx.fillStyle="#000";
+         ctx.fillText("createRadialGradient的第二个圆(参数后三个)一定要比第一个圆大!!!",0,220);
+         ctx.fillText("并且两个圆不能相交,不然鬼知道会成什么样子",0,240);
+      }
+    }
+
+    createPatern();
+    
+    function createPatern() {
+      var ctx = document.getElementById('createPatern').getContext('2d');
+
+     var img = new Image();
+     img.src="Res/arrow.jpg";
+     img.onload=function(){
+        var pattern= ctx.createPattern(img,'repeat');
+        ctx.fillStyle=pattern;
+        ctx.fillRect(0,0,300,300);
+        ctx.font="40px Microsoft Yahei";
+        ctx.shadowOffsetX=2;
+        ctx.shadowOffsetY=2;
+        ctx.shadowBlur=2;
+        ctx.shadowColor="rgba(0,0,0,.5)";
+        ctx.strokeStyle="#f00";
+        ctx.strokeText("createPattern 图片文字带上阴影效果",0,220);
+     };
+    }
+
+
+    useImg();
+  function useImg() {
+    var cavs=document.getElementById('useImg'),
+        ctx =cavs .getContext('2d');
+
+    var img = new Image();
+    img.src = "Res/aa.png";
+    function imageloaded() {
+
+      ctx.drawImage(img, 0, 0,cavs.width,cavs.height);
+      ctx.beginPath();
+      ctx.moveTo(30, 96);
+      ctx.lineTo(70, 66);
+      ctx.lineTo(103, 76);
+      ctx.lineTo(170, 15);
+      ctx.strokeStyle = "#f00";
+      ctx.stroke();
+      ctx.font = "40px Microsoft Yahei";
+      ctx.shadowOffsetX = 2;
+      ctx.shadowOffsetY = 2;
+      ctx.shadowBlur = 2;
+      ctx.shadowColor = "rgba(0,0,0,.5)";
+      ctx.strokeStyle = "#f00";
+      ctx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
+      ctx.fillStyle = "#fff";
+      ctx.fillText("图片渲染到canvas中时缩放", 0, 280);
+    };
+
+    if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
+      imageloaded();
+    } else {
+      img.onload = function() {
+        imageloaded();
+      };
+    }
+  }
+
+    useImgSlicing();
+  function useImgSlicing() {
+    var cavs=document.getElementById('useImg_slicing'),
+        ctx =cavs .getContext('2d');
+
+    var img = new Image();
+    img.src = "Res/default.png";
+    function imageloaded() {
+
+      ctx.drawImage(img, 0,0);
+      ctx.drawImage(img, 110, 105,150,120,500,10,200,150);
+      ctx.strokeStyle = "#f00";
+      ctx.stroke();
+      ctx.font = "20px Microsoft Yahei";
+      ctx.shadowOffsetX = 2;
+      ctx.shadowOffsetY = 2;
+      ctx.shadowBlur = 2;
+      ctx.shadowColor = "rgba(0,0,0,.5)";
+      ctx.strokeStyle = "#f00";
+      ctx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
+      ctx.strokeText("切片,组合图片", 0, 260);
+       ctx.strokeText("drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)", 0, 300)
+    };
+
+    if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
+      imageloaded();
+    } else {
+      img.onload = function() {
+        imageloaded();
+      };
+    }
+  }
+
+  saveRestore();
+  function saveRestore() {
+    var cavs = document.getElementById('save_restore'),
+      ctx = cavs.getContext('2d');
+
+    ctx.fillRect(0, 0, 150, 150); // Draw a rectangle with default settings
+    ctx.save(); // Save the default state
+
+    ctx.fillStyle = '#09F' // Make changes to the settings
+    ctx.fillRect(15, 15, 120, 120); // Draw a rectangle with new settings
+
+    ctx.save(); // Save the current state
+    ctx.fillStyle = '#FFF' // Make changes to the settings
+    ctx.globalAlpha = 0.5;
+    ctx.fillRect(30, 30, 90, 90); // Draw a rectangle with new settings
+
+    ctx.restore(); // Restore previous state
+    ctx.fillRect(45, 45, 60, 60); // Draw a rectangle with restored settings
+
+    ctx.restore(); // Restore original state
+    ctx.fillRect(60, 60, 30, 30); // Draw a rectangle with restored settings
+    ctx.strokeStyle = "#f00";
+    ctx.strokeText("save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数", 0, 220);
+
+  }
+  translate();
+
+  function translate() {
+    var cavs = document.getElementById('translate'),
+      ctx = cavs.getContext('2d');
+
+    ctx.fillRect(0, 0, 300, 300);
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        ctx.save();
+        ctx.strokeStyle = "#9CFF00";
+        ctx.translate(50 + j * 100, 50 + i * 100);
+        drawSpirograph(ctx, 20 * (j + 2) / (j + 1), -8 * (i + 3) / (i + 1), 10);
+        ctx.restore();
+      }
+    }
+
+    function drawSpirograph(ctx, R, r, O) {
+      var x1 = R - O;
+      var y1 = 0;
+      var i = 1;
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      do {
+        if (i > 20000) break;
+        var x2 = (R + r) * Math.cos(i * Math.PI / 72) - (r + O) * Math.cos(((R + r) / r) * (i * Math.PI / 72))
+        var y2 = (R + r) * Math.sin(i * Math.PI / 72) - (r + O) * Math.sin(((R + r) / r) * (i * Math.PI / 72))
+        ctx.lineTo(x2, y2);
+        x1 = x2;
+        y1 = y2;
+        i++;
+      } while (x2 != R - O && y2 != 0);
+      console.log(i);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = "#f00";
+    ctx.strokeText("我在画螺旋形通过save,restore保存并恢复状态", 0, 220);
+
+  }
+
   };
+
+
 </script>
 </head>
 <body>
 <input type="button" value="rotate" id="btn">
 <div id="wrap" class="wrap">
-  <p>我是要革1</p>
-  <p>我是要革2</p>
-  <p>我是要革3</p>
-  <p>我是要革4</p>
-  <p>我是要革5</p>
+  <p>我是可旋转的1</p>
+  <p>我是可旋转的2</p>
+  <p>我是可旋转的3</p>
+  <p>我是可旋转的4</p>
+  <p>我是可旋转的5</p>
 </div>
 
+<canvas id="test" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="demo" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="general" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="colors" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="circle" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="line" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="gradient" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="createPatern" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="useImg" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="useImg_slicing" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="save_restore" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="translate" width="700" height="500">不支持canvas标签</canvas>
 </body>
 </html>

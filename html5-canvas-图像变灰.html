@@ -9,7 +9,7 @@
 				$(window).load(function() {
 					var img = $('#color-img');
 					// 复制图像
-					img.clone().addClass('gray-img').css({
+					img.clone().removeAttr("id").addClass('gray-img').css({
 						"position": "absolute",
 						"z-index": "2",
 						"opacity": "0"

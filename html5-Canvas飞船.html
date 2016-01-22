@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        /*CSS样式*/
+
+        body {
+          overflow: hidden;
+        }
+
+        canvas {
+          width: 100%;
+          height: 100%;
+        }
+
+    </style>
+    <script>
+    window.onload = function() {
+            /*画布JS*/
+
+            var fov = 100, //定义3D坐标转2D坐标比率
+                SCREEN_WIDTH = 600,
+                SCREEN_HEIGHT = 300,
+                HALF_WIDTH = SCREEN_WIDTH / 2,
+                HALF_HEIGHT = SCREEN_HEIGHT / 2,
+                numSpaceship = 50;
+
+            //飞船图片
+            var anim_img = new Image();
+
+            anim_img.src = 'http://www.gbtags.com/gb/networks/uploads/de6da3dc-5924-4a2d-9e47-718a9ef43d6b/fighter3.png';
+            //anim_img.src = 'Res/aa.png';
+            //获取画布上下文
+            var canvas = document.getElementById('gbcanvas');
+            var c = canvas.getContext('2d');
+
+            /* 绘制画布飞船图形方法，参数为3D坐标：数据格式为一个数组 */
+            function draw3Din2D(point3d) {
+                x3d = point3d[0],
+                    y3d = point3d[1],
+                    z3d = point3d[2];
+
+                //定义缩放比率
+                var scale = fov / (fov + z3d);
+
+                //获取对应2d画布中坐标
+                var x2d = (x3d * scale) + HALF_WIDTH;
+                var y2d = (y3d * scale) + HALF_HEIGHT;
+
+                //绘制图片
+                c.drawImage(anim_img, x2d, y2d, 5 * scale, 5 * scale);
+
+            }
+
+
+            var points = [];
+            //生成随机的飞船
+            function generateSpaceship() {
+                for (i = 0; i < numSpaceship; i++) {
+                    var point = [(Math.random() * 400) - 200, (Math.random() * 400) - 200, (Math.random() * 400) - 200];
+                    points.push(point);
+                }
+                console.log(points)
+            }
+
+            //清除并且绘制飞船
+            function render() {
+                //清除画布上所有的图形
+                c.fillStyle = "rgb(0,0,0)";
+                c.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+                for (var i = 0; i < numSpaceship; i++) {
+                    point3d = points[i];
+
+                    z3d = point3d[2];
+
+                    z3d -= 2; //每次缩减，生成新的z轴坐标位置
+
+                    if (z3d < -fov) z3d += 200; //超过一定数量，则生成反向坐标
+
+                    point3d[2] = z3d;
+
+                    //调用绘制方法
+                    draw3Din2D(point3d);
+                }
+
+            }
+
+        //生成飞船
+        generateSpaceship();
+
+        //隔一定时间生成页面图形
+
+        setInterval(function() {
+            render();
+        }, 15);
+    }
+    </script>
+</head>
+<body>
+<!-- 画布元素 -->
+
+<canvas id="gbcanvas" width="600" height="300">不支持HTML5画布</canvas>
+</body>
+</html>
