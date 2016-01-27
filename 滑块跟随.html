@@ -1,197 +1,88 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <script src="Scripts/jquery-1.9.0.js"></script>
-    <script src="Scripts/myLibrary.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--author:天凡-->
+    <title>滑动背景的ＪＳ导航菜单－基于jquery</title>
     <style type="text/css">
-        body, html * {
-            margin: 0px;
-            padding: 0px;
-        }
-        ul {
-            width: 800px;
+        ul, li {
             list-style: none;
-            overflow: hidden;
-            /*background-color: #808080;*/
-            margin: 50px auto;
+            margin: 0;
+            padding: 0;
+            overflow:hidden;
+        }
+
+        #menu_text{
             position:relative;
-            z-index: 2;
-            border:0px solid #898989;
-            border-bottom-width: 1px;
+            margin:0 auto;
+            top:150px;
+            width:600px;
+        }
 
+        #menu_text ul {
+            height:36px;
+            position:absolute;
+            background:#e80;
         }
-        ul li:first-child{
-            margin-left: 0px;
+
+        #menu_text li {
+            padding:0 60px;
+            float: left;
+            padding: 0 10px;
+            line-height: 36px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            position:relative;
+            z-index:6;
         }
-            ul li {
-                float: left;
-                line-height: 25px;
-                padding: 0 30px;
-                border: 1px solid #898989;
-                border-bottom-width: 0px;
-                margin-left: -1px;
-                border-radius:4px 4px 0 0;
-                color: red;
-            }
-        ul li:hover{
-            color:#90af00;
-            cursor:pointer;
+
+        #menu_text li:before{
+            content:'';
+            border:1px solid #fff;
+            position:absolute;
+            left:0;
+            top:10%;
+            height:80%;
         }
-        .slide {
-            width: 90px;
-            background-color: #4FAAD8;
-            border-radius:4px 4px 0 0;
+         #menu_text li:first-child:before{
+            border:none;
+         }
+
+        #menu_text #slide_block{
+            height: 36px;
+            display:none;
+            padding:0;
+            margin:0;
+            left: 0;
+            top:0;
+            z-index: 5;
+            background: #f50;
             position: absolute;
-            left: 100px;
-            top: 30px;
-            height: 27px;
-            display: block;
-            filter: alpha(opacity=50);
-            opacity: 0.5;
-            z-index: 1;
+            border:none;
         }
+         #menu_text #slide_block:before{border:none;}
     </style>
-
+    <script src="Scripts/jquery-1.9.0.js"></script>
     <script type="text/javascript">
-        $(function () {
-
-            var $slide = $("#slide"),
-                $ulPanel = $("#ulPanel");
-            var testUrl = "http://www.baidu.com?p=1#!",
-                enTestUrl = "";
-           // console.info(window.escape(testUrl));
-            enTestUrl = window.encodeURI(testUrl);
-           // console.info(enTestUrl);
-            enTestUrl = window.encodeURIComponent(testUrl);
-           // console.info(enTestUrl);
-
-            var url = "Default.aspx?str=" + encodeURIComponent("12#");
-            var time = null;
-            // window.open(url);
-
-            $ulPanel.on("mouseenter", "li", function (e) {
-               // move(this);
-                e.preventDefault();
-                $("#en").val("over");
-            });
-
-            $("#divpanel").on("mouseleave", function (e) {
-
-               // move($ulPanel.get(0), "out");
-                e.preventDefault();
-                $("#en").val("out");
-            });
-
-            function move(sender, out) {
-                if (time)
-                    window.clearTimeout(time);
-                time = window.setTimeout(function () {
-                    var l = $(sender).offset().left + 10,
-                     t = $(sender).offset().top,
-                     w = $(sender).outerWidth(true);
-                    if (out) {
-                        l = $(sender).find("li").first().offset().left+10;
-                        t = $(sender).find("li").first().offset().top;
-                        w = $(sender).find("li").first().outerWidth(true);
-
-                    }
-                    $slide.animate({
-                        "left": l,
-                        "top": t,
-                        "width": w
-                    }, "fast", function () {
-                        $slide.animate({
-                            "left": l-10
-                        },"fast");
-
-                    });
-                }, 300);
-            }
-
-            $("#divpanel").on("click", function (e) {
-                //alert($(e.target).html());
-            });
-
-            var tempJson={key:"name",val:"zhangshan"};
-            var ss =$.makeArray(tempJson);
-
-
-            var x=$("#divpanel").data("mx",function(){alert('abc')});
-            var s = $("#divpanel").data("mx");
-            $("#divpanel").hide(500).show(500);
-
+        $(document).ready(function () {
+            $("#menu_text li").on("mouseenter",function(){
+                var pos=$(this).position();
+                var w=$(this).outerWidth();
+                $("#slide_block").stop(false,true).animate({ left: pos.left,width:w}, 'fast');}).show();
         });
-
-
-        weiLib.ready(function(){
-             var $slide = weiLib.$("slide"),
-                 $ulPanel = weiLib.$("ulPanel");
-
-             weiLib.on($ulPanel,"mouseover",function(e){
-               var li = e.target || e.srcElement,
-                   w=li.offsetWidth,
-                   navOffset = weiLib.offset(li),
-                   l=navOffset.left,
-                   t=navOffset.top;
-                   
-                   if(li.tagName !== "LI")return;
-                // 模拟jquery实现
-                 weiLib.animate($slide,{left:l,top:t,width:w},4000,function(time){
-                    weiLib.$("showText").innerHTML='时长:300=== move complete!耗时:'+time;
-                 });
-
-                //jQuery 实现
-                // $($slide).animate({left:300},200,function(){
-                //     alert((new Date).getTime()-s);
-                // });
-             });
-
-             //缓存
-             weiLib.data($slide,"fx",{key:'keyUU'}); //返回元素自身
-             weiLib.data($slide,"fx1",{key:'keyUU1'}); 
-             weiLib.data($slide,"fx2",{key:'keyUU2'});
-             var getKey=weiLib.data($slide,"fx2"); //取出
-             var getKeyAll= weiLib.data($slide);
-
-             // $.queue($slide,"say",function(next){alert('t1');next();});
-             // $.queue($slide,"say",function(next){alert('t2');next();});
-             // $.queue($slide,"say",function(){alert('t3')});
-             //  $.dequeue($slide,"say");
-             //  alert($.queue($slide,"say").length);
-             //队列
-             
-             var $queue=weiLib.$("queue"),
-                 queue_T1=weiLib.queue($slide,"queue",function(next){$queue.value="this is test--1";alert("队列test-1");next();}),
-                 queue_T2=weiLib.queue($slide,"queue",function(next){$queue.value="this is test--2";alert("队列test-2");next();}),
-                 queue_T3=weiLib.queue($slide,"queue",function(next){$queue.value="this is test--3";alert("队列test-3");});
-                 weiLib.dequeue($slide,"queue");
-         });
-
     </script>
-
 </head>
 <body>
-    mouseenter:<input id="en" type="text" />
-    mouseleave:<input id="le" type="text" />
-    queue:<input id="queue" type="text" />
-    <div id="divpanel">
-        <ul id="ulPanel">
-            <li>主页</li>
-            <li>最近浏览的书签</li>
-            <li>新闻动态</li>
-            <li>收藏</li>
-            <li>联系我们</li>
-        </ul>
-        <div id="slide" class="slide"></div>
-        <div id='showText' class="slide" style='top:200px;left:300px;background:#ff00aa;height:auto;width:auto;padding:50px;'>show</div>
-    </div>
-
-<div style="width:800px;border:1px solid red;height:300px;margin-top:400px;">
-    <ul style="list-style:none;">
-    <li style="float:left;width:300px;background:#f00;"></li>
-    <li style="float:left;width:300px;background:#ababac;"></li>
-    <li style="float:left;width:300px;background:#f5f5f5;"></li></ul>
-    </div>
+<div id="menu_text">
+    <ul>
+        <li>导航一革</li>
+        <li>导航二大东奔西走</li>
+        <li>导航三城</li>
+        <li>导航四未亡人地</li>
+        <li>导航五花样百出</li>
+        <li id="slide_block"><div ></div></li>
+    </ul>
+</div>
 </body>
-</html>
+    </html>

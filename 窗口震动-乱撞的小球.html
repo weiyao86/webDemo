@@ -104,7 +104,7 @@
 
 		//move ball
 		var smallball =_$("move_small_ball"),clone=null,doc=document.body ? document.body :document.documentElement;
-		for(var i = 1;i<=10;i++){
+		for(var i = 1;i<=5;i++){
 			clone=smallball.cloneNode(false);
 			smallball.parentNode.appendChild(clone,smallball);
 			clone.id='move_small_ball'+i;
