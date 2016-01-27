@@ -20,30 +20,29 @@
         }
 
         #menu_text ul {
-            height:36px;
             position:absolute;
             background:#e80;
         }
 
         #menu_text li {
-            padding:0 60px;
             float: left;
-            padding: 0 10px;
             line-height: 36px;
             text-align: center;
             color: white;
             cursor: pointer;
             position:relative;
+            border-bottom-width:2px;
+            border-bottom-style:solid;
             z-index:6;
         }
-
+       
         #menu_text li:before{
             content:'';
             border:1px solid #fff;
             position:absolute;
             left:0;
-            top:10%;
-            height:80%;
+            top:20%;
+            height:60%;
         }
          #menu_text li:first-child:before{
             border:none;
@@ -62,6 +61,13 @@
             border:none;
         }
          #menu_text #slide_block:before{border:none;}
+        a{text-decoration:none;color:#fff;position: relative;padding: 0 10px;}
+        a:after{position: absolute;top:140%;left:50%;content: "";width:0;background: #fff;height:2px;}
+        li:hover a:hover:after{
+            width:100%;
+            left:0;
+            transition:all .2s linear .3s;
+        }
     </style>
     <script src="Scripts/jquery-1.9.0.js"></script>
     <script type="text/javascript">
@@ -69,19 +75,20 @@
             $("#menu_text li").on("mouseenter",function(){
                 var pos=$(this).position();
                 var w=$(this).outerWidth();
-                $("#slide_block").stop(false,true).animate({ left: pos.left,width:w}, 'fast');}).show();
+                $("#slide_block").stop(false,true).animate({ left: pos.left,width:w}, 'fast').show();
+            });
         });
     </script>
 </head>
 <body>
 <div id="menu_text">
     <ul>
-        <li>导航一革</li>
-        <li>导航二大东奔西走</li>
-        <li>导航三城</li>
-        <li>导航四未亡人地</li>
-        <li>导航五花样百出</li>
-        <li id="slide_block"><div ></div></li>
+        <li><a>导航一革</a></li>
+        <li><a>导航二大东奔西走</a></li>
+        <li><a>导航三城</a></li>
+        <li><a>人文情怀</a></li>
+        <li><a>深山老屋</a></li>
+        <li id="slide_block"></li>
     </ul>
 </div>
 </body>
