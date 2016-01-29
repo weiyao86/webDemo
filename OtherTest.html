@@ -6,7 +6,16 @@
   <script src="Scripts/jquery-1.9.0.js"></script>
 <script>
     $(function(){
-      alert($("#wrap").offset().top);
+      function power(base,exponent){
+        if(exponent == 0){
+          return 1;
+        }else{
+          return base * power(base,exponent-1);
+        }
+      };
+
+      var s = power(5,3);
+      alert(s);
     });
 
 </script>
