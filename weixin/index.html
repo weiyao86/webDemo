@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title></title>
+        <script src="./js/jweixin-1.0.0.js"></script>
+        <script src="./js/zepto.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            alert('打开成功');
+            //1.wechat config
+            var urlCode = "538b9b11426814d8"; // 第二步生成的url后面的字符串
+            var locationUrl = location.href.replace(/#.*$/,''); //当前网页地址
+            var url = "http://wx.servision.com.cn/servision-wechat/debug/"+ urlCode +"/jsticket?url=" + locationUrl;
+
+            $.ajax({
+                url: url,
+                jsonp: "callback",
+                dataType: "jsonp",
+                success: function( response ) {
+                    wx.config({
+                        debug: true, 
+                        appId: response.appId, 
+                        timestamp: response.timestamp, 
+                        nonceStr: response.noncestr, 
+                        signature: response.signature,
+                        jsApiList: []
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+    <p>成功</p>
+        <script type="text/javascript" charset="utf-8">
+            wx.ready(function(){
+                //2. check
+                wx.checkJsApi({
+                    jsApiList: ['chooseImage'], 
+                    success: function(res) {
+                        alert('配置成功');
+                        console.log(res);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
