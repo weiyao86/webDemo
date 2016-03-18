@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>3d</title>
+	<script src='http://runjs.cn/gist/jc7ucsie/all'></script>
 	<style>
 		
 .wrap {
@@ -72,6 +73,27 @@
 	to{transform:rotateX(180deg);}
 }
 	</style>
+
+	<script>
+		var c = 1,
+			v = 30,
+			d = 0;
+		setInterval(function() {
+			d += (c * v);
+			if (d >= 360) {
+				c = -1;
+			} else {
+				if (d >= 0) {
+					c = 1;
+				} else if (d <= -360) {
+					c = 1;
+				} else {
+					console.log(d);
+					c = -1;
+				}
+			}
+		}, 1 * 1000);
+	</script>
 </head>
 <body>
 	<div class="wrap">
