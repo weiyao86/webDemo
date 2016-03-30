@@ -5,61 +5,32 @@
 	<title>各种css制作形状及jquery中deferred对象(jq回调函数解决方案)</title>
 	<script src="Scripts/jquery-1.9.0.js"></script>
 	<style type='text/css'>
-		html,body{margin: 0;padding: 0;}
-		.clearfix:after,.clearfix:before{content:"";display:table;}
-		.clearfix:after{*zoom:1;}
-		.clearfix{clear:both;}
-		.container{
-			margin:-100px 0 0 -400px;
-			border:2px solid #acacac;
-			width:800px;
-			height:200px;
-			position:absolute;
-			top:50%;
-			left:50%;
-		}
-			.test{
-				border: 20px solid transparent;
-				float:left;
-				margin-left:20px;
-	            width: 0px;
-	            height: 0px;
-			}
-			.t1{border-top-color: #f00;}
-			.t2{border-bottom-color: #f00;}
-			.t3{border-left-color: #f00;}
-			.t4{border-right-color: #f00;}
-			.t5{border-color: red green blue black;border-radius:50%;}
-			.t6{border-color: #000 #000 #000 #0ab;width:100px;height:20px;background:#aaa;border-radius:4px;}
-			.t6::after{content:"";border:18px solid transparent;border-color: transparent transparent transparent #f00;height:0px;width:0;margin-left: 120px;position:relative;}
-			.t7{width:100px;height: 100px;border:1px solid #899;float:left;margin-left: 100px;position:relative;border-radius:4px;}
-			.t7::after,.t7::before{content:"";position:absolute;border:0px solid #899;left:100%;}
-			.t7::after{border-width:9px;border-color:transparent transparent transparent #fff;top:10px;}
-			.t7::before{border-width:10px;border-color:transparent transparent transparent #899;top:9px;}
-			hr{margin: 10px 0 0;}
-			.t8::after{content:"";position:absolute;border:10px solid;border-color: #f00 transparent transparent transparent;left:50%;}
-
-
-			.outside{width:1600px;overflow:hidden;border:1px solid red;list-style:none;}
-			.outside li{float:left;border:1px solid gray;background:gray;margin-left: 15px;height:100px;position: relative;padding-right:55px;}
-			.arrow{border-color: transparent transparent transparent #000;
-			    border-style: solid;
-			    border-width: 50px 0 50px 60px;
-			    height: 0;
-			    position: absolute;
-			    right: 0;
-			    top: 0;
-			    width: 0;}
-		    .arrow-1{
-		    	border-color: transparent transparent transparent #808080;
-			    border-style: solid;
-			    border-width: 50px 0 50px 60px;
-			    height: 0;
-			    left: -66px;
-			    position: absolute;
-			    top: -50px;
-			    width: 0;
-			    }
+html,body{margin:0;padding:0;}
+.clearfix:after,.clearfix:before{content:"";display:table;}
+.clearfix:after{*zoom:1;}
+.clearfix{clear:both;}
+.container{margin:-100px 0 0 -400px;border:2px solid #acacac;width:800px;height:200px;position:absolute;top:50%;left:50%;}
+.test{border:20px solid transparent;float:left;margin-left:20px;width:0px;height:0px;}
+.t1{border-top-color:#f00;}
+.t2{border-bottom-color:#f00;}
+.t3{border-left-color:#f00;}
+.t4{border-right-color:#f00;}
+.t5{border-color:red green blue black;border-radius:50%;}
+.t6{border-color:#000 #000 #000 #0ab;width:100px;height:20px;background:#aaa;border-radius:4px;}
+.t6::after{content:"";border:18px solid transparent;border-color:transparent transparent transparent #f00;height:0px;width:0;margin-left:120px;position:relative;}
+.t7{width:100px;height:100px;border:1px solid #899;float:left;margin-left:100px;position:relative;border-radius:4px;}
+.t7::after,.t7::before{content:"";position:absolute;border:0px solid #899;left:100%;}
+.t7::after{border-width:9px;border-color:transparent transparent transparent #fff;top:10px;}
+.t7::before{border-width:10px;border-color:transparent transparent transparent #899;top:9px;}
+hr{margin:10px 0 0;}
+.t8::after{content:"";position:absolute;border:10px solid;border-color:#f00 transparent transparent transparent;left:50%;}
+.outside{width:1600px;overflow:hidden;border:1px solid red;list-style:none;}
+.outside li{float:left;border:1px solid gray;background:gray;margin-left:15px;height:100px;position:relative;padding-right:55px;}
+.arrow{border-color:transparent transparent transparent #000;border-style:solid;border-width:50px 0 50px 60px;height:0;position:absolute;right:0;top:0;width:0;}
+.arrow-1{border-color:transparent transparent transparent #808080;border-style:solid;border-width:50px 0 50px 60px;height:0;left:-66px;position:absolute;top:-50px;width:0;}
+.yue{width:100px;height:100px;border-radius:50%;box-shadow:10px 15px 0 0 green;}
+.leaf{width:100px;height:100px;border-radius:5px 300px 3px 300px;background:green;}
+.triangleUp{width:0;height:0;border-style:solid;border-width:0 50px 100px 50px;border-color:transparent transparent green;}
 		</style>
 </head>
 <body>
@@ -72,18 +43,11 @@
 		<div class='test t6'></div>
 		<div class='t7'></div>
 		<hr class="clearfix t8"></div>
+		<div class="yue">月牙</div>
+		<div class="leaf">树叶</div>
+		<div class="triangleUp">三角形</div>
 
-	<div style='float:left;height:50px;' id="prompt_msg"></div>
-	<ul class="outside">
-		<li>项目符号的位置是outside</li>
-		<li>项目符号的位置是outside</li>
-		<li>
-			项目符号的位置是outside
-			<div class="arrow">
-				<div class="arrow-1"></div>
-			</div>
-		</li>
-	</ul>
+	
 </body>
 </body>
 </html>
