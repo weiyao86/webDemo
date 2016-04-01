@@ -16,6 +16,7 @@
 		$("#moShow , #popupDiv").mouseleave(function(e) {
 			//在这里做判断，只有当鼠标的去向与popup层无关的时候，我们才关闭popup层
 			var target = e.relatedTarget;
+			console.log(target)
 			if(!target || (target && target.id != "popupDiv" && target.id != "moShow" && $(target).parents("#popupDiv , #moShow").length == 0)){
 				$("#popupDiv").hide();
 			}
@@ -27,5 +28,6 @@
 <body>
 <a href="javascript:void(0)" id="moShow">mouseover</a>
 <div id="popupDiv" class="popupDiv">This is related div This is related div This is related div</div>
+<input type="text" value="asfdads" style="outline: none;">
 </body>
 </html>

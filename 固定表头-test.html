@@ -5,6 +5,14 @@
 	<title>Document</title>
 	<script type="text/javascript" src='Scripts/jquery-1.9.0.js'></script>
 	<style type='text/css'>
+	tr:nth-of-type(2n-1){
+		transition:all .3s;
+		background:#fff;
+	}
+	tr:hover{
+		background:#FF8C00;
+		transition:all .3s;
+	}
 		#scrollTable {
 			width:701px;
 			border: 1px solid #EB8;/*table没有外围的border，只有内部的td或th有border*/
@@ -53,6 +61,8 @@
 			}
 			.mod-spm{border:1px solid red;width:400px;height:300px;}
 			.child_a,.child_b,.child_c,.child_d{border:1px solid red;width:50px;height:50px;}
+	}
+	}
 	</style>
 	<script type="text/javascript">
 
@@ -178,9 +188,10 @@
 	<div id="scrollTable">
 		<table class="thead">
 			<colgroup>
-			<col width="180px"/>
-			<col width="250px"/>
 			<col width="200px"/>
+			<col width="250px"/>
+			<col width="100px"/>
+			
 			<col/>
 			</colgroup>
 			<tbody>
@@ -195,9 +206,103 @@
 		<div id="innerScroll">
 			<table class="tbody">
 			<colgroup>
-			<col width="180px"/>
-			<col width="250px"/>
 			<col width="200px"/>
+			<col width="250px"/>
+			<col width="100px"/>
+			
+			<col/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<td>名称</td>
+					<td>语法</td>
+					<td>说明</td>
+					<td>例子</td>
+				</tr>
+				<tr>
+					<td>名称</td>
+					<td>语法</td>
+					<td>说明</td>
+					<td>例子</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+				<tr>
+					<td>1_1</td>
+					<td>2_2</td>
+					<td>3_3</td>
+					<td>4_4</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+
+<p>百分比宽度有滚动条时无法对齐边框</p>
+	<div id="scrollTable">
+		<table class="thead">
+			<colgroup>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+			
+			<col/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>名称</th>
+					<th>语法</th>
+					<th>说明</th>
+					<th>例子</th>
+				</tr>
+			</tbody>
+		</table>
+		<div id="innerScroll">
+			<table class="tbody">
+			<colgroup>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
 			<col/>
 			</colgroup>
 			<tbody>
