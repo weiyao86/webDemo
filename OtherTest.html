@@ -1,97 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>afdsaf</title>
-	<link rel="stylesheet" href="css/all.css">
-	<style>
-	html,body{
-		/*perspective:300px;*/
-		overflow:hidden;
-		height:100%;
-	}
-		/*.slidein{
-			transform:translate3d(50%,0,0);
-			animation:a 5s forwards;
-		}*/
-		@-webkit-keyframes a {
-    0% { -webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0); opacity: 0;; }
-    to { -webkit-transform: translateZ(0); transform: translateZ(0); opacity: 1; }
-}
-@keyframes a {
-    0% { -webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0); opacity: 0; }
-    to { -webkit-transform: translateZ(0); transform: translateZ(0); opacity: 1; }
-}
-@-webkit-keyframes b {
-    0% { -webkit-transform: translateZ(0); transform: translateZ(0); opacity: 1; }
-    to { -webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0); opacity: 0; }
-}
-@keyframes b {
-    0% { -webkit-transform: translateZ(0); transform: translateZ(0); opacity: 1; }
-    to { -webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0); opacity: 0; }
-}
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+/*<!--absolute布局 ]] -->*/
 
-		.s1,.s2{
-			background:#ff8800;
-			position: absolute; top: 150px; right: 0; bottom: 0; left: 0;
-			opacity:0;
-		}
-		.s2{
-			background:#ccc;
-			animation:all .2s infinite;
-		}
-		.slidein{
-			-webkit-animation: a .2s forwards; animation: a .2s forwards;
-		}
-		.slideout{
-			-webkit-animation: b .2s forwards; animation: b .2s forwards;
-		}
-		input{
-			width:200px;
-			height:60px;
-		}
+html,body{height:100%;}
+.wrap{width:100%;}
+.header,.footer{height:40px;line-height:40px;background-color:#D8D8D8;text-align:center;}
+.header{position: absolute;top:0;left:0;width:100%;}
+.footer{position: absolute;bottom:0;left:0;width:100%;}
+.main{position:absolute;z-index:1;top:40px;left:0;bottom:40px;width:100%;overflow: auto;-webkit-overflow-scrolling: touch;}
 
-	</style>
-	<script>
-	window.onload=function(){
-		var btn= document.getElementById("btn");
-		var btn1= document.getElementById("btn1");
-		var s1= document.getElementById("s1");
-		var s2= document.getElementById("s2");
-		
-		
-		var btnFun=function(){
-			this.value="App_Code";
-			s1.className="s1 slidein";
-			location.hash="#abc123";
-			history.replaceState({},"tesat",location.href);
-		}
-
-		var btnFun1=function(){
-			this.value="8种css实现垂直水平居中.html";
-			s2.className="s2 slidein";
-			location.hash="#123";
-			history.replaceState({},"test",location.href);
-		};
-
-btn.addEventListener("click",btnFun,false);
-		btn1.addEventListener("click",btnFun1,false);
-	}
-	</script>
+  </style>
 </head>
 <body>
-  <!-- <fieldset class="slidein">
-    <legend>MB5U.com CSS网页布局</legend>
-    <ul>
-      <li>Div CSS教程 系统的讲述了关于CSS布局的知识</li>
-      <li>CSS布局实例 向你呈现了mb5u.com中的一些实例</li>
-      <li>CSS模板下载 你可以查看一些模板</li>
-      <li>CSS酷站欣赏 高手与大师的作品定会让你有所收获</li>
-    </ul>
-  </fieldset> -->
-  <input type="button" value="aaaaaaaaaaaa" id="btn">
-  <input type="button" value="bbbbbbbbbbbb" id="btn1">
-  <div class='s1' id="s1">我是btn1加进来的</div>
-  <div class='s2' id="s2">我是btn2加进来的</div>
+<div class="wrap">
+    <div class="header">header</div>
+    <div class="main">
+      <div style="height:2600px;background: #f00;">
+        <div>
+        <p>1---弹性滚动区域</p>
+        <p>35---弹性滚动区域</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">footer</div>
+</div>
 </body>
 </html>
