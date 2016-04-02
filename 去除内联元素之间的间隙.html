@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>去除内联元素之间的间隙</title>
+	<script>
+		 // var bind_test = function(fn, context) {
+   //              return function() {
+   //                  return fn.apply(context || this, arguments);
+   //              }
+   //          };
+
+   //          var name="global";
+   //          function foo(){
+   //          	alert(this.name);
+   //          }
+   //          foo();
+   //          var obj={"name":"obj"};
+   //          var f1 = bind_test(foo);
+   //          f1();
+
+
+
+	</script>
+	<style>
+		ul{width:100%;height:36px;line-height:36px;border:1px solid #f80;text-align:center;}
+		ul li{display:inline-block;*zoom:1;*display:inline;border:1px solid #ccc;}
+
+
+			/* 去除内联元素之间的间隙 */
+		ul{word-spacing:-1em;display:table;/* 调教webkit*/}
+		ul li{word-spacing:0;}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>内联</li>
+		<li>元素</li>
+		<li>中间</li>
+		<li>会有</li>
+		<li>间隔</li>
+	</ul>
+</body>
+</html>

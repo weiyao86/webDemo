@@ -6,8 +6,12 @@
     <script type="text/javascript" src="Scripts/jquery-1.9.0.js"></script>
     <script type="text/javascript" src="Scripts/jquery.blockUI.js"></script>
     <script type="text/javascript">
+
     $(function(){
-    
+
+        console.log(top.parent.document.body.scrollHeight);
+        console.log(document.body.scrollHeight);
+
         $("#btn").on("click",function(){
             $(".left").toggleClass("w")
         });

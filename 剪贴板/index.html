@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>zeroclipboard</title>
+	<script src="../Scripts/jquery-1.9.0.js"></script>
+	<script src="ZeroClipboard.min.js"></script>
+	<script>
+	//需要在服务器上运行
+	/**
+	 * [description]http://code.ciaoca.com/javascript/zeroclipboard/
+	 */
+		$(function() {
+			ZeroClipboard && ZeroClipboard.config({
+				swfPath: "ZeroClipboard.swf",
+				trustedDomains: ['*']
+			});
+
+			var clip = new ZeroClipboard($("#btn"));
+			clip.on("noflash", function(e) {
+				alert($(e.target).attr("data-clipboard-text"));
+			});
+			clip.on("aftercopy", function(e) {
+				alert($(e.target).attr("data-clipboard-text"));
+			});
+			var i = 0;
+			setInterval(function() {
+				$("#btn").attr("data-clipboard-text", i++);
+			}, 3 * 1000);
+		});
+
+	</script>
+</head>
+<body>
+	<input type="button" value="复制" id="btn" data-clipboard-text="我是要被复制的按钮"></body>
+</html>

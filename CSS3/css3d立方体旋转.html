@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3d</title>
+    <style>
+        
+.wrap {
+    perspective: 800px;
+    /* perspective-origin: 50% 100px; */
+    margin:200px;
+    text-align:center;
+}
+.cube {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    transform-style: preserve-3d;
+    animation:dir 5s infinite;
+}
+.f {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border:1px solid;
+    opacity:0;
+}
+.front {
+    /* transform: translate3d(0,0, 100px); */
+    transform:translate3d(0,0, 150px);
+    opacity:1;
+}
+.back {
+    /* transform: translateZ(-100px) rotateY(180deg); */
+    opacity:1;
+    transform:translate3d(0,0, -150px) rotateY(180deg);
+}
+.right {
+    /* transform: rotateY(-270deg) translateX(100px); */
+    /* transform-origin: top right; */
+    opacity:1;
+    transform:translate3d(150px,0, 0) rotateY(90deg);
+
+}
+.left {
+    /* transform: rotateY(270deg) translateX(-100px); */
+    /* transform-origin: center left; */
+    opacity:1;
+    transform:translate3d(-150px,0, 0) rotateY(-90deg);
+}
+.top {
+    /* transform: rotateX(-90deg) translateY(-100px); */
+    /* transform-origin: top center; */
+    opacity:1;
+    transform:translate3d(0,-150px, 0) rotateX(90deg);
+    height:300px;
+}
+.bottom {
+    /* transform: rotateX(90deg) translateY(100px); */
+    /* transform-origin: bottom center; */
+    opacity:1;
+    height:300px;
+    /* (height-(width/2)  200-300/2*/
+    transform:translate3d(0,50px, 0) rotateX(-90deg);
+}
+
+@keyframes dir{
+    to{transform:rotateY(0deg) rotateX(0deg);}
+    from{transform:rotateY(360deg) rotateX(360deg);}
+}
+@keyframes y{
+    to{transform:rotateY(0deg);}
+    from{transform:rotateY(360deg);}
+}
+@keyframes x{
+    to{transform:rotateX(0deg);}
+    from{transform:rotateX(360deg);}
+}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="cube">
+            <div class="f front">前</div>
+            <div class="f back">后</div>
+            <div class="f left">左</div>
+            <div class="f right">右</div>
+            <div class="f top">上</div>
+            <div class="f bottom">下</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+/* 
+ * @name: 
+ * @time: 2013/1/24
+ * @author: sole
+ * @url: http://www.imsole.net/
+ * @directiona: 瀑布流实列css
+ * @html5+css3+jQuery+响应式设计布局: http://www.imsole.net/html5/
+ *
+ * 
+ *
+*/
+ 
+/* basic */
+body { background:#f9f9f9;height:1000px; margin:0 auto; font:12px/24px tahoma, Helvetica, Arial; text-align:center; }
+body,iframe,div,p,h1,h2,h3,h4,h5,h6,fieldset,ul,dl,dt,dd,form,input,button,textarea,select,i { margin:0px; padding:0px; font-weight:normal; }
+ul { list-style:none; overflow:hidden; }
+img { border:none; }
+
+/* content */
+.content { width:960px; margin:10px auto;}
+
+/* case-list */
+.case-list { position:relative; width:960px; }
+.case-list li { display:block; position:absolute; border:1px solid #ddd; width:200px; padding:5px; border-radius:5px; background-color:#fff;min-height: 100px;transition:all .3s ease 0s; }
+.case-list li img { display:block; width:100%; border-radius:5px;}
+  .large {
+            width: 175px;
+            height: 175px;
+            border-radius: 4px;
+            position: absolute;
+            box-shadow: inset 0 0 0px 5px #aaa;
+            display: none;
+            background: #fede4f;
+           /* filter: alpha(opacity=50);
+            opacity: 0.5;*/
+        }
+.show{position: absolute;top:50px;right:50px;width:300px;height:300px;border:1px solid #fede4f;overflow: hidden;z-index: 2;}
+.fixed-bottom{
+	position: fixed;bottom:-40px;line-height:40px;border-radius: 4px;box-shadow: inset 0 0 10px rgba(0,0,0,.5);text-shadow:1px 1px 1px rgba(0,0,0,.3);font-size: 24px;color:#fff;background: #99f;width:100%;z-index: 3;transition:all 1s ease-in 0s;
+}
+.fixed-bg-self{;bottom:0;transition:all .4s ease-in 0s}
+.made{
+	position: fixed;
+	top:0;
+	left:0;
+	right: 0;
+	bottom: 0;
+	background: #000;
+	opacity: .95;
+	z-index: 1000;
+}
+
+.loading,.loading:after,.loading:before{
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin:auto;
+            z-index: 1000;
+            color:#fff;
+        }
+        .loading{width:100px;height:100px;text-align: center;line-height: 100px;font-size: 20px;}
+        .loading:after,.loading:before{
+            border-radius: 110%;
+            border:10px solid transparent;
+            border-top-color:#fff;
+            width:100px;
+            height:100px;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0) inset;
+            content: "";
+        }
+        .loading:before{
+             border-color:#888;
+            /*animation:before 1s linear infinite;*/
+        }
+        .loading:after{
+            animation:before 1s linear infinite;
+        }
+
+        @keyframes before{
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
+         @keyframes after{
+            0%{transform:rotate(360deg);}
+            100%{transform:rotate(0deg);}
+        }
+</style>
+</head>
+
+
+<body>
+<div id="large" class="large"></div>
+<!-- content -->
+<div class="content" id="content">
+	<ul class="case-list" id="case-list">
+		<li data-field='loupe' data-id='1'><img data-target='self' src="../res/car.png" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/car.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/car.png" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/car1.gif" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/car-red.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/car-red-1.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/test-1.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/test-3.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/tree.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T1.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T2.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T3.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T4.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T5.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T6.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T7.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T8.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T9.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T1.jpg" alt=""></li>
+		<li data-field='loupe'><img data-target='self' src="../res/T1.jpg" alt=""></li>
+		<li data-field="loupe"><img src="../res/psb.jpg" alt="psb.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_002.jpg" alt="psb_002.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_003.jpg" alt="psb_003.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_004.jpg" alt="psb_004.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_005.jpg" alt="psb_005.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_006.jpg" alt="psb_006.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_007.jpg" alt="psb_007.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_008.jpg" alt="psb_008.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_009.jpg" alt="psb_009.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_010.jpg" alt="psb_010.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_011.jpg" alt="psb_011.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_012.jpg" alt="psb_012.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_013.jpg" alt="psb_013.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_014.jpg" alt="psb_014.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_015.jpg" alt="psb_015.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_016.jpg" alt="psb_016.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_017.jpg" alt="psb_017.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_018.jpg" alt="psb_018.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_019.jpg" alt="psb_019.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_020.jpg" alt="psb_020.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_021.jpg" alt="psb_021.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_022.jpg" alt="psb_022.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_023.jpg" alt="psb_023.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_024.jpg" alt="psb_024.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_025.jpg" alt="psb_025.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_026.jpg" alt="psb_026.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_027.jpg" alt="psb_027.jpg" data-target="self"></li>
+		<li data-field="loupe"><img src="../res/psb_0285.jpg" alt="psb_028.jpg" data-target="self"></li>
+	</ul>
+</div>
+
+<div id="showImg" class="show"></div>
+<div class="fixed-bottom"></div>
+<div class="made"></div>
+<div class="loading">Loading..</div>
+    <script src="../Scripts/Libs/jquery-1.8.1.min.js"></script>
+    <script src="../Scripts/Plugin/Loupe.js"></script>
+    <script src="../Scripts/Plugin/imageLoaded.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		var lis = $(".case-list li"),
+			timer = null,
+			barpanel = null,
+			cell=4,
+			speed, counter = 0;
+
+		function createProgress() {
+			barpanel = document.createElement("div");
+			var style = barpanel.style;
+			style.width = "100%";
+			style.height = "20px";
+			style.position = "fixed";
+			style.zIndex = 10000;
+			style.top = "70%";
+			style.left = "0";
+			//style.backgroundColor = "#898989";
+			style.borderRadius = "4px";
+			document.body.appendChild(barpanel);
+			barpanel.innerHTML = "<div id='rect' style='background:#ccc; height: 30%; width: 0%;overflow:hidden;color:white;border-radius:4px;text-align:center;box-shadow:0 0 20px;'></div>";
+		}
+
+		function showmade($img, fun) {
+
+
+			$img.imagesLoaded({
+				progress: function(isbroker, $images, $proper, $broker) {
+					speed = ($proper.length + $broker.length) / $images.length * 100;
+					console.log("共" + $images.length + "张图片，正在加载第" + ($proper.length + $broker.length) + "张" + speed)
+				},
+				done: function($that) {
+					console.log("success");
+
+				},
+				always: function(isbroker, $images, $proper, $broker) {
+					var clear = setInterval(function() {
+
+						if (speed == undefined) return;
+						if (counter <= speed) {
+							barpanel.childNodes[0].style.width = (counter++) + "%";
+						} else if (speed == 100) {
+							$(".made").add($(".loading")).fadeOut();
+
+							$(barpanel).hide().children().width(0);
+							counter = 0;
+							clearInterval(clear);
+
+						} else clearInterval(clear);
+					}, 30);
+
+					fun.apply(null);
+
+				},
+				fail: function($that, $proper, $broken) {
+					var arr = [];
+					$broken.each(function(idx, val) {
+						arr.push(val.src);
+					});
+					console.log(arr.join("\n\t"));
+
+				}
+			});
+		}
+
+		function waterfall() {
+			var cases = $(".case-list li");
+			var case_h = [
+				[],
+				[],
+				[],
+				[]
+			];
+			var sum = [0, 0, 0, 0];
+			var step;
+			$.each(cases, function(i) {
+				var m = i % cell;
+				step = Math.floor(i / cell);
+				cases.eq(i).css("left", 220 * m + "px");
+				case_h[m].push(cases.eq(i).height());
+				if (!step) {
+					cases.eq(i).css("top", "0");
+				} else {
+					var num = 0;
+					for (var n = 0; n < step; n++) {
+						num += case_h[m][n] + 20;
+					}
+					cases.eq(i).css("top", num + "px");
+				}
+			});
+
+			$(case_h).each(function(i) {
+				$(case_h[i]).each(function(j) {
+					sum[i] += case_h[i][j];
+				});
+			});
+			cases.parent().css({
+				"height": sum.sort(function(a, b) {
+					return a < b ? a : -1
+				})[0] + (step + 1) * 20 + 100 + "px"
+			});
+			console.log(sum);
+			$.Loupe(".case-list", {
+				large: "#large",
+				fixed: "#showImg",
+				isScroll: false,
+				isBackground: true,
+				isShowInnerImg: true,
+				iscursorFollow: true,
+				filter: ['default.png']
+			});
+		}
+
+		$(window).on("scroll", function() {
+			var wh = $(this).height(),
+				wsh = $(this).scrollTop(),
+				dh = $(document).height();
+
+			if (dh == (wh + wsh)) {
+				if (timer) {
+					window.clearTimeout(timer);
+				}
+				$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
+				$(".made").add($(".loading")).add($(barpanel)).fadeIn();
+				timer = window.setTimeout(function() {
+					var $clone;
+					var later = function() {
+						var deferred = $.Deferred();
+						setTimeout(function() {
+							$clone = lis.clone().removeAttr("style");
+							$clone.sort(function(a, b) {
+								var rad = Math.random();
+								return rad > 0.5;
+							});
+							$clone.find("img").each(function(idx, val) {
+								var src = $(val).attr("src") + "?_dc" + Math.random() * (100 - 20 + 1) + 20;
+								$(val).attr("src", src);
+							});
+
+							$(".case-list").append($clone);
+							deferred.resolve();
+						}, 200);
+						return deferred.promise();
+					};
+
+				$.when(later()).then(function() {
+
+
+					showmade($clone.find("img"), function() {
+						waterfall();
+						$(".fixed-bottom").removeClass("fixed-bg-self");
+					});
+
+				});
+				}, 2000);
+			}
+		});
+
+		createProgress();
+
+		$(".made").add($(".loading")).fadeIn();
+
+		showmade($("img"), function() {
+			waterfall();
+		});
+	});
+
+	</script>
+</body>
+</html>
