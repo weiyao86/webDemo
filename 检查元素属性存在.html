@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<meta name="author" content="" />
+	<style>
+h1{font-size:16px;}
+p{width:200px;padding:5px 10px;border:1px solid #ddd;font:14px/1.5 simsun,serif,sans-serif;}
+p:first-letter {float:left;font-size:40px;font-weight:bold;line-height:1;}
+</style>
+<script>
+window.onload=function(){
+	var matchesSelector=function(el,selector){
+		var p=Element.prototype;
+		var f= p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function(s){
+				return [].indexOf.call(document.querySelectorAll(s),this)!==-1;
+		};
+		return f.call(el,selector);
+	}
+	var rst = matchesSelector(document.getElementById("test"),"div[data-val]");
+}
+</script>
+</head>
+<body>
+	<h1>杂志常用的首字下沉效果</h1>
+	<p>今天，阳光明媚，晴空万里，非常适合户外活动，如踏青、远足之类的。长期坐在办公室的同学们要多注意运动。</p>
+	<div id="test" data-val="abc"></div>
+</body>
+</html>

@@ -36,6 +36,7 @@ function get_width(dparent, dcontent) { //固定宽度
 
 function min_image_locatin(dec_width, dcontent) {
 	var box_height_array = [];
+	debugger;
 	for (var i = 0; i < dcontent.length; i++) { //遍历所有图片
 		if (i < dec_width) {
 			box_height_array[i] = dcontent[i].offsetHeight; //取得第一排图片的高度

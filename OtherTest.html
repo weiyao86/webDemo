@@ -2,30 +2,73 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>获取滚动条宽度</title>
-	<script src="Scripts/jquery-1.9.0.js"></script>
+	<title>Document</title>
+	<script id="jquery_183" type="text/javascript" class="library" src="Scripts/jquery-1.9.0.js"></script>
+	<style>
+.wrap{margin:100px;}
+ul{margin:0;padding:0;font-size:0;}
+li{list-style:none;width:100px;height:60px;line-height:60px;text-align:center; display:inline-block;background:#555;color:#fff;letter-spacing:0;padding:10px;position:relative;overflow:hidden;margin-left:-1px;font-size:18px;transition:background .3s;}
 
+li:hover,.active{
+	background:#ee2200;
+	cursor:pointer;
+	padding:10px 9px;
+	border-style:solid;
+	border-width:0 1px 0 1px;
+	border-color:#ccc;
+	z-index:1;
+	transition:background .3s;
+}
+li:hover{
+	background:#ff8800;
+}
+
+.r{
+	position:absolute;
+	width:0;
+	height:0;
+	opacity:1;
+	background:rgba(60,180,255,.4);
+	border-radius:50%;
+	transform:scale(0);
+}
+.hover{
+	animation:ripples .5s linear;
+}
+@keyframes ripples{
+	100%{
+		transform:scale(4);
+		opacity:0;
+	}
+
+}</style>
+	<script>
+	$(function() {
+		$(".wrap").on("click", "li", function(e) {
+			var w = $(this).width(),
+				h = $(this).height();
+			w = w > h ? w : h;
+			$(".r").remove();
+
+			$(this).append("<span class='r'></span>").addClass("active").siblings().removeClass("active");
+			$(".r").css({
+				top: e.pageY - $(this).offset().top - w / 2,
+				left: e.pageX - $(this).offset().left - w / 2,
+				width: w,
+				height: w
+			}).addClass("hover");
+		});
+	})
+	</script>
 </head>
 <body>
-	<div id="wrap" style="width:100px;height:50px;overflow:hidden;border:1px solid;">
-		<div id="c" style="height:100px;background: #ccc;">
-		</div>
+
+	<div class="wrap">
+		<ul>
+			<li>Table 一</li>
+			<li>Table 二</li>
+			<li>Table 三</li>
+		</ul>
 	</div>
-	<div style="position: absolute;top:300px;width:300px;left:500px;height:200px;background: #f00;">
-	<div style="position: fixed;top:30px;width:30px;left:50px;height:200px;background: #ccc;"></div>
-	</div>
-	<script>
-
-		$(function(){
-
-			var c=$("#c").get(0);
-			var of1=c.offsetWidth;
-			$("#wrap").css("overflow","auto");
-			var of2=$("#c").get(0).offsetWidth;
-			alert(of1-of2);
-			
-		});
-
-	</script>
 </body>
 </html>

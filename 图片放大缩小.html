@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+<style>
+		html,body{height:100%;position:relative;margin:0;padding:0;}
+		#nav {width: 200px; float: left;background:#ccc; margin-bottom:-3200px;padding-bottom:3200px;}
+		#nav1 {width: 200px; float: right;background:#ccc; margin-bottom:-3200px;padding-bottom:3200px;}
+		#content-wrapper {overflow:auto;border:1px solid #ccc; background:#fcc;margin-bottom:-3200px;padding-bottom:3200px;}
+		.box{
+				position:absolute;
+				top:400px;
+				bottom:20px;
+				left:200px;
+				right:200px;
+				overflow:hidden;
+				border:1px solid #ccc;
+			}
+			p{background:#fc5;margin:0;padding:10px;}
+			p:nth-of-type(2n){background:#f80;}
+			p:hover{background:#889;color:#fff;}
+		.drag{position:absolute;top:0;left:0;}
+</style>
+<script>
+	window.onload=function(){
+		var i=document.getElementById("img");
+		E.on(i,"mousewheel",function(e){ 
+			wheelzoomimg(this,e);
+		});
+		E.on(i,"mousedown",function(e){
+			drags(e);
+		});
+	};
+
+
+</script>
+
+</head>
+<body>
+<div style="overflow: hidden;border:1px solid #ccc;float:left;width:100%;">
+	<div id="nav">
+		<p>菜单1</p>
+		<p>菜单2</p>
+		<p>菜单3</p>
+		<p>菜单4</p>
+	</div>
+	<div id="nav1">
+		<p>菜单1</p>
+		<p>菜单2</p>
+		<p>菜单3</p>
+		<p>菜单4</p><p>菜单4</p><p>菜单4</p><p>菜单4</p>
+	</div>
+	<div id="content-wrapper">
+		<div id="content">
+			<p>
+					左中右布局，背景色等高显示
+			</p><p>
+					左中右布局，背景色等高显示
+			</p><p>
+					左中右布局，背景色等高显示
+			</p>
+			<p>点击下图，每点击一次刷新一次坐标位置作为放大缩小</p>
+			<p>点击下图，每点击一次刷新一次坐标位置作为放大缩小</p>
+			<p>点击下图，每点击一次刷新一次坐标位置作为放大缩小</p>
+			<p>点击下图，每点击一次刷新一次坐标位置作为放大缩小</p>
+			<p>点击下图，每点击一次刷新一次坐标位置作为放大缩小</p>
+			<p>点击下图，每点击一次刷新一次坐标位置作为放大缩小</p>
+		</div>
+	</div>
+
+
+
+	</div>
+<div class="box"><img id="img" class="drag" src="Res/aa.png" alt=""></div>
+
+	<script src="Scripts/imgZoom.js"></script>
+</body>
+</html>
