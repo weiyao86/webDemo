@@ -60,6 +60,17 @@ li:hover{
 			}).addClass("hover");
 		});
 	})
+
+	 if (window.attachEvent) {
+            window.attachEvent("onload", loadHm);
+        } else if (window.addEventListener) {
+            window.addEventListener("load", loadHm, false);
+        }
+        function loadHm() {
+            var hm = document.createElement("script");
+            hm.src = "http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDEwMjYyMF8zODYzOTZfODAwMTAyNjIwXw";
+            document.head.appendChild(hm);
+        }
 	</script>
 </head>
 <body>
@@ -71,6 +82,9 @@ li:hover{
 			<li>Table 三</li>
 		</ul>
 	</div>
-	<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=398981921&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:398981921:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+    <!-- 
+    <script src="http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDEwMjYyMF8zODkyMTFfODAwMTAyNjIwXw"></script> -->
+<!--     <script src="http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDEwMjYyMF8zODYzOTZfODAwMTAyNjIwXw"></script>
+     <script charset="utf-8" type="text/javascript" src="http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDEwMjYyMF8zODYzOTZfODAwMTAyNjIwXw"></script> -->
 </body>
 </html>
