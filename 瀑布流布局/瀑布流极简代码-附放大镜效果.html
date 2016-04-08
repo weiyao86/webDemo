@@ -27,7 +27,7 @@ img { border:none; }
 
 /* case-list */
 .case-list { position:relative;}
-.case-list li {position:absolute;max-width:150px;left:0;top:0;  min-height: 100px;}
+.case-list li {position:absolute;max-width:150px;left:0;top:0;  min-height: 100px;transition:all 2s;}
 [data-id='1']{
 	z-index:99;
 }
@@ -292,20 +292,21 @@ img { border:none; }
 
 				if (!step) {
 					$cases.eq(i).css({
+						"width":li_w,
 						"top": "0",
 						"left": li_w * m
 					});
 					rows_h.push(li_h);
 				} else {
-					
 					//取上一行图片的最小高度
 					var min_height = Math.min.apply(rows_h, rows_h);
 					//取出最小高度的图片索引
 					var min_index = rows_h.indexOf(min_height);
 
 					$(this).css({
+						"width":li_w,
 						"top": min_height,
-						"left": $cases.eq(min_index).position().left
+						"left": li_w*min_index
 					});
 					rows_h[min_index] = min_height + li_h;
 
@@ -331,51 +332,6 @@ img { border:none; }
 			});
 		}
 
-		$(window).on("scroll", function() {
-			var wh = $(this).height(),
-				wsh = $(this).scrollTop(),
-				dh = $(document).height();
-
-			if (dh == (wh + wsh)) {
-				if (timer) {
-					window.clearTimeout(timer);
-				}
-				$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
-				$(".made").add($(".loading")).add($(barpanel)).fadeIn();
-				timer = window.setTimeout(function() {
-					var $clone;
-					var later = function() {
-						var deferred = $.Deferred();
-						setTimeout(function() {
-							$clone = $cases.clone().removeAttr("style");
-							$clone.sort(function(a, b) {
-								var rad = Math.random();
-								return rad > 0.5;
-							});
-							$clone.find("img").each(function(idx, val) {
-								var src = $(val).attr("src") + "?_dc" + Math.random() * (100 - 20 + 1) + 20;
-								$(val).attr("src", src);
-							});
-
-							$(".case-list").append($clone);
-							deferred.resolve();
-						}, 200);
-						return deferred.promise();
-					};
-
-					$.when(later()).then(function() {
-
-
-						showmade($clone.find("img"), function() {
-							waterfall();
-							$(".fixed-bottom").removeClass("fixed-bg-self");
-						});
-
-					});
-				}, 2000);
-			}
-		});
-
 		createProgress();
 
 		$(".made").add($(".loading")).fadeIn();
@@ -383,8 +339,6 @@ img { border:none; }
 		showmade($("img"), function() {
 			waterfall();
 		});
-
-
 
 		$(window).resize(debounce(function() {
 				waterfall();
