@@ -1,5 +1,6 @@
 window.onload = function() {
 	img_location("container", "box");
+
 }
 
 function img_location(parent, content) {
@@ -27,7 +28,7 @@ function get_child_element(parent, content) { //获得子元素个数
 
 function get_width(dparent, dcontent) { //固定宽度
 	var img_width = dcontent[1].offsetWidth; //获取图片宽度
-	var win_width = 600; // document.documentElement.clientWidth; //获取屏幕宽度
+	var win_width = document.documentElement.clientWidth; //获取屏幕宽度
 	var num_width = Math.floor(win_width / img_width); //获得一排摆的个数 用Math.floor()转换为整数
 	dparent.style.cssText = "width:" + img_width * num_width + "px; margin:0 auto"; //固定屏幕的高并设置居中
 	return num_width;
@@ -36,6 +37,7 @@ function get_width(dparent, dcontent) { //固定宽度
 
 function min_image_locatin(dec_width, dcontent) {
 	var box_height_array = [];
+
 	for (var i = 0; i < dcontent.length; i++) { //遍历所有图片
 		if (i < dec_width) {
 			box_height_array[i] = dcontent[i].offsetHeight; //取得第一排图片的高度

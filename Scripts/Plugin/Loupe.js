@@ -94,7 +94,7 @@
 				$fixed = $(self.configs.fixed),
 				$fixedImg = $fixed.find("img"),
 				blank = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
-				m = $sender.offset(),
+
 				showW = $fixed.width(),
 				showH = $fixed.height(),
 				largeWidth,
@@ -108,7 +108,9 @@
 				scalex,
 				scaley,
 				largePos = function(e) {
-					var mx = e.pageX - m.left,
+					var field = $.fn.Loupe.prototype.defaults.loupeField,
+						m = $(e.target).closest("[data-field='" + field + "']").offset(),
+						mx = e.pageX - m.left,
 						my = e.pageY - m.top,
 						yx = mx - largeWidth / 2,
 						yy = my - largeHeight / 2;
@@ -134,6 +136,8 @@
 			$sender.on({
 				"mouseenter": function(evt) {
 					var scope = this,
+						field = $.fn.Loupe.prototype.defaults.loupeField,
+						m = $(scope).closest("[data-field='" + field + "']").offset(),
 						mx = evt.pageX - m.left,
 						my = evt.pageY - m.top,
 						src = $small.attr("src").replace(/\!\w*$/, '') || $small.attr("data-img"),

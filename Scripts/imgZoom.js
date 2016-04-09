@@ -46,7 +46,7 @@ function clickzooimg(active, imgid) {
 		lt = ih * distance;
 		ratio = lw / parseFloat(imgObj.width);
 	}
-	console.log(imgObj.pageX);
+
 	if (ratio >= maxRatio || ratio >= minRatio) {
 		return;
 	}
@@ -81,7 +81,7 @@ function drags(event) {
 	var oimg = event.srcElement || event.target;
 	try {
 
-		return otherBrowser(oimg, event);
+		// return otherBrowser(oimg, event);
 		if (!document.all) return otherBrowser(oimg, event);
 		if (oimg.className == "drag") {
 			if (oimg.src.indexOf("nopic.gif") > -1)
@@ -120,6 +120,8 @@ function otherBrowser(target, event) {
 	setParentEl(parentEl);
 	target.style.cursor = 'url("../PublicRes/grabbing.cur"),pointer';
 
+	//去掉图片距离父元素左边及上边的距离，以当前鼠标为原点截取图片左边宽度，获取在全图宽度的比例,
+	//高度同理
 	dx = dx - target.offsetLeft;
 	dy = dy - target.offsetTop;
 
@@ -135,6 +137,11 @@ function otherBrowser(target, event) {
 	imgObj.pageY = cach_y - offset.top;
 	imgObj.disX = (dx - offset.left) / parseFloat(tstyle.width);
 	imgObj.disY = (dy - offset.top) / parseFloat(tstyle.height);
+
+	if (document.getElementById("txt_coordinate")) {
+		var coordinate = dx + "****" + dy;
+		document.getElementById("txt_coordinate").value = coordinate;
+	}
 
 	function move(e) {
 		var xy = commonObj.getXY(e);
@@ -189,6 +196,7 @@ var E = {
 
 		getStyle: function(el) {
 			if (!el) return;
+
 			return el.currentStyle ? el.currentStyle : getComputedStyle(el, null);
 		},
 
@@ -248,3 +256,63 @@ var E = {
 	};
 
 window._customAddEvent = E;
+
+
+
+/**
+ * 以下仅作为测试.练习demo
+ * [description]钩子机制练习
+ * @param  {[type]} )             {	return      {		timer: null,		init: function(init) {			this.callhooks(init);		} [description]
+ * @param  {[type]} callhooks:    function(init) {			var   self         [description]
+ * @param  {[type]} hooksTimeout: function(f)    {			var   self         [description]
+ * @return {[type]}               [description]
+ */
+var hook = (function() {
+	return {
+		timer: null,
+		init: function(init) {
+			this.callhooks(init);
+		},
+
+		callhooks: function(init) {
+			var self = this,
+				s = "hook_" + init + "_event",
+				f = [];
+			for (var k in window) {
+				if (k.indexOf(s) > -1) {
+					f.push(k);
+				}
+			}
+			self.hooksTimeout(f);
+		},
+		hooksTimeout: function(f) {
+			var self = this,
+				h;
+			if (f.length === 0) {
+				if (self.timer) clearTimeout(self.timer);
+				return;
+			}
+			h = f.shift();
+			window[h].apply();
+			window[h] = undefined;
+			self.timer = window.setTimeout(self.hooksTimeout(f), 200);
+		}
+	}
+})();
+
+hook.init("init");
+
+function hook_init_event_abc() {
+	alert("我是一个钩子：hook_init_event");
+}
+
+var fragment = document.createDocumentFragment(),
+	input = document.createElement("input"),
+	lable = document.createElement("lable");
+input.type = "text";
+input.id = "txt_coordinate";
+lable.innerHTML = "请点击图显示坐标:";
+fragment.appendChild(input);
+fragment.insertBefore(lable, input);
+
+document.body.appendChild(fragment);

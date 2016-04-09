@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="瀑布流布局/blocksit/blocksit.js"></script>
+	<style>
+	ul { list-style:none; overflow:hidden; }
+img { border:none; }
+
+/* content */
+.content { margin:10px auto;border:1px solid #f80;}
+
+/* case-list */
+.case-list { position:relative;}
+.case-list li {position:absolute;width:150px;left:0;top:0;  min-height: 100px;border:1px solid red;}
+[data-id='1']{
+	z-index:99;
+}
+.case-list li:nth-child(2n){border-color:#000;}
+.content-img{
+	padding:5px; border-radius:5px; background-color:#fff;border:1px solid #ddd;
+}
+.case-list li img { display:block; width:100%; border-radius:5px;}
+	</style>
+	<script>
+$(document).ready(function() {
+	// //blocksit define
+	// $(window).load( function() {
+	// 	$('#container').BlocksIt({
+	// 		numOfCol: 5,
+	// 		offsetX: 8,
+	// 		offsetY: 8,
+	// 		blockElement:"li"
+	// 	});
+	// });
+	// //window resize
+	// var currentWidth = 1100;
+	// $(window).resize(function() {
+	// 	var winWidth = $(window).width();
+	// 	var conWidth;
+	// 	if(winWidth < 660) {
+	// 		conWidth = 440;
+	// 		col = 2
+	// 	} else if(winWidth < 880) {
+	// 		conWidth = 660;
+	// 		col = 3
+	// 	} else if(winWidth < 1100) {
+	// 		conWidth = 880;
+	// 		col = 4;
+	// 	} else {
+	// 		conWidth = 1100;
+	// 		col = 5;
+	// 	}
+
+	// 	if(conWidth != currentWidth) {
+	// 		currentWidth = conWidth;
+	// 		$('#container').width(conWidth);
+	// 		$('#container').BlocksIt({
+	// 			numOfCol: col,
+	// 			offsetX: 8,
+	// 			offsetY: 8
+	// 		});
+	// 	}
+	// });
+	var $cases = $("#container li"),
+		timer = null,
+		barpanel = null,
+		speed, counter = 0;
+
+	function waterfall() {
+		var contentW = $("#container").width(),
+			li_w = $cases.outerWidth(true),
+			cell = Math.floor(contentW / li_w),
+			colarr = new Array(cell);
+
+		var step, rows_h = [];
+		$.each($cases, function(i) {
+			var m = i % cell,
+				li_h = $(this).outerHeight(true);
+			step = Math.floor(i / cell);
+
+			if (!step) {
+				$cases.eq(i).css({
+					"top": "0",
+					"left": li_w * m
+				});
+				rows_h.push(li_h);
+			} else {
+
+				//取上一行图片的最小高度
+				var min_height = Math.min.apply(rows_h, rows_h);
+				//取出最小高度的图片索引
+				var min_index = rows_h.indexOf(min_height);
+
+				$(this).css({
+					"top": min_height,
+					"left": $cases.eq(min_index).position().left
+				});
+				rows_h[min_index] = min_height + li_h;
+
+			}
+
+		});
+
+
+		var rst_height = rows_h.sort(function(a, b) {
+			return a < b ? a : -1;
+		});
+
+		$cases.parent().css("height", rst_height[0]);
+	}
+	waterfall();
+	$(window).resize(debounce(function() {
+				waterfall();
+	}, 200));
+
+		function debounce(fn, wait, immediate) {
+			var timer = null;
+			return function() {
+				var self = this,
+					args = arguments,
+					later = function() {
+						timer = null;
+						if (!immediate) {
+							fn.apply(self || this,args);
+						}
+					};
+				var callNow = !timer && immediate;
+				clearTimeout(timer);
+				timer = setTimeout(later, wait);
+				if (callNow) fn.apply(self || this, args);
+			};
+		}
+});
+</script>
+</head>
+<body>
+	<div class="content" id="content">
+		<ul class="case-list" id="container">
+		
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb.jpg" alt="psb.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_002.jpg" alt="psb_002.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_003.jpg" alt="psb_003.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_004.jpg" alt="psb_004.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_005.jpg" alt="psb_005.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_006.jpg" alt="psb_006.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_007.jpg" alt="psb_007.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_008.jpg" alt="psb_008.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_009.jpg" alt="psb_009.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_010.jpg" alt="psb_010.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_011.jpg" alt="psb_011.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_012.jpg" alt="psb_012.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_013.jpg" alt="psb_013.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_014.jpg" alt="psb_014.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_015.jpg" alt="psb_015.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_016.jpg" alt="psb_016.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_017.jpg" alt="psb_017.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_018.jpg" alt="psb_018.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_019.jpg" alt="psb_019.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_020.jpg" alt="psb_020.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_021.jpg" alt="psb_021.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_022.jpg" alt="psb_022.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_023.jpg" alt="psb_023.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_024.jpg" alt="psb_024.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_025.jpg" alt="psb_025.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_026.jpg" alt="psb_026.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_027.jpg" alt="psb_027.jpg" data-target="self"></div></li>
+		<li data-field="loupe">
+			<div class="content-img"> <img src="res/psb_0285.jpg" alt="psb_028.jpg" data-target="self"></div></li>
+	</ul>
+</div>
+</body>
+</html>
