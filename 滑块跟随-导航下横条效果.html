@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--author:天凡-->
@@ -31,8 +31,6 @@
             color: white;
             cursor: pointer;
             position:relative;
-            border-bottom-width:2px;
-            border-bottom-style:solid;
             z-index:6;
         }
        
@@ -63,6 +61,12 @@
          #menu_text #slide_block:before{border:none;}
         a{text-decoration:none;color:#fff;position: relative;padding: 0 10px;}
         a:after{position: absolute;top:140%;left:50%;content: "";width:0;background: #fff;height:2px;}
+         a:after{
+            border-radius:80%;
+            height:3px;
+            width:0;
+            transition:all .2s linear .3s;
+        }
         li:hover a:after{
             width:100%;
             left:0;
@@ -71,12 +75,22 @@
     </style>
     <script src="Scripts/jquery-1.9.0.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#menu_text li").on("mouseenter",function(){
-                var pos=$(this).position();
-                var w=$(this).outerWidth();
-                $("#slide_block").stop(false,true).animate({ left: pos.left,width:w}, 'fast').show();
+        $(document).ready(function() {
+            $("#menu_text li").on("mouseenter", function() {
+                var pos = $(this).position();
+                var w = $(this).outerWidth();
+                $("#slide_block").stop(false, true).animate({
+                    left: pos.left,
+                    width: w
+                }, 'fast').show();
             });
+
+            var $num = $("#num")
+            num = "4564899847646458978";
+            //验证为数字此处省略……
+            num =num.split('').reverse().join('').replace(/(\d{3})/g,"$1,").replace(/,$/, '').split('').reverse().join('');
+            
+            
         });
     </script>
 </head>
