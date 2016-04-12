@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Video</title>
+	<script src="../Scripts/jquery-1.9.0.js"></script>
+	<script>
+		$(function(){
+			$("#play").on("click",function(){
+				if($("#video")[0].paused){
+					$("#video")[0].play();
+				}else{
+					$("#video")[0].pause();
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+<input type="button" id="play" value="播放/暂停">
+<input type="button" value="放大">
+<input type="button" value="缩小">
+<input type="button" value="普通">
+<video id="video" width="500" height="500" controls autoplay loop>
+	<source src="http://www.runoob.com/try/demo_source/mov_bbb.mp4" type="video/mp4">
+	<source src="http://www.runoob.com/try/demo_source/mov_bbb.ogg" type="video/ogg">
+	<source src="" type="video/webm">
+	您的浏览器不支持Video标签
+</video>
+</body>
+</html>
