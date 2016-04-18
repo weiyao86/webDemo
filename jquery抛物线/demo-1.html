@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>抛物线</title>
+	<script src="js/jquery.min.js"></script>
+	<style>
+	html,body{height:100%;padding:0;margin:0;}
+		.x{
+			position:absolute;
+			top:300px;
+			width:100%;
+			border:1px solid;
+			border-width:0 0 1px 0;
+			height:0px;
+		}
+		.y{
+			border:1px solid;
+			border-width:0 1px 0 0;
+			margin:0 800px;
+			height:100%;
+		}
+		.origin-ball,.move-ball{
+			position:absolute;
+			top:250px;
+			left:750px;
+			width:100px;height:100px;
+			border-radius:50%;
+			background:#ccc;
+			opacity:.65;
+			text-align:center;
+			display:table;
+			z-index:3;
+		}
+		.move-ball{
+			top:400px;
+			left:200px;
+			-moz-user-select:none;
+			-webkit-user-select:none;
+			-ms-user-select:none;
+			user-select:none;
+			-webkit-user-drag:none;
+			user-drag:none;
+			cursor:pointer;
+		}
+		.cld{
+			display:table-cell;
+			vertical-align: middle;
+			color:red;
+			font-weight:bold;
+		}
+	</style>
+	<script>
+
+		$(function() {
+			var $move = $("#move_ball"),
+				$origin = $("#origin_ball");
+			var a = 1 / 1000,
+				duration = 2000,
+				start, requestId, b,moveP;
+				var originP = $origin.position();
+			$move.on('click', "button", function() {
+				moveP = $move.position();
+					diffx = moveP.left - originP.left,
+					diffy = moveP.top - originP.top;
+
+				//y=a*x*x+b*x+c
+				//a=弧度，x=横坐标，y=纵坐标，c=经过原点为=0
+				b = (diffy - a * Math.pow(diffx, 2)) / diffx;
+				start = new Date().getTime();
+				console.time('log');
+				step(start);
+
+				function step(t) {
+					var endTime = new Date().getTime();
+					if (endTime - t >= duration) {
+						stop();
+						console.timeEnd('log');
+
+					} else {
+						var x = (endTime - t) / duration * diffx;
+						var y = a * Math.pow(x, 2) + b * x;
+						setPosition($origin, {
+							left: originP.left + x,
+							top: originP.top + y
+						});
+
+						$("div[data-move]").fadeOut("slow", function() {
+							$(this).remove()
+						});
+						$("<div>").appendTo("body").css({
+							"position": "absolute",
+							"top": originP.top + y+50-15,
+							"left": originP.left + x+50-15,
+							"background-color": "#f00",
+							"width": "30px",
+							"height": "30px",
+							"border-radius": "50%"
+						}).attr("data-move", 1);
+
+						requestId = requestAnimationFrame(function() {
+							step(t);
+						});
+					}
+				}
+			});
+
+			function stop() {
+				if(moveP == undefined)return;
+				setPosition($origin, {
+					left: moveP.left,
+					top: moveP.top
+				});
+				$("div[data-move]").fadeOut("slow", function() {
+							$(this).remove()
+				});
+				setPosition($origin, {
+					left: originP.left,
+					top: originP.top
+				});
+				cancelAnimationFrame(requestId);
+			}
+			/**
+			 * [maxX description]拖动小球
+			 * @type {[type]}
+			 */
+			var maxX = $(window).width() - $move.width(),
+				minX = 0,
+				maxY = $(window).height() - $move.height(),
+				minY = 0;
+
+			$move.on("mousedown", function(evt) {
+				var $moveBall = $(this),
+					nativeX = evt.pageX,
+					nativeY = evt.pageY,
+					l = $moveBall.position().left,
+					t = $moveBall.position().top;
+
+				$(document).on({
+					"mousemove.m": function(e) {
+
+						var x = e.pageX - nativeX + l,
+							y = e.pageY - nativeY + t;
+
+						x > maxX && (x = maxX);
+						x < minX && (x = minX);
+						y > maxY && (y = maxY);
+						y < minY && (y = minY);
+						setPosition($move, {
+							left: x,
+							top: y
+						});
+					},
+					"mouseup.m": function(e) {
+						$(document).off(".m");
+						stop();
+					}
+				})
+
+			})
+
+			function setPosition($el, offset) {
+
+				$el.css({
+					"left": offset.left,
+					"top": offset.top
+				});
+			}
+
+		});
+	</script>
+</head>
+<body>
+<div class="x"></div>
+<div class="y"></div>
+	<div id="origin_ball" class="origin-ball"><span class="cld">ball</span></div>
+		<div id="move_ball" class="move-ball"><span class="cld"><button  id="come_on">follow me</button></span></div>
+</body>
+</html>

@@ -145,13 +145,14 @@
 
             //层移动
             $("#div_mouse").bind("mousedown", function (e) { move(e, this); });
-            function move(e, sender) {
-                targetX = e.clientX;// $(sender).offset().left;
-                targetY = e.clientY;// $(sender).offset().top;
-                nativeX = e.clientX - (e.clientX - $(sender).offset().left);
-                nativeY = e.clientY - (e.clientY - $(sender).offset().top);
+            function move(evt, sender) {
+                targetX = evt.clientX;// $(sender).offset().left;
+                targetY = evt.clientY;// $(sender).offset().top;
+                nativeX = $(sender).position().left;
+                nativeY =$(sender).position().top;
                 $(document).bind({
                     mousemove: function (e) {
+
                         var left = nativeX + e.clientX - targetX;
                         var top = nativeY + e.clientY - targetY;
                         $("#txtTestId").val(nativeX + "-----" + e.clientX);
