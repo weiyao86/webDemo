@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jq抛物线实现</title>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	/**
+	 * [description]兼容各浏览器
+	 * @return {[type]} [description]
+	 */
+	(function() {
+		var lastTime = 0;
+		var vendors = ['webkit', 'moz'];
+		for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+			window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+			window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || // name has changed in Webkit
+				window[vendors[x] + 'CancelRequestAnimationFrame'];
+		}
+
+		if (!window.requestAnimationFrame) {
+			window.requestAnimationFrame = function(callback, element) {
+				var currTime = new Date().getTime();
+				var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+				var id = window.setTimeout(function() {
+					callback(currTime + timeToCall);
+				}, timeToCall);
+				lastTime = currTime + timeToCall;
+				return id;
+			};
+		}
+		if (!window.cancelAnimationFrame) {
+			window.cancelAnimationFrame = function(id) {
+				clearTimeout(id);
+			};
+		}
+	}());
+	/*
+	一元二次函数 (抛物线公式,a,b,c为常数a!=0)
+	一般式：y=a*x*x+b*x-c
+	 */
+		$(function() {
+			var $run = $("#run"),
+				$start = $(".start"),
+				$end = $(".end"),
+				startOffset = $start.offset(),
+				endOffset = $end.offset(),
+				defaults = {
+					offset: [endOffset.left - startOffset.left, endOffset.top - startOffset.top],
+					duration: 3000,
+					curvature: 3.2/1000
+
+				},
+				timer = null,
+				startTime, endTime, b;
+
+			//y=a*x*x+b*x-c
+			//y=纵坐标，x=横坐标,a=defaults.curvature,c=0
+			var a = defaults.curvature,
+				x = defaults.offset[0],
+				y = defaults.offset[1],
+				b = (y - a * x * x) / x;
+
+			$run.on("click", function() {
+				startTime = new Date().getTime();
+				endTime = startTime + defaults.duration;
+
+				// if (timer) {
+				// 	clearInterval(timer);
+				// }
+
+				// timer = setInterval(function() {
+				// 	var t = new Date().getTime();
+				// 	step(t);
+				// }, 35);
+
+					var t = new Date().getTime(),
+						requestId=null;
+					step(t);
+
+				function step(now) {
+
+					if (now > endTime) {
+						move(x, y);
+						$("div[data-move]").fadeOut("slow",function(){$(this).remove()});
+						timer && clearInterval(timer);
+						window.cancelAnimationFrame(requestId);
+					} else {
+						var difx = x * ((now - startTime) / defaults.duration);
+						var dify = a * Math.pow(difx,2) + b * difx;
+						move(difx, dify);
+						$("div[data-move]").fadeOut("slow",function(){$(this).remove()});
+						$("<div>").appendTo("body").css({
+							"position": "absolute",
+							"top": startOffset.top + dify,
+							"left": startOffset.left + difx,
+							"background-color": "#f00",
+							"width": "30px",
+							"height": "30px",
+							"border-radius": "50%"
+						}).attr("data-move",1);
+
+						requestId=requestAnimationFrame(function(){
+								var t = new Date().getTime();
+								step(t);
+						});
+					}
+				}
+
+
+				function move(x, y) {
+					$start.css({
+						"position": "absolute",
+						"top":  startOffset.top+ y,
+						"left": startOffset.left + x
+					});
+				}
+
+
+			});
+
+		});
+	</script>
+</head>
+<body>
+	<style>
+		.start,.end{
+			position:absolute;
+			top:300px;
+			left:100px;
+			width:100px;
+			height:100px;
+			border-radius:50%;
+			background:#ccc;
+			z-index:2;
+		}
+		.end{background:#f80;left:800px;top:500px;z-index:1;}
+
+	</style>
+	<div class="start"></div>
+	<div class="end"></div>
+	<input type="button" id="run" value="run">
+</body>
+</html>

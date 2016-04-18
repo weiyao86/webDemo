@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Parent</title>
+	<style>
+		iframe{
+			width:100%;
+			height:500px;
+			border:1px solid #f88;
+		}
+	</style>
+	<script>
+
+
+		function getHostUrl(){
+			return "调用父窗口成功！";
+		}
+	</script>
+</head>
+<body>
+我是父窗口
+	<iframe src="child.html" frameborder="0"></iframe>
+</body>
+</html>

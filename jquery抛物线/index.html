@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery抛出物体时动画轨迹显示代码- xw素材网</title>
+<style type="text/css">
+.btns{text-align:center;}
+.btns a{
+	color:#fff;padding:5px 10px;font-family:Arial;
+	background-color:#f90;text-decoration:none;
+}
+.boll {
+	width: 50px;
+	height: 50px;
+	background-color: #ff3333;
+	position: absolute;
+	top: 380px;
+	left: 100px;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+.target {
+	width: 50px;
+	height: 50px;
+	background-color: #CDCDCD;
+	position: absolute;
+	top: 180px;
+	left: 600px;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/parabola.js"></script>
+</head>
+<body>
+ <div class="btns" style="margin-top:20px">
+    <a href="javascript:;" id="run">run</a>
+    <a href="javascript:;" id="reset">reset</a>    
+    <a href="javascript:;" id="stop">stop</a>
+    <a href="javascript:;" id="setOptions">setOptions</a>
+</div>
+<div id="boll" class="boll"></div>
+<div id="target" class="target"></div>
+<script type="text/javascript">
+    var bool = new Parabola({
+        el: "#boll",
+        offset: [500, 100],
+        curvature: 0.001,
+        duration: 2000,
+        callback:function(){
+            alert("完成后回调")
+        },
+        stepCallback:function(x,y){
+            console.log(x,y);
+            $("<div>").appendTo("body").css({
+                "position": "absolute",
+                "top": this.elOriginalTop + y,
+                "left":this.elOriginalLeft + x,
+                "background-color":"#000",
+                "width":"5px",
+                "height":"5px",
+                "border-radius": "5px"
+            });
+        }
+    });
+    $("#reset").click(function () {
+        bool.reset()
+    });
+    $("#run").click(function () {
+        bool.start();
+    });
+    $("#stop").click(function () {
+        bool.stop();
+    });
+    $("#setOptions").click(function () {
+        bool.setOptions({
+            targetEl: $("#target"),
+            curvature: 0.001,
+            duration: 1000
+        });
+    });
+</script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<p>来源：<a href="http://www.xwcms.net/" target="_blank">xw素材网</a></p>
+</div>
+</body>
+</html>
