@@ -27,7 +27,9 @@ img { border:none; }
 
 /* case-list */
 .case-list { position:relative;}
-.case-list li {position:absolute;max-width:150px;left:0;top:0;  min-height: 100px;transition:all 2s;}
+.case-list li {position:absolute;width:150px;left:0;top:0;  min-height: 100px;border:1px solid red;overflow:hidden;}
+.case-list li:nth-child(2n){border-color:#000;}
+
 [data-id='1']{
 	z-index:99;
 }
@@ -109,46 +111,7 @@ img { border:none; }
 <!-- content -->
 <div class="content" id="content">
 	<ul class="case-list" id="case-list">
-		<li data-field='loupe' data-id='1'>
-			<div class="content-img"> <img data-target='self' src="../res/car.png" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/car.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/car.png" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/car1.gif" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/car-red.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/car-red-1.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/test-1.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/test-3.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/tree.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T1.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T2.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T3.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T4.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T5.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T6.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T7.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T8.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T9.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T1.jpg" alt=""></div></li>
-		<li data-field='loupe'>
-			<div class="content-img"> <img data-target='self' src="../res/T1.jpg" alt=""></div></li>
+		
 		<li data-field="loupe">
 			<div class="content-img"> <img src="../res/psb.jpg" alt="psb.jpg" data-target="self"></div></li>
 		<li data-field="loupe">
@@ -332,6 +295,50 @@ img { border:none; }
 			});
 		}
 
+		$(window).on("scroll", function() {
+			var wh = $(this).height(),
+				wsh = $(this).scrollTop(),
+				dh = $(document).height();
+
+			if (dh == (wh + wsh)) {
+				if (timer) {
+					window.clearTimeout(timer);
+				}
+				$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
+				$(".made").add($(".loading")).add($(barpanel)).fadeIn();
+				timer = window.setTimeout(function() {
+					var $clone;
+					var later = function() {
+						var deferred = $.Deferred();
+						setTimeout(function() {
+							$clone = $cases.clone().removeAttr("style");
+							$clone.sort(function(a, b) {
+								var rad = Math.random();
+								return rad > 0.5;
+							});
+							$clone.find("img").each(function(idx, val) {
+								var src = $(val).attr("src") + "?_dc" + Math.random() * (100 - 20 + 1) + 20;
+								$(val).attr("src", src);
+							});
+
+							$(".case-list").append($clone);
+							deferred.resolve();
+						}, 200);
+						return deferred.promise();
+					};
+
+					$.when(later()).then(function() {
+
+
+						showmade($clone.find("img"), function() {
+							waterfall();
+							$(".fixed-bottom").removeClass("fixed-bg-self");
+						});
+
+					});
+				}, 2000);
+			}
+		});
 		createProgress();
 
 		$(".made").add($(".loading")).fadeIn();
