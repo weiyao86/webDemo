@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>5种css实现垂直水平居中</title>
+	<style type='text/css'>
+		html,body{width:100%;height:100%;margin:0;padding: 0;}
+		ul,ol,dd,p{margin:0;padding:0;}
+		.first{
+			height: 80%;
+			width:50%;
+			border:1px solid #f00;
+			/* height: 100%;
+			width:100%; */
+			margin:auto;
+			position: absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			/* z-index:0; */
+			/*resize:both;
+			min-width: 20%;
+			max-width: 80%;
+			min-height: 20%;
+			max-height: 80%;*/
+		}
+		.second-center,.is-table{
+			display: table;
+			width:100%;
+			height: 100%;
+			position:absolute;
+
+		}
+		.is-table .table-cell{
+			display: table-cell;
+			vertical-align:middle;
+			height: 100%;
+		}
+		.is-table .center-block{
+			margin:0 auto;
+			width:40%;
+			height: 60%;
+			background:#E1A33F;
+		}
+
+
+		.third{position:absolute;left:50%;top:50%;margin:-150px 0 0 -250px;width:500px;height:300px;background: #94E186;}
+
+		.fourth{position: absolute;display: table;width: 100%;height:100%;*position: absolute;*top:50%;*height:auto;}
+
+		.fourth .fourth-child{position: relative;display: table-cell;vertical-align:middle; *position: relative;*top:-50%;}
+		.fourth .fourth-child .cd{margin:0 auto;background:#0000ff;color:#fff;width:300px;}
+
+		 #demo{
+            height:300px;
+            text-align:center;
+            font-size:0;
+            background:#ccc;
+            color:#f00;
+        }
+        #demo:after,#demo span{
+            display:inline-block;
+            *display:inline;
+            *zoom:1;
+            width:0;
+            height:100%;
+            vertical-align:middle;
+        }
+        #demo:after{
+            content:'';
+        }
+        #demo .p{
+            display:inline-block;
+            *display:inline;
+            *zoom:1;
+            vertical-align:middle;
+            font-size:16px;
+        }
+	</style>
+</head>
+<body>
+	<div class="first">居中方法一 gte IE8(采用position的四个方向值都为0处理 DOM:一级结构)</div>
+
+
+	<div class="second-center is-table">
+		<div class="table-cell">
+			<div class="center-block">
+			<p>居中方法二 gte IE8(采用表格模式css中用display:table与display:table-cell实现 DOM:三级结构)</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="third">居中方法三 已知宽高(采用position的top:50%;left:50%...实现  DOM:一级结构)</div>
+
+	<div class="fourth">
+		<div class="fourth-child">
+
+			<div class="cd">
+				<p>居中方法四 我是不定高的居中兼容IE6+</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+				<p>居中方法四 我是不定高的居中</p>
+			</div>
+
+		<div style="position:absolute;bottom:20px;right:20px;">c4可通过定位置放其它元素</div>
+		<div style="position:absolute;top:20px;right:20px;">c4可通过定位置放其它元素</div>
+	</div>
+	</div>
+	<div id="demo">
+		<p class="p"><b>居中方法五：[不使用定位]</b>终极不定宽高居中实例终极不定宽高居中实例终极不定宽高居中实例<b>兼容各版本浏览器</b><b>居中方法五：[不使用定位]</b>终极不定宽高居中实例终极不定宽高居中实例终极不定宽高居中实例<b>兼容各版本浏览器</b></p>
+    <!--[if lt IE 8]><span></span><![endif]-->
+    </div>
+
+</body>
+</html>

@@ -3,6 +3,7 @@
 <head>
     <title></title>
     <style type="text/css">
+        html,body{padding:0;height:100%;margin:0;}
         .noneHeight {
             height: 4em;
             line-height: 4em;
@@ -15,36 +16,38 @@
             border: 1px solid gray;
             width:200px;
         }
-        .tb{
-            width:500px;height:300px;table-layout:fixed;border-collapse:collapse;
+
+        #demo{
+            height:300px;
+            text-align:center;
+            font-size:0;
+            border:1px solid red;
         }
-        .tb td{
-            border:1px solid #ccc;
+        #demo:after,#demo span{
+            display:inline-block;
+            *display:inline;
+            *zoom:1;
+            width:0;
+            height:100%;
+            vertical-align:middle;
+        }
+        #demo:after{
+            content:'';
+        }
+        #demo .p{
+            display:inline-block;
+            *display:inline;
+            *zoom:1;
+            vertical-align:middle;
+            border:1px solid #f00;
+            font-size:16px;
         }
     </style>
-    <script type='text/javascript'>
-    window.onload=function(){
-        var btn = document.getElementById('btnOpen');
-       
-        if(btn.attachEvent)
-             btn.attachEvent("onclick",open);
-         else if(btn.addEventListener)
-            btn.addEventListener("click",open,false);
-        function open(){
-             var w=window.screen.width,
-                h=window.screen.height;
-            window.showModalDialog('Canvas绘图.html','','dialogWidth='+w+'px;dialogHeight='+h+'px');
-        }
-        var cls=["FF","CC",99,66,33,00];
-        
 
-    };
-    </script>
 </head>
 <body>
-<input id='btnOpen' type='button' value="弹出模式窗口"/>
     <div class="noneHeight" title='&#10 1. 同时支持块级和内联极元素;&#13 2. 支持所有浏览器;&#13 缺点：;&#10 1. 只能显示一行;'>
-        单行内容的居中
+        单行内容的居中单行内容的居中单行内容的居中单行内容的居中单行内容的居中单行内容的居中
          <!--     优点：
         1. 同时支持块级和内联极元素
         2. 支持所有浏览器
@@ -62,6 +65,11 @@
             3. 支持所有浏览器
             缺点：容器不能固定高度-->
 
+    </div>
+
+    <div id="demo">
+        <p class="p">终极不定宽高居中实例终极不定宽高居中实例终极不定宽高居中实例<b>兼容各版本浏览器</b></p>
+    <!--[if lt IE 8]><span></span><![endif]-->
     </div>
 
 </body>
