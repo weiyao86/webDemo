@@ -34,8 +34,37 @@ p { margin: 1em; }
 <i class="x" title="x轴"></i>
 <i class="y" title="y轴"></i>
 <a href="http://www.zhangxinxu.com/wordpress/?p=3855" class="article">本demo相关文章&raquo;</a>
-<script src="/study/201309/requestAnimationFrame.js"></script>
+
 <script>
+/* requestAnimationFrame.js
+ * by zhangxinxu 2013-09-30
+*/
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||    // name has changed in Webkit
+                                      window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16.7 - (currTime - lastTime));
+            var id = window.setTimeout(function() {
+                callback(currTime + timeToCall);
+            }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!window.cancelAnimationFrame) {
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+    }
+}());
 var funParabola = function(element, target, options) {
 	/*
 	 * 网页模拟现实需要一个比例尺
