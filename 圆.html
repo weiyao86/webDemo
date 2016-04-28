@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <title>画个简单的圆</title>
+      <script src="Scripts/jquery-1.9.0.js"></script>
+      <style>
+            .point{
+                   width:2px;
+                  height:2px; 
+                  border-radius:50%;
+                  background:#f00;
+                  position:absolute;
+            }
+      </style>
+      <script>
+            $(function() {
+                  var canvasDiv=$("#wrap")[0];
+                  // drawEllipseSingle({
+                  //       width:5
+                  // },{
+                  //       x:500,y:200
+                  // },100,100);
+                  function drawEllipseSingle(pen, center, width, height) {
+                        //Check arguments for null values
+                        if (!pen || !center || !width || !height)
+                              return false;
+
+                        var ellipseDiv = canvasDiv.appendChild(document.createElement("div"));
+                        var iHtml = new Array();
+
+                        var penWidth = parseInt(pen.width);
+                        var hexColor = "#f00";
+
+                        var a = Math.round(width / 2);
+                        var b = Math.round(height / 2);
+                        var xc = center.x;
+                        var yc = center.y;
+
+                        var x = 0;
+                        var y = b;
+                        var a2 = a * a;
+                        var b2 = b * b;
+
+                        var yp = y;
+                        var xp = x;
+                        var divWidth;
+                        var divHeight;
+
+                        while (b2 * x < a2 * y) {
+                              x++;
+                              if ((b2 * x * x + a2 * (y - 0.5) * (y - 0.5) - a2 * b2) >= 0)
+                                    y--;
+
+                              if (x == 1 && y != yp) {
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + x) + "px;top:" + (yc + y) + "px;width:1px;height:1px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + x) + "px;top:" + (yc - y) + "px;width:1px;height:1px;background-color:" + hexColor + "\"></DIV>";
+                              }
+                              if (y != yp) {
+                                    divWidth = x - xp;
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp) + "px;top:" + (yc + yp - penWidth + 1) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp - divWidth + 1) + "px;top:" + (yc + yp - penWidth + 1) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp) + "px;top:" + (yc - yp) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp - divWidth + 1) + "px;top:" + (yc - yp) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+
+                                    yp = y;
+                                    xp = x;
+                              }
+
+                              if (b2 * x >= a2 * y) {
+                                    divWidth = x - xp + 1;
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp) + "px;top:" + (yc + yp - penWidth + 1) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp - divWidth + 1) + "px;top:" + (yc + yp - penWidth + 1) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp) + "px;top:" + (yc - yp) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp - divWidth + 1) + "px;top:" + (yc - yp) + "px;height:" + penWidth + "px;width:" + divWidth + "px;background-color:" + hexColor + "\"></DIV>";
+                              }
+                        }
+
+                        yp = y;
+                        xp = x;
+
+                        while (y != 0) {
+                              y--;
+                              if ((b2 * (x + 0.5) * (x + 0.5) + a2 * y * y - a2 * b2) <= 0)
+                                    x++;
+
+                              if (x != xp) {
+                                    divHeight = yp - y;
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp - penWidth + 1) + "px;top:" + (yc + yp - divHeight + 1) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp - penWidth + 1) + "px;top:" + (yc - yp) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp) + "px;top:" + (yc + yp - divHeight + 1) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp) + "px;top:" + (yc - yp) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+
+                                    xp = x;
+                                    yp = y;
+                              }
+
+                              if (y == 0) {
+                                    divHeight = yp - y + 1;
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp - penWidth + 1) + "px;top:" + (yc + yp - divHeight + 1) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc + xp - penWidth + 1) + "px;top:" + (yc - yp) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp) + "px;top:" + (yc + yp - divHeight + 1) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+                                    iHtml[iHtml.length] = "<DIV style=\"position:absolute;overflow:hidden;left:" + (xc - xp) + "px;top:" + (yc - yp) + "px;width:" + penWidth + "px;height:" + divHeight + "px;background-color:" + hexColor + "\"></DIV>";
+
+                                    xp = x;
+                                    yp = y;
+                              }
+
+                        }
+
+                        ellipseDiv.innerHTML = iHtml.join("");
+                        return ellipseDiv;
+                  }
+
+
+
+                  //定义圆心
+                  var docFrame = document.createDocumentFragment();
+                  var a = 500,
+                        b = 300,
+                        r = 50,
+                        x, y, pw = 2;
+                  for (var i = 0; i < 360; i++) {
+                        var x1 = Math.sin(i * Math.PI / 180) * r;
+                        var y1 =Math.cos(i * Math.PI / 180) * r;
+                        x = a + x1;
+                        y = b + y1;
+
+                        var point = document.createElement("div");
+                        point.style.left = x + 'px';
+                        point.style.top = y + 'px';
+                        point.setAttribute("data-id",i);
+                        // point.style.width=x1+'px';
+                        //point.style.height=(r-y1)+'px';
+                        point.className = "point";
+                        console.log([x1, y1].join('---'));
+                        docFrame.appendChild(point);
+                  }
+                  $("body").append(docFrame);
+            });
+      </script>
+</head>
+<body>
+      <div id="wrap" class="wrap"></div>
+</body>
+</html>
