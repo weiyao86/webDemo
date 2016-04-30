@@ -3,32 +3,199 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel=stylesheet href="CodeMirror/doc/docs.css">
+	<!-- <link rel=stylesheet href="CodeMirror/doc/docs.css"> -->
 	<link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
-	<link rel="stylesheet" href="CodeMirror/addon/fold/foldgutter.css">
-	<link rel="stylesheet" href="CodeMirror/addon/dialog/dialog.css">
+	<!-- <link rel="stylesheet" href="CodeMirror/addon/fold/foldgutter.css"> -->
+	<!-- <link rel="stylesheet" href="CodeMirror/addon/dialog/dialog.css"> -->
 	<link rel="stylesheet" href="CodeMirror/theme/monokai.css">
+	<link rel="stylesheet" href="CodeMirror/theme/night.css">
 
+	
 	<script src="CodeMirror/lib/codemirror.js"></script>
 	<script src="CodeMirror/mode/javascript/javascript.js"></script>
+	<script src="CodeMirror/mode/xml/xml.js"></script>
+	<script src="CodeMirror/mode/css/css.js"></script>
+	<script src="//cdn.bootcss.com/jquery/3.0.0-beta1/jquery.js"></script>
+	<script type="text/javascript">
+		$(function() {
+
+			var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+				lineNumbers: true,
+				mode: "javascript",
+				autoCloseBrackets: true,
+				matchBrackets: true,
+				showCursorWhenSelecting: true,
+				theme: "night",
+				tabSize: 2,
+				dragDrop: true
+			});
+			var hv = $("#html").html();
+
+			var htmleditor = CodeMirror.fromTextArea(document.getElementById("html"), {
+				value: hv,
+				lineNumbers: true,
+				mode: "text/html",
+				autoCloseBrackets: true,
+				matchBrackets: true,
+				showCursorWhenSelecting: true,
+				theme: "monokai",
+				tabSize: 2,
+				dragDrop: true
+			});
+			var csseditor = CodeMirror.fromTextArea(document.getElementById("css"), {
+				lineNumbers: true,
+				mode: "css",
+				styleActiveLine: true,
+				autoCloseBrackets: true,
+				matchBrackets: true,
+				showCursorWhenSelecting: true,
+				theme: "monokai",
+				tabSize: 2,
+				dragDrop: true
+			});
+
+			var timer = null;
+			editor.on("change", function(that, changes) {
+				fillIframe();
+			});
+			htmleditor.on("change", function(that, changeObj) {
+				fillIframe();
+			});
+			csseditor.on("change", function(that, changeObj) {
+				fillIframe();
+			});
+			csseditor.on("cursorActivity", function() {
+				console.log('当光标或选中(内容)发生变化，或者编辑器的内容发生了更改的时候触发。');
+			});
+
+			var $view = $("#preview").parent();
+
+			function fillIframe() {
+				clearTimeout(timer);
+				$view.find("iframe").remove();
+				var view = $view.append('<iframe id="preview" frameborder="0"></iframe>').find("iframe")[0];
+
+				var doc = view.contentDocument || view.contentWindow.document;
+				doc.open();
+
+				timer = setTimeout(function() {
+					var html = htmleditor.getValue(),
+						js = editor.getValue(),
+						css = csseditor.getValue(),
+						temp = '';
+
+					if (html.indexOf("</body>") > -1) {
+						var body = [];
+						body.push(html.substring(0, html.lastIndexOf("</body>")));
+						body.push(html.substring(html.lastIndexOf("</body>")));
+						html = body[0];
+						temp = body.length == 2 && body[1] ? body[1] : ""
+					}
+					js_css = "<script>try{\n" + js + "}catch(e){\n}<\/script><style>" + css + "<\/style>";
+					doc.write(html + js_css + temp);
+					doc.close();
+				}, 1500);
+			}
+
+			fillIframe();
+		});
+	</script>
+
 	<style type="text/css">
-  .CodeMirror {border-top: 1px solid #eee; border-bottom: 1px solid #eee; line-height: 1.3; height: 300px}
+  .CodeMirror {border-top: 1px solid #eee; border-bottom: 1px solid #eee; line-height: 1.3; height: 100%;}
   .CodeMirror-linenumbers { padding: 0 8px; }
+  .wrap{
+  	position:absolute;
+  	top:0;
+  	left:0;
+  	right:0;
+  	bottom:0;
+  }
+  fieldset{margin:0;padding:0;border:none;}
+  fieldset.left{
+  	position:absolute;left:0;top:0;width:50%;height:100%;
+  	overflow:hidden;
+  }
+  fieldset.right{
+  	position:absolute;left:50%;top:0;width:50%;height:100%;
+  	overflow:hidden;
+  }
+  .top:hover .dock-right,.bottom:hover .dock-right,.middle:hover .dock-right,.CodeMirror .dock-right{
+	display:block;
+  }
+
+   .top,.middle,.bottom{
+	position:absolute;width:100%;overflow:hidden;border:1px solid #ccc;
+   }
+  .top{
+  	height:48%;top:-2px;
+  }
+  .middle{
+  	height:4%;background:#ccc;top:48%;line-height:2em;font-size:0.678em;
+  }
+  .bottom{
+  	height:48%;bottom:0;background:#555;
+  }
+  .dock-right{
+  	position:absolute;top:5px;right:5px;padding:5px;border-radius:4px;background:#898989;display:none;z-index:1;color:#fff;
+  }
+  #preview{width:100%;height:100%;}
 </style>
 </head>
 <body>
 
-	<form><textarea id="code" name="code"></textarea></form>
-	<script>
-		 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-		   	lineNumbers: true,
-		    mode: "javascript",
-		    autoCloseBrackets: true,
-		    matchBrackets: true,
-		    showCursorWhenSelecting: true,
-		    theme: "monokai",
-		    tabSize: 2
-		  });
-	</script>
+<div class="wrap">
+	<fieldset class="left">
+		<!-- <legend>LEFT</legend> -->
+		<div class="top">
+			<span class="dock-right">HTML</span>
+			<textarea id="html" name="code">
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Test JS</title>
+	</head>
+	<body>
+		<button onclick="javascript:say_hello();">Hello Test JS!</button>
+	</body>
+</html>
+			</textarea>
+		</div>
+		<div class="middle">我是分界线</div>
+		<div class="bottom">
+			<span class="dock-right">JAVASCRIPT</span>
+			<textarea id="code" name="code">
+function say_hello(){
+	 alert("Hello Test JS!");
+}
+			</textarea>
+		</div>
+	</fieldset>
+
+	<fieldset class="right">
+		 <!-- <legend>RIGHT</legend> -->
+		<div class="top">
+			<span class="dock-right">CSS</span>
+			<textarea id="css" name="code">
+button{
+	border:1px solid #ccc;
+	cursor:pointer;
+	display:block;
+	margin:auto;
+	position:relative;
+	top:100px;
+}
+			</textarea></div>
+		<div class="middle">我是分界线</div>
+		<div class="bottom">
+			<span class="dock-right">VIEW</span>
+			<iframe id="preview" frameborder="2" width="100%" height="100%" ></iframe></div>
+	</fieldset>
+	</div>
+
+
 </body>
 </html>
+
+
