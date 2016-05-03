@@ -5,9 +5,30 @@
 	<title>Document</title>
 	<script src='Scripts/jquery-1.9.0.js'></script>
 	<script>
-		document.addEventListener("DOMContentLoaded",function(){
-			console.log("DOMContentLoaded")
-		})
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("DOMContentLoaded");
+
+      function fadeIn(el) {
+        var opacity = 0,
+          filter = "",
+          last = new Date();
+        el.style.opacity = opacity;
+        el.style.filter = filter;
+        var tick = function() {
+          opacity += (new Date() - last) / 600;
+          if(opacity > 1)opacity=1;
+          el.style.opacity = opacity;
+          el.style.filter = 'alpha(opacity=' + (opacity * 100) + ')';
+          last = new Date();
+          if (opacity < 1) {
+            console.log(opacity)
+            window.requestAnimationFrame && window.requestAnimationFrame(tick) && setTimeout(tick, 16);
+          }
+        }
+        tick(el);
+      }
+      fadeIn($(".block")[0]);
+    })
 		$(function(){
 			console.log("ready")
 			$.fn.showLinkLocation=function(){
@@ -42,6 +63,20 @@
 			div[0].remove();
 		}
 	</script>
+  <style>
+    .test{
+      background:#ccc;
+    }
+    .block{
+      position:fixed;
+      left:0;
+      top:0;
+      right:0;
+      bottom:0;
+      background:#000;
+    }
+
+  </style>
 	<style>
 
 	</style>
@@ -53,5 +88,6 @@
 			<span id="s">span</span>
 		</a>
 	</div>
+  <div class="block"></div>
 </body>
 </html>
