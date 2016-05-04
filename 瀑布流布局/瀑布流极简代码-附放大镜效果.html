@@ -23,12 +23,12 @@ ul { list-style:none; overflow:hidden; }
 img { border:none; }
 
 /* content */
-.content { margin:10px auto;border:1px solid #f80;}
+.content { margin:10px auto;}
 
 /* case-list */
 .case-list { position:relative;}
-.case-list li {position:absolute;width:150px;left:0;top:0;  min-height: 100px;border:1px solid red;overflow:hidden;}
-.case-list li:nth-child(2n){border-color:#000;}
+.case-list li {position:absolute;width:150px;left:0;top:0;  min-height: 100px;overflow:hidden;}
+/* .case-list li:nth-child(2n){border-color:#000;} */
 
 [data-id='1']{
 	z-index:99;
@@ -226,7 +226,7 @@ img { border:none; }
 
 						} else clearInterval(clear);
 					}, 30);
-
+					console.log("always:");
 					fun.apply(null);
 
 				},
@@ -242,20 +242,24 @@ img { border:none; }
 		}
 
 		function waterfall() {
-			var contentW = $("#case-list").width(),
-				li_w=$cases.outerWidth(true),
-				cell = Math.floor(contentW / li_w),
-				colarr = new Array(cell);
+
+			var contentW = $("#case-list").outerWidth(true),
+				$cases =  $("#case-list").children(),
+				li_w = $cases.outerWidth(true),
+				cell = Math.floor(contentW / li_w);
 
 			var step, rows_h = [];
 			$.each($cases, function(i) {
-				var m = i % cell,
-					li_h = $(this).outerHeight(true);
+				var $that_li = $(this),
+					m = i % cell,
+					li_h = $that_li.outerHeight(true);
 				step = Math.floor(i / cell);
 
+				$that_li.css({
+					"width": li_w
+				});
 				if (!step) {
-					$cases.eq(i).css({
-						"width":li_w,
+					$that_li.animate({
 						"top": "0",
 						"left": li_w * m
 					});
@@ -266,15 +270,12 @@ img { border:none; }
 					//取出最小高度的图片索引
 					var min_index = rows_h.indexOf(min_height);
 
-					$(this).css({
-						"width":li_w,
+					$that_li.animate({
 						"top": min_height,
-						"left": li_w*min_index
+						"left": li_w * min_index
 					});
 					rows_h[min_index] = min_height + li_h;
-
 				}
-
 			});
 
 
@@ -283,6 +284,51 @@ img { border:none; }
 			});
 
 			$cases.parent().css("height", rst_height[0]);
+
+
+			// ------------------------------------------
+			// var contentW = $("#case-list").width(),
+			// 	li_w=$cases.outerWidth(true),
+			// 	cell = Math.ceil(contentW / li_w),
+			// 	colarr = new Array(cell);
+
+			// var step, rows_h = [];
+
+			// $.each($cases, function(i) {
+			// 	 var $that_li = $(this),
+			// 		m = i % cell,
+			// 		li_h = $that_li.outerHeight(true);
+			// 	step = Math.floor(i / cell);
+			// 	$that_li.css({
+			// 		"width": li_w
+			// 	});
+			// 	if (!step) {
+			// 		$that_li.css({
+			// 			"top": "0",
+			// 			"left": li_w * m
+			// 		});
+			// 		rows_h.push(li_h);
+			// 	} else {
+			// 		//取上一行图片的最小高度
+			// 		var min_height = Math.min.apply(rows_h, rows_h);
+			// 		//取出最小高度的图片索引
+			// 		var min_index = rows_h.indexOf(min_height);
+
+			// 		$that_li.animate({
+			// 			"top": min_height,
+			// 			"left": li_w*min_index
+			// 		});
+			// 		rows_h[min_index] = min_height + li_h;
+			// 	}
+
+			// });
+
+
+			// var rst_height = rows_h.sort(function(a, b) {
+			// 	return a < b ? a : -1;
+			// });
+
+			// $cases.parent().css("height", rst_height[0]);
 
 			$.Loupe(".case-list", {
 				large: "#large",

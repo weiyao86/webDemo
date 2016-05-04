@@ -4,100 +4,135 @@
     <title></title>
     <script src="Scripts/jquery-1.9.0.js"></script>
     <script type="text/javascript">
+    //可替代jquery的$.ready()方法
+    winLoad(function() {
+        console.log('可替代jquery的$.ready()方法');
+         fadeIn($("#wrap")[0]);
+    });
 
-        var oldonload = window.onload;
-        window.onload = function() {
-            __adroll_loaded = true;
-            var scr = document.createElement("script");
-            var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
-            scr.setAttribute('async', 'true');
-            scr.type = "text/javascript";
-            scr.src = host + "/j/roundtrip.js";
-            ((document.getElementsByTagName('head') || [null])[0] ||
-                document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
-
-            if (oldonload) {
-                oldonload();
-            }
-        };
-
-
-        var _layer;
-        _layer = function (seletor, content) {
-            return new _layer.init(seletor, content);
-        };
-        _layer.prototype = {
-            init: function (seletor, content) {
-                var self = this,
-                    rquickExpr = /^(?:#([\w-]+)|\.([\w-]+)|(\w+))$/,
-                    elem,
-                    match;
-                if (!seletor)
-                    return this;
-
-
-            }
-        };
-
-
-        $(function () {
-            return;
-
-            var c = $(".btn_b");
-           //$("#t1").focus();
-           //选中全部
-            document.execCommand("SelectAll");
-            //打开文件
-           document.execCommand("Open");
-            //网页另存为...
-            document.execCommand("SaveAs");
-            //据说是将定位的元素可拖动?
-           document.execCommand("2D-Position","false","true");
-
-            document.execCommand("CreateLink","false","http://www.baidu.com");
-            document.execCommand("Bold","false",null);
-            //$("#t2").focus();
-            //document.execCommand("Paste");
-            //
-            //
-            //
-            var docElem = window.document;
-            var iframe = docElem.createElement("iframe");
-            iframe.height = iframe.width =150;
-            docElem.body.appendChild(iframe);
-
-            if (iframe.contentWindow){
-                    iframe = iframe.contentWindow;
-            }else{
-                    if (iframe.contentDocument && iframe.contentDocument.document){
-                            iframe = iframe.contentDocument.document;
-                    }else{
-                            iframe = iframe.contentDocument;
-                    }
-            }
-
-            var img = document.createElement("img");
-            img.src = "res/IMG_0461.png";
-            iframe.document.open();
-            iframe.document.appendChild(img);
-            iframe.document.close();
-
-        });
-
-        function moveWin()
-          {
-              myWindow.moveTo(0,100);
-              myWindow.focus();
+    function winLoad(fn) {
+        if (document.readyState != "loading") {
+            fn();
+        } else if (document.addEventListener) {
+            document.addEventListener("DOMContentLoaded", fn);
+        } else {
+            document.attachEvent("onreadystatechange", function() {
+                if (document.readyState != 'loading') {
+                    fn();
+                }
+            });
+        }
+    }
+    //jquery fadeIn
+     function fadeIn(el) {
+        var opacity = 0,
+          filter = "",
+          last = new Date();
+        el.style.opacity = opacity;
+        el.style.filter = filter;
+        var tick = function() {
+          opacity += (new Date() - last) / 1600;
+          if(opacity > 1)opacity=1;
+          el.style.opacity = opacity;
+          el.style.filter = 'alpha(opacity=' + (opacity * 100) + ')';
+          last = new Date();
+          if (opacity < 1) {
+            console.log(opacity)
+            window.requestAnimationFrame && window.requestAnimationFrame(tick) && setTimeout(tick, 16);
           }
-        myWindow=window.open(window.location.href,'','width=200,height=100')
-        myWindow.document.write("This is 'myWindow'")
+        }
+        tick(el);
+      }
+     
+
+
+    var oldonload = window.onload;
+    window.onload = function() {
+        __adroll_loaded = true;
+        var scr = document.createElement("script");
+        var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+        scr.setAttribute('async', 'true');
+        scr.type = "text/javascript";
+        scr.src = host + "/j/roundtrip.js";
+        ((document.getElementsByTagName('head') || [null])[0] ||
+            document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+
+        if (oldonload) {
+            oldonload();
+        }
+    };
+
+
+
+    $(function() {
+
+        var c = $(".btn_b");
+        //$("#t1").focus();
+        //选中全部
+        document.execCommand("SelectAll");
+        //打开文件
+        document.execCommand("Open");
+        //网页另存为...
+        document.execCommand("SaveAs");
+        //据说是将定位的元素可拖动?
+        document.execCommand("2D-Position", "false", "true");
+
+        document.execCommand("CreateLink", "false", "http://www.baidu.com");
+        document.execCommand("Bold", "false", null);
+        //$("#t2").focus();
+        //document.execCommand("Paste");
+        //
+        var docElem = window.document;
+        var iframe = docElem.createElement("iframe");
+        iframe.height = iframe.width = 450;
+        docElem.body.appendChild(iframe);
+
+        var iframeDoc = null;
+        if (iframe.contentWindow) {
+            iframeDoc = iframe.contentWindow.document;
+        } else {
+            if (iframe.contentDocument && iframe.contentDocument.document) {
+                iframeDoc = iframe.contentDocument.document;
+            } else {
+                iframeDoc = iframe.contentDocument;
+            }
+        }
+
+        var img = document.createElement("img");
+        img.src = "res/IMG_0461.png";
+        iframeDoc.open();
+        iframeDoc.appendChild(img);
+        iframeDoc.close();
+
+
+        $("#open").on("click",function(){
+            $("<p></p>").load("./边框阴影效果.html", function(data, status, ajaxinstance) {
+               myWindow = window.open('', 'window', 'width=' + window.screen.width + ',height=' + window.screen.height);
+                myWindow.document.open();
+                myWindow.document.write(data);
+                myWindow.document.close();
+                //myWindow.moveTo(0,100);
+                // myWindow.focus();
+                // console.log(window.screen)
+            });
+        })
+
+    });
     </script>
+    <style>
+        #wrap{
+            height:100px;background:#000;
+        }
+    </style>
 </head>
 <body>
-    <div id="test">abcddd
-    <input type="text" id="t1" value="t11"><input type="text" id="t2" value="t22">
-    <input type="checkBox" id="id_1" checked="true">
-    <input type="button" value="Move 'myWindow'" onclick="moveWin()" />
+    <div id="wrap">
+        <input type="button" id="open"  value="Open Empty frame">
+
     </div>
+    <del>asdfl;kasdffsl;kj</del>
+    <ins>ins</ins>
+    <sub>sub</sub>
+    <sup>sup</sup>
 </body>
 </html>

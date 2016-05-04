@@ -8,31 +8,28 @@
 
             var $form = $("<form>", {
                 id: "export-form",
+                action:"./5种css实现垂直水平居中.html",
                 method: "post"
             });
-            //$form = $("#testForm");
             $form.appendTo("body");
-            $("#test").on("click", function () {
-                var str = "export-form";
-                
-                var el = $(':input[form=' + str + ']').get();
-                alert(el);
-                $form.submit(function () {
-                    alert("fff");
-                });
 
+            $("#test").on("click", function (e) {
+                //$("#testForm").submit();
+                 $form.submit();
+                 //$("#testForm").submit(function(){})   --submit中带参数后此种方法会当做绑定事件对待
             });
 
-            $("#testForm").on("submit", function () {
-                alert("fff");
-                return false;
-            });
-            
+            $form.submit(function(){
+                alert('sub');
+            })
         });
     </script>
 </head>
 <body>
-    <!--<form id="testForm" action="鼠标拖动层.aspx" method="post"></form>-->
+    <form id="testForm" action="http://xxx.xx.xx" method="POST">
+        <!-- <input type="submit" value="sbtn" id="sb"> -->
+        <input type="text" name="aaaa" value="sfa">
+    </form>
     <button id="test" type="button">submit</button>
 </body>
 </html>
