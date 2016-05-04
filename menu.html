@@ -13,7 +13,9 @@
 
 	.nav-menu{float:left;width:20%;min-height:99.5%;}
 	.nav-menu ul{width:90%;border:1px solid;padding:0;margin:0 auto;padding:20px 0;}
-	.nav-menu ul li{list-style:none;margin:10px 5px;font-size:14px;}
+	.nav-menu ul li{list-style:none;padding:0 5px;font-size:14px;line-height:30px;transition:background .3s;}
+	.nav-menu ul li a{display:block;}
+	.nav-menu ul li:hover,.selected{background:#ccc;transition:background .3s;color:#fff;}
 	.fieldset{min-height:99.5%;padding:0 10px;margin:0;border-width:1px;}
 	.iframe-wrap{}
 	</style>
@@ -28,13 +30,14 @@
 				 	redirect(url);
 				};
 			preload();
-			
+
 			$(window).on("hashchange",function(){
 				 preload();
 			});
 
 			$menu.on("click","li a",function(e){
 				redirect($(this).attr("href"));
+				$(this).parent("li").addClass("selected").siblings().removeClass();
 				e.preventDefault();
 			});
 
