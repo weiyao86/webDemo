@@ -38,6 +38,7 @@
 			$menu.on("click","li a",function(e){
 				redirect($(this).attr("href"));
 				$(this).parent("li").addClass("selected").siblings().removeClass();
+				$(document.body).scrollTop(0);
 				e.preventDefault();
 			});
 
@@ -61,7 +62,7 @@
 							this.contentWindow ? this.contentWindow.document.body : null;
 
 					var sh =ibody && (ibody.scrollHeight+20);
-					sh=Math.max(0,$pageView.height(),sh);
+					sh=Math.max(0,$menu.height(),$pageView.height(),sh);
 					$pageFrame.height(sh);
 				};
 				iframe.src=href;
@@ -436,6 +437,12 @@
 
 		<li>
 			<a href="鼠标拖动层.html">鼠标拖动层.html</a>
+		</li>
+		<li>
+			<a href="根据索引移动.html">根据索引移动.html</a>
+		</li>
+		<li>
+			<a href="手机滑动最优曲线.html">手机滑动最优曲线.html</a>
 		</li>
 
 	</ul>

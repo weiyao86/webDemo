@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+    <script src="bootSyntaxHigh.js"></script>
+
     <script type="text/javascript">
 
         window.onload = function () {
@@ -73,5 +75,37 @@
         <code>text-align:center</code>
         <pre>{ ( 1 * 102 ) + ( 9 * 101 ) + ( 3 * 100 ) }</pre>
     </div>
+
+<pre class="brush:js;">
+window.onload = function () {
+            var str = /^[a-zA-Z1-9]{1,2}$/;
+            alert(str.test("sff"));
+        };
+
+        // 取自 UnderscoreJS 实用框架  
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                var later = function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
+
+        // 添加resize的回调函数，但是只允许它每300毫秒执行一次  
+        window.addEventListener('resize', debounce(function (event) {
+
+            // 这里写resize过程  
+
+        }, 300));
+
+
+</pre>
 </body>
 </html>

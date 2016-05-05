@@ -1,9 +1,54 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>�����Զ����¼�ԭ��</title>
-    <script src="Scripts/jquery-1.9.0.js"></script>
+    <meta charset="T-8">
+    <title>触发自定义事件原生</title>
+    <!-- <script src="Scripts/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="网页嵌入代码/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+    <script type="text/javascript" src="网页嵌入代码/syntaxhighlighter_3.0.83/scripts/shAutoloader.js"></script>
+    <link type="text/css" rel="stylesheet" href="网页嵌入代码/syntaxhighlighter_3.0.83/styles/shCore.css"/>
+    <link type="text/css" rel="stylesheet" href="网页嵌入代码/syntaxhighlighter_3.0.83/styles/shThemeRDark.css"/> -->
+    <script src="bootSyntaxHigh.js"></script>
     <script type="text/javascript">
+
+        Element.prototype.trigger = function (type, data) {
+            var event = document.createEvent('HTMLEvents');
+            event.initEvent(type, true, true);
+            event.data = data || {};
+            event.eventName = type;
+            event.target = this;
+            this.dispatchEvent(event);
+            return this;
+        };
+
+            window.onload = function () {
+               loadSyntax();
+
+                var testTrigger = document.getElementById('testTrigger');
+                if (window.attachEvent) {
+                    testTrigger.attachEvent("tt", function () { alert('test') });
+                }
+                else if (window.addEventListener) {
+                    testTrigger.addEventListener("click", function () { alert(this.name + 'addEventListener'); }, false);
+                }
+
+                function test() {
+                    debugger;
+                    var self = this;
+                }
+                testTrigger.trigger('tt');
+            }
+
+    </script>
+</head>
+<body>
+
+    <div>
+        <a href="javascript:;" id="testTrigger">testTrigger</a>
+    </div>
+    <iframe src=""></iframe>
+    <textarea class="ignore-part" rows="4" readonly="readonly" data-field="PartNumbers">sadfasdf</textarea>
+    <pre class="brush: js;">
 
         Element.prototype.trigger = function (type, data) {
             var event = document.createEvent('HTMLEvents');
@@ -31,15 +76,7 @@
                 }
                 testTrigger.trigger('tt');
             }
-
-    </script>
-</head>
-<body>
-
-    <div>
-        <a href="javascript:;" id="testTrigger">testTrigger</a>
-    </div>
-    <iframe src="js���ú���.html"></iframe>
-    <textarea class="ignore-part" rows="4" readonly="readonly" data-field="PartNumbers">sadfasdf</textarea>
+网页中插入代码
+    </pre>
 </body>
 </html>

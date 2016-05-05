@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>手机滑动最优曲线</title>
+  <script src="Scripts/jquery-1.9.0.js"></script>
+  <script>
+    
+    $(function(){
+      (function(){
+        var curIdx=0;
+        function initPage(){
+
+          var $cur = $(".wrap .page:eq(1)"),
+              $pre = $cur.prevAll(),
+              $next = $cur.nextAll();
+              $cur.addClass("active");
+              $pre.addClass("page-pre");
+              $next.addClass("page-next");
+              curIdx=$cur.index();
+        }
+        initPage();
+        $("#prev").on("click",function(){
+          var $cur = $(".wrap .active"),
+              $pre = $cur.prev();
+          if($pre.size()){
+            $cur.removeClass("active").addClass("page-next");
+            $pre.removeClass("page-pre").addClass("active");
+            curIdx=$pre.index();
+          }
+        });
+        $("#next").on("click",function(){
+           var $cur = $(".wrap .active"),
+               $next = $cur.next();
+          if($next.size()){
+            $cur.removeClass("active").addClass("page-pre");
+            $next.removeClass("page-next").addClass("active");
+            curIdx=$next.index();
+          }
+        });
+      })();
+
+      //weiui
+       (function(){
+        var curIdx=0;
+        function initPage(){
+
+          var $cur = $(".wrap-wei-ui .page:eq(1)"),
+              $pre = $cur.prevAll(),
+              $next = $cur.nextAll();
+              $cur.addClass("active slidein ");
+              curIdx=$cur.index();
+        }
+        initPage();
+        $("#prev").on("click",function(){
+          var $cur = $(".wrap-wei-ui .active"),
+              $pre = $cur.prev();
+          if($pre.size()){
+            $cur.removeClass().addClass("page");
+            $pre.addClass("active slideout");
+            curIdx=$pre.index();
+          }
+        });
+        $("#next").on("click",function(){
+           var $cur = $(".wrap-wei-ui .active"),
+               $next = $cur.next();
+          if($next.size()){
+            $cur.removeClass().addClass("page");
+            $next.addClass("active slidein");
+            curIdx=$next.index();
+          }
+        });
+      })();
+    });
+  </script>
+  <style>
+  .wrap{position:absolute;top:50px;left:0;right:0;bottom:450px;background:#ccc;overflow:hidden;}
+  .page{position:absolute;top:0;bottom:0;left:0;right:0;background:#ccc;color:#fff;font-size:36px;font-weight:bold;text-align:center;}
+  .page:nth-of-type(1){background:#cdf;}
+  .page:nth-of-type(2){background:#9bf;}
+  .page:nth-of-type(3){background:#59f;}
+  .page:nth-of-type(4){background:#06f;}
+  .page:nth-of-type(5){background:#04b;}
+  .active{transform:translate3d(0,0,0);transition:transform .2s cubic-bezier(0.42,0,0.58,1) .1s;z-index:1;}
+  .page-pre{transform:translate3d(-100%,0,0);transition:transform .2s cubic-bezier(0.42,0,0.58,1) .1s;}
+  .page-next{transform:translate3d(100%,0,0);transition:transform .2s cubic-bezier(0.42,0,0.58,1) .1s;}
+
+   /* weiui */
+  .wrap-wei-ui{position:absolute;top:450px;left:0;right:0;bottom:0px;background:#ccc;overflow:hidden;}
+  .wrap-wei-ui .page{opacity:0;}
+  .active{z-index:1;}
+  .slidein{animation:slidein .2s forwards;}
+  .slideout{animation:slideout .2s forwards;}
+
+  @keyframes slidein{
+    0%{transform:translate3d(100%,0,0);opacity:0;}
+    100%{transform:translate3d(0,0,0);opacity:1;}
+  }
+  @keyframes slideout{
+    0%{transform:translate3d(-100%,0,0);opacity:0;}
+    100%{transform:translate3d(0,0,0);opacity:1;}
+  }
+  
+  </style>
+</head>
+<body>
+<input type="button" id="prev" value="prev">
+<input type="button" id="next" value="next">
+  <div class="wrap">
+    <selection class="page">selection-1</selection>
+    <selection class="page">selection-2</selection>
+    <selection class="page">selection-3</selection>
+    <selection class="page">selection-4</selection>
+    <selection class="page">selection-5</selection>
+  </div>
+  <div class="wrap-wei-ui">
+    <selection class="page">wrap-wei-ui-1</selection>
+    <selection class="page">wrap-wei-ui-2</selection>
+    <selection class="page">wrap-wei-ui-3</selection>
+    <selection class="page">wrap-wei-ui-4</selection>
+    <selection class="page">wrap-wei-ui-5</selection>
+  </div>
+</body>
+</html>

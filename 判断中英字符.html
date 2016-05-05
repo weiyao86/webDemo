@@ -6,6 +6,7 @@
     <link href="Css/promptMes.css" rel="stylesheet" />
     <script src="Scripts/jquery-1.9.0.js"></script>
     <script src="Scripts/plugin.js"></script>
+    <script src="bootSyntaxHigh.js"></script>
     <script type="text/javascript">
         $(function () {
             var txtName = $("#txtName");
@@ -103,5 +104,48 @@
         </div>
     </form>
     <div class="loading"></div>
+    <pre class="brush:js;">
+
+$(function () {
+            var txtName = $("#txtName");
+
+            $("#txtName").keyup(function () {
+                fun(4);
+            });
+
+            function fun(num) {
+                var vl = txtName.val();
+                vl = getChooseChar(vl);
+                if (vl / 2 > num) {
+                    txtName.val(txtglobe);
+                }
+                else
+                    txtglobe = txtName.val();
+
+                $("#spanMsg").html("输入   " + vl + "  字符!");
+                return false;
+            }
+
+            function getChooseChar(str) {
+                var l = 0;
+
+                str = str.split("");
+                for (var i = 0; i < str.length; i++) {
+                    if (str[i].charCodeAt(0) < 299)
+                        l++;
+                    else {
+                        l += 2;
+                    }
+                }
+                return l;
+            }
+
+            $("#btnOpenMsg").click(function () {
+                $("#divTest").promptMes("this is testhis is testhis is test", { header: "title", msgDefault_w: 200, isLinefeed: false });
+            });
+
+        });
+
+</pre>
 </body>
 </html>

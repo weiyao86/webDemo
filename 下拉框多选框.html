@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+
     <meta charset="utf-8">
+    <script src="bootSyntaxHigh.js"></script>
+   
     <style type="text/css">
         .container-dropdown {
             position: absolute;
@@ -56,6 +59,7 @@
         ];
 
         (function ($) {
+             
 
             var defaults={
                  $template:$("#test"),
@@ -179,6 +183,8 @@
 
 
         $(function () {
+
+             loadSyntax();
             $("#txtTest").dropDownList({
                 $template:$("#test"),
                 data:data,
@@ -196,6 +202,7 @@
                 rule:{ "Code": "Code", "D": "Desc" },
                 Mustache:Mustache
             });
+
         });
 
         var st=[1,2,3,5],str=[19,25];
@@ -204,7 +211,7 @@
                 if(str[j] == st[i])st.splice(i,1);
             }
         }
-        alert(st.join(','));
+       
 
     </script>
 
@@ -300,13 +307,186 @@
 	var url = window.location.href;
 	
 	alert(window.location.search);
-$("#btnT").click(function(){
-	window.location.href=window.location.href+"?abc=aa";
-});
-$("#btnT1").click(function(){
-	window.location.search="";
-});
+    $("#btnT").click(function(){
+    	window.location.href=window.location.href+"?abc=aa";
+    });
+    $("#btnT1").click(function(){
+    	window.location.search="";
+    });
 </script>
 
+<pre class="brush:js;">
+          var data = [
+                { "D": "加速踏板固定螺母加速踏板固定螺母", "Code": "RE1001", "Gauge": "M6×1", "TheoreticalMass": "0.004" },
+                { "D": "固定螺母加速踏板固定螺母", "Code": "RE1002", "Gauge": "M6×1", "TheoreticalMass": "0.004" },
+                { "D": "固定螺母", "Code": "RE1003", "Gauge": "M6×1", "TheoreticalMass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" },
+                { "D": "螺母", "Code": "RE1004", "Gauge": "M6×1", "theoreticalmass": "0.004" }
+        ];
+
+        (function ($) {
+             
+
+            var defaults={
+                 $template:$("#test"),
+                 data:{},
+                 rule:{ "Code": "Code", "Desc": "Desc" },
+                 Mustache:null
+            };
+            var s="我修改了master issue issue2 issue3 temp";
+
+
+
+            $.fn.dropDownList = function (opts) {
+                var self = this;
+                    self.opts=$.extend({},defaults,opts);
+                    self.$parentContainer = self.wrap("<div></div>").parent();
+                    self.$tempContainer = self.opts.$template.clone().appendTo(self.$parentContainer).removeAttr("id");
+                    self.$fillContainer = self.$tempContainer.find("ul[data-field='container-dropdown']");
+                    self.templateContainer = self.$tempContainer.find("ul>[data-field='container-template-dropdown']").html();
+                    self.tempHtml='<li><input type="checkbox" data-code="{{Code}}" /><span class="literal">{{Desc}}</span><li>';
+
+                bindEvent(self);
+                self.localPosition(self.$tempContainer);
+            };
+
+            $.fn.localPosition = function ($standByContainer,width) {
+                var self = this,
+                    x =self.position().left,
+                    y =self.position().top + self.outerHeight(),
+                    w = width || self.outerWidth();
+                $standByContainer.css({
+                    "left": x,
+                    "top": y,
+                    "width": w
+                }).hide();
+            };
+
+            function loadData(sender){
+                var self=sender,
+                    datalist = mappingJSON(self.opts.data, self.opts.rule, []);
+                if(self.opts.Mustache === undefined){
+                    var list=[];
+                     for(var i =0,l=datalist.length;i<l;i++){
+                        list[list.length]=self.tempHtml.replace(/\{\{(\w+)\}\}/ig,function(allMatch,field,index){
+                            return datalist[i][field];
+                        });
+                     }
+                     tempHtml = list.join('');
+                }else var tempHtml = self.opts.Mustache.render(self.templateContainer, { List: datalist });
+
+                self.$fillContainer.html(tempHtml);
+            }
+
+            function bindEvent(sender) {
+                var self = sender;
+
+                self.$parentContainer.on("mouseenter mouseleave", function (e) {
+                    if (e.type == "mouseleave") self.$tempContainer.slideUp("fast");
+                    else if (e.type == "mouseenter") {
+
+                        self.$tempContainer.slideDown("fast");
+                        loadData(self);
+                    }
+                }).width(self.width());
+
+                self.$tempContainer.on("change click", "li>input[type='checkbox'],li", function (e) {
+                    var $this = $(this),
+                        txtcontent = self.val() ? self.val().split(",") : [],
+                        $ck = $this;
+                    if ($this.prop("tagName") == "LI") $ck = $this.find("input[type='checkbox']");
+                    var curVal = $ck.attr("data-code");
+
+                    if (e.type == "change") {
+                        if ($ck.prop("checked")) {
+                            txtcontent.push(curVal);
+                            self.val(txtcontent.join(","));
+                        } else {
+                            var index = $.inArray(curVal, txtcontent);
+                            index > -1 && txtcontent.splice(index, 1) && self.val(txtcontent.join(","));
+                        }
+                        e.stopPropagation();
+                    }
+                    else if (e.type == "click") {
+                        if (!$ck.prop("checked")) {
+                            txtcontent.push(curVal);
+                            self.val(txtcontent.join(","));
+                            $ck.prop("checked", true);
+                        } else {
+                            var index = $.inArray(curVal, txtcontent);
+                            index > -1 && txtcontent.splice(index, 1) && self.val(txtcontent.join(","));
+                            $ck.prop("checked", false);
+                        }
+                    }
+                });
+
+                    self.attr("readOnly", true);
+            }
+
+            function mappingJSON(data, rule, container) {
+
+                for (var i = 0; i < data.length; i++) {
+                    var temp = {};
+                    var item = data[i];
+
+                    for (var key in item) {
+                        var newKey = rule[key] || key;
+
+                        if ($.type(item[key]) === "array" && item[key].length > 0) {
+                            temp[newKey] = [];
+                            this.mappingJSON(item[key], rule, temp[newKey]);
+                        } else {
+                            temp[newKey] = item[key];
+                        }
+                    }
+                    container.push(temp);
+                }
+
+                    return container;
+            }
+
+        })(jQuery);
+
+
+        $(function () {
+            
+             loadSyntax();
+            $("#txtTest").dropDownList({
+                $template:$("#test"),
+                data:data,
+                rule:{ "Code": "Code", "D": "Desc" }
+            });
+            $("#Text1").dropDownList({
+                $template:$("#test"),
+                data:data,
+                rule:{ "Code": "Code", "D": "Desc" },
+                Mustache:Mustache
+            });
+            $("#Text2").dropDownList({
+                $template:$("#test"),
+                data:data,
+                rule:{ "Code": "Code", "D": "Desc" },
+                Mustache:Mustache
+            });
+
+        });
+
+        var std=[1,2,3,5],str=[19,25];
+        for(var i = 0;i<std.length;i++){
+            for(var j =0;j<str.length;j++){
+                if(str[j] == std[i])std.splice(i,1);
+            }
+        };
+        var url = window.location.href;
+        $("#btnT").click(function(){
+            window.location.href=window.location.href+'?abc=aa';
+        });
+        $("#btnT1").click(function(){
+            window.location.search="";
+        });
+    </pre>
 </body>
 </html>

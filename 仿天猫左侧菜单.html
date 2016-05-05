@@ -3,7 +3,7 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+    <script src="bootSyntaxHigh.js"></script>
     <title>仿天猫左侧分类导航菜单特效</title>
 
     <style>
@@ -282,6 +282,79 @@
         此效果主要还是应用css使元素相互关联，移出LI时同时给显示内容也加上相应的hover事件
 
     </div>
+<pre class="brush:js;">
+//闭包示例
+        function closure(list) {
+            var result = [];
+            var fun = function (li, i) { alert(li + '---' + i); };
+            for (var i = 0, li; li = list[i]; i++) {
+                li.i = i;
+                result["key_" + i] = (function (i) { alert(i+"--处理元素加1＝"+(++i)); })(li);
+            }
+            return result;
+        }
 
+        var test = closure([5, 6, 8]);
+        for (var j = 0, li; li = test[j]; j++) {
+            li();
+        }
+        //闭包示例
+
+
+        $(document).ready(function () {
+
+            $("#cardlist li").each(function (index) {
+
+                $(this).mouseover(function () {
+
+                    //清除没有访问过的层，同时计算当前的相对位置，实现等位置平移效果
+
+                    $("div.box").css({ display: "none" });
+
+                    var height = index * 41 + "px";
+
+                    //显示具体内容效果
+
+                    $("div.box").eq(index).addClass("show showcontent").css({ display: "block", top: height });
+
+                    $(this).addClass("hover");
+
+                    $("#txtTest").val("into");
+
+                }).mouseout(function () {
+
+                    //关闭所有的层效果
+
+                    $("div.box").eq(index).css({ display: "none" });
+
+                    $(this).removeClass("hover");
+                    $("#txtTest").val("li mouseout");
+                });
+
+            });
+
+            $(".box").hover(function () {
+
+                //获取当前选中的状态的时候让其处于显示状态
+
+                $('.box').eq($('.box').index($(this))).addClass("show showcontent").css({ display: "block" });
+
+                //同时添加背景效果
+
+                $("li.current").eq($('.box').index($(this))).addClass("hover");
+                $("#txtTest").val("box 1");
+            }, function () {
+
+                //移除当前效果，同时隐藏内容层
+
+                $("li.current").removeClass("hover");
+
+                $('div.box').css({ display: "none" });
+                $("#txtTest").val("box 2");
+
+            });
+
+        });
+    </pre>
 </body>
 </html>
