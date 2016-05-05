@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Menu</title>
+	<script src="Scripts/jquery-1.9.0.js"></script>
+	<style>
+	html,body{margin:0;padding:0;height:100%;font-size:12px;}
+	a:link{color:#555;}
+	a:visited{color:#888;}
+	a:hover{color:#f00;}
+	a:active{color:#f80;}
+
+	.nav-menu{float:left;width:20%;min-height:99.5%;}
+	.nav-menu ul{width:90%;border:1px solid;padding:0;margin:0 auto;padding:20px 0;}
+	.nav-menu ul li{list-style:none;padding:0 5px;font-size:14px;line-height:30px;transition:background .3s;}
+	.nav-menu ul li a{display:block;}
+	.nav-menu ul li:hover,.selected{background:#ccc;transition:background .3s;color:#fff;}
+	.fieldset{min-height:99.5%;padding:0 10px;margin:0;border-width:1px;}
+	.iframe-wrap{}
+	</style>
+	<script>
+		$(function() {
+			var $menu = $("#menu"),
+				$pageView=$("#page_view"),
+				pageFrame=$.trim($("#page_frame").html()),
+				preload=function(){
+					var url = location.hash.indexOf('#') === 0 ? location.hash.replace("#",'') : '';
+
+				 	redirect(url);
+				};
+			preload();
+
+			$(window).on("hashchange",function(){
+				 preload();
+			});
+
+			$menu.on("click","li a",function(e){
+				redirect($(this).attr("href"));
+				$(this).parent("li").addClass("selected").siblings().removeClass();
+				$(document.body).scrollTop(0);
+				e.preventDefault();
+			});
+
+
+			function redirect(href){
+				var $pageFrame=$(pageFrame),
+					$cur=$("[data-frame-href='"+href+"']");
+
+					location.hash=href;
+					if($cur.size()){
+						$cur.show().siblings(":not(legend)").hide();
+						return;
+					}else{
+						$("[data-frame-href]",$pageView).hide();
+					}
+
+				var iframe = document.createElement("iframe");
+				iframe.onload=function(){
+
+					var ibody=this.contentDocument ? this.contentDocument.documentElement :
+							this.contentWindow ? this.contentWindow.document.body : null;
+
+					var sh =ibody && (ibody.scrollHeight+20);
+					sh=Math.max(0,$menu.height(),$pageView.height(),sh);
+					$pageFrame.height(sh);
+				};
+				iframe.src=href;
+				iframe.width="100%";
+				iframe.height="100%";
+				iframe.style.border="none";
+
+				$pageFrame.append(iframe).attr("data-frame-href",href);
+				$pageView.append($pageFrame);
+			}
+		})
+	</script>
+</head>
+<body>
+<nav class="nav-menu">
+	<ul id="menu"><li><a href="5种css实现垂直水平居中.html">5种css实现垂直水平居中.html</a></li><li><a href="BulidTree.html">BulidTree.html</a></li></ul>
+</nav>
+<fieldset id="page_view" class="fieldset">
+	<legend>页面展示</legend>
+
+</fieldset>
+
+<script id="page_frame" type="text/template">
+		<div class="iframe-wrap"></div>
+	</script>
+</body>
+</html>
