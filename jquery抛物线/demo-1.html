@@ -5,7 +5,7 @@
 	<title>抛物线</title>
 	<script src="js/jquery.min.js"></script>
 	<style>
-	html,body{height:100%;padding:0;margin:0;}
+	html,body{height:100%;padding:0;margin:0;position:relative;}
 		.x{
 			position:absolute;
 			top:300px;
@@ -129,6 +129,14 @@
 				maxY = $(window).height() - $move.height(),
 				minY = 0;
 
+			$(window).on("resize",function(){
+				maxX = $(window).width() - $move.width();
+				minX = 0;
+				maxY = $(window).height() - $move.height();
+				minY = 0;
+
+			});
+
 			$move.on("mousedown", function(evt) {
 				var $moveBall = $(this),
 					nativeX = evt.pageX,
@@ -150,6 +158,7 @@
 							left: x,
 							top: y
 						});
+						e.preventDefault();
 					},
 					"mouseup.m": function(e) {
 						$(document).off(".m");
@@ -173,7 +182,7 @@
 <body>
 <div class="x"></div>
 <div class="y"></div>
-	<div id="origin_ball" class="origin-ball"><span class="cld">ball</span></div>
-		<div id="move_ball" class="move-ball"><span class="cld"><button  id="come_on">follow me</button></span></div>
+<div id="origin_ball" class="origin-ball"><span class="cld">ball</span></div>
+<div id="move_ball" class="move-ball"><span class="cld"><button  id="come_on">follow me</button></span></div>
 </body>
 </html>

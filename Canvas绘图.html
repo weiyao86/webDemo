@@ -103,11 +103,12 @@
             var canvasRotate = document.getElementById("canvas_rotate"),
                 angle = 1,
                 ctxRotate = canvasRotate.getContext("2d");
+            
             var stest = setInterval(function () {
                 if (angle > 360) { return window.clearInterval(stest); }
-                console.log(angle);
+                // console.log(angle);
                 ctxRotate.rotate(angle * Math.PI / 180);
-                ctxRotate.fillRect(300, 0, 10, 10);
+                ctxRotate.fillRect(100, 200, 5, 5);
                 angle++;
             }, 100);
 
@@ -171,7 +172,7 @@
     <canvas id="img_test">将图片置于画布中</canvas>
     <canvas id="canvas_img_t">图片重复</canvas>
     <canvas id="canvas_arc">两条切线间添加弧线</canvas>
-    <canvas id="canvas_rotate">旋转角度</canvas>
+    <canvas id="canvas_rotate" width="1000px" height="600px">旋转角度</canvas>
     <!--end canvas scope-->
 
     <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2q2-s-Sju7Wasa__tam7r661t7Wus6y-9Lm1t-S5tA" style="text-decoration: none;">

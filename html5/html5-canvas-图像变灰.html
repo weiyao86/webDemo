@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script src="../Scripts/jquery-1.9.0.js"></script>
+	 <script src="../bootSyntaxHigh.js"></script>
 	<script>
 				// 加载时就进行处理
 				$(window).load(function() {
@@ -64,6 +65,55 @@
 </head>
 <body>
 	<img id='color-img' class="te" src="../res/t8.jpg" alt="">
-
+<pre class="brush:js;">// 加载时就进行处理
+				$(window).load(function() {
+					 loadSyntax();
+					var img = $('#color-img');
+					// 复制图像
+					img.clone().removeAttr("id").addClass('gray-img').css({
+						"position": "absolute",
+						"z-index": "2",
+						"opacity": "0"
+					}).insertBefore(img);
+					img.attr('src', grayscale(img.attr('src')));
+					// 图像的淡入
+					$('.gray-img').mouseover(function() {
+							$(this).stop().animate({
+								opacity: 1
+							}, 1000);
+						})
+						// 图像的淡出
+					$('.gray-img').mouseout(function() {
+						$(this).stop().animate({
+							opacity: 0
+						}, 1000);
+					});
+				});
+				// 创建灰度版的图像
+				function grayscale(src) {
+					if (!document.createElement('canvas').getContext) return src;
+					// 取得canvas元素及其绘图上下文
+					var canvas = document.createElement('canvas');
+					var ctx = canvas.getContext('2d');
+					var imgObj = new Image();
+					imgObj.src = src;
+					canvas.width = imgObj.width;
+					canvas.height = imgObj.height;
+					ctx.drawImage(imgObj, 0, 0); // 绘制一副图像
+					var imgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height); // 获取之前的数据
+					for (var x = 0; x < imgPixels.height; x++) {
+						for (var y = 0; y < imgPixels.width; y++) {
+							var i = (x * 4) * imgPixels.width + y * 4;
+							var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3; // 计算灰度值
+							imgPixels.data[i] = avg; // rgb中的r
+							imgPixels.data[i + 1] = avg; // rgb中的g
+							imgPixels.data[i + 2] = avg; // rgb中的b
+							// i + 3是alpha通道，我们现在不需要
+						}
+					}
+					ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+					return canvas.toDataURL();
+				}
+	</script></pre>
 </body>
 </html>

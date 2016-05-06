@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>获取滚动条宽度</title>
+	<title>钩子机制</title>
 	<script src="Scripts/jquery-1.9.0.js"></script>
+	<script src="bootSyntaxHigh.js"></script>
+
 <script>
+	$(function() {
+		// var c = $("#c").get(0);
+		// 		var of1 = c.offsetWidth;
+		// 		$("#wrap").css("overflow", "auto");
+		// 		alert(of1)
+		// 		var of2 = $("#c").get(0).offsetWidth;
+		// 		alert(of1 - of2);
+	});
+
+	</script>
+</head>
+<body>
+	<div id="wrap" style="width:100px;height:50px;overflow:hidden;border:1px solid;">
+		<div id="c" style="height:100px;background: #ccc;"></div>
+	</div>
+	<div id="test" style="width:100px;height:400px;margin:0 auto;border:10px solid red;"></div>
+	<pre class="brush:js;">
 		// 处理钩子的对象
 		var hook = (function() {
 			return {
@@ -58,12 +77,6 @@
 	hook.init();
 
 
-	</script>
-</head>
-<body>
-	<div id="wrap" style="width:100px;height:50px;overflow:hidden;border:1px solid;">
-		<div id="c" style="height:100px;background: #ccc;"></div>
-	</div>
-	<div id="test" style="width:100px;height:400px;margin:0 auto;border:1px solid red;"></div>
+	</pre>
 </body>
 </html>
