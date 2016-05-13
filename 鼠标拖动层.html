@@ -1,30 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>鼠标拖动层(可任意绑定DIV标签)（一） </title>
-    <script src="Scripts/myJsClass.js"></script>
     <script src="Scripts/jquery-1.4.1.js"></script>
     <script type="text/javascript">
-        //封装JS类
-        $(document).ready(function () {
-            //
-            //var o = new myClass();
-            //
-            var o = new my();
-            o.init();
-            o.load();
-            //var or = new Moduls.myClassTest();
-            //or.init();
-            //or.load();
-            //alert(or.name + "==" + or.age);
-            ////
-            //var oe = new Moduls.youClassTest();
-            //oe.init();
-            ////
-            //var ot = new my();
-            //ot.init();
-
-        });
+       
         /*
         鼠标拖动层(可任意绑定DIV标签)（一）
         作者:Anlige
@@ -98,8 +78,8 @@
 
                 e = e ? e : (window.event ? window.event : null);
                 funs.getFocus(target);
-                var s = NS ? 1 : 0;
-                if (e.button == s) {//(NS ? 0 : 1)
+                var s = NS ? 1 : 0; //IE6-8 and ie9 or firefox chrome ...(NS ? 0 : 1)
+                if (e.button == s) {
                     if (!NS) { this.setCapture() }
                     x0 = e.clientX;
                     y0 = e.clientY;

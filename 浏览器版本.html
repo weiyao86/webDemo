@@ -13,9 +13,8 @@
             //else
             //    alert("failed");
 
-            //var browser = uaMatch(ua);
-            //alert(browser.browser);
-            //alert(browser.version);
+            var browser = uaMatch(ua);
+           // alert("浏览器："+browser.browser+"\n\t版本："+browser.version+"\n\tua"+ua);
 
             function uaMatch() {
                 ua = ua.toLowerCase();
@@ -57,7 +56,7 @@
 
 
                 $.when(
-                    { test: "tt" },
+                    { test: "promise complete" },
                     $("#d1").fadeOut(5000),
                     fun4 = $("#d2").fadeOut(3000))
                     .done(function (x) {
@@ -69,7 +68,6 @@
             $("#btnOpen").on("click", function () {
                 window.showModalDialog("滑块跟随.html", null);
             });
-            
         });
 
     </script>
@@ -86,7 +84,6 @@
             width: 800px;
         }
     </style>
-    
 </head>
 <body>
     <div id="d1" class="div1"></div>
