@@ -1,24 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <script src="Scripts/jquery-1.9.0.js"></script>
-  <script>
-  $(function(){
-    var str = '<h3>978978978asfdfdas</h3>';
-    $("#container").before(str);
-    // $(str).insertBefore($("#container"));
-  })
-  </script>
-  <style>
-  #container{
-    height:50px;
-    background:#ddd;
-  }
-  </style>
+<html lang="en-US"><head>
+<meta charset="UTF-8">
+<title>JS图片放大展示效果</title>
+<style>
+* {margin:0; padding:0}
+body {font:12px/20px "Consolas", "Microsoft YaHei"; color:#333;background:#EFEFEF; overflow:hidden}
+ul, li {list-style:none}
+.cf {zoom:1}
+.cf:after {clear:both; content:"."; display:block; visibility:hidden; height:0}
+.wrap {width:980px; margin:0 auto; padding:100px 0 0}
+#banner {width:800px; margin:0 auto; position:relative; background:#FFF; height:400px; overflow:hidden}
+#banner ul {}
+#banner li {float:left; width:190px; height:190px; cursor:pointer;padding:5px}
+#banner li img {width:190px; height:190px; position:absolute; z-index:4; left:5px; top:5px}
+#banner li span {display:block; width:170px; height:170px; border:10px solid #000; position:absolute; background:#CCC; opacity:0.5; filter:alpha(opacity=50);left:5px; top:5px; z-index:5}
+#banner li span:hover {opacity:0.3; filter:alpha(opacity=30); border:10px solid #000; background:#fff;}
+.btn_wrap {position:absolute; left:820px; top:150px; height:100px; width:37px}
+#goUp {background:url(images/nav.png) no-repeat 4px 4px; width:37px; height:22px; display:block; text-indent:-9999px;position:absolute; left:0; top:0;}
+#goUp:hover {background-position:-34px 4px}
+#goDown {background:url(images/nav.png) no-repeat 4px -52px; width:37px; height:22px; display:block; text-indent:-9999px;position:absolute; left:0; bottom:0;}
+#goDown:hover {background-position:-34px -52px}
+</style>
 </head>
 <body>
-  <div id="container">asdfasdfasdfasdfasdfasdf</div>
-</body>
-</html>
+<div class="wrap">
+  <div id="banner" style="overflow: visible;">
+    <ul class="cf">
+      <li style="left: 0px; top: 0px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall1.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 200px; top: 0px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall2.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 400px; top: 0px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall3.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 600px; top: 0px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall4.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 0px; top: 200px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall5.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 200px; top: 200px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall6.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 400px; top: 200px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall7.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 600px; top: 200px; position: absolute; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall8.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+      <li style="left: 0px; top: 400px; position: absolute; opacity: 0; display: none;"><span></span><img src="http://www.codefans.net/jscss/demoimg/wall9.jpg" alt=""></li>
+      <li style="left: 200px; top: 400px; position: absolute; opacity: 0; display: none; z-index: 10;"><span style="width: 170px; height: 170px; left: 5px; top: 5px;"></span><img src="http://www.codefans.net/jscss/demoimg/wall10.jpg" alt="" style="width: 190px; height: 190px; left: 5px; top: 5px;"></li>
+    </ul>
+    <div class="btn_wrap">
+      <a href="javascript:;" id="goUp">向上走着</a>
+      <a href="javascript:;" id="goDown">向下走着</a>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var JSHELPER = {
+  initi: function() {
+},
+  animate: function(obj, attrList, callback) {
+    clearInterval(obj.timer);
+    obj.timer = setInterval(function() {
+      var isStop = true;
+      for(var attr in attrList) {
+        var curAttr = attr === "opacity" ? Math.round(parseFloat(JSHELPER.getStyle(obj, attr) * 100)) : parseInt(JSHELPER.getStyle(obj, attr));
+        var speed = (attrList[attr] - curAttr) / 8;
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        if(attr === "opacity") {
+          obj.style.filter = "alpha(opacity=" + (curAttr + speed) + ")";
+          obj.style.opacity = (curAttr + speed) / 100;
+        } else {
+          obj.style[attr] = curAttr + speed + "px";
+        }
+        curAttr != attrList[attr] && (isStop = false);
+      }
+      if(isStop) {
+        clearInterval(obj.timer);
+        !!callback && callback();
+      }
+    }, 15);
+  },
+  $: function(params) {
+    switch (params.charAt(0)) {
+      case "#":
+        return document.getElementById(params.substring(1));
+        break;
+      case ".":
+        return this.getByClass(document, params.substring(1));
+      default:
+        return document.getElementsByTagName(params);
+    }
+  },
+  getStyle: function(obj, attr) {
+    return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+  },
+  getByClass: function(pn, cn) {
+    var ae = pn.getElementsByTagName("*"), 
+      rent = [],
+      re = new RegExp('\\b' + cn + '\\b', 'i');
+    for(var i = 0, len = ae.length; i < len; i++) {
+      ae[i].className.search(re) != -1 && rent.push(ae[i]);
+    }
+    return rent;
+  }
+};
+window.onload = function() {
+  var btnDown = JSHELPER.$("#goDown"),
+    btnUp = JSHELPER.$("#goUp"),
+    wrap = JSHELPER.$("#banner"),
+    liList = wrap.children[0].children,
+    len = liList.length;
+  wrap.style.overflow = "visible";
+  //设置 left 和  top
+  for(var i = 0; i < len; i++) {
+    liList[i].style.left = liList[i].offsetLeft + "px";
+    if(i >= 12) {
+      liList[i].style.top = "400px";
+    } else {
+      liList[i].style.top = liList[i].offsetTop + "px";
+    }
+  }
+  //添加 position:absolute
+  for(var i = 0; i < len; i++) {
+    liList[i].style.position = "absolute";
+  }
+  //把容器外的设置为透明
+  for(var i = 8; i < len; i++) {
+    liList[i].style.filter = "alpha(opacity=0)";
+    liList[i].style.opacity = 0;
+    liList[i].style.display = "none";
+  }
+  
+  var now = 0;
+  //上一个
+  btnUp.onclick = function() {
+    if(now == 0) {
+      return;
+    }
+    var i = now + 8;
+    i = i >= len ? (len-1) : i;
+    var timerDo = setInterval(function() {
+      if(i < now) {
+        liList[i].style.display = "block";
+        JSHELPER.animate(liList[i], {top: 0, opacity: 100});
+      } else if(i < now + 4) {
+        JSHELPER.animate(liList[i], {top: 200});
+      } else {
+        JSHELPER.animate(liList[i], {top: 400, opacity: 0});
+      }
+      i--;
+      if( i == now - 5 ) {
+        now -= 4;
+        for(var m = len-1; m > now+7; m--) {
+          liList[m].style.display = "none";
+        }
+        clearInterval(timerDo);
+      }
+    }, 50);
+  };
+  //下一个
+  btnDown.onclick = function() {
+    if(now >= len - 8) {
+      return;
+    }
+    var i = now;
+    var timerDo = setInterval(function() {
+      if(i < now + 4) {
+        JSHELPER.animate(liList[i], {top: -200, opacity: 0});
+      } else if(i < now + 8) {
+        JSHELPER.animate(liList[i], {top: 0});
+      } else {
+        liList[i].style.display = "block";
+        JSHELPER.animate(liList[i], {top: 200, opacity: 100});
+      }
+      i++;
+      if( i == now + 12 ) {
+        now += 4;
+        for(var m = 0; m < now; m++) {
+          liList[m].style.display = "none";
+        }
+        clearInterval(timerDo);
+      }
+    }, 50);
+  };
+  
+  //放大镜
+  for(var i = 0; i < len; i++) {
+    (function(i) {
+      liList[i].children[0].onmouseover = function() {
+        liList[i].style.zIndex = 100;
+        JSHELPER.animate(liList[i].children[0], {width:280, height: 280, left: -50, top: -50});
+        JSHELPER.animate(liList[i].children[1], {width:300, height: 300, left: -50, top: -50});
+      };
+      liList[i].children[0].onmouseout = function() {
+        liList[i].style.zIndex = 10;
+        JSHELPER.animate(liList[i].children[0], {width:170, height: 170, left: 5, top: 5});
+        JSHELPER.animate(liList[i].children[1], {width:190, height: 190, left: 5, top: 5});
+      };
+    })(i);
+  }
+  
+};
+</script>
+
+</body></html>
