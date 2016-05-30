@@ -50,13 +50,13 @@
             //4
             function e(x, y, a) {
                 arguments[2] = 10;
-                alert(a);//10
+                console.info(a);//10
             }
             e(1, 2, 3);
 
             //5
             function f() {
-                alert(this);//window
+                console.info(this);//window
             }
             f.call(null);
 
@@ -67,7 +67,6 @@
 </head>
 <body>
 
-    <div style="width: 200px; height: 200px; background-color: gray; background-clip: padding-box;">abc</div>
     <div id="testDiv" style="border: 1px solid red;">
         <p>
             <s>不赞成使用。定义加删除线的文本</s><br />
@@ -125,7 +124,7 @@
             <br />
             <label>定义 input 元素的标注。      </label>
             <br />
-            <ieldse>   定义围绕表单中元素的边框。      </ieldse>
+            <fieldset>   定义围绕表单中元素的边框。      </fieldset>
             <br />
             <legend>定义 ieldset 元素的标题。      </legend>
             <br />
@@ -178,27 +177,5 @@
         </p>
     </div>
 
-    <table id="tb" style="border: 1px solid black; table-layout: fixed;">
-        <tr>
-            <td>abc</td>
-            <td>abc</td>
-            <td>abc</td>
-        </tr>
-        <tr>
-            <td>abc</td>
-            <td>abc</td>
-            <td>abc</td>
-        </tr>
-        <tr>
-            <td>abc</td>
-            <td>abc</td>
-            <td>abc</td>
-        </tr>
-        <tr>
-            <td>abc</td>
-            <td>abc</td>
-            <td>abc</td>
-        </tr>
-    </table>
 </body>
 </html>
