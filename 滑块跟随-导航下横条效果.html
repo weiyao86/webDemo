@@ -90,7 +90,9 @@
             //验证为数字此处省略……
             num =num.split('').reverse().join('').replace(/(\d{3})/g,"$1,").replace(/,$/, '').split('').reverse().join('');
             
-            
+             $("#menu_text li").on('click',function(){
+                alert($(this).html())
+             })
         });
     </script>
 </head>
