@@ -4,8 +4,12 @@
 	<meta charset="UTF-8">
 	<title>Menu</title>
 	<script src="Scripts/jquery-1.9.0.js"></script>
+	<!-- 改良版reset.css, -->
+	<link rel="stylesheet" href="Css/normalize.css">
+	<!-- 动画库 -->
+	<link type="text/css" rel="stylesheet" href="CSS3/animate/css/animate.css" />
 	<style>
-	html,body{margin:0;padding:0;height:100%;font-size:12px;box-sizing:border-box;}
+	html,body{margin:0;padding:0;height:100%;font-size:12px;box-sizing:border-box;overflow:hidden;}
 	a:link{color:#555;}
 	a:visited{color:#888;}
 	a:hover{color:#f00;}
@@ -16,7 +20,7 @@
 	.nav-menu ul li{list-style:none;padding:0 5px;font-size:14px;line-height:30px;transition:background .3s;}
 	.nav-menu ul li a{display:block;}
 	.nav-menu ul li:hover,.selected{background:#ccc;transition:background .3s;color:#fff;}
-	.fieldset{padding:0;margin:0;border-width:0;position:absolute;top:0;bottom:0;left:20%;right:0;overflow:auto;background:#fff;box-sizing:border-box;}
+	.fieldset{padding:0;margin:0;border-width:0;position:absolute;top:0;bottom:0;left:20%;right:0;overflow:auto;background:#fff;box-sizing:border-box;background:#eee;}
 	.iframe-wrap{}
 	legend{position:absolute;}
 	dl{margin:0 -5px;}
@@ -31,7 +35,8 @@
 					var url = location.hash.indexOf('#') === 0 ? location.hash.replace("#", '') : '';
 
 					redirect(url);
-				};
+				},
+				animateList = ['bounce', 'flash', 'pulse', 'rubberBand', 'shake', 'swing', 'tada', 'wobble', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight', 'bounceInUp', 'bounceOut', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight', 'bounceOutUp', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'fadeOut', 'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight', 'fadeOutRightBig', 'fadeOutUp', 'fadeOutUpBig', 'flip', 'flipInX', 'flipInY', 'flipOutX', 'flipOutY', 'lightSpeedIn', 'lightSpeedOut', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft', 'rotateOutUpRight', 'hinge', 'rollIn', 'rollOut', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp'];
 			preload();
 
 			$(window).on("hashchange", function() {
@@ -67,23 +72,34 @@
 					var sh = ibody && (ibody.scrollHeight);
 					sh = Math.max(0, $pageView.height(), sh);
 					$pageFrame.height(sh);
+
+
+					//子窗口禁用滚动条
+					ibody.style.overflow='hidden';
+					var random = Math.floor(Math.random() * (animateList.length - 1));
+					$pageView.removeClass(function() {
+						return $(this).attr("class").replace('fieldset', '');
+					}).addClass(animateList[random] + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+						$(this).removeClass(function() {
+							return $(this).attr("class").replace('fieldset', '');
+						});
+					});
 				};
 				iframe.src = href;
 				iframe.width = "100%";
-				iframe.height = "99.5%";
+				iframe.height = "100%";
 				iframe.style.border = "none";
 
 				$pageFrame.append(iframe).attr("data-frame-href", href);
 				$pageView.append($pageFrame);
-
 			}
 
-			$menu.on("click","li dt",function(){
+			$menu.on("click", "li dt", function() {
 				var $that = $(this);
-				if($that.data("toggle") == undefined){
-				 	$that.nextAll().slideUp();
-				 	$that.data("toggle",true);
-				}else{
+				if ($that.data("toggle") == undefined) {
+					$that.nextAll().slideUp();
+					$that.data("toggle", true);
+				} else {
 					$that.nextAll().slideDown();
 					$that.removeData("toggle");
 				}
@@ -94,7 +110,650 @@
 </head>
 <body>
 	<nav class="nav-menu">
-		<ul id="menu"><li><a href="5种css实现垂直水平居中.html">5种css实现垂直水平居中.html</a></li><li><a href="BulidTree.html">BulidTree.html</a></li><li><a href="Canvas绘图.html">Canvas绘图.html</a></li><li><a href="Copy of 前端防抖方法.html">Copy of 前端防抖方法.html</a></li><li><a href="css 绘制三角形圆.html">css 绘制三角形圆.html</a></li><li><dl><dt>CSS3</dt><dd><a href="./CSS3/3D旋转.html">3D旋转.html</a></dd><dd><a href="./CSS3/animation.html">animation.html</a></dd><dd><a href="./CSS3/css3d立方体旋转.html">css3d立方体旋转.html</a></dd><dd><a href="./CSS3/css3d立方体顺序旋转.html">css3d立方体顺序旋转.html</a></dd><dd><a href="./CSS3/css3仿flash扫光效果.html">css3仿flash扫光效果.html</a></dd><dd><a href="./CSS3/loading.html">loading.html</a></dd><dd><a href="./CSS3/position.html">position.html</a></dd><dd><a href="./CSS3/temp.html">temp.html</a></dd><dd><a href="./CSS3/text-shadow.html">text-shadow.html</a></dd><dd><a href="./CSS3/transform.html">transform.html</a></dd><dd><a href="./CSS3/transfrom-origin.html">transfrom-origin.html</a></dd><dd><a href="./CSS3/translate3d.html">translate3d.html</a></dd><dd><a href="./CSS3/切割.html">切割.html</a></dd><dd><a href="./CSS3/接住弹起的小球.html">接住弹起的小球.html</a></dd><dd><a href="./CSS3/渐变.html">渐变.html</a></dd></dl></li><li><dl><dt>CSS3实现跳动小球</dt><dd><a href="./CSS3实现跳动小球/index.html">index.html</a></dd></dl></li><li><a href="css制作漂亮彩带导航条菜单.html">css制作漂亮彩带导航条菜单.html</a></li><li><dl><dt>downloadPage</dt><dd><a href="./downloadPage/index.html">index.html</a></dd></dl></li><li><a href="form.html">form.html</a></li><li><a href="hasOwnProperty.html">hasOwnProperty.html</a></li><li><a href="helium.html">helium.html</a></li><li><dl><dt>html-css-icon</dt><dd><a href="./html-css-icon/index.html">index.html</a></dd></dl></li><li><dl><dt>html5</dt><dd><a href="./html5/css3_clock.html">css3_clock.html</a></dd><dd><a href="./html5/html5-canvas-图像变灰.html">html5-canvas-图像变灰.html</a></dd><dd><a href="./html5/html5-canvas-猴子.html">html5-canvas-猴子.html</a></dd><dd><a href="./html5/html5-canvas.html">html5-canvas.html</a></dd><dd><a href="./html5/html5-Canvas飞船.html">html5-Canvas飞船.html</a></dd><dd><a href="./html5/html5-video.html">html5-video.html</a></dd><dd><a href="./html5/html5便签.html">html5便签.html</a></dd></dl></li><li><a href="html各种字符.html">html各种字符.html</a></li><li><a href="html颜色对照表.html">html颜色对照表.html</a></li><li><a href="iframe.html">iframe.html</a></li><li><a href="iframe撑开父元素高度.html">iframe撑开父元素高度.html</a></li><li><dl><dt>javascript-pdf</dt><dd><a href="./javascript-pdf/取色器.html">取色器.html</a></dd><dd><a href="./javascript-pdf/打开取色器.html">打开取色器.html</a></dd></dl></li><li><a href="javascript权威指南.html">javascript权威指南.html</a></li><li><a href="javascript高级技巧.html">javascript高级技巧.html</a></li><li><dl><dt>jquery抛物线</dt><dd><a href="./jquery抛物线/demo-1.html">demo-1.html</a></dd><dd><a href="./jquery抛物线/demo-2.html">demo-2.html</a></dd><dd><a href="./jquery抛物线/index.html">index.html</a></dd></dl></li><li><dl><dt>jquery观察者模式</dt><dd><a href="./jquery观察者模式/jq-observable.html">jq-observable.html</a></dd></dl></li><li><a href="js兼容各浏览器placeholder.html">js兼容各浏览器placeholder.html</a></li><li><a href="js动画.html">js动画.html</a></li><li><a href="js常用函数 (2).html">js常用函数 (2).html</a></li><li><a href="js常用函数.html">js常用函数.html</a></li><li><a href="js正弦余弦.html">js正弦余弦.html</a></li><li><dl><dt>js缓动公式</dt><dd><a href="./js缓动公式/js缓动公式.html">js缓动公式.html</a></dd></dl></li><li><dl><dt>Loupe</dt><dd><a href="./Loupe/fashion.html">fashion.html</a></dd></dl></li><li><a href="menu.html">menu.html</a></li><li><a href="MenuAim.html">MenuAim.html</a></li><li><a href="OtherTest.html">OtherTest.html</a></li><li><a href="relatedTarget.html">relatedTarget.html</a></li><li><dl><dt>scrollIntoView</dt><dd><a href="./scrollIntoView/demo.html">demo.html</a></dd></dl></li><li><a href="sublime快捷键.html">sublime快捷键.html</a></li><li><dl><dt>TreeTabs</dt><dd><a href="./TreeTabs/demo.html">demo.html</a></dd></dl></li><li><a href="ul内li不定宽居中.html">ul内li不定宽居中.html</a></li><li><dl><dt>weixin</dt><dd><a href="./weixin/index.html">index.html</a></dd></dl></li><li><dl><dt>Xplaye_Demo</dt><dd><a href="./Xplaye_Demo/Index.html">Index.html</a></dd><dd><a href="./Xplaye_Demo/main.html">main.html</a></dd><dd><a href="./Xplaye_Demo/vertical-align.html">vertical-align.html</a></dd></dl></li><li><dl><dt>zeroclipboard</dt><dd><a href="./zeroclipboard/copy.html">copy.html</a></dd><dd><a href="./zeroclipboard/zclip.html">zclip.html</a></dd></dl></li><li><a href="上下布局.html">上下布局.html</a></li><li><a href="下拉框多选框.html">下拉框多选框.html</a></li><li><a href="乱撞的小球.html">乱撞的小球.html</a></li><li><a href="二,三列及单列自适应布局.html">二,三列及单列自适应布局.html</a></li><li><a href="仿天猫左侧菜单.html">仿天猫左侧菜单.html</a></li><li><dl><dt>仿谷歌图片缩放平移</dt><dd><a href="./仿谷歌图片缩放平移/index.html">index.html</a></dd><dd><a href="./仿谷歌图片缩放平移/index2.html">index2.html</a></dd><dd><a href="./仿谷歌图片缩放平移/index3.html">index3.html</a></dd><dd><a href="./仿谷歌图片缩放平移/readme.html">readme.html</a></dd></dl></li><li><dl><dt>侧边栏过渡效果</dt><dd><a href="./侧边栏过渡效果/index.html">index.html</a></dd></dl></li><li><a href="内容居中显示.html">内容居中显示.html</a></li><li><a href="判断中英字符.html">判断中英字符.html</a></li><li><a href="前端防抖方法.html">前端防抖方法.html</a></li><li><dl><dt>剪贴板</dt><dd><a href="./剪贴板/index.html">index.html</a></dd></dl></li><li><a href="动态生成DOM表格.html">动态生成DOM表格.html</a></li><li><a href="原生ajax请求示例.html">原生ajax请求示例.html</a></li><li><a href="原生cookie.html">原生cookie.html</a></li><li><a href="原生JS.html">原生JS.html</a></li><li><a href="原生拖拽.html">原生拖拽.html</a></li><li><a href="去除内联元素之间的间隙.html">去除内联元素之间的间隙.html</a></li><li><a href="另一个时钟.html">另一个时钟.html</a></li><li><a href="右键菜单.html">右键菜单.html</a></li><li><a href="各种主流浏览器CSS、BUG兼容.html">各种主流浏览器CSS、BUG兼容.html</a></li><li><a href="各种标签.html">各种标签.html</a></li><li><a href="固定表头-test.html">固定表头-test.html</a></li><li><dl><dt>图片左右移动</dt><dd><a href="./图片左右移动/demo.html">demo.html</a></dd><dd><a href="./图片左右移动/self_Demo.html">self_Demo.html</a></dd></dl></li><li><a href="图片放大缩小.html">图片放大缩小.html</a></li><li><dl><dt>图片放大镜</dt><dd><a href="./图片放大镜/index.html">index.html</a></dd></dl></li><li><a href="图片是否加载完成.html">图片是否加载完成.html</a></li><li><a href="图片等比例适应DEMO.html">图片等比例适应DEMO.html</a></li><li><dl><dt>图片组件</dt><dd><a href="./图片组件/图片放大镜-test.html">图片放大镜-test.html</a></dd></dl></li><li><a href="图片自适应按比例缩放.html">图片自适应按比例缩放.html</a></li><li><a href="圆.html">圆.html</a></li><li><a href="圆周运动.html">圆周运动.html</a></li><li><dl><dt>在线编辑器</dt><dd><a href="./在线编辑器/custom.html">custom.html</a></dd></dl></li><li><dl><dt>多级横向半透明菜单</dt><dd><a href="./多级横向半透明菜单/index.html">index.html</a></dd></dl></li><li><a href="太极图.html">太极图.html</a></li><li><a href="对象引用.html">对象引用.html</a></li><li><dl><dt>导航菜单</dt><dd><a href="./导航菜单/index.html">index.html</a></dd></dl></li><li><a href="层上弹层移动.html">层上弹层移动.html</a></li><li><a href="层移动.html">层移动.html</a></li><li><a href="布局上下固定中间自适应.html">布局上下固定中间自适应.html</a></li><li><a href="布局自动高度.html">布局自动高度.html</a></li><li><dl><dt>幻灯片</dt><dd><a href="./幻灯片/demo.html">demo.html</a></dd></dl></li><li><a href="延迟对象应用及物体各方向移动.html">延迟对象应用及物体各方向移动.html</a></li><li><a href="形状样式.html">形状样式.html</a></li><li><a href="手机滑动最优曲线.html">手机滑动最优曲线.html</a></li><li><a href="找出1-10000中随机移除的三个数.html">找出1-10000中随机移除的三个数.html</a></li><li><a href="排序算法.html">排序算法.html</a></li><li><a href="提示消息.html">提示消息.html</a></li><li><dl><dt>数字滚动-LiJin</dt><dd><a href="./数字滚动-LiJin/lijing-test.html">lijing-test.html</a></dd></dl></li><li><a href="文字2种色.html">文字2种色.html</a></li><li><dl><dt>文字动画</dt><dd><a href="./文字动画/test.html">test.html</a></dd></dl></li><li><a href="文本框仿下拉框.html">文本框仿下拉框.html</a></li><li><a href="文本框震动.html">文本框震动.html</a></li><li><a href="时钟.html">时钟.html</a></li><li><a href="根据索引移动.html">根据索引移动.html</a></li><li><a href="检查元素属性存在.html">检查元素属性存在.html</a></li><li><a href="模拟拉取选择框-数字自增.html">模拟拉取选择框-数字自增.html</a></li><li><a href="正则表达式方法.html">正则表达式方法.html</a></li><li><a href="正方形div.html">正方形div.html</a></li><li><a href="水波纹.html">水波纹.html</a></li><li><a href="测试正则.html">测试正则.html</a></li><li><a href="浏览器各尺寸.html">浏览器各尺寸.html</a></li><li><a href="浏览器版本.html">浏览器版本.html</a></li><li><a href="滑块跟随-导航下横条效果.html">滑块跟随-导航下横条效果.html</a></li><li><a href="滤镜使用旋转.html">滤镜使用旋转.html</a></li><li><dl><dt>瀑布流布局</dt><dd><a href="./瀑布流布局/固定列布局.html">固定列布局.html</a></dd><dd><a href="./瀑布流布局/瀑布流极简代码-附放大镜效果.html">瀑布流极简代码-附放大镜效果.html</a></dd></dl></li><li><dl><dt>登录表单</dt><dd><a href="./登录表单/index.html">index.html</a></dd></dl></li><li><a href="百度map.html">百度map.html</a></li><li><dl><dt>碰撞效果</dt><dd><a href="./碰撞效果/demo.html">demo.html</a></dd></dl></li><li><a href="禁止选中文字图片.html">禁止选中文字图片.html</a></li><li><a href="移动轨迹.html">移动轨迹.html</a></li><li><a href="窗口震动-乱撞的小球.html">窗口震动-乱撞的小球.html</a></li><li><a href="背景透明文字不透明.html">背景透明文字不透明.html</a></li><li><a href="获取滚动条宽度.html">获取滚动条宽度.html</a></li><li><dl><dt>视差滚动制作</dt><dd><a href="./视差滚动制作/index.html">index.html</a></dd><dd><a href="./视差滚动制作/带定时图片左右滚动.html">带定时图片左右滚动.html</a></dd><dd><a href="./视差滚动制作/视差滚动图片.html">视差滚动图片.html</a></dd></dl></li><li><dl><dt>访问父窗口</dt><dd><a href="./访问父窗口/child.html">child.html</a></dd><dd><a href="./访问父窗口/parent.html">parent.html</a></dd></dl></li><li><a href="边框阴影效果.html">边框阴影效果.html</a></li><li><dl><dt>选中文字and判断浏览器</dt><dd><a href="./选中文字and判断浏览器/browser.html">browser.html</a></dd></dl></li><li><a href="钩子机制.html">钩子机制.html</a></li><li><a href="闭包与匿名函数.html">闭包与匿名函数.html</a></li><li><a href="阴影层叠.html">阴影层叠.html</a></li><li><a href="需掌握点.html">需掌握点.html</a></li><li><a href="页面中缓存图片.html">页面中缓存图片.html</a></li><li><a href="页面跳转替换后退按钮.html">页面跳转替换后退按钮.html</a></li><li><a href="鼠标拖动层.html">鼠标拖动层.html</a></li></ul>
+		<ul id="menu">
+			<li>
+				<a href="5种css实现垂直水平居中.html">5种css实现垂直水平居中.html</a>
+			</li>
+			<li>
+				<a href="BulidTree.html">BulidTree.html</a>
+			</li>
+			<li>
+				<a href="Canvas绘图.html">Canvas绘图.html</a>
+			</li>
+			<li>
+				<a href="Copy of 前端防抖方法.html">Copy of 前端防抖方法.html</a>
+			</li>
+			<li>
+				<a href="css 绘制三角形圆.html">css 绘制三角形圆.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>CSS3</dt>
+					<dd>
+						<a href="./CSS3/3D旋转.html">3D旋转.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/animation.html">animation.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/css3d立方体旋转.html">css3d立方体旋转.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/css3d立方体顺序旋转.html">css3d立方体顺序旋转.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/css3仿flash扫光效果.html">css3仿flash扫光效果.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/loading.html">loading.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/position.html">position.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/temp.html">temp.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/text-shadow.html">text-shadow.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/transform.html">transform.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/transfrom-origin.html">transfrom-origin.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/translate3d.html">translate3d.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/切割.html">切割.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/接住弹起的小球.html">接住弹起的小球.html</a>
+					</dd>
+					<dd>
+						<a href="./CSS3/渐变.html">渐变.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>CSS3实现跳动小球</dt>
+					<dd>
+						<a href="./CSS3实现跳动小球/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="css制作漂亮彩带导航条菜单.html">css制作漂亮彩带导航条菜单.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>downloadPage</dt>
+					<dd>
+						<a href="./downloadPage/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="form.html">form.html</a>
+			</li>
+			<li>
+				<a href="hasOwnProperty.html">hasOwnProperty.html</a>
+			</li>
+			<li>
+				<a href="helium.html">helium.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>html-css-icon</dt>
+					<dd>
+						<a href="./html-css-icon/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>html5</dt>
+					<dd>
+						<a href="./html5/css3_clock.html">css3_clock.html</a>
+					</dd>
+					<dd>
+						<a href="./html5/html5-canvas-图像变灰.html">html5-canvas-图像变灰.html</a>
+					</dd>
+					<dd>
+						<a href="./html5/html5-canvas-猴子.html">html5-canvas-猴子.html</a>
+					</dd>
+					<dd>
+						<a href="./html5/html5-canvas.html">html5-canvas.html</a>
+					</dd>
+					<dd>
+						<a href="./html5/html5-Canvas飞船.html">html5-Canvas飞船.html</a>
+					</dd>
+					<dd>
+						<a href="./html5/html5-video.html">html5-video.html</a>
+					</dd>
+					<dd>
+						<a href="./html5/html5便签.html">html5便签.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="html各种字符.html">html各种字符.html</a>
+			</li>
+			<li>
+				<a href="html颜色对照表.html">html颜色对照表.html</a>
+			</li>
+			<li>
+				<a href="iframe.html">iframe.html</a>
+			</li>
+			<li>
+				<a href="iframe撑开父元素高度.html">iframe撑开父元素高度.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>javascript-pdf</dt>
+					<dd>
+						<a href="./javascript-pdf/取色器.html">取色器.html</a>
+					</dd>
+					<dd>
+						<a href="./javascript-pdf/打开取色器.html">打开取色器.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="javascript权威指南.html">javascript权威指南.html</a>
+			</li>
+			<li>
+				<a href="javascript高级技巧.html">javascript高级技巧.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>jquery抛物线</dt>
+					<dd>
+						<a href="./jquery抛物线/demo-1.html">demo-1.html</a>
+					</dd>
+					<dd>
+						<a href="./jquery抛物线/demo-2.html">demo-2.html</a>
+					</dd>
+					<dd>
+						<a href="./jquery抛物线/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>jquery观察者模式</dt>
+					<dd>
+						<a href="./jquery观察者模式/jq-observable.html">jq-observable.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="js兼容各浏览器placeholder.html">js兼容各浏览器placeholder.html</a>
+			</li>
+			<li>
+				<a href="js动画.html">js动画.html</a>
+			</li>
+			<li>
+				<a href="js常用函数 (2).html">js常用函数 (2).html</a>
+			</li>
+			<li>
+				<a href="js常用函数.html">js常用函数.html</a>
+			</li>
+			<li>
+				<a href="js正弦余弦.html">js正弦余弦.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>js缓动公式</dt>
+					<dd>
+						<a href="./js缓动公式/js缓动公式.html">js缓动公式.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>Loupe</dt>
+					<dd>
+						<a href="./Loupe/fashion.html">fashion.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="menu.html">menu.html</a>
+			</li>
+			<li>
+				<a href="MenuAim.html">MenuAim.html</a>
+			</li>
+			<li>
+				<a href="OtherTest.html">OtherTest.html</a>
+			</li>
+			<li>
+				<a href="relatedTarget.html">relatedTarget.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>scrollIntoView</dt>
+					<dd>
+						<a href="./scrollIntoView/demo.html">demo.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="sublime快捷键.html">sublime快捷键.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>TreeTabs</dt>
+					<dd>
+						<a href="./TreeTabs/demo.html">demo.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="ul内li不定宽居中.html">ul内li不定宽居中.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>weixin</dt>
+					<dd>
+						<a href="./weixin/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>Xplaye_Demo</dt>
+					<dd>
+						<a href="./Xplaye_Demo/Index.html">Index.html</a>
+					</dd>
+					<dd>
+						<a href="./Xplaye_Demo/main.html">main.html</a>
+					</dd>
+					<dd>
+						<a href="./Xplaye_Demo/vertical-align.html">vertical-align.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>zeroclipboard</dt>
+					<dd>
+						<a href="./zeroclipboard/copy.html">copy.html</a>
+					</dd>
+					<dd>
+						<a href="./zeroclipboard/zclip.html">zclip.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="上下布局.html">上下布局.html</a>
+			</li>
+			<li>
+				<a href="下拉框多选框.html">下拉框多选框.html</a>
+			</li>
+			<li>
+				<a href="乱撞的小球.html">乱撞的小球.html</a>
+			</li>
+			<li>
+				<a href="二,三列及单列自适应布局.html">二,三列及单列自适应布局.html</a>
+			</li>
+			<li>
+				<a href="仿天猫左侧菜单.html">仿天猫左侧菜单.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>仿谷歌图片缩放平移</dt>
+					<dd>
+						<a href="./仿谷歌图片缩放平移/index.html">index.html</a>
+					</dd>
+					<dd>
+						<a href="./仿谷歌图片缩放平移/index2.html">index2.html</a>
+					</dd>
+					<dd>
+						<a href="./仿谷歌图片缩放平移/index3.html">index3.html</a>
+					</dd>
+					<dd>
+						<a href="./仿谷歌图片缩放平移/readme.html">readme.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>侧边栏过渡效果</dt>
+					<dd>
+						<a href="./侧边栏过渡效果/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="内容居中显示.html">内容居中显示.html</a>
+			</li>
+			<li>
+				<a href="判断中英字符.html">判断中英字符.html</a>
+			</li>
+			<li>
+				<a href="前端防抖方法.html">前端防抖方法.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>剪贴板</dt>
+					<dd>
+						<a href="./剪贴板/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="动态生成DOM表格.html">动态生成DOM表格.html</a>
+			</li>
+			<li>
+				<a href="原生ajax请求示例.html">原生ajax请求示例.html</a>
+			</li>
+			<li>
+				<a href="原生cookie.html">原生cookie.html</a>
+			</li>
+			<li>
+				<a href="原生JS.html">原生JS.html</a>
+			</li>
+			<li>
+				<a href="原生拖拽.html">原生拖拽.html</a>
+			</li>
+			<li>
+				<a href="去除内联元素之间的间隙.html">去除内联元素之间的间隙.html</a>
+			</li>
+			<li>
+				<a href="另一个时钟.html">另一个时钟.html</a>
+			</li>
+			<li>
+				<a href="右键菜单.html">右键菜单.html</a>
+			</li>
+			<li>
+				<a href="各种主流浏览器CSS、BUG兼容.html">各种主流浏览器CSS、BUG兼容.html</a>
+			</li>
+			<li>
+				<a href="各种标签.html">各种标签.html</a>
+			</li>
+			<li>
+				<a href="固定表头-test.html">固定表头-test.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>图片左右移动</dt>
+					<dd>
+						<a href="./图片左右移动/demo.html">demo.html</a>
+					</dd>
+					<dd>
+						<a href="./图片左右移动/self_Demo.html">self_Demo.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="图片放大缩小.html">图片放大缩小.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>图片放大镜</dt>
+					<dd>
+						<a href="./图片放大镜/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="图片是否加载完成.html">图片是否加载完成.html</a>
+			</li>
+			<li>
+				<a href="图片等比例适应DEMO.html">图片等比例适应DEMO.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>图片组件</dt>
+					<dd>
+						<a href="./图片组件/图片放大镜-test.html">图片放大镜-test.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="图片自适应按比例缩放.html">图片自适应按比例缩放.html</a>
+			</li>
+			<li>
+				<a href="圆.html">圆.html</a>
+			</li>
+			<li>
+				<a href="圆周运动.html">圆周运动.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>在线编辑器</dt>
+					<dd>
+						<a href="./在线编辑器/custom.html">custom.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>多级横向半透明菜单</dt>
+					<dd>
+						<a href="./多级横向半透明菜单/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="太极图.html">太极图.html</a>
+			</li>
+			<li>
+				<a href="对象引用.html">对象引用.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>导航菜单</dt>
+					<dd>
+						<a href="./导航菜单/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="层上弹层移动.html">层上弹层移动.html</a>
+			</li>
+			<li>
+				<a href="层移动.html">层移动.html</a>
+			</li>
+			<li>
+				<a href="布局上下固定中间自适应.html">布局上下固定中间自适应.html</a>
+			</li>
+			<li>
+				<a href="布局自动高度.html">布局自动高度.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>幻灯片</dt>
+					<dd>
+						<a href="./幻灯片/demo.html">demo.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="延迟对象应用及物体各方向移动.html">延迟对象应用及物体各方向移动.html</a>
+			</li>
+			<li>
+				<a href="形状样式.html">形状样式.html</a>
+			</li>
+			<li>
+				<a href="手机滑动最优曲线.html">手机滑动最优曲线.html</a>
+			</li>
+			<li>
+				<a href="找出1-10000中随机移除的三个数.html">找出1-10000中随机移除的三个数.html</a>
+			</li>
+			<li>
+				<a href="排序算法.html">排序算法.html</a>
+			</li>
+			<li>
+				<a href="提示消息.html">提示消息.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>数字滚动-LiJin</dt>
+					<dd>
+						<a href="./数字滚动-LiJin/lijing-test.html">lijing-test.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="文字2种色.html">文字2种色.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>文字动画</dt>
+					<dd>
+						<a href="./文字动画/test.html">test.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="文本框仿下拉框.html">文本框仿下拉框.html</a>
+			</li>
+			<li>
+				<a href="文本框震动.html">文本框震动.html</a>
+			</li>
+			<li>
+				<a href="时钟.html">时钟.html</a>
+			</li>
+			<li>
+				<a href="根据索引移动.html">根据索引移动.html</a>
+			</li>
+			<li>
+				<a href="检查元素属性存在.html">检查元素属性存在.html</a>
+			</li>
+			<li>
+				<a href="模拟拉取选择框-数字自增.html">模拟拉取选择框-数字自增.html</a>
+			</li>
+			<li>
+				<a href="正则表达式方法.html">正则表达式方法.html</a>
+			</li>
+			<li>
+				<a href="正方形div.html">正方形div.html</a>
+			</li>
+			<li>
+				<a href="水波纹.html">水波纹.html</a>
+			</li>
+			<li>
+				<a href="测试正则.html">测试正则.html</a>
+			</li>
+			<li>
+				<a href="浏览器各尺寸.html">浏览器各尺寸.html</a>
+			</li>
+			<li>
+				<a href="浏览器版本.html">浏览器版本.html</a>
+			</li>
+			<li>
+				<a href="滑块跟随-导航下横条效果.html">滑块跟随-导航下横条效果.html</a>
+			</li>
+			<li>
+				<a href="滤镜使用旋转.html">滤镜使用旋转.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>瀑布流布局</dt>
+					<dd>
+						<a href="./瀑布流布局/固定列布局.html">固定列布局.html</a>
+					</dd>
+					<dd>
+						<a href="./瀑布流布局/瀑布流极简代码-附放大镜效果.html">瀑布流极简代码-附放大镜效果.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>登录表单</dt>
+					<dd>
+						<a href="./登录表单/index.html">index.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="百度map.html">百度map.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>碰撞效果</dt>
+					<dd>
+						<a href="./碰撞效果/demo.html">demo.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="禁止选中文字图片.html">禁止选中文字图片.html</a>
+			</li>
+			<li>
+				<a href="移动轨迹.html">移动轨迹.html</a>
+			</li>
+			<li>
+				<a href="窗口震动-乱撞的小球.html">窗口震动-乱撞的小球.html</a>
+			</li>
+			<li>
+				<a href="背景透明文字不透明.html">背景透明文字不透明.html</a>
+			</li>
+			<li>
+				<a href="获取滚动条宽度.html">获取滚动条宽度.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>视差滚动制作</dt>
+					<dd>
+						<a href="./视差滚动制作/index.html">index.html</a>
+					</dd>
+					<dd>
+						<a href="./视差滚动制作/带定时图片左右滚动.html">带定时图片左右滚动.html</a>
+					</dd>
+					<dd>
+						<a href="./视差滚动制作/视差滚动图片.html">视差滚动图片.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt>访问父窗口</dt>
+					<dd>
+						<a href="./访问父窗口/child.html">child.html</a>
+					</dd>
+					<dd>
+						<a href="./访问父窗口/parent.html">parent.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="边框阴影效果.html">边框阴影效果.html</a>
+			</li>
+			<li>
+				<dl>
+					<dt>选中文字and判断浏览器</dt>
+					<dd>
+						<a href="./选中文字and判断浏览器/browser.html">browser.html</a>
+					</dd>
+				</dl>
+			</li>
+			<li>
+				<a href="钩子机制.html">钩子机制.html</a>
+			</li>
+			<li>
+				<a href="闭包与匿名函数.html">闭包与匿名函数.html</a>
+			</li>
+			<li>
+				<a href="阴影层叠.html">阴影层叠.html</a>
+			</li>
+			<li>
+				<a href="需掌握点.html">需掌握点.html</a>
+			</li>
+			<li>
+				<a href="页面中缓存图片.html">页面中缓存图片.html</a>
+			</li>
+			<li>
+				<a href="页面跳转替换后退按钮.html">页面跳转替换后退按钮.html</a>
+			</li>
+			<li>
+				<a href="鼠标拖动层.html">鼠标拖动层.html</a>
+			</li>
+		</ul>
 	</nav>
 	<fieldset id="page_view" class="fieldset">
 		<legend>页面展示</legend>

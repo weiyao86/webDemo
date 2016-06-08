@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hotpoint</title>
+	<link rel="stylesheet" href="css.css">
+	<script src='lib/require.js'>
+	</script>
+	<script>
+		 require.config({
+		 	baseUrl: 'http://localhost/WebTest/hotpoint-demo/',
+		 	waitSeconds: 30,
+		 	paths: {
+		 		jquery: 'lib/jquery-1.9.0.min.js',
+		 		hotpoint: 'hot/js/hotpoint.js',
+		 		domReady: 'lib/domReady.js',
+
+		 		text: 'lib/text.js',
+		 		normalize: 'lib/normalize.js',
+		 		jsDraw2D: 'lib/jsDraw2D.js',
+		 		scrollIntoView: 'lib/jquery.scrollIntoView.min.js',
+		 		mousewheel: 'lib/jquery.mousewheel.js',
+		 		blockUI: 'lib/blockUI.js'
+		 	},
+		 	shim: {
+		 		hotpoint: ['jquery'],
+		 		scrollIntoView: ['jquery']
+		 	}
+		 });
+
+	</script>
+</head>
+<body>
+<div class="wrap" id="legend_wrap">
+</div>
+<input id="legend_path" type="hidden" value="">
+<script src="index.js"></script>
+</body>
+</html>

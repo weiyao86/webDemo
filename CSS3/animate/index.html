@@ -140,6 +140,12 @@
   };
 
   $(document).ready(function(){
+    var t= $('.js--animations').find("option"),ret=[];
+    t.get().forEach(function(key,idx){
+      ret.push("'"+key.value+"'");
+    });
+    console.log(ret.join(','));
+
     $('.js--triggerAnimation').click(function(e){
       e.preventDefault();
       var anim = $('.js--animations').val();

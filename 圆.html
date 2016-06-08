@@ -16,11 +16,11 @@
       <script>
             $(function() {
                   var canvasDiv=$("#wrap")[0];
-                  // drawEllipseSingle({
-                  //       width:5
-                  // },{
-                  //       x:500,y:200
-                  // },100,100);
+                  drawEllipseSingle({
+                        width:1
+                  },{
+                        x:500,y:200
+                  },100,300);
                   function drawEllipseSingle(pen, center, width, height) {
                         //Check arguments for null values
                         if (!pen || !center || !width || !height)
@@ -116,7 +116,7 @@
 
                   //定义圆心
                   var docFrame = document.createDocumentFragment();
-                  var a = 500,
+                  var a = 900,
                         b = 300,
                         r = 50,
                         x, y, pw = 2;
@@ -136,11 +136,11 @@
                         console.log([x1, y1].join('---'));
                         docFrame.appendChild(point);
                   }
-                  $("body").append(docFrame);
+                 $("body").append(docFrame);
             });
       </script>
 </head>
 <body>
-      <div id="wrap" class="wrap"></div>
+      <div id="wrap" class="wrap">我是圆圆</div>
 </body>
 </html>
