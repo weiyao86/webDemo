@@ -25,14 +25,14 @@
 	.front{display:inline-block; border-width: 20px 0 20px 20px;border-style: solid;border-color: transparent transparent transparent #88f;transition:all .3s;}
 	.front:hover{border-left-color: #3456df;}
 	.rear:hover{border-right-color:#ffd;}
-	.rotate{transform:rotate(180deg);}
+	.rotate{-webkit-transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg);}
 
 
 	.wrap-fixed{position:absolute;width:100%;height:100%;}
 	
 	.nav-menu{position:relative;width:20%;height:100%; float:left;transition:width .3s;overflow:auto;}
 	
-	.nav-menu ul{width:90%;border:1px solid #3498DB;margin:0 auto;padding:20px 0;}
+	.nav-menu ul{width:96%;border:1px solid #3498DB;margin:0 auto;padding:20px 0;}
 	.nav-menu ul li{list-style:none;font-size:14px;line-height:30px;transition:background .3s;}
 	.nav-menu ul li a{display:block;padding-left:20px;word-wrap:break-word;}
 	.nav-menu ul li a:hover,.selected{background:#ccc;transition:background .3s;color:#fff;}
@@ -105,12 +105,10 @@
 						this.contentWindow ? this.contentWindow.document.body : null;
 
 					var sh = ibody && (ibody.scrollHeight);
-					sh = Math.max(0, $pageView.height(), sh);
+					sh = Math.max(0, $pageView.height()-4, sh);
+
 					$pageFrame.height(sh).show();
 
-
-					//子窗口禁用滚动条
-					ibody.style.overflow = 'hidden';
 					var random = Math.floor(Math.random() * (animateList.length - 1));
 					$pageView.removeClass(function() {
 						return $(this).attr("class").replace('fieldset', '');
