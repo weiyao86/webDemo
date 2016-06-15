@@ -112,8 +112,8 @@
 				move: function(evt, objs) {
 
 					var ratio = objs.disX / (operatorW),
-						hw = $wrapInner.width() / $img.width() * operatorW, //operatorW * (1 - ratio),
-						hh = $wrapInner.height() / $img.height() * operatorH, //operatorH * (1 - ratio),
+						hw = $wrapInner.width() / globalRatioX, //operatorW * (1 - ratio),
+						hh = $wrapInner.height() / globalRatioY, //operatorH * (1 - ratio),
 						ht = $snapHandle.position().top,
 						hl = $snapHandle.position().left;
 
@@ -160,6 +160,8 @@
 		});
 
 		var setSnapSize = function(val) {
+			val.width = $wrapInner.width();
+			val.height = $wrapInner.height();
 			globalRatioX = val.width / operatorW;
 			globalRatioY = val.height / operatorH;
 			$snapHandle.css({
@@ -167,7 +169,6 @@
 				width: $wrapInner.width() / globalRatioX, // operatorW,  TODO
 				height: $wrapInner.height() / globalRatioY //operatorH //
 			});
-
 
 
 			var $slideParent = $slidebar.parent();
