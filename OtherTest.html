@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+
     <script>
+    $(function(){
+        var c=0;
+        $("#demo1").on({
+            "mousemove.drag":function(){console.log(c++);},
+            "mouseup.drag":function(e){$("#demo1").off(".drag");},
+        })
+    })
     var arr = [4,6,454,86,9,78,90,3,1,5,43,21];
 
     function quicksort(arr){
