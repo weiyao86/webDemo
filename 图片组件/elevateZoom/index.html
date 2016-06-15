@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<title>电商网站jQuery放大镜代码 - xw素材网</title>
+	<script src='js/jquery-1.8.3.min.js'></script>
+	<script src='js/jquery.elevatezoom.js'></script>
+	<style>
+*{margin:0;padding:0;}
+body{padding:20px;}
+</style>
+</head>
+<body>
+	<center>
+		<h1>Basic Zoom Example</h1>
+		<img id="zoom_01" src='images/small/image1.png' data-zoom-image="images/large/image1.jpg"/>
+		<br/>
+		<br/>
+		<br/>
+		<h1>Inner Zoom</h1>
+		<img id="zoom_02" src='images/small/image1.png' data-zoom-image="images/large/image1.jpg"/>
+		<br/>
+		<br/>
+		<br/>
+		<h1>Lens Zoom</h1>
+		<img id="zoom_03" src='images/small/image1.png' data-zoom-image="images/large/image1.jpg"/>
+		<br/>
+		<br/>
+		<br/>
+		<h1>Fade in / Fade Out Settings</h1>
+		<img id="zoom_04" src='images/small/image1.png' data-zoom-image="images/large/image1.jpg"/>
+		<br/>
+		<br/>
+		<br/>
+		<h1>Easing</h1>
+		<img id="zoom_05" src='images/small/image1.png' data-zoom-image="images/large/image1.jpg"/>
+		<br/>
+		<br/>
+		<br/>
+		<h1>Mousewheel Zoom</h1>
+		<img id="zoom_06" src='images/small/image1.png' data-zoom-image="images/large/image1.jpg"/>
+	</center>
+	<script>
+$('#zoom_01').elevateZoom({}); 
+$('#zoom_02').elevateZoom({
+	zoomType: "inner",
+	cursor: "crosshair",
+	zoomWindowFadeIn: 500,
+	zoomWindowFadeOut: 750
+}); 
+$("#zoom_03").elevateZoom({
+	zoomType:"lens",
+	lensShape : "round",
+	lensSize : 200
+});
+$("#zoom_04").elevateZoom({
+	zoomWindowFadeIn:500,
+	zoomWindowFadeOut:500,
+	lensFadeIn: 500,
+	lensFadeOut:500
+});
+$("#zoom_05").elevateZoom({
+	easing : true
+});
+$("#zoom_06").elevateZoom({
+	scrollZoom:true
+});
+</script>
+	<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+		<p>
+			适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。
+		</p>
+		<p>
+			来源：
+			<a href="http://www.xwcms.net/" target="_blank">xw素材网</a>
+		</p>
+	</div>
+</body>
+</html>

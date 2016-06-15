@@ -8,8 +8,8 @@
 
 	var defaults = {
 			ratio: 1.1,
-			maxRatio: Math.pow(1.1, 10), //最大可放大N倍
-			minRatio: Math.pow(1.1, 10),//最大可缩小N倍
+			maxRatio: Math.pow(1.1, 100), //最大可放大N倍
+			minRatio: Math.pow(1.1, 100), //最大可缩小N倍
 			wrap: 'wrap',
 			wrapInner: 'wrap_inner',
 			up: 'up',
@@ -21,9 +21,9 @@
 			height: 0,
 			left: 0,
 			top: 0,
-			onceset: true
+			onceset: false
 		};
-
+	var cc = 0;
 	$.Zoom = function(opts, callback) {
 		var opts = $.extend({}, defaults, opts);
 		var $wrap = $("#" + opts.wrap),
@@ -40,14 +40,17 @@
 			wrapInnerLeft = $wrapInner.offset().left,
 			wrapInnerTop = $wrapInner.offset().top,
 			$img = $wrapInner.children(),
-			operatorW = $operator.width(),
-			operatorH = $operator.height(),
+			operatorW = $operator.innerWidth(),
+			operatorH = $operator.innerHeight(),
 			globalRatioX, globalRatioY,
 			iw, ih, rw, rh, it, il, dir;
 
 		$img.on("mousewheel", function(e) {
-			zoomImg(e.deltaY, e);
-			//console.log($img.width());
+			if (originAttr.onceset) {
+				zoomImg(e.deltaY, e);
+			} else {
+				alert("高清图还未准备好");
+			}
 		});
 
 		// $img.on({
@@ -86,58 +89,108 @@
 		});
 
 		$snapHandle.on("mousedown", function(e) {
+			e.preventDefault();
 			drag(this, $operator, e, {
 				move: function(evt, objs) {
-
 					$img.css({
-						left: objs.disX * -globalRatioX - 2,
-						top: objs.disY * -globalRatioY - 2
+						left: objs.disX * -globalRatioX,
+						top: objs.disY * -globalRatioY
 					});
 				}
 			});
-			e.preventDefault();
+
 		});
-		var dir,
-			dirNum;
+
 		$slidebar.on("mousedown", function(e) {
+			if (!originAttr.onceset) {
+				return alert("高清图还未准备好");
+			}
+			e.preventDefault();
+
 
 			drag(this, $(this).parent(), e, {
 				move: function(evt, objs) {
-					var ratio = objs.disX / (operatorW);
+
+					// var w = $snapHandle.width(),
+					// 	h = $snapHandle.height(),
+					// 	nw = w / $img.width(),
+					// 	nh = h / $img.height(),
+					// 	r = 1;
+
+					// if (nw < 1 || nh < 1) {
+					// 	r = nw > nh ? nh : nw;
+					// }
+					// var wr = h / w;
+
+					var ratio = objs.disX / (operatorW),
+						hw = operatorW * (1 - ratio),
+						hh = operatorH * (1 - ratio),
+						ht = $snapHandle.position().top,
+						hl = $snapHandle.position().left;
+					//$("#test").html(hw + '===' + h);
+
+					if (hw + hl >= operatorW) {
+						hl = operatorW - hw;
+					}
+					if (hh + ht >= operatorH) {
+						ht = operatorH - hh;
+					}
+
 
 					$snapHandle.css({
-						width: operatorW - operatorW * ratio - 2,
-						height: operatorH - operatorH * ratio - 2
+						top: ht,
+						left: hl,
+						width: hw - 2,
+						height: hh - 2
 					});
+					//$("#test").html(hw);
 
-					if (dir) {
+					if (ratio) {
+						var iw = originAttr.width + originAttr.width * ratio,
+							ih = originAttr.height + originAttr.height * ratio,
+							it = ht * -globalRatioY,
+							il = hl * -globalRatioX;
 
-						if (objs.disX > dir)
-							dirNum = 1;
-						else {
-							dirNum = -1;
-						}
-						dir > 0 && objs.moveDisX < operatorW && (zoomImg(dirNum), console.log(dirNum + '==='));
-						$("#test").html(objs.disX + '====================' + dirNum);
+						$img.css({
+							width: iw,
+							height: ih,
+							left: il,
+							top: it
+						});
+						globalRatioX = iw / operatorW;
+						globalRatioY = ih / operatorH;
+						var str = "ow:---" + originAttr.width + "oh:---" + originAttr.height + "iw:--" + iw + "ih:--" + ih + "it:--" + it + "il:--" + il + "hl:--" + hl;
+						str = (hw / nw) + '====' + (originAttr.width + originAttr.width * ratio);
+						$("#test").html(iw);
 					}
-					dir = objs.disX;
 				}
 			});
-			e.preventDefault();
+
 		});
 
 		var setSnapSize = function(val) {
 			globalRatioX = val.width / operatorW;
 			globalRatioY = val.height / operatorH;
 			$snapHandle.css({
-				width: operatorW - 2,
-				height: operatorH - 2 // / globalRatioX
+				//TODO
+				width: $wrapInner.width() / globalRatioX, // operatorW,  TODO
+				height: $wrapInner.height() / globalRatioY //operatorH //
 			});
+
+
 
 			var $slideParent = $slidebar.parent();
 			$slidebar.css({
 				width: $slideParent.width() / globalRatioX
 			});
+
+			if (val.width) {
+				originAttr.top = parseFloat($img.css("top"));
+				originAttr.left = parseFloat($img.css("left"));
+				originAttr.width = val.width;
+				originAttr.height = val.height;
+				originAttr.onceset = true;
+			}
 
 		};
 
@@ -163,13 +216,7 @@
 			ih = $img.height();
 			it = parseFloat($img.css("top"));
 			il = parseFloat($img.css("left"));
-			if (originAttr.onceset) {
-				originAttr.top = it;
-				originAttr.left = il;
-				originAttr.width = iw;
-				originAttr.height = ih;
-				originAttr.onceset = false;
-			}
+
 			if (dir > 0) {
 				rw = iw * opts.ratio;
 				rh = ih * opts.ratio;
@@ -180,7 +227,7 @@
 				percent = originAttr.width / rw;
 			}
 
-			console.log(percent +'---------'+ opts.maxRatio +'---------'+ opts.minRatio);
+			console.log(percent + '---------' + opts.maxRatio + '---------' + opts.minRatio);
 			if (percent > opts.maxRatio || percent > opts.minRatio) return;
 
 			if (e && e.pageX) {
@@ -239,7 +286,7 @@
 						top: moveDisY,
 						left: moveDisX
 					});
-					if (callback && typeof callback.move) {
+					if (callback && typeof callback.move == "function") {
 						callback.move.call(null, evt, {
 							moveDisX: moveDisX + $target.width(),
 							moveDisY: moveDisY + $target.height(),
@@ -248,6 +295,7 @@
 						});
 					}
 
+					console.log(cc++)
 					evt.preventDefault();
 				},
 				"mouseup.drag": function(e) {
