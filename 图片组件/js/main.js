@@ -7,9 +7,9 @@
 })(function($) {
 
 	var defaults = {
-			ratio: 1.1,
-			maxRatio: Math.pow(1.1, 100), //最大可放大N倍
-			minRatio: Math.pow(1.1, 100), //最大可缩小N倍
+			ratio: 1.05,
+			maxRatio: Math.pow(1.05, 100), //最大可放大N倍
+			minRatio: Math.pow(1.05, 100), //最大可缩小N倍
 			wrap: 'wrap',
 			wrapInner: 'wrap_inner',
 			up: 'up',
@@ -23,7 +23,7 @@
 			top: 0,
 			onceset: false
 		};
-	var cc = 0;
+	var gratio = 0;
 	$.Zoom = function(opts, callback) {
 		var opts = $.extend({}, defaults, opts);
 		var $wrap = $("#" + opts.wrap),
@@ -111,37 +111,28 @@
 			drag(this, $(this).parent(), e, {
 				move: function(evt, objs) {
 
-					// var w = $snapHandle.width(),
-					// 	h = $snapHandle.height(),
-					// 	nw = w / $img.width(),
-					// 	nh = h / $img.height(),
-					// 	r = 1;
-
-					// if (nw < 1 || nh < 1) {
-					// 	r = nw > nh ? nh : nw;
-					// }
-					// var wr = h / w;
-
 					var ratio = objs.disX / (operatorW),
-						hw = operatorW * (1 - ratio),
-						hh = operatorH * (1 - ratio),
+						hw = $wrapInner.width() / $img.width() * operatorW, //operatorW * (1 - ratio),
+						hh = $wrapInner.height() / $img.height() * operatorH, //operatorH * (1 - ratio),
 						ht = $snapHandle.position().top,
 						hl = $snapHandle.position().left;
-					//$("#test").html(hw + '===' + h);
 
-					if (hw + hl >= operatorW) {
-						hl = operatorW - hw;
-					}
-					if (hh + ht >= operatorH) {
-						ht = operatorH - hh;
-					}
+					// if (hw + hl >= operatorW) {
+					// 	hl = operatorW - hw;
+					// }
+					// if (hh + ht >= operatorH) {
+					// 	ht = operatorH - hh;
+					// }
+
+					var newLeft = (operatorW - hw) / 2,
+						newTop = (operatorH - hh) / 2;
 
 
 					$snapHandle.css({
-						top: ht,
-						left: hl,
-						width: hw - 2,
-						height: hh - 2
+						top: newTop,
+						left: newLeft,
+						width: hw,
+						height: hh
 					});
 					//$("#test").html(hw);
 
