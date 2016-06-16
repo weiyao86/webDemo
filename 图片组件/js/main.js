@@ -99,13 +99,15 @@
 			e.preventDefault();
 			drag(this, $operator, e, {
 				move: function(evt, objs) {
+					var iw = originAttr.width * opts.zoomValue / 100,
+						ih = originAttr.height * opts.zoomValue / 100;
+
 					$img.css({
-						left: objs.disX * -globalRatioX,
-						top: objs.disY * -globalRatioY
+						left: -objs.disX / operatorW * iw,
+						top: -objs.disY / operatorH * ih
 					});
 				}
 			});
-
 		});
 
 		$slidebar.on("mousedown", function(e) {
@@ -114,75 +116,103 @@
 			}
 			e.preventDefault();
 
-			var point = {
+			drag(this, $(this).parent(), e, {
+				move: function(evt, objs) {
+
+					//大图的缩放根据滑块移动距离的
+					var disbar = objs.disX / (operatorW - $slidebar.width()),
+						perc = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * disbar;
+
+					zoomView(perc);
+				}
+			});
+		});
+
+
+		function zoomView(perc, point) {
+			var point = point || {
 				x: containerDim.w / 2,
 				y: containerDim.h / 2
 			};
 
-			drag(this, $(this).parent(), e, {
-				move: function(evt, objs) {
+			var ratio = perc / 100,
 
+				newWidth = originAttr.width * ratio,
+				newHeight = originAttr.height * ratio,
+				//根据坐标居中 
+				// pos = $img.position(),
+				// w = $img.width(),
+				// h = $img.height(),
+				// newLeft = point.x - (point.x - pos.left) / w * newWidth,
+				// newTop = point.y - (point.y - pos.top) / h * newHeight;
 
-					//大图的缩放根据滑块移动距离的
-					var disbar = objs.disX / (operatorW - $slidebar.width());
-					var t = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * disbar;
-					var ratio = t / 100,
-						pos = $img.position(),
-						iw = originAttr.width,
-						ih = originAttr.height,
-						newWidth = iw * ratio,
-						newHeight = ih * ratio,
-						//根据坐标居中 
-						// newLeft = point.x - (point.x / iw) * newWidth,
-						// newTop = point.y - (point.y / ih) * newHeight;
-						newLeft = -((point.x - pos.left) * t / opts.zoomValue - point.x),
-						newTop = -((point.y - pos.top) * t / opts.zoomValue - point.y);
-					//若无固定坐标时默认居中
-					// newLeft = (containerDim.w - newWidth) / 2,
-					// newTop = (containerDim.h - newHeight) / 2 
+				newLeft = -((point.x - pos.left) * perc / opts.zoomValue - point.x),
+				newTop = -((point.y - pos.top) * perc / opts.zoomValue - point.y);
+			//若无固定坐标时默认居中
+			// newLeft = (containerDim.w - newWidth) / 2,
+			// newTop = (containerDim.h - newHeight) / 2
 
-					$img.css({
-						width: newWidth,
-						height: newHeight,
-						left: newLeft,
-						top: newTop
-					});
-					$("#test").html("--height:" + newHeight + "--ratio:" + ratio + "--top:" + newTop);
-					opts.zoomValue = t;
-					return;
+			// if (perc < 120) {
+			// 	newLeft = (containerDim.w - newWidth) / 2;
+			// 	newTop = (containerDim.h - newHeight) / 2;
+			// }
+			// 
 
-
-					// globalRatioX = $img.width() / operatorW;
-					// globalRatioY = $img.height() / operatorH;
-
-
-					// var ratio = objs.disX / operatorW,
-					// 	hw = containerDim.w / globalRatioX, //operatorW * (1 - ratio),
-					// 	hh = containerDim.h / globalRatioY, //operatorH * (1 - ratio),
-					// 	ht = $snapHandle.position().top,
-					// 	hl = $snapHandle.position().left;
-
-					// //hw = iw > ih ? containerDim.w / globalRatioX : iw * containerDim.w / globalRatioX / ih;
-					// //hh = ih > iw ? containerDim.h / globalRatioY : ih * containerDim.h / globalRatioY / iw;
-
-
-					// var newLeft = (operatorW - hw) / 2,
-					// 	newTop = (operatorH - hh) / 2;
-
-					// $("#test").html(hw);
-					// $snapHandle.css({
-					// 	top: newTop,
-					// 	left: newLeft,
-					// 	width: hw,
-					// 	height: hh
-					// });
-
-
-
-				}
+			$img.css({
+				width: newWidth,
+				height: newHeight,
+				left: newLeft,
+				top: newTop
 			});
 
-		});
+
+			// resizeHandler();
+			resizeHandler(newWidth, newHeight, newLeft, newTop);
+			opts.zoomValue = perc;
+		}
+
+		var resizeHandler = function(iWidth, iHeight, iLeft, iTop) {
+			var iw = iWidth || originAttr.width * opts.zoomValue / 100,
+				ih = iHeight || originAttr.height * opts.zoomValue / 100,
+				hw = Math.min(containerDim.w / iw * 100, 100), //operatorW * (1 - ratio),
+				hh = Math.min(containerDim.h / ih * 100, 100), //operatorH * (1 - ratio),
+				hl = Math.max(-(iLeft || parseFloat($img.css("left"))) / iw * 100, 0),
+				ht = Math.max(-(iTop || parseFloat($img.css("top"))) / ih * 100, 0);
+
+			// $("#test").html(iLeft);
+			// if (hw + hl > 100) {
+			// 	hl = 100 - hw;
+			// 	iLeft = -hl * iw / 100;
+
+			// 	//updateImgView(iLeft, iTop);
+			// }
+			// if (hh + ht > 100) {
+			// 	ht = 100 - hh;
+			// 	iTop = -ht * ih / 100;
+			// 	//updateImgView(iLeft, iTop);
+			// }
+
+			$snapHandle.css({
+				top: ht + '%',
+				left: hl + '%',
+				width: hw + '%',
+				height: hh + '%'
+			});
+			// var s = (iWidth + iLeft) + '====' + (hw + '--' + hl);
+			// $("#test").html(s);
+		}
+
+		//更新View的值
+		function updateImgView(iLeft, iTop) {
+			$img.css({
+				left: iLeft,
+				top: iTop
+			});
+		}
+
+		function resetZoom() {
+			opts.zoomValue = 100;
+		}
 
 		var setSnapSize = function(val) {
 
@@ -292,8 +322,8 @@
 					top: e.pageY - $target.position().top,
 					left: e.pageX - $target.position().left
 				},
-				maxX = $parent.width() - $target.outerWidth(),
-				maxY = $parent.height() - $target.outerHeight();
+				maxX = $parent.width() - $target.width(),
+				maxY = $parent.height() - $target.height();
 			if (window.attachEvent) {
 				$target.one('selectstart', function() {
 					return false;
