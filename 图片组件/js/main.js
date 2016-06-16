@@ -7,9 +7,12 @@
 })(function($) {
 
 	var defaults = {
-			ratio: 1.05,
-			maxRatio: Math.pow(1.05, 100), //最大可放大N倍
-			minRatio: Math.pow(1.05, 100), //最大可缩小N倍
+			ratio: 1.1,
+			maxRatio: Math.pow(1.1, 20), //最大可放大N倍
+			minRatio: Math.pow(1.1, 20), //最大可缩小N倍
+			zoomValue: 100,
+			zoomMax: 500,
+			zoomMin: 100,
 			wrap: 'wrap',
 			wrapInner: 'wrap_inner',
 			up: 'up',
@@ -40,6 +43,10 @@
 			wrapInnerLeft = $wrapInner.offset().left,
 			wrapInnerTop = $wrapInner.offset().top,
 			$img = $wrapInner.children(),
+			containerDim = {
+				w: $wrapInner.width(),
+				h: $wrapInner.height()
+			},
 			operatorW = $operator.innerWidth(),
 			operatorH = $operator.innerHeight(),
 			globalRatioX, globalRatioY,
@@ -107,81 +114,115 @@
 			}
 			e.preventDefault();
 
+			var point = {
+				x: containerDim.w / 2,
+				y: containerDim.h / 2
+			};
 
 			drag(this, $(this).parent(), e, {
 				move: function(evt, objs) {
 
-					var ratio = objs.disX / (operatorW),
-						hw = $wrapInner.width() / globalRatioX, //operatorW * (1 - ratio),
-						hh = $wrapInner.height() / globalRatioY, //operatorH * (1 - ratio),
-						ht = $snapHandle.position().top,
-						hl = $snapHandle.position().left;
 
-					// if (hw + hl >= operatorW) {
-					// 	hl = operatorW - hw;
-					// }
-					// if (hh + ht >= operatorH) {
-					// 	ht = operatorH - hh;
-					// }
+					//大图的缩放根据滑块移动距离的
+					var disbar = objs.disX / (operatorW - $slidebar.width());
+					var t = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * disbar;
+					var ratio = t / 100,
+						pos = $img.position(),
+						iw = originAttr.width,
+						ih = originAttr.height,
+						newWidth = iw * ratio,
+						newHeight = ih * ratio,
+						//根据坐标居中 
+						// newLeft = point.x - (point.x / iw) * newWidth,
+						// newTop = point.y - (point.y / ih) * newHeight;
+						newLeft = -((point.x - pos.left) * t / opts.zoomValue - point.x),
+						newTop = -((point.y - pos.top) * t / opts.zoomValue - point.y);
+					//若无固定坐标时默认居中
+					// newLeft = (containerDim.w - newWidth) / 2,
+					// newTop = (containerDim.h - newHeight) / 2 
 
-					var newLeft = (operatorW - hw) / 2,
-						newTop = (operatorH - hh) / 2;
-
-
-					$snapHandle.css({
-						top: newTop,
+					$img.css({
+						width: newWidth,
+						height: newHeight,
 						left: newLeft,
-						width: hw,
-						height: hh
+						top: newTop
 					});
-					//$("#test").html(hw);
+					$("#test").html("--height:" + newHeight + "--ratio:" + ratio + "--top:" + newTop);
+					opts.zoomValue = t;
+					return;
 
-					if (ratio) {
-						var iw = originAttr.width + originAttr.width * ratio,
-							ih = originAttr.height + originAttr.height * ratio,
-							it = ht * -globalRatioY,
-							il = hl * -globalRatioX;
 
-						$img.css({
-							width: iw,
-							height: ih,
-							left: il,
-							top: it
-						});
-						globalRatioX = iw / operatorW;
-						globalRatioY = ih / operatorH;
-						var str = "ow:---" + originAttr.width + "oh:---" + originAttr.height + "iw:--" + iw + "ih:--" + ih + "it:--" + it + "il:--" + il + "hl:--" + hl;
-						str = (hw / nw) + '====' + (originAttr.width + originAttr.width * ratio);
-						$("#test").html(iw);
-					}
+					// globalRatioX = $img.width() / operatorW;
+					// globalRatioY = $img.height() / operatorH;
+
+
+					// var ratio = objs.disX / operatorW,
+					// 	hw = containerDim.w / globalRatioX, //operatorW * (1 - ratio),
+					// 	hh = containerDim.h / globalRatioY, //operatorH * (1 - ratio),
+					// 	ht = $snapHandle.position().top,
+					// 	hl = $snapHandle.position().left;
+
+					// //hw = iw > ih ? containerDim.w / globalRatioX : iw * containerDim.w / globalRatioX / ih;
+					// //hh = ih > iw ? containerDim.h / globalRatioY : ih * containerDim.h / globalRatioY / iw;
+
+
+					// var newLeft = (operatorW - hw) / 2,
+					// 	newTop = (operatorH - hh) / 2;
+
+					// $("#test").html(hw);
+					// $snapHandle.css({
+					// 	top: newTop,
+					// 	left: newLeft,
+					// 	width: hw,
+					// 	height: hh
+					// });
+
+
+
 				}
 			});
 
 		});
 
 		var setSnapSize = function(val) {
-			val.width = $wrapInner.width();
-			val.height = $wrapInner.height();
-			globalRatioX = val.width / operatorW;
-			globalRatioY = val.height / operatorH;
+
+			var imgWidth, imgHeight, iratio = val.width / val.height;
+			imgWidth = iratio * operatorH > operatorW ? operatorW : iratio * operatorH;
+			imgHeight = imgWidth / iratio;
+
+			//初始化小框内图片的自适应
+			$operator.children('img').css({
+				width: imgWidth,
+				height: imgHeight
+			});
+
+			// globalRatioX = val.width / operatorW;
+			// globalRatioY = val.height / operatorH;
+			//初始化小框尺寸
 			$snapHandle.css({
 				//TODO
-				width: $wrapInner.width() / globalRatioX, // operatorW,  TODO
-				height: $wrapInner.height() / globalRatioY //operatorH //
+				width: imgWidth, // containerDim.w / globalRatioX, // operatorW,
+				height: imgHeight // containerDim.h / globalRatioY //operatorH //
 			});
 
-
+			//初始化滑块尺寸
 			var $slideParent = $slidebar.parent();
-			$slidebar.css({
-				width: $slideParent.width() / globalRatioX
-			});
+			// $slidebar.css({
+			// 	width: $slideParent.width() / 20 // globalRatioX
+			// });
 
+			//保存图片初始参数
 			if (val.width) {
 				originAttr.top = parseFloat($img.css("top"));
 				originAttr.left = parseFloat($img.css("left"));
-				originAttr.width = val.width;
-				originAttr.height = val.height;
+				originAttr.width = iratio * containerDim.h > containerDim.w ? containerDim.w : iratio * containerDim.h; // val.width;
+				originAttr.height = originAttr.width / iratio;
 				originAttr.onceset = true;
+
+				$img.css({
+					width: originAttr.width,
+					height: originAttr.height
+				});
 			}
 
 		};
@@ -220,7 +261,10 @@
 			}
 
 			console.log(percent + '---------' + opts.maxRatio + '---------' + opts.minRatio);
+
 			if (percent > opts.maxRatio || percent > opts.minRatio) return;
+
+
 
 			if (e && e.pageX) {
 				var dirL = e.pageX - wrapInnerLeft;
@@ -230,8 +274,8 @@
 				il = dirL - rw * proprtionX;
 				it = dirT - rh * proprtionY;
 			} else {
-				il = ($wrapInner.width() - rw) / 2;
-				it = ($wrapInner.height() - rh) / 2;
+				il = (containerDim.w - rw) / 2;
+				it = (containerDim.h - rh) / 2;
 			}
 
 			$img.css({
@@ -287,7 +331,6 @@
 						});
 					}
 
-					console.log(cc++)
 					evt.preventDefault();
 				},
 				"mouseup.drag": function(e) {
