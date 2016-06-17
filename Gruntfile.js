@@ -1,4 +1,12 @@
 ﻿module.exports = function(grunt) {
+
+	//临时要使用sass压缩文件
+	var scwd = "图片组件/", //监听目录
+		sdest = "styles/css/", //生成的css文件存放目录
+		wfiles = ["图片组件/styles/css/*.css"], //需要监听的css文件
+		wsassfiles = ['图片组件/*.scss']; //需要监听的scss文件
+
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		concat: {
@@ -111,23 +119,23 @@
 					style: 'compact'
 				},
 				expand: true,
-				cwd: 'downloadPage/',
+				cwd: scwd, //'downloadPage/'
 				src: '*.scss',
 				ext: '.css',
-				dest: 'downloadPage/styles/css/'
+				dest: sdest //downloadPage/styles/css/
 			}
 		},
 
 		//监听模式
 		watch: {
 			css: {
-				files: ["downloadPage/styles/css/*.css"],
+				files: wfiles, // ["downloadPage/styles/css/*.css"],
 				options: {
 					livereload: true
 				}
 			},
 			sass: {
-				files: ['downloadPage/*.scss'],
+				files: wsassfiles, //['downloadPage/*.scss'],
 				tasks: ['sass'],
 				options: {
 					livereload: false

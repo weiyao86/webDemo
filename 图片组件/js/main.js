@@ -51,13 +51,42 @@
 			operatorH = $operator.innerHeight(),
 			globalRatioX, globalRatioY,
 			iw, ih, rw, rh, it, il, dir;
-
+		var sc = 0;
 		$img.on("mousewheel", function(e) {
 			if (originAttr.onceset) {
-				zoomImg(e.deltaY, e);
+				//zoomImg(e.deltaY, e);
+				var barLeft = $slidebar.position().left;
+				if (e.deltaY > 0) {
+					barLeft += 5;
+				} else {
+					barLeft -= 5;
+				}
+				barLeft = Math.max(barLeft, 0);
+				barLeft = Math.min(operatorW - $slidebar.width(), barLeft);
+
+				$slidebar.css({
+					left: barLeft
+				});
+
+				var perc = setPerc(barLeft);
+
+				zoomView(perc, {
+					x: e.pageX,
+					y: e.pageY
+				});
 			} else {
 				alert("高清图还未准备好");
 			}
+		});
+
+		$img.on("mousedown", function(e) {
+			e.preventDefault();
+
+			drag(this, null, e, {
+				move: function(evt, objs) {
+					adjustHandler();
+				}
+			});
 		});
 
 		// $img.on({
@@ -119,15 +148,19 @@
 			drag(this, $(this).parent(), e, {
 				move: function(evt, objs) {
 
-					//大图的缩放根据滑块移动距离的
-					var disbar = objs.disX / (operatorW - $slidebar.width()),
-						perc = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * disbar;
-
+					var perc = setPerc(objs.disX);
+					// $("#test").html(objs.disX);
 					zoomView(perc);
 				}
 			});
 		});
 
+		var setPerc = function(disX) {
+			//缩放根据滑块移动比率
+			var disbar = disX / (operatorW - $slidebar.width()),
+				perc = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * disbar;
+			return perc;
+		};
 
 		function zoomView(perc, point) {
 			var point = point || {
@@ -140,7 +173,7 @@
 				newWidth = originAttr.width * ratio,
 				newHeight = originAttr.height * ratio,
 				//根据坐标居中 
-				// pos = $img.position(),
+				pos = $img.position(),
 				// w = $img.width(),
 				// h = $img.height(),
 				// newLeft = point.x - (point.x - pos.left) / w * newWidth,
@@ -156,7 +189,7 @@
 			// 	newLeft = (containerDim.w - newWidth) / 2;
 			// 	newTop = (containerDim.h - newHeight) / 2;
 			// }
-			// 
+
 
 			$img.css({
 				width: newWidth,
@@ -165,13 +198,11 @@
 				top: newTop
 			});
 
-
-			// resizeHandler();
-			resizeHandler(newWidth, newHeight, newLeft, newTop);
+			adjustHandler(newWidth, newHeight, newLeft, newTop);
 			opts.zoomValue = perc;
 		}
 
-		var resizeHandler = function(iWidth, iHeight, iLeft, iTop) {
+		var adjustHandler = function(iWidth, iHeight, iLeft, iTop) {
 			var iw = iWidth || originAttr.width * opts.zoomValue / 100,
 				ih = iHeight || originAttr.height * opts.zoomValue / 100,
 				hw = Math.min(containerDim.w / iw * 100, 100), //operatorW * (1 - ratio),
@@ -179,18 +210,12 @@
 				hl = Math.max(-(iLeft || parseFloat($img.css("left"))) / iw * 100, 0),
 				ht = Math.max(-(iTop || parseFloat($img.css("top"))) / ih * 100, 0);
 
-			// $("#test").html(iLeft);
-			// if (hw + hl > 100) {
-			// 	hl = 100 - hw;
-			// 	iLeft = -hl * iw / 100;
 
-			// 	//updateImgView(iLeft, iTop);
-			// }
-			// if (hh + ht > 100) {
-			// 	ht = 100 - hh;
-			// 	iTop = -ht * ih / 100;
-			// 	//updateImgView(iLeft, iTop);
-			// }
+			hl = Math.min(100 - hw, hl);
+			ht = Math.min(100 - hh, ht);
+			var iL = -hl * iw / 100;
+			var iT = -ht * ih / 100;
+			updateImgView(iL, iT);
 
 			$snapHandle.css({
 				top: ht + '%',
@@ -198,9 +223,10 @@
 				width: hw + '%',
 				height: hh + '%'
 			});
-			// var s = (iWidth + iLeft) + '====' + (hw + '--' + hl);
-			// $("#test").html(s);
-		}
+
+
+
+		};
 
 		//更新View的值
 		function updateImgView(iLeft, iTop) {
@@ -212,6 +238,7 @@
 
 		function resetZoom() {
 			opts.zoomValue = 100;
+			zoomView(opts.zoomValue);
 		}
 
 		var setSnapSize = function(val) {
@@ -263,7 +290,7 @@
 		}).each(function(idx, el) {
 			var src = el.src;
 
-			if (el.complete && el.naturalWidth !== undefined) {
+			if (el.complete && el.naturalWidth !== undefined && el.naturalWidth !== 0) {
 				return setSnapSize(el);
 			}
 			if (el.readyState === undefined || el.complete) {
@@ -322,8 +349,8 @@
 					top: e.pageY - $target.position().top,
 					left: e.pageX - $target.position().left
 				},
-				maxX = $parent.width() - $target.width(),
-				maxY = $parent.height() - $target.height();
+				maxX = $parent && $parent.width() - $target.outerWidth(),
+				maxY = $parent && $parent.height() - $target.outerHeight();
 			if (window.attachEvent) {
 				$target.one('selectstart', function() {
 					return false;
@@ -343,10 +370,12 @@
 						moveDisX = px - pos.left,
 						moveDisY = py - pos.top;
 
-					moveDisX < 0 && (moveDisX = 0);
-					moveDisX > maxX && (moveDisX = maxX);
-					moveDisY < 0 && (moveDisY = 0);
-					moveDisY > maxY && (moveDisY = maxY);
+					if ($parent) {
+						moveDisX < 0 && (moveDisX = 0);
+						moveDisX > maxX && (moveDisX = maxX);
+						moveDisY < 0 && (moveDisY = 0);
+						moveDisY > maxY && (moveDisY = maxY);
+					}
 
 					$target.css({
 						top: moveDisY,

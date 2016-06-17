@@ -12,6 +12,8 @@ html {
     bottom: 0;
     z-index: 1;
 }
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+*:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 .w-wrap {
 	@extend %modal;
 	width:100%;
@@ -40,8 +42,8 @@ html {
     padding-top: 20px;
     border: 1px solid #ccc;
     background:#ccc;
+    overflow: hidden;
     z-index: 2;
-    opacity:.7;
     .w-operator-inner{
     	position:relative;
     	img{
@@ -51,6 +53,7 @@ html {
     	}
     	.w-snap-handle{
     	    border: 1px solid #fff;
+            box-shadow: 0 0 0 200px rgba(0, 0, 0, .5);
 		    height: 100px;
 		    position: absolute;
 		    top:0;

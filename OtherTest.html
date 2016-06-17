@@ -7,11 +7,41 @@
 
     <script>
     $(function(){
-        var c=0;
-        $("#demo1").on({
-            "mousemove.drag":function(){console.log(c++);},
-            "mouseup.drag":function(e){$("#demo1").off(".drag");},
-        })
+
+var success='';
+var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+var loaded=function(msg){
+    this.src && $("#img").attr("src",this.src);
+    alert(this.src);
+}
+var s= ["t1.jpg","t2.jpg",'t3.jpg'];
+
+    $("#img").on("click", function() {
+
+        var img = new Image();
+        img.src = "http://localhost/WebTest/Res/"+s.shift();
+
+        img.onreadystatechange=function(){
+            alert('onreadystatechange--'+img.readyState)
+        }
+
+        if (img.complete) {
+            success='complete';
+            loaded(img);
+        }
+        else if(img.addEventListener){
+             success='addEventListener';
+            img.addEventListener('load',loaded,false);
+        }else if(img.attachEvent){
+            success='attachEvent';
+            img.attachEvent("onload",loaded);
+        }else{
+            success='onload';
+            img['onload']=loaded;
+        }
+
+    });
+
     })
     var arr = [4,6,454,86,9,78,90,3,1,5,43,21];
 
@@ -85,7 +115,7 @@
     <!end-->
 </div>
 
-
+<img id="img" src="Res/car.png" alt="" width="500" height="600">
 <div class="middle" >
         <div class="inner">
             <span class="front">as</span>
