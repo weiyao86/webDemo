@@ -27,6 +27,7 @@
 			onceset: false
 		};
 	var gratio = 0;
+
 	$.Zoom = function(opts, callback) {
 		var opts = $.extend({}, defaults, opts);
 		var $wrap = $("#" + opts.wrap),
@@ -51,8 +52,10 @@
 			operatorH = $operator.innerHeight(),
 			globalRatioX, globalRatioY,
 			iw, ih, rw, rh, it, il, dir;
-		var sc = 0;
-		$img.on("mousewheel", function(e) {
+
+		$snapHandle.add($img).on("mousewheel", function(e) {
+			var x = e.pageX,
+				y = e.pageY;
 			if (originAttr.onceset) {
 				//zoomImg(e.deltaY, e);
 				var barLeft = $slidebar.position().left;
@@ -70,9 +73,13 @@
 
 				var perc = setPerc(barLeft);
 
+				// var offset = $(this).offset();
+				// x = (e.pageX - offset.left)* opts.zoomValue / 100,
+				// 	y = (e.pageY - offset.top)  * opts.zoomValue / 100;
+				// $("#test").html(x + '===' + y);
 				zoomView(perc, {
-					x: e.pageX,
-					y: e.pageY
+					x: x,
+					y: y
 				});
 			} else {
 				alert("高清图还未准备好");
@@ -80,13 +87,13 @@
 		});
 
 		$img.on("mousedown", function(e) {
-			e.preventDefault();
 
 			drag(this, null, e, {
 				move: function(evt, objs) {
 					adjustHandler();
 				}
 			});
+			e.preventDefault();
 		});
 
 		// $img.on({
@@ -149,7 +156,6 @@
 				move: function(evt, objs) {
 
 					var perc = setPerc(objs.disX);
-					// $("#test").html(objs.disX);
 					zoomView(perc);
 				}
 			});
@@ -174,13 +180,14 @@
 				newHeight = originAttr.height * ratio,
 				//根据坐标居中 
 				pos = $img.position(),
+				pof = $img.parent().offset(),
 				// w = $img.width(),
 				// h = $img.height(),
 				// newLeft = point.x - (point.x - pos.left) / w * newWidth,
 				// newTop = point.y - (point.y - pos.top) / h * newHeight;
 
-				newLeft = -((point.x - pos.left) * perc / opts.zoomValue - point.x),
-				newTop = -((point.y - pos.top) * perc / opts.zoomValue - point.y);
+				newLeft = -((point.x - pof.left - pos.left) * perc / opts.zoomValue - point.x),
+				newTop = -((point.y - pof.top - pos.top) * perc / opts.zoomValue - point.y);
 			//若无固定坐标时默认居中
 			// newLeft = (containerDim.w - newWidth) / 2,
 			// newTop = (containerDim.h - newHeight) / 2
@@ -241,17 +248,30 @@
 			zoomView(opts.zoomValue);
 		}
 
-		var setSnapSize = function(val) {
+		var setSnapSize = function(val, success) {
+			if (!success) {
+				alert('图片加载失败，请重新加载!');
+			}
 
 			var imgWidth, imgHeight, iratio = val.width / val.height;
-			imgWidth = iratio * operatorH > operatorW ? operatorW : iratio * operatorH;
+			imgWidth = operatorW;
 			imgHeight = imgWidth / iratio;
 
+
+			//初始化高宽随宽度的比率自适应
+			operatorH = imgHeight;
+
 			//初始化小框内图片的自适应
-			$operator.children('img').css({
+			$operator.css({
+				height: imgHeight
+			}).children('img').css({
 				width: imgWidth,
 				height: imgHeight
 			});
+
+			console.log(val.width + '===' + val.height)
+			console.log(operatorW + '===' + operatorH)
+			console.log(iratio)
 
 			// globalRatioX = val.width / operatorW;
 			// globalRatioY = val.height / operatorH;
@@ -284,20 +304,22 @@
 
 		};
 
-		$originImg.load(function() {
-			setSnapSize(this);
+		$originImg.attr("src", $originImg.attr("data-high-res-src"));
+
+		$originImg.on("load.zoom error.zoom", function(e) {
+			setSnapSize(this, e.type === 'load');
 
 		}).each(function(idx, el) {
 			var src = el.src;
 
 			if (el.complete && el.naturalWidth !== undefined && el.naturalWidth !== 0) {
-				return setSnapSize(el);
+				return setSnapSize(el, true);
 			}
 			if (el.readyState === undefined || el.complete) {
 				el.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 				el.src = src;
 			}
-		}).attr("src", $originImg.attr("data-high-res-src"));
+		});
 
 		function zoomImg(direction, e) {
 			var percent;
