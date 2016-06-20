@@ -2,7 +2,7 @@
 
 	//临时要使用sass压缩文件
 	var scwd = "图片组件/", //监听目录
-		sdest = "styles/css/", //生成的css文件存放目录
+		sdest = "图片组件/styles/css/", //生成的css文件存放目录
 		wfiles = ["图片组件/styles/css/*.css"], //需要监听的css文件
 		wsassfiles = ['图片组件/*.scss']; //需要监听的scss文件
 
@@ -111,6 +111,18 @@
 			}
 		},
 
+		postcss: {
+			options: {
+				map: false,
+				processors: [
+					require('autoprefixer')()
+				]
+			},
+			dist: {
+				src: wfiles
+			}
+		},
+
 
 		sass: {
 			dist: {
@@ -136,7 +148,7 @@
 			},
 			sass: {
 				files: wsassfiles, //['downloadPage/*.scss'],
-				tasks: ['sass'],
+				tasks: ['sass', 'postcss'],
 				options: {
 					livereload: false
 				}
@@ -149,6 +161,7 @@
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'sass']);

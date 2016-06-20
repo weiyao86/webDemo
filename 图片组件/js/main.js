@@ -43,40 +43,64 @@
 			$originImg = $("img[data-high-res-src]"),
 			wrapInnerLeft = $wrapInner.offset().left,
 			wrapInnerTop = $wrapInner.offset().top,
-			$img = $wrapInner.children(),
+			$img = $wrapInner.children().first(),
 			containerDim = {
 				w: $wrapInner.width(),
 				h: $wrapInner.height()
 			},
 			operatorW = $operator.innerWidth(),
 			operatorH = $operator.innerHeight(),
+			//用于可放大的区域
+			slideScopeW = operatorW - $slidebar.width(),
+			//当前缩放比率(无缩放初始值为0)
+			zoomRatio = 0,
 			globalRatioX, globalRatioY,
 			iw, ih, rw, rh, it, il, dir;
 
+
 		$snapHandle.add($img).on("mousewheel", function(e) {
 			var x = e.pageX,
-				y = e.pageY;
+				y = e.pageY,
+				left;
+
 			if (originAttr.onceset) {
 				//zoomImg(e.deltaY, e);
-				var barLeft = $slidebar.position().left;
+				//滑轮滚动累加/累减值为 1/100
 				if (e.deltaY > 0) {
-					barLeft += 5;
+					zoomRatio += 1 / 100;
 				} else {
-					barLeft -= 5;
+					zoomRatio -= 1 / 100;
 				}
-				barLeft = Math.max(barLeft, 0);
-				barLeft = Math.min(operatorW - $slidebar.width(), barLeft);
+
+				zoomRatio = Math.max(zoomRatio, 0);
+				zoomRatio = Math.min(1, zoomRatio);
+
+				left = zoomRatio * slideScopeW;
 
 				$slidebar.css({
-					left: barLeft
+					left: left
 				});
 
-				var perc = setPerc(barLeft);
+				var perc = setPerc(zoomRatio);
+				var pof = $(this).parent().offset();
+				x = x - pof.left;
+				y = y - pof.top;
 
-				// var offset = $(this).offset();
-				// x = (e.pageX - offset.left)* opts.zoomValue / 100,
-				// 	y = (e.pageY - offset.top)  * opts.zoomValue / 100;
-				// $("#test").html(x + '===' + y);
+				if (this === $snapHandle[0]) {
+
+					var iw = originAttr.width * opts.zoomValue / 100,
+						ih = originAttr.height * opts.zoomValue / 100;
+					console.log(x + '=1==' + (operatorW - $snapHandle.width()));
+					x = Math.min(operatorW - $snapHandle.width(), x);
+					y = Math.min(operatorH - $snapHandle.height(), y);
+					console.log(x + '===2');
+					x = x / operatorW;
+					y = y / operatorH;
+					console.log(x + '===3');
+
+
+				}
+
 				zoomView(perc, {
 					x: x,
 					y: y
@@ -96,43 +120,7 @@
 			e.preventDefault();
 		});
 
-		// $img.on({
-		// 	"mousemove.drag": function(e) {
-		// 		var $target = $(this),
-		// 			$parent = $target.parent(),
-		// 			distance = 1,
-		// 			dirX = (e.pageX - $parent.offset().left) / $parent.width() >= 0.5 ? -distance : distance,
-		// 			dirY = (e.pageY - $parent.offset().top) / $parent.height() >= 0.5 ? -distance : distance;
-
-		// 		var dirX = $target.position().left + dirX;
-		// 		var dirY = $target.position().top + dirY;
-		// 		$target.css({
-		// 			left: dirX,
-		// 			top: dirY
-		// 		});
-		// 	}
-		// });
-
-		$btnUp.click(function() {
-			zoomImg(1);
-		});
-
-		$btnDown.click(function() {
-			zoomImg(-1);
-		});
-
-
-		$btnReset.on("click", function() {
-			$img.css({
-				width: originAttr.width,
-				height: originAttr.height,
-				left: originAttr.left,
-				top: originAttr.top
-			});
-		});
-
 		$snapHandle.on("mousedown", function(e) {
-			e.preventDefault();
 			drag(this, $operator, e, {
 				move: function(evt, objs) {
 					var iw = originAttr.width * opts.zoomValue / 100,
@@ -144,6 +132,8 @@
 					});
 				}
 			});
+
+			e.preventDefault();
 		});
 
 		$slidebar.on("mousedown", function(e) {
@@ -154,40 +144,43 @@
 
 			drag(this, $(this).parent(), e, {
 				move: function(evt, objs) {
+					var ratio = objs.disX / slideScopeW,
+						perc = setPerc(ratio);
 
-					var perc = setPerc(objs.disX);
+					zoomRatio = ratio;
+
 					zoomView(perc);
 				}
 			});
 		});
 
-		var setPerc = function(disX) {
-			//缩放根据滑块移动比率
-			var disbar = disX / (operatorW - $slidebar.width()),
-				perc = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * disbar;
+		var setPerc = function(ratio) {
+			//缩放的倍率
+			var perc = opts.zoomMin + (opts.zoomMax - opts.zoomMin) * ratio;
 			return perc;
 		};
 
 		function zoomView(perc, point) {
-			var point = point || {
-				x: containerDim.w / 2,
-				y: containerDim.h / 2
-			};
+			var pof = $img.parent().offset(),
+				point = point || {
+					x: containerDim.w / 2,
+					y: containerDim.h / 2
+				};
+
 
 			var ratio = perc / 100,
-
 				newWidth = originAttr.width * ratio,
 				newHeight = originAttr.height * ratio,
-				//根据坐标居中 
+				//根据坐标居中
 				pos = $img.position(),
-				pof = $img.parent().offset(),
+
 				// w = $img.width(),
 				// h = $img.height(),
 				// newLeft = point.x - (point.x - pos.left) / w * newWidth,
 				// newTop = point.y - (point.y - pos.top) / h * newHeight;
 
-				newLeft = -((point.x - pof.left - pos.left) * perc / opts.zoomValue - point.x),
-				newTop = -((point.y - pof.top - pos.top) * perc / opts.zoomValue - point.y);
+				newLeft = -((point.x - pos.left) * perc / opts.zoomValue - point.x),
+				newTop = -((point.y - pos.top) * perc / opts.zoomValue - point.y);
 			//若无固定坐标时默认居中
 			// newLeft = (containerDim.w - newWidth) / 2,
 			// newTop = (containerDim.h - newHeight) / 2
@@ -196,7 +189,7 @@
 			// 	newLeft = (containerDim.w - newWidth) / 2;
 			// 	newTop = (containerDim.h - newHeight) / 2;
 			// }
-
+			$("#test").html(pof.left)
 
 			$img.css({
 				width: newWidth,
@@ -230,8 +223,6 @@
 				width: hw + '%',
 				height: hh + '%'
 			});
-
-
 
 		};
 
@@ -321,6 +312,7 @@
 			}
 		});
 
+		//TODO 暂时无用到
 		function zoomImg(direction, e) {
 			var percent;
 			dir = direction;
@@ -418,6 +410,41 @@
 					$(document).off(".drag");
 					e.preventDefault();
 				}
+			});
+		}
+
+
+
+		function zoomSnap(direction, e, $target) {
+			var percent,
+				dir = direction,
+				iw = $target.width(),
+				ih = $target.height(),
+				it = parseFloat($target.css("top")),
+				il = parseFloat($target.css("left"));
+
+			if (dir > 0) {
+				rw = iw * opts.ratio;
+				rh = ih * opts.ratio;
+				percent = rw / originAttr.width;
+			} else {
+				rw = iw / opts.ratio;
+				rh = ih / opts.ratio;
+				percent = originAttr.width / rw;
+			}
+
+			var dirL = e.pageX - $target.parent().offset().left;
+			var dirT = e.pageY - $target.parent().offset().top;
+			var proprtionX = (dirL - il) / iw;
+			var proprtionY = (dirT - it) / ih;
+			il = dirL - rw * proprtionX;
+			it = dirT - rh * proprtionY;
+
+			$target.css({
+				width: rw,
+				height: rh,
+				left: il,
+				top: it
 			});
 		}
 
