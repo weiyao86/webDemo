@@ -58,6 +58,10 @@
 			iw, ih, rw, rh, it, il, dir;
 
 
+		// $snapHandle.on("mousewheel", function(e) {
+		// 	zoomSnap(e.deltaY, e, $(this));
+		// });
+
 		$snapHandle.add($img).on("mousewheel", function(e) {
 			var x = e.pageX,
 				y = e.pageY,
@@ -81,30 +85,19 @@
 					left: left
 				});
 
-				var perc = setPerc(zoomRatio);
-				var pof = $(this).parent().offset();
-				x = x - pof.left;
-				y = y - pof.top;
+
+				var pof = $(this).parent().offset(),
+					point = {
+						x: x - pof.left,
+						y: y - pof.top
+					};
 
 				if (this === $snapHandle[0]) {
-
-					var iw = originAttr.width * opts.zoomValue / 100,
-						ih = originAttr.height * opts.zoomValue / 100;
-					console.log(x + '=1==' + (operatorW - $snapHandle.width()));
-					x = Math.min(operatorW - $snapHandle.width(), x);
-					y = Math.min(operatorH - $snapHandle.height(), y);
-					console.log(x + '===2');
-					x = x / operatorW;
-					y = y / operatorH;
-					console.log(x + '===3');
-
-
+					point = null;
 				}
 
-				zoomView(perc, {
-					x: x,
-					y: y
-				});
+				var perc = setPerc(zoomRatio);
+				zoomView(perc, point);
 			} else {
 				alert("高清图还未准备好");
 			}
@@ -189,7 +182,13 @@
 			// 	newLeft = (containerDim.w - newWidth) / 2;
 			// 	newTop = (containerDim.h - newHeight) / 2;
 			// }
-			$("#test").html(pof.left)
+			newLeft = Math.max(containerDim.w - newWidth, newLeft);
+			newTop = Math.max(containerDim.h - newHeight, newTop);
+
+			newLeft = Math.min(0, newLeft);
+			newTop = Math.min(0, newTop);
+
+			$("#test").html(newWidth + '===' + newLeft + '===' + containerDim.w);
 
 			$img.css({
 				width: newWidth,
@@ -197,9 +196,9 @@
 				left: newLeft,
 				top: newTop
 			});
+			opts.zoomValue = perc;
 
 			adjustHandler(newWidth, newHeight, newLeft, newTop);
-			opts.zoomValue = perc;
 		}
 
 		var adjustHandler = function(iWidth, iHeight, iLeft, iTop) {
@@ -210,20 +209,22 @@
 				hl = Math.max(-(iLeft || parseFloat($img.css("left"))) / iw * 100, 0),
 				ht = Math.max(-(iTop || parseFloat($img.css("top"))) / ih * 100, 0);
 
+			// if (parseInt(hl + hw) > 100) {
+			// 	alert(hl + hw)
+			// }
 
-			hl = Math.min(100 - hw, hl);
-			ht = Math.min(100 - hh, ht);
-			var iL = -hl * iw / 100;
-			var iT = -ht * ih / 100;
-			updateImgView(iL, iT);
+			// hl = Math.min(100 - hw, hl);
+			// ht = Math.min(100 - hh, ht);
+			// var iL = -hl * iw / 100;
+			// var iT = -ht * ih / 100;
+			// updateImgView(iL, iT);
 
 			$snapHandle.css({
 				top: ht + '%',
 				left: hl + '%',
-				width: hw + '%',
+				width: hw + '%', // operatorW / opts.zoomValue * 100, //operatorW * containerDim.w / iw, // hw + '%',
 				height: hh + '%'
 			});
-
 		};
 
 		//更新View的值
@@ -260,9 +261,6 @@
 				height: imgHeight
 			});
 
-			console.log(val.width + '===' + val.height)
-			console.log(operatorW + '===' + operatorH)
-			console.log(iratio)
 
 			// globalRatioX = val.width / operatorW;
 			// globalRatioY = val.height / operatorH;
@@ -291,6 +289,10 @@
 					width: originAttr.width,
 					height: originAttr.height
 				});
+				containerDim = {
+					w: originAttr.width,
+					h: originAttr.height
+				};
 			}
 
 		};
@@ -331,7 +333,6 @@
 				percent = originAttr.width / rw;
 			}
 
-			console.log(percent + '---------' + opts.maxRatio + '---------' + opts.minRatio);
 
 			if (percent > opts.maxRatio || percent > opts.minRatio) return;
 
