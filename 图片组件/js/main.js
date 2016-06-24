@@ -71,9 +71,9 @@
 				//zoomImg(e.deltaY, e);
 				//滑轮滚动累加/累减值为 1/100
 				if (e.deltaY > 0) {
-					zoomRatio += 1 / 100;
+					zoomRatio += 1 / 10;
 				} else {
-					zoomRatio -= 1 / 100;
+					zoomRatio -= 1 / 10;
 				}
 
 				zoomRatio = Math.max(zoomRatio, 0);
