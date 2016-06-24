@@ -128,47 +128,58 @@ $(function() {
         }
     }
 
-    var objX = 0;
-    $snapHandle.on("mousedown", function(e) {
+    var objX = 100;
 
+    $("#btn").on('click',function(){
+        var objs={disX:100,disY:30};
+        ani(objs);
+    });
+var id=null;
+    $snapHandle.on("mousedown", function(e) {
         drag(this, $wrap, e, {
             move: function(evt, objs) {
-                var iw = contentDim.fw / zoomRatio,
-                    ih = contentDim.fh / zoomRatio;
-
                 clearFrames();
-
-                var perc = objs.disX,
-                    curperc = objX,
-                    step = 0;
-
-                function zoomView(t) {
-                    step++;
-
-                    if (step < 20) {
-                        timer = window.requestAnimationFrame(zoomView);
-                    }
-
-                    var tickZoom = easeOutQuart(step, curperc, perc - curperc, 20);
-
-                    if (!curperc) curperc*=1/100;
-
-                    var ratio = tickZoom / curperc;
-                    
-                    $viewImg.css({
-                        left:-objs.disX / operatorW * iw * ratio,
-                        top: -objs.disY / operatorH * ih * ratio
-                    });
-                     console.log(tickZoom+'---'+ratio+'---'+objs.disX);
-
-                    objX = tickZoom;
-                }
-                
-                zoomView();
+                     ani(objs);
             }
         });
         e.preventDefault();
     });
+
+    function ani(objs){
+
+         var iw = contentDim.fw / zoomRatio,
+                    ih = contentDim.fh / zoomRatio;
+
+        var perc =100+( objs.disX > objs.disY ? objs.disX : objs.disY),
+                    curperc = objX,
+                    step = 0;
+                var ox=objs.disX,oy=objs.disY;
+
+                function zoomView(t) {
+                    step++;
+
+                    if (step < 60) {
+                        timer = window.requestAnimationFrame(zoomView);
+                    }else if(step ==60){
+                         clearFrames();
+                    }
+
+                    var tickZoom = easeOutQuart(step, curperc, perc - curperc, 60);
+
+                    var ratio = tickZoom / curperc;
+
+                    var l = ox / operatorW * iw ,lt=ox / operatorW * iw *ratio;
+
+                    $viewImg.css({
+                        left:-ox / operatorW * iw * ratio,
+                        top: -oy / operatorH * ih * ratio
+                    });
+                     console.log( l+'---'+tickZoom+'---'+lt);
+
+                    objX = tickZoom;
+                }
+                zoomView();
+    }
 
     $snapHandle.on("mousewheel", function(e) {
         var x = e.pageX,
@@ -185,7 +196,7 @@ $(function() {
         zoomRatio = Math.max(zoomRatio, zoomMin);
         zoomRatio = Math.min(zoomMax, zoomRatio);
 
-        if (preZoom == zoomRatio) return;
+       if (preZoom == zoomRatio) return;
 
         var pof = $(this).parent().offset();
         x = x - pof.left;
@@ -212,39 +223,19 @@ $(function() {
             top: t
         });
 
-        clearFrames();
-        var curperc = preZoom,
-            x = 0,
-            y = 0,
-            step = 0;
+        var vw = contentDim.fw * operatorW / nw, //* operatorW/nw,
+            vh = contentDim.fh * operatorH / nh, //* operatorH/nh,
+            vl = -vw * (l / operatorW),
+            vt = -vh * (t / operatorH) //;
 
-        function zoomView() {
-            step++;
+        $viewImg.css({
+            width: vw, //contentDim.fw *operatorW/nw,
+            height: vh,
+            left: vl,
+            top: vt
+        });
 
-            if (step < 2) {
-                timer = window.requestAnimationFrame(zoomView);
-            }
-
-            var tickZoom = easeOutQuart(step, curperc, zoomRatio - curperc, 2);
-
-            var ratio = tickZoom / zoomRatio;
-            var vw = contentDim.fw * operatorW / nw * ratio, //* operatorW/nw,
-                vh = contentDim.fh * operatorH / nh * ratio, //* operatorH/nh,
-                vl = -vw * (l / operatorW) * ratio,
-                vt = -vh * (t / operatorH) * ratio //;
-
-            $viewImg.css({
-                width: vw, //contentDim.fw *operatorW/nw,
-                height: vh,
-                left: vl,
-                top: vt
-            });
-
-            preZoom = tickZoom;
-        }
-        zoomView();
-        console.log(preZoom + '===' + zoomRatio);
-        //preZoom =zoomRatio;
+        preZoom =zoomRatio;
     });
 
     function clearFrames() {
@@ -320,6 +311,7 @@ $(function() {
     </style>
 </head>
 <body>
+<input type="button" value="button" id="btn">
     <div id="wrap" class="wrap">
     <img src="../Res/aa.png" alt="">
     <div id="snap_handle" class="w-snap-handle"></div>
