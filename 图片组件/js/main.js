@@ -26,7 +26,7 @@
 			top: 0,
 			onceset: false
 		};
-	var gratio = 0;
+	var timer = null;
 
 	$.Zoom = function(opts, callback) {
 		var opts = $.extend({}, defaults, opts);
@@ -160,7 +160,45 @@
 					y: containerDim.h / 2
 				};
 
+			// cancelAnimationFrame(timer);
 
+			// var curperc = opts.zoomValue,
+			// 	step = 0;
+
+			// function zoom() {
+			// 	step++;
+			// 	if (step < 20) {
+			// 		timer = requestAnimationFrame(zoom);
+			// 	}
+			// 	var tickZoom = easeOutQuart(step, curperc, perc - curperc, 20);
+			// 	var ratio = tickZoom / perc,
+			// 		newWidth = originAttr.width * tickZoom / 100,
+			// 		newHeight = originAttr.height * tickZoom / 100,
+			// 		//根据坐标居中
+			// 		pos = $img.position(),
+			// 		newLeft = -((point.x - pos.left) * ratio / 100 - point.x),
+			// 		newTop = -((point.y - pos.top) * ratio / 100 - point.y);
+
+			// 	newLeft = Math.max(containerDim.w - newWidth, newLeft);
+			// 	newTop = Math.max(containerDim.h - newHeight, newTop);
+
+			// 	newLeft = Math.min(0, newLeft);
+			// 	newTop = Math.min(0, newTop);
+
+			// 	$img.css({
+			// 		width: newWidth,
+			// 		height: newHeight,
+			// 		left: newLeft,
+			// 		top: newTop
+			// 	});
+
+			// 	opts.zoomValue = tickZoom;
+
+			// 	adjustHandler(newWidth, newHeight, newLeft, newTop);
+
+			// }
+
+			// zoom();
 			var ratio = perc / 100,
 				newWidth = originAttr.width * ratio,
 				newHeight = originAttr.height * ratio,
@@ -449,5 +487,18 @@
 			});
 		}
 
+	};
+
+	//由快到慢 ease out method  更多算法参考 src="../Scripts/jquery.easing.1.3.js">
+	/*
+	    t : current time,
+	    b : intial value,
+	    c : changed value,
+	    d : duration
+	*/
+	function easeOutQuart(t, b, c, d) {
+		t /= d;
+		t--;
+		return -c * (t * t * t * t - 1) + b;
 	};
 });
