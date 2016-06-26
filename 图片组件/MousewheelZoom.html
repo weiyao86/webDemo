@@ -65,7 +65,11 @@ $(function() {
         zoomMin = 0.2,
         zoomMax = 1,
         preZoom = 0,
-        ra, rh, ow, oh, na, timer = null,timer1 = null;
+        ra, rh, ow, oh, na,
+        objX = 0,
+        objY = 0,
+         timer = null,
+        timer1 = null;
 
     $("#msg").html("zoomRatio=" + zoomRatio + " zoomMin=" + zoomMin + " zoomMax=" + zoomMax);
     $("#view_img").on("load.zoom error.zoom", function(e) {
@@ -119,6 +123,10 @@ $(function() {
                 height: contentDim.fh / zoomRatio
             });
 
+            $fixed.css({
+                height: $fixed.width() / iratio
+            });
+
             $snapHandle.css({
                 width: contentDim.fw / that.width * operatorW, // zoomRatio*operatorW,
                 height: contentDim.fh / that.height * operatorH // zoomRatio*operatorH
@@ -129,62 +137,108 @@ $(function() {
     }
 
 
-    $("#btn").on('click',function(){
-        var objs={disX:100,disY:30};
-        ani(objs);
+    $("#btn").on('click', function() {
+        // var objs = {
+        //     disX: 100,
+        //     disY: 30
+        // };
+        // ani(objs);
+          var nw = 70,
+             nh=40,
+             l=177,
+             t=65;
+
+        $("#srl").empty();
+        var perc = 100 * zoomRatio,
+            curperc =  preZoom,//<100 ? 100 :preZoom,
+            step = 0;
+
+
+        var vw = contentDim.fw * operatorW / nw, //* operatorW/nw,
+                vh = contentDim.fh * operatorH / nh, //* operatorH/nh,
+                vl = -vw * (l / operatorW),
+                vt = -vh * (t / operatorH) //;
+
+        function zoomView() {
+            step++;
+
+            if (step < 20) {
+                timer1 = window.requestAnimationFrame(zoomView);
+            } else if (step == 20) {
+                clearFrames();
+            }
+
+            var tickZoom = easeOutQuart(step, curperc, perc - curperc, 20);
+
+            var ratio = tickZoom / perc;
+
+            $viewImg.css({
+                width: vw * ratio,
+                height: vh * ratio,
+                left: vl* ratio,
+                top: vt * ratio
+            });
+
+            var str = '<p>'+vl+'====='+( vl* ratio)+'==='+perc+'=='+curperc+'</p>'
+
+            $("#srl").append(str).scrollTop(99999);
+            preZoom = tickZoom;
+        }
+        zoomView();
     });
 
     $snapHandle.on("mousedown", function(e) {
         drag(this, $wrap, e, {
             move: function(evt, objs) {
+                if(!objs.disX && !objs.disY)return;
                 clearFrames();
-                     ani(objs);
+                ani(objs);
             }
         });
         e.preventDefault();
     });
 
-    var objX = 100,objY=100;
 
-    function ani(objs){
+    function ani(objs) {
 
-         var iw = contentDim.fw / zoomRatio,
-                    ih = contentDim.fh / zoomRatio;
+        var iw = contentDim.fw / zoomRatio,
+            ih = contentDim.fh / zoomRatio;
 
-        var perc =100+objs.disX,
-                    topperc=100+objs.disY,
-                    curperc = objX,
-                    curpercY = objY,
-                    step = 0;
-                var ox=objs.disX,oy=objs.disY;
+        var perc = 100 * objs.disX,
+            topperc = 100 * objs.disY,
+            curperc = objX,
+            curpercY = objY,
+            step = 0,
+            ox = objs.disX / operatorW * iw,
+            oy = objs.disY / operatorH * ih;
 
-                function zoomView(t) {
-                    step++;
+        function zoomView(t) {
+            step++;
 
-                    if (step < 60) {
-                        timer = window.requestAnimationFrame(zoomView);
-                    }else if(step ==60){
-                         clearFrames();
-                    }
+            if (step < 60) {
+                timer = window.requestAnimationFrame(zoomView);
+            } else if (step == 60) {
+                clearFrames();
+            }
 
-                    var tickZoom = easeOutQuart(step, curperc, perc - curperc, 60);
-                    var tickZoomY = easeOutQuart(step, curpercY, topperc - curpercY, 60);
+            var tickZoom = easeOutQuart(step, curperc, perc - curperc, 60);
+            var tickZoomY = easeOutQuart(step, curpercY, topperc - curpercY, 60);
 
-                    var ratio = tickZoom / perc;
-                    var ratioY = tickZoomY / topperc;
+            var ratio = tickZoom / perc;
+            var ratioY = tickZoomY / topperc;
 
-                    $viewImg.css({
-                        left:-ox / operatorW * iw * ratio,
-                        top: -oy / operatorH * ih * ratioY
-                    });
+            $viewImg.css({
+                left: -ox * ratio,
+                top: -oy * ratioY
+            });
 
-                    var str="<p>"+tickZoom+'====='+ratio+"</p>";
-                     $("#srl").append(str).scrollTop(99999);
+            var str = "<p>" + tickZoom + '=====' + ratio + "</p>";
+            $("#srl").append(str).scrollTop(99999);
 
-                    objX = tickZoom;
-                    objY = tickZoomY;
-                }
-                zoomView();
+            objX = tickZoom;
+            objY = tickZoomY;
+        }
+        zoomView();
     }
 
     $snapHandle.on("mousewheel", function(e) {
@@ -202,7 +256,7 @@ $(function() {
         zoomRatio = Math.max(zoomRatio, zoomMin);
         zoomRatio = Math.min(zoomMax, zoomRatio);
 
-       if (preZoom == zoomRatio) return;
+        if (preZoom == zoomRatio) return;
 
         var pof = $(this).parent().offset();
         x = x - pof.left;
@@ -228,57 +282,39 @@ $(function() {
             left: l,
             top: t
         });
-      
-         clearFrames();
+
+        clearFrames();
         $("#srl").empty();
-        var perc =100+zoomRatio,
-                    curperc =100+ preZoom,
-                    step = 0;
+        var perc = 100 * zoomRatio,
+            curperc =  preZoom,
+            step = 0,
+            vw = contentDim.fw * operatorW / nw, //* operatorW/nw,
+            vh = contentDim.fh * operatorH / nh, //* operatorH/nh,
+            vl = -vw * (l / operatorW),
+            vt = -vh * (t / operatorH);
 
-                function zoomView() {
-                    step++;
+        function zoomView() {
+            step++;
 
-                    if (step < 20) {
-                        timer1 = window.requestAnimationFrame(zoomView);
-                    }else if(step ==20){
-                         clearFrames();
-                    }
+            if (step < 20) {
+                timer1 = window.requestAnimationFrame(zoomView);
+            }
+            var tickZoom = easeOutQuart(step, curperc, perc - curperc, 20);
 
-                    var tickZoom = easeOutQuart(step, curperc, perc - curperc, 20);
+            var ratio = tickZoom / perc;
 
-                    var ratio = tickZoom / perc;
+            $viewImg.css({
+                width: vw * ratio,
+                height: vh * ratio,
+                left: vl* ratio,
+                top: vt * ratio
+            });
 
-                    var vw = contentDim.fw * operatorW / nw, //* operatorW/nw,
-                            vh = contentDim.fh * operatorH / nh, //* operatorH/nh,
-                            vl = -vw * (l / operatorW),
-                            vt = -vh * (t / operatorH) //;
-
-                    $viewImg.css({
-                        width:vw ,//* tickZoom /100,
-                        height:vh ,//* tickZoom /100,
-                        left:vl ,//* ratio,
-                        top: vt //* ratio
-                    });
-
-                    var str="<p>"+vl+'==='+(vl/ratio)+"</p>";
-                    $("#srl").append(str).scrollTop(99999);
-                    preZoom =tickZoom;
-                }
-                zoomView();
-
-        // var vw = contentDim.fw * operatorW / nw, //* operatorW/nw,
-        //     vh = contentDim.fh * operatorH / nh, //* operatorH/nh,
-        //     vl = -vw * (l / operatorW),
-        //     vt = -vh * (t / operatorH) //;
-
-        // $viewImg.css({
-        //     width: vw, //contentDim.fw *operatorW/nw,
-        //     height: vh,
-        //     left: vl,
-        //     top: vt
-        // });
-
-    
+            var str = '<p>'+tickZoom+'</p>'
+            $("#srl").append(str).scrollTop(99999);
+            preZoom = tickZoom;
+        }
+        zoomView();
     });
 
     function clearFrames() {
@@ -293,8 +329,8 @@ $(function() {
                 top: e.pageY - $target.position().top,
                 left: e.pageX - $target.position().left
             },
-            maxX = $parent && $parent.width() - $target.outerWidth(),
-            maxY = $parent && $parent.height() - $target.outerHeight();
+            maxX = $parent && $parent.width() - $target.width(),
+            maxY = $parent && $parent.height() - $target.height();
         if (window.attachEvent) {
             $target.one('selectstart', function() {
                 return false;
@@ -343,9 +379,9 @@ $(function() {
 });
     </script>
     <style>
-        .wrap{position:absolute ;top:200px;left:20px;border:1px solid #f80;height:200px;background:#ccc;margin:auto;z-index:1;overflow:hidden;}
+        .wrap{position:absolute ;top:200px;left:20px;border:2px solid #f80;height:200px;background:#ccc;margin:auto;z-index:1;overflow:hidden;}
         .wrap img{height:100%;}
-        .w-snap-handle{position:absolute;top:0;left:0;width:100px;height:100px;box-shadow:0 0 0 500px rgba(0,0,0,.6);cursor:crosshair;}
+        .w-snap-handle{position:absolute;top:0;left:0;width:100px;height:100px;box-shadow:0 0 0 500px rgba(0,0,0,.6);cursor:crosshair;border:2px solid #999;}
         .fixed{position:fixed;top:100px;left:400px;width:500px;height:400px;background:#ccc;overflow:hidden;border:1px solid #f80;}
 
         .fixed img{position:absolute;top:0;left:0;border:none;}
