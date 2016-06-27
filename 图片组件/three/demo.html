@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Three.js</title>
+	<script src="http://threejs.org/build/three.min.js"></script>
+	<script src="../../Scripts/jquery-1.9.0.js"></script>
+	<script>
+		$(function(){
+			//创建场景尺寸(scene size)
+			var WIDTH=400,HEIGHT=300;
+			//设置相机属性-set some camera attribute
+			var VIEW_ANGLE = 45,ASPECT=WIDTH/HEIGHT,NEAR=0.1,FAR=10000;
+			//获取元素，使用jquery - get the dom element to attach to -assume we've got jQuery to hand
+			var $container = $("#container");
+			//创建一个Webgl 渲染器，相机和场景 -create a WebGl renderer,camera,and a scene
+			var renderer = new THREE.WebGLRenderer();
+			var camera = new THREE.PerspectiveCamera(VIEW_ANGLE,ASPECT,NEAR,FAR);
+			var scene= new THREE.Scene();
+			//添加相机到场景 -add the camera to the scene
+			scene.add(camera);
+			//the camera starts at 0.0.0 so pull it back
+			camera.position.z=300;
+			//start the renderer
+			renderer.setSize(WIDTH,HEIGHT);
+			//attach the render-supplied DOM element
+			$container.append(renderer.domElement);
+
+
+			//灯光 - lights
+			 var pointLight = new THREE.PointLight(0xffffff);
+			//直线光
+			//var pointLight = new THREE.DirectionalLight(0xffffff);
+			//设置位置 - set its position
+			//pointLight.set(0,0,100).normalize();
+			pointLight.position.x = 10;
+			pointLight.position.y = 50;
+			pointLight.position.z = 130;
+			
+			//add to the scene
+			scene.add(pointLight);
+			//set up the sphere vars
+			var radius=50,segments=16,rings=16;
+			//材质属性
+			var sphereMaterial = new THREE.MeshLambertMaterial({color:0xff8888});
+			//var meterial = new THREE.MeshBasicMaterial({color:0xffff00});
+			var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius,segments,rings),sphereMaterial);
+			//add the sphere to the scene;
+			sphere.position.x=-50;
+			sphere.position.y=0;
+			sphere.position.z=50;
+			scene.add(sphere);
+
+			//draw!
+			renderer.render(scene,camera);
+
+			(function anime(){
+				sphere.rotation.x += 0.02; //改变球体角度
+				sphere.rotation.y += 0.01; //改变球体角度
+				sphere.rotation.z += 0.01; //改变球体角度
+				renderer.render(scene, camera); //开始渲染
+				return requestAnimationFrame(anime);
+			})();
+
+
+		});
+
+	</script>
+
+	<style>
+		.container{
+			width:600px;height:400px;border:1px solid #f80;
+		}
+	</style>
+</head>
+<body>
+	<div id="container" class="container"></div>
+</body>
+</html>

@@ -537,7 +537,6 @@
 					newLeft = (containerDim.w - imgWidth) / 2;
 					newTop = (containerDim.h - imgHeight) / 2;
 				}
-				console.log(tickZoom + '---' + ratio + '---' + curPerc);
 
 				curImg.css({
 					height: imgHeight + 'px',
