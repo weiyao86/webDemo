@@ -3,59 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="Scripts/jquery-1.9.0.js"></script>
-    <script src="Scripts/jquery.easing.1.3.js"></script>
-    <script src="Scripts/Plugin/mousewheel/jquery.mousewheel.min.js"></script>
-    <script>
-    $(function() {
-        /*
-            t : current time,
-            b : intial value,
-            c : changed value,
-            d : duration
-        */
-        function easeOutQuart(t, b, c, d) {
-            t /= d;
-            t--;
-            return -c * (t * t * t * t - 1) + b;
-
-          //  return -c*((t=t/d-1)*t*t*t-1)+b;
-        };
-
-        var cur=0,step=0,prev=40,naw=50,iw=100,na=100;
-
-        function zoom(){
-            step++;
-            if(step<60){
-                setTimeout(zoom,16);
-                //requestAnimationFrame(zoom)
-            }
-               var tick = easeOutQuart(step,cur,prev-cur,60);
-               var r = tick / prev;
-
-               var w = iw*r,
-                   h=w/1.2;
-
-               $("#msg").css({width:w,height:h}).html(r+'==='+tick);
-               na=tick;
-        }
-
-
-        $("#btn").on("click",function(){
-            step=0;
-            prev+=140;
-            iw +=10;
-            cur=na;
-            zoom();
-        });
-    });
-    </script>
     <style>
-        .msg{position:absolute; text-align:center;width:40px;border:1px solid red; height:25px;line-height:25px;background:#fff;}
+    .wrap{position:absolute;top:0;left:0;right:0;bottom:0;filter:alpha(opacity=50);opacity:.5; background:#000;}
     </style>
+    <script>
+    </script>
 </head>
-<body>
-    <input type="button" id="btn" value="btnTest">
-        <div id="msg" class="msg"></div>
+<body>asdfsasdf
+    <div class="wrap"></div>
 </body>
 </html>

@@ -3,7 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Three.js</title>
-	<script src="http://threejs.org/build/three.min.js"></script>
+	<script src="./js/three.min.js"></script>
+	<script src="./js/OrbitControls.js"></script>
 	<script src="../../Scripts/jquery-1.9.0.js"></script>
 	<script>
 		$(function(){
@@ -20,37 +21,51 @@
 			//添加相机到场景 -add the camera to the scene
 			scene.add(camera);
 			//the camera starts at 0.0.0 so pull it back
-			camera.position.z=300;
+			camera.position.set(0,0,300);
+
 			//start the renderer
 			renderer.setSize(WIDTH,HEIGHT);
+			renderer.setClearColor(0x0000ff,1);
 			//attach the render-supplied DOM element
 			$container.append(renderer.domElement);
 
 
 			//灯光 - lights
-			 var pointLight = new THREE.PointLight(0xffffff);
+			 var ambeintLight = new THREE.AmbientLight(0x000000);//环境光
 			//直线光
-			//var pointLight = new THREE.DirectionalLight(0xffffff);
+			//var pointLight = new THREE.DirectionalLight(0xffffff);//方向光
 			//设置位置 - set its position
 			//pointLight.set(0,0,100).normalize();
-			pointLight.position.x = 10;
-			pointLight.position.y = 50;
-			pointLight.position.z = 130;
+			ambeintLight.position.set(100,100,200);
 
 			//add to the scene
-			scene.add(pointLight);
+			scene.add(ambeintLight);
 			//set up the sphere vars
 			var radius=50,segments=50,rings=50;
-			//材质属性  -linewidth-windows平台上只有默认值1，无法改变
-			var sphereMaterial = new THREE.LineBasicMaterial({color:0xff0000,linewidth: 10});
-			//var meterial = new THREE.MeshBasicMaterial({color:0xffff00});LineBasicMaterial
-			var sphere = new THREE.CircleGeometry(30,64);
-			//add the sphere to the scene;
-			sphere.vertices.shift();
-			sphere.position.x=50;
-			var line = new THREE.Line(sphere,sphereMaterial);
-			//sphere.position.x=10;
-			scene.add(line);
+			for(var i = 0;i<20;i++){
+				//材质属性  -linewidth-windows平台上只有默认值1，无法改变
+				var sphereMaterial = new THREE.LineBasicMaterial({color:0xff0000,linewidth: 10});
+				//var meterial = new THREE.MeshBasicMaterial({color:0xffff00});LineBasicMaterial
+				var sphere = new THREE.CircleGeometry(10,64);
+				//add the sphere to the scene;
+				sphere.vertices.shift();
+				//sphere.position.x=50;
+				var line = new THREE.Line(sphere,sphereMaterial);
+				var x = setPos(i),
+					y = setPos(i);
+				//line.position.set(x,y,0);
+				scene.add(line);
+				// line.addEventListener("mouseover",function(){
+				// 	alert('s')
+				// })
+			}
+
+			var controls = new THREE.OrbitControls(camera,renderer.domElement);
+
+			function setPos(i){
+				var r = Math.random();
+				return  r> 0.5 ? r*i*10 : -r*i*10;
+			}
 
 
 			// var segmentCount = 32,

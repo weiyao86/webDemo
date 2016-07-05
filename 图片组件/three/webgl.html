@@ -36,12 +36,17 @@
 		<script src="http://threejs.org/examples/js/Detector.js"></script>
 		<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
 		<script src="./js/OrbitControls.js"></script>
+		<script src="./js/Octree.js"></script>
+		<script src="./js/threex.domevents.js"></script>
         
 		<script>
+			var GlobalIntersected,mouseClick=false;
+			var raycaster = new THREE.Raycaster();
+			var mouse = new THREE.Vector2();
             var clock = new THREE.Clock();
             var delta = clock.getDelta(); // seconds.
             var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
-			var container, stats;
+			var container, stats,obj;
 
 			var camera, scene, renderer, controls, stats;
 
@@ -50,6 +55,9 @@
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
 
+			var octree = new THREE.Octree({
+				undeferred:false,depthMax:Infinity,objectsThreshold:8,overlapPct:0.15
+			});
 
 			init();
 
@@ -60,7 +68,7 @@
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.z = 400;
+				camera.position.set(100,100,400);
 				// scene
 
 				scene = new THREE.Scene();
@@ -82,9 +90,15 @@
 
 				};
 
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				var domEvents = new THREEx.DomEvents(camera,renderer.domElement);
+
 				// model
 				var loader = new THREE.OBJLoader( manager );
-				loader.load( './res/32_1172_N3082.obj', function ( object ) {
+				loader.load( './res/20160704-加序号.obj', function ( object ) {
 
 					object.traverse( function ( child ) {
 
@@ -102,25 +116,44 @@
                     object.scale.x = 30;
                     object.scale.y = 30;
                     object.scale.z = 30;
-                    obj = object
+                    obj = object;
+
+                    //隐藏数字1
+                    //obj.getObjectByName("Text001").visible=false;
+                    if(obj.children){
+                    	obj.children.forEach(function(key,val){
+
+                    		domEvents.addEventListener(key,"mouseover",function(e){
+                    			e.target.material.color.set(0xff0000);
+                    		},false);
+							domEvents.addEventListener(key,"mouseout",function(e){
+								e.target.material.color.set(0xffffff);
+							},false);
+							domEvents.addEventListener(key,"click",function(e){
+								e.target.material.color.set(0x0000ff);
+							},false);
+                    	});
+                    }
+
 					scene.add( obj );
 
 					animate();
 				} );
 
-				renderer = new THREE.WebGLRenderer();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				container.appendChild( renderer.domElement );
-
 				controls = new THREE.OrbitControls( camera, renderer.domElement );
 				//controls.target.set( 0, 0, 0 );
 				controls.enableDamping = true;
 				controls.dampingFactor = 0.25;
-				// controls.autoRotate = true;
+				//controls.autoRotate = true;
 				// controls.enableZoom = false;
 				window.addEventListener( 'resize', onWindowResize, false );
 
+				// renderer.domElement.addEventListener("mousemove",onMouseMove,false);
+				// renderer.domElement.addEventListener("mousedown",onMouseDown,false);
+				// renderer.domElement.addEventListener("mouseup",onMouseUp,false);
+
 			}
+
 
 			function onWindowResize() {
 				windowHalfX = window.innerWidth / 2;
@@ -136,14 +169,74 @@
 			function animate() {
 				window.requestAnimationFrame( animate );
 
+				// obj.rotation.x += 2 * Math.PI/180;
+				// obj.rotation.y += 2* Math.PI/180;
+				//obj.rotation.z += 2* Math.PI/180;
+
 				controls.update();
 
 				render();
 			}
 
 			function render() {
+				//overorout();
+
 				renderer.render( scene, camera );
+
+				//octree.update();
+
 			}
+
+			//手动触发各个mesh事件改用插件threex.js
+
+			// function onMouseMove(event){
+			// 	mouse.x=(event.clientX/window.innerWidth)*2-1;
+			// 	mouse.y=-(event.clientY/window.innerHeight)*2+1;
+			// }
+
+			// function onMouseDown(event){
+			// 	// event.preventDefault();
+			// 	mouseClick=true;
+			// 	mouse.x=(event.clientX/window.innerWidth)*2-1;
+			// 	mouse.y=-(event.clientY/window.innerHeight)*2+1;
+			// }
+
+			// function onMouseUp(event){
+			// 	// event.preventDefault();
+			// 	mouseClick=false;
+			// }
+
+			// function overorout(){
+			// 	raycaster.setFromCamera(mouse,camera);
+
+			// 	var octreeObjects=octree.search(raycaster.ray.origin,raycaster.ray.far,true,raycaster.ray.direction);
+
+			// 	intersections = raycaster.intersectOctreeObjects( octreeObjects );
+
+			// 	if(intersections.length>0){
+			// 		GlobalIntersected=intersections;//[0].object;
+			// 		GlobalIntersected.forEach(function(key,val){
+			// 			key.object.material.color.setHex(0xff0000);
+			// 			if(mouseClick && typeof key.object.callback === "function"){
+			// 				key.object.callback.call(key);
+			// 				mouseClick=false;
+			// 			}
+
+			// 			//显示隐藏
+			// 			//key.object.visible=false;
+			// 		});
+
+			// 		//GlobalIntersected.material.color.setHex(0xff0000);
+			// 	}else if(GlobalIntersected){
+			// 		//GlobalIntersected.material.color.setHex(0xffffff);
+			// 		GlobalIntersected.forEach(function(key,val){
+			// 			//key.object.visible=true;
+			// 			key.object.material.color.setHex(0xffffff);
+			// 		});
+			// 		GlobalIntersected=null;
+			// 	}
+			// }
+
 		</script>
 	</body>
 </html>
