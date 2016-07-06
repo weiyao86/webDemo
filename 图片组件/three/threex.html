@@ -77,7 +77,7 @@
 				meshClick:function(e){
 					var target = e.target,
 						name = target.name,
-						children=scene.children;
+						children=scene.children;//TODO  need recursive
 
 					cacheObjects.forEach(function(val){
 						val.material.color.set(outCls);
@@ -89,6 +89,8 @@
 						}
 						return flag;
 					});
+
+					//target.material.color.set(clickCls);
 
 					cacheObjects=arr;
 				}
@@ -175,7 +177,7 @@
                     var geometry,material,meshR;
                     geometry=new THREE.CylinderGeometry(0,10,30,4,4);
 
-                    for(var i =0;i<1000;i++){
+                    for(var i =0;i<50;i++){
                     	var c = colors[Math.floor(Math.random()*colors.length)];
 
                     	material=new THREE.MeshPhongMaterial({color:0xffffff,shading:THREE.FlatShading});
@@ -197,15 +199,15 @@
                     }
 
                  	if(obj.children){
-                    	obj.children.forEach(function(key,val){
+                    	obj.children.forEach(function(val,idx){
 
-                    		domEvents.addEventListener(key,"mouseover",useEvents.meshMouseover,false);
-							domEvents.addEventListener(key,"mouseout",useEvents.meshMouseout,false);
-							domEvents.addEventListener(key,"click",useEvents.meshClick,false);
+                    		domEvents.addEventListener(val,"mouseover",useEvents.meshMouseover,false);
+							domEvents.addEventListener(val,"mouseout",useEvents.meshMouseout,false);
+							domEvents.addEventListener(val,"click",useEvents.meshClick,false);
                     	});
                 	}
 
-					scene.add( obj );
+                	scene.add( obj );
 
 					animate();
 				} );
