@@ -1,10 +1,10 @@
 ﻿module.exports = function(grunt) {
 
 	//临时要使用sass压缩文件
-	var scwd = "图片组件/", //监听目录
-		sdest = "图片组件/styles/css/", //生成的css文件存放目录
-		wfiles = ["图片组件/styles/css/*.css"], //需要监听的css文件
-		wsassfiles = ['图片组件/*.scss']; //需要监听的scss文件
+	var scwd = "图片组件/three/js/hotpoint/", //监听目录
+		sdest = "图片组件/three/js/hotpoint/", //生成的css文件存放目录
+		wfiles = ["图片组件/three/js/hotpoint/*.css"], //需要监听的css文件
+		wsassfiles = ['图片组件/three/js/hotpoint/*.scss']; //需要监听的scss文件
 
 
 	grunt.initConfig({

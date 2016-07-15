@@ -21,13 +21,18 @@
 				z-index: 100;
 				display:block;
 			}
-			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer; }
+			.fixed{position:fixed;top:0;left:100px;background: #000;z-index:1000;width:30%;height:40px;line-height:40px;text-align:center;}
 		</style>
 	</head>
 
 	<body>
 		<div id="info">
             右车门
+		</div>
+		<div class="fixed">
+			<input type="button" id='zoomIn' value="zoomIn">
+			<input type="button" id='reset' value="reset">
 		</div>
 
 		<script src="http://threejs.org/build/three.min.js"></script>
@@ -38,8 +43,25 @@
 		<script src="./js/OrbitControls.js"></script>
 		<script src="./js/Octree.js"></script>
 		<script src="./js/threex.domevents.js"></script>
-        
+		<script src="./js/TweenMax.min.js"></script>
+
 		<script>
+		Function.prototype.bind=function(content){
+			var slice = [].slice,
+				args = slice.call(arguments,1);
+			if(typeof this !== "function"){throw new TypeError("Function...error");}
+			var self=this,
+				noop = function(){},
+				round=function(){
+					return self.apply(this instanceof noop 
+										? this
+										: content || this,
+										args.concat(slice.call(arguments,1)));
+				};
+				noop.prototype=self.prototype;
+				round.prototype=new noop();
+			return round;
+		};
 			var _width=window.innerWidth,
 				_height=window.innerHeight,
 				cacheObjects=[],
@@ -75,9 +97,10 @@
 					e.stopPropagation();
 				},
 				meshClick:function(e){
-					var target = e.target,
+					var self=this,
+						target = e.target,
 						name = target.name,
-						children=scene.children;//TODO  need recursive
+						children=self.recursiveChild(scene);//TODO  need recursive
 
 					cacheObjects.forEach(function(val){
 						val.material.color.set(outCls);
@@ -89,10 +112,26 @@
 						}
 						return flag;
 					});
-
-					//target.material.color.set(clickCls);
-
 					cacheObjects=arr;
+				},
+
+				recursiveChild:function(obj){
+					var self=this;
+					return self.recursive(obj);
+				},
+
+				recursive:function(obj){
+					var self=this,
+						arr = [];
+					if(obj.children.length){
+						obj.children.forEach(function(val){
+							arr.push(val);
+							if(val.children.length){
+								arr = arr.concat(self.recursive(val));
+							}
+						});
+					}
+					return arr;
 				}
 			};
 
@@ -112,7 +151,7 @@
 				document.body.appendChild( container );
 
 				renderer = new THREE.WebGLRenderer();
-				renderer.setClearColor(0x888888,1);
+				renderer.setClearColor(0x333333,1);
 				renderer.setSize( _width,_height );
 				container.appendChild( renderer.domElement );
 
@@ -162,6 +201,8 @@
 
 				window.addEventListener( 'resize', useEvents.onWindowResize, false );
 
+
+
 			}
 
 			function loadOutMaterial(){
@@ -175,41 +216,80 @@
 
                     var colors=[0x9900cc,0x00ff00,0x55555f,0xffffff];
                     var geometry,material,meshR;
-                    geometry=new THREE.CylinderGeometry(0,10,30,4,4);
+                    geometry=new THREE.SphereGeometry(2,32,32); //CylinderGeometry(0,10,30,4,4);
 
-                    for(var i =0;i<50;i++){
-                    	var c = colors[Math.floor(Math.random()*colors.length)];
+       				var r=70,n=16,cls ,meshList=[],meshPos=[];
+       				for(var i =0;i<=n;i++){
+       					var c=Math.PI/n*i;
+       					for(var j = 1;j<=2*n;j++){
+       						var c2=Math.PI/n*j;
+       						cls = colors[Math.floor(Math.random()*colors.length)];
+       						material=new THREE.MeshPhongMaterial({color:cls,shading:THREE.FlatShading,side: THREE.DoubleSide});
+                    		meshR = new THREE.Mesh(geometry,material);
+                    		 meshR.position.x=r*Math.sin(c)*Math.cos(c2);
+                    		 meshR.position.y=r*Math.cos(c);
+                    		 meshR.position.z=r*Math.sin(c)*Math.sin(c2);
+                    		 meshR.name=j%2==0 ? 'db' : i;
 
-                    	material=new THREE.MeshPhongMaterial({color:0xffffff,shading:THREE.FlatShading});
-                    	meshR = new THREE.Mesh(geometry,material);
-                    	 meshR.position.x=(Math.random()-0.5)*1000;
-                    	 meshR.position.y=(Math.random()-0.5)*1000;
-                    	 meshR.position.z=(Math.random()-0.5)*1000;
-                    	 // meshR.rotation.x=i*Math.PI/180;
-                    	 // meshR.rotation.y=i*Math.PI/180;
-                    	 // meshR.rotation.z=i*Math.PI/180;
-                    	 meshR.name=i%2==0 ? 'db' : i;
-
-                    	 meshR.updateMatrix();
-                    	 meshR.matrixAutoUpdate=false;
-                    	 domEvents.addEventListener(meshR,"mouseover",useEvents.meshMouseover,false);
-                    	 domEvents.addEventListener(meshR,"mouseout",useEvents.meshMouseout,false);
-						 domEvents.addEventListener(meshR,"click",useEvents.meshClick,false);
-                    	 scene.add( meshR );
-                    }
+	                    	// meshR.updateMatrix();
+	                    	 meshR.matrixAutoUpdate=true;
+	                    	 domEvents.addEventListener(meshR,"mouseover",over,false);
+	                    	 domEvents.addEventListener(meshR,"mouseout",out,false);
+							 domEvents.addEventListener(meshR,"click",click,false);
+	                    	 scene.add( meshR );
+	                    	 meshList.push(meshR);
+	                    	 meshPos.push({x:meshR.position.x,y:meshR.position.y,z:meshR.position.z});
+       					}
+       				}
 
                  	if(obj.children){
                     	obj.children.forEach(function(val,idx){
 
-                    		domEvents.addEventListener(val,"mouseover",useEvents.meshMouseover,false);
-							domEvents.addEventListener(val,"mouseout",useEvents.meshMouseout,false);
-							domEvents.addEventListener(val,"click",useEvents.meshClick,false);
+                    		domEvents.addEventListener(val,"mouseover",over,false);
+							domEvents.addEventListener(val,"mouseout",out,false);
+							domEvents.addEventListener(val,"click",click,false);
                     	});
                 	}
+                	function over(e){
+                		useEvents.meshMouseover.bind(useEvents,e)();
+                	}
+                	function out(e){useEvents.meshMouseout.bind(useEvents,e)();}
+                	function click(e){useEvents.meshClick.bind(useEvents,e)();}
 
                 	scene.add( obj );
 
 					animate();
+
+					document.getElementById("zoomIn").addEventListener("click",function(){
+						var r1=1.5;
+	       				meshList.forEach(function(val,idx){
+
+	                    	TweenMax.to(val.position,2,{
+	                    		x:meshPos[idx].x*r1,
+	                    		y:meshPos[idx].y*r1,
+	                    		z:meshPos[idx].z*r1,
+	                    		delay:0,
+	                    		ease:Back.easeIn,
+	                    		onComplete:function(){
+	                    			// console.log(meshPos[idx].pos.x);
+	                    		}
+	                    	});
+	       				});
+					},false);
+					document.getElementById("reset").addEventListener("click",function(){
+	       				meshList.forEach(function(val,idx){
+	                    	TweenMax.to(val.position,2,{
+	                    		x:meshPos[idx].x,
+	                    		y:meshPos[idx].y,
+	                    		z:meshPos[idx].z,
+	                    		delay:0,
+	                    		ease:Back.easeIn,
+	                    		onComplete:function(){
+	                    			// console.log(GreenSock);
+	                    		}
+	                    	});
+	       				});
+					},false);
 				} );
 			}
 
@@ -246,5 +326,8 @@
 				renderer.render( scene, camera );
 			}
 		</script>
+
+
+	
 	</body>
 </html>
