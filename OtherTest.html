@@ -1,30 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-    
-    </style>
-    <script>
-    </script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title</title>
+<script src="Scripts/html5.js"></script>
+<script>
+window.onload=function(){
+	window.onpopstate=function(){
+		console.log(arguments)
+	}
+	setTimeout(function(){
+		window.history.pushState({'name':'zhan'},"page 2","BulidTree.html");
+				setTimeout(function(){
+				window.history.replaceState({'name':'wang'},"page 2","Bulidee.html");
+			}, 3*1000);
+		
+	}, 3*1000);
+	var stylesheet = document.createElement('style');
+	stylesheet.type='text/css';
+	stylesheet.textContent='.back{color:#fff;border:1px solid #f00;}';
+	
+	document.getElementsByTagName('head')[0].appendChild(stylesheet);
+	document.querySelector("#form1").classList.add('back')
+};
+</script>
+
 </head>
 <body>
-	<div style="border:1px solid red;word-wrap:break-word;width:800px;word-break:break-all;">
-	<img src="Res/aa.png" alt="" style="width:500px;height:300px;float:left;">
-	<div>
-	afa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsfafa;sdfja;slfdjas;ldfja;lfdjasdlfadfasdfasfqqeurqwierupoqwasiufapsf</div>
-	</div>
-<!--    <div><img src="pic/20070404/014.jpg" width="91" height="84" style="float:left;" />
-·新闻标题列表
-·新闻标题列表
-·新闻标题列表
-·新闻标题列表
-·新闻标题列表新闻标题列表
-·新闻标题列表新闻标题列表
-·新闻标题列表新闻标题列表
-·新闻标题列表新闻标题列表
-·新闻标题列表新闻标题列表
-</div> -->
+<nav>abcdeafasfdnav</nav>
+<progress value='50' max='100' style='width:300px;height:200px;'></progress>
+<form id="form1"name="form1"method="post"action="">
+<p>用户名：<input type="text" name="textfield" id="textfield" onkeydown="changeEnter()"/></p>
+<p>密码：<input type="text" name="textfield2" id="textfield2" onkeydown="changeEnter()"/></p>
+
+</form>
 </body>
 </html>
