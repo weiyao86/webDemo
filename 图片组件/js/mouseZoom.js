@@ -1,4 +1,19 @@
 	/**
+		 * 	example:
+		 *  $.MouseZoom({
+	            //拖动容器
+	            snapHandle: "snap_handle",
+	            //显示容器
+	            fixed: "fixed",
+	            //源容器
+	            wrap: "wrap",
+	            //大图id
+	            viewImg: "view_img",
+	            //显示容器位置
+	            posFixedLeft:500
+	        });
+		 */
+	/**
 	 * [description]requestAnimationFrame 兼容
 	 * @return {[type]} [description]
 	 */
@@ -51,25 +66,19 @@
 
 
 		$.MouseZoom = function(opts) {
-			this.children().mouseZoom(opts);
+			return new MouseZoom(opts);
 		};
 
-		$.fn.mouseZoom = function(opts) {
-			if ($.isFunction(this.each)) {
-				return this.each(function() {
-					if ($(this).data("MouseZoom.zoom") === undefined) {
-						$(this).data("MouseZoom.zoom", new $.fn.mouseZoom());
-					}
-					$(this).data("MouseZoom.zoom").init(opts);
-				});
-			}
+		var MouseZoom = function(opts) {
+			this.opts = $.extend(true, {}, $.MouseZoom.defaultsOpts, opts);
+			this.init();
 		};
 
-		$.extend($.fn.mouseZoom.prototype, {
+		$.extend(MouseZoom.prototype, {
 
-			init: function(opts) {
+			init: function() {
 				var self = this;
-				self.opts = $.extend(true, {}, $.fn.mouseZoom.defaultsOpts, opts);
+
 				self.buildDom();
 				self.bindEvent();
 			},
@@ -383,7 +392,7 @@
 		 * defaults config params
 		 * @type {Object}
 		 */
-		$.fn.mouseZoom.defaultsOpts = {
+		$.MouseZoom.defaultsOpts = {
 			snapHandle: "snap_handle",
 			fixed: "fixed",
 			wrap: "wrap",

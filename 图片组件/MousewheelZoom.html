@@ -7,7 +7,18 @@
     <script src="../Scripts/Plugin/mousewheel/jquery.mousewheel.min.js"></script>
     <script>
     $(function(){
-        $("#wrap").mouseZoom({posFixedLeft:500});
+        $.MouseZoom({
+            //拖动容器
+            snapHandle: "snap_handle",
+            //显示容器
+            fixed: "fixed",
+            //源容器
+            wrap: "wrap",
+            //大图id
+            viewImg: "view_img",
+            //显示容器位置
+            posFixedLeft:500
+        });
     });
 
     </script>
