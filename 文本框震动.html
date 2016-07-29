@@ -47,7 +47,7 @@
             var shakeClsTiem = null;
             function shake(e, distance, time, callback) {
                 if (typeof e == "string") e = document.getElementById(e);
-                if (!distance) distance = 3;
+                if (!distance) distance = 10;
                 if (!time) time = 500;
                 var nativeCss = e.style.cssText,
                     _left = parseInt(e.style.left),
@@ -72,12 +72,11 @@
                         var y = distance * Math.cos(fudu);
                         e.style.left =  x + "px";
                         e.style.top = y + "px";
-                        console.log("x:"+x+",f:"+f);
-                        shakeClsTiem = setTimeout(animate, Math.min(25, time - fragin));
+                        shakeClsTiem = setTimeout(animate, Math.min(16.173, time - fragin));
 
                     } else {
                         e.style.cssText = nativeCss;
-                        //alert("完成！");
+                        console.log('nativeCss:=='+nativeCss)
                     }
 
                 }
@@ -125,7 +124,7 @@
 <body>
 
     <div id="tt" class="test">
-        <input type="text" id="test" />
+        <input type="text" id="test" style="width:320px;"/>
     </div>
     <a href="../Index.aspx?code=">dfdsf</a>
     <div class="upTriangle"></div>
