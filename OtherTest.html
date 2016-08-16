@@ -7,10 +7,24 @@
 	<script>
 
 	$(function(){
-		setTimeout(function(){
-			$("img").attr('src',"./Res/aa.png");
-		}, 3*1000);
-	})
+		var count=0;
+		var list=[2,5,24];
+		alert(list[3]);
+		var test = function(i){
+			setTimeout(function(){
+				console.log(i);
+			}, 3*1000);
+		};
+
+		var queue=function(arrFun){
+			var def = $.Deferred();
+			arrFun.some(function(v,idx){
+				v.then(function(data){
+
+				});
+			});
+		};
+	});
 	</script>
 	<style>
 		.bg-icon{width:400px;height:400px;border:3px solid #ccc;overflow:hidden;}
