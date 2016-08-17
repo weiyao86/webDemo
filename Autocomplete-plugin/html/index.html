@@ -7,66 +7,66 @@
 	<link rel="stylesheet" href="../style/customautocomplete.css"/>
 	<script src="../../Scripts/jquery-1.9.0.js"></script>
     <script src="../../Scripts/Libs/mustache.js"></script>
-    <!-- <script src="../js/autocomplete.js"></script> -->
+    <script src="../js/autocomplete.js"></script>
 
 	<script type="text/javascript">
 	$(function(){
 
-		// $.customAutoComplete({
-		// 		url: "http://localhost/svwepc/Info/loadtransmissions", //请求URL
-  // 				tempHtml: $("#brand_template").html(), //模板
-  // 				target:"[data-id]",	//数据填充容器
-  // 				checkCls:"check",	//选中样式
-  // 				load:"remote", //local
-  // 				autocompleteContainer:"#autocomplete_source_wrap", //外围容器
-  // 				callbacks: {
-  // 					onKeyup: function(e,txtVal, $container){
-  // 						//根据返回值判断是否继续执行
-  // 						//return false;
-  // 						},
-  // 					onBeforeLoad: function(e, searchTxt){
-  // 						//加载前修改参数　默认值code
-  // 						return {
-  // 							Code:searchTxt,
-  // 							SortType:0,
-  // 							SortColumn:"",
-  // 							PageIndex:1,
-  // 							PageSize:10
-  // 							};//JSON.stringify(params);
-  // 						},
-  // 					onAfterLoad: function(){
-  // 						//alert("onAfterLoad");
-  // 						//请求成功
-  // 						},
-  // 					onbeforeRender: function(record,ret){
-  // 						//数据渲染前重构数据
-  // 						record.Data=ret.Data;
-  // 					},
-  // 					onBeforeSend:function(config){
-  // 						//alert("onAfterLoad");
-  // 						//请求发起前
-  // 						},
-  // 					onComplete:function(config){
-  // 						//alert("onAfterLoad");
-  // 						//请求完成(不论失败成功都调用)
-  // 						},
-  //           loadLocalData:function(param){
-  //             //加载本地数据
-  //             var code = param.$target.val();
-  //             alert(code);
+		$.customAutoComplete({
+				url: "http://localhost/svwepc/Info/loadtransmissions", //请求URL
+  				tempHtml: $("#brand_template").html(), //模板
+  				target:"[data-id]",	//数据填充容器
+  				checkCls:"check",	//选中样式
+  				load:"remote", //local
+  				autocompleteContainer:"#autocomplete_source_wrap", //外围容器
+  				callbacks: {
+  					onKeyup: function(e,txtVal, $container){
+  						//根据返回值判断是否继续执行
+  						//return false;
+  						},
+  					onBeforeLoad: function(e, searchTxt){
+  						//加载前修改参数　默认值code
+  						return {
+  							Code:searchTxt,
+  							SortType:0,
+  							SortColumn:"",
+  							PageIndex:1,
+  							PageSize:10
+  							};//JSON.stringify(params);
+  						},
+  					onAfterLoad: function(){
+  						//alert("onAfterLoad");
+  						//请求成功
+  						},
+  					onbeforeRender: function(record,ret){
+  						//数据渲染前重构数据
+  						record.Data=ret.Data;
+  					},
+  					onBeforeSend:function(config){
+  						//alert("onAfterLoad");
+  						//请求发起前
+  						},
+  					onComplete:function(config){
+  						//alert("onAfterLoad");
+  						//请求完成(不论失败成功都调用)
+  						},
+            loadLocalData:function(param){
+              //加载本地数据
+              var code = param.$target.val();
+              alert(code);
 
-  //             return {
-  //               Data:[{
-  //                 Code:"001-04",
-  //                 Description:"加载本地数据"
-  //               },{
-  //                  Code:"001-05",
-  //                 Description:"05加载本地数据"
-  //               }]
-  //             }
-  //           }
-  // 				}
-		// });
+              return {
+                Data:[{
+                  Code:"001-04",
+                  Description:"加载本地数据"
+                },{
+                   Code:"001-05",
+                  Description:"05加载本地数据"
+                }]
+              }
+            }
+  				}
+		});
 
 
 		$("#btn").click(function(){
