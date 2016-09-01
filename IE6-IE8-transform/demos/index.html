@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>CSS Transforms in IE</title>
+<script src="external/jquery.min.js"></script>
+<style type="text/css">
+body,
+html {
+    font-family: Arial;
+    font-size: 12px;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.test {
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    behavior: url(../build/transform.htc);
+    position: absolute;
+    background: green;
+    padding: 10px;
+    height: 100px;
+    width: 100px;
+    left: 100px;
+    top: 100px;
+    color: white;
+}
+.test:hover {
+    -webkit-transform: rotate(80deg);
+    -ms-transform: rotate(80deg);
+    transform: rotate(80deg);
+}
+</style>
+<script>
+jQuery(function($) {
+    var test = $(".test"),
+        rotation,
+        timer;
+
+    function start() {
+        stop();
+        rotation = 0;
+        timer = setInterval(function() {
+            test.css("transform", "rotate(" + (++rotation) + "deg)");
+        }, 20);
+        return false;
+    }
+
+    function stop() {
+        clearInterval(timer);
+        test.css("transform", "");
+        return false;
+    }
+
+    $(".start").click(start);
+    $(".stop").click(stop);
+});
+</script>
+</head>
+
+<body style="margin: 0; padding: 0;">
+
+    <div style="position: absolute; z-index: 100; top: 100px; left: 0px; width: 100%; border-top: 1px solid black;"></div>
+    <div style="position: absolute; z-index: 100; top: 165px; left: 0px; width: 100%; border-top: 1px solid red;"></div>
+    <div style="position: absolute; z-index: 100; top: 0px; left: 100px; height: 100%; border-left: 1px solid black;"></div>
+    <div style="position: absolute; z-index: 100; top: 0px; left: 165px; height: 100%; border-left: 1px solid red;"></div>
+
+    <a href="#" class="test">
+        Test element
+        <div style="height: 20px; background: #fff; border: 2px solid red; margin: 10px; color: black;">I"m another div!</div>
+    </a>
+
+    <p style="margin: 20px;">
+        If everything is working properly, the below element should be rotated by 45 degrees<br>
+        in both Internet Explorer, Safari and Firefox (>= 3.5).<br>
+        <a href="#" class="start">start</a>
+        <a href="#" class="stop">stop</a>
+    </p>
+
+</body>
+
+</html>
