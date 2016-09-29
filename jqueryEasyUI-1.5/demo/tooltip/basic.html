@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic Tooltip - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	<script>
+	$(function(){
+		$("[title]").tooltip({
+			position:'right',
+			trackMouse:true,
+			content:function(){
+				var $c=$("#custom").clone().removeAttr("id");
+				$c.wrap("<div class='tt'></div>").show();
+				var htm = $c.parent('div').html();
+				return htm;
+			}
+		});
+	})
+	</script>
+	<style>
+.custom{border:3px solid;width:300px;height:400px;background: #fea;display: none;}
+.wrap{width:95%;overflow: auto;height:50px;border:1px solid;}
+.wrap div{width:3000px;}
+.wrap span{margin-left:1200px;}
+
+.wrap1{width:95%;overflow: auto;height:50px;border:1px solid;position: absolute;bottom:0;}
+.wrap1 div{width:3000px;}
+.wrap1 span{margin-left:1200px;}
+
+.wrap2{width:45%;overflow: auto;border:1px solid;position: absolute;bottom:50px;top:50px;}
+.wrap2 span{margin-left:1200px;}
+	</style>
+</head>
+<body>
+
+	<div class="wrap">
+		<div>
+			<span title="margin-left:1200px;" class="easyui-tooltip">margin-left:1200px;</span>
+		</div>
+	</div>
+	<div class="wrap1">
+		<div>
+			<span title="margin-left:1200px;" class="easyui-tooltip">margin-left:1200px;</span>
+		</div>
+	</div>
+
+	<div class="wrap2">
+		<div>
+			<p>1----1</p>
+			<p>2----2</p>
+			<p>3----3</p>
+			<p>4----4</p>
+			<p>5----5</p>
+			<p>6----6</p>
+			<p>7----7</p>
+			<p>8----8</p>
+			<p>9----9</p>
+			<p>10----10</p>
+			<p>11----11</p>
+			<p>12----12</p>
+			<p>13----13</p>
+			<p>14----14</p>
+			<p>15----15</p>
+			<p>16----16</p>
+			<p>17----17</p>
+			<p class="easyui-tooltip" title="18----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----1818----18">18----18</p>
+			<p  class="easyui-tooltip" title="19----19" style="background:#ccc;color:#fff;">19----19</p>
+			<p>20----20</p>
+			<p>21----21</p>
+			<p>22----22</p>
+			<p>23----23</p>
+			<p>24----24</p>
+			<p>25----25</p>
+			<p>26----26</p>
+			<p>27----27</p>
+			<p>28----28</p>
+			<p>29----29</p>
+			<p>30----30</p>
+			<p>31----31</p>
+			<p>32----32</p>
+			<p>33----33</p>
+			<p>34----34</p>
+			<p>35----35</p>
+			<p>36----36</p>
+			<p>37----37</p>
+			<p>38----38</p>
+			<p>39----39</p>
+			<p>40----40</p>
+			<p>41----41</p>
+			<p>42----42</p>
+			<p>43----43</p>
+			<p>44----44</p>
+			<p>45----45</p>
+			<p>46----46</p>
+			<p>47----47</p>
+			<p>48----48</p>
+			<p>49----49</p>
+			<p>50----50</p>
+		</div>
+	</div>
+
+	<span style="position:absolute;top:300px;left:300px;height:50px;border:1px solid #f00;" title="Hover ME Hover Hove" class="easyui-tooltip">
+		Hover meHover meHover meHover meHover
+		<span title="what's wrong" class="easyui-tooltip" style="border:1px solid #f00;">what's wrong</span>
+		meeHover meHover meHover meHove
+	</span>
+	
+<!-- <div class="s-tooltip">
+<div class="s-tooltip-content">tooltiptoo</div>
+<div class="s-tooltip-arrow-out"></div>
+<div class="s-tooltip-arrow"></div>
+</div>
+-->
+<div class="custom" id="custom">this is a test box</div>
+</body>
+</html>

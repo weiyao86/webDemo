@@ -134,6 +134,7 @@
 		console.log("快速排序结果:"+arr.join(','));
 
 		//效率稍次
+
 		var mergeSort = Mysort.getMergeInstance();
 		var merge = mergeSort.sort([15,10,18,2]); 
 		console.log("合并排序结果:"+merge.join(','));
@@ -144,6 +145,18 @@
 		console.log("选择排序结果:"+arr1.join(','));
 
 		//冒泡效率最低,一般很少用到生产环境
+		var test=[12,35,6,10,2,1,100];
+
+		for(var i=0;i<test.length;i++){
+			for(var j=i+1;j<test.length;j++){
+				if(test[i] > test[j]){
+					var sw = test[i];
+					test[i]=test[j];
+					test[j]=sw;
+				}
+			}
+		}
+		console.log('冒泡效率最低----'+test);
 
 	</script>
 </head>

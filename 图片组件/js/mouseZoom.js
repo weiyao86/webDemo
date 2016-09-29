@@ -1,18 +1,18 @@
 	/**
-		 * 	example:
-		 *  $.MouseZoom({
-	            //拖动容器
-	            snapHandle: "snap_handle",
-	            //显示容器
-	            fixed: "fixed",
-	            //源容器
-	            wrap: "wrap",
-	            //大图id
-	            viewImg: "view_img",
-	            //显示容器位置
-	            posFixedLeft:500
-	        });
-		 */
+																																																																																																			 * 	example:
+																																																																																																			 *  $.MouseZoom({
+																																																																																																		            //拖动容器
+																																																																																																		            snapHandle: "snap_handle",
+																																																																																																		            //显示容器
+																																																																																																		            fixed: "fixed",
+																																																																																																		            //源容器
+																																																																																																		            wrap: "wrap",
+																																																																																																		            //大图id
+																																																																																																		            viewImg: "view_img",
+																																																																																																		            //显示容器位置
+																																																																																																		            posFixedLeft:500
+																																																																																																		        });
+																																																																																																			 */
 	/**
 	 * [description]requestAnimationFrame 兼容
 	 * @return {[type]} [description]
@@ -90,12 +90,12 @@
 				self.$wrap = $("#" + self.opts.wrap);
 				self.$viewImg = $("#" + self.opts.viewImg);
 				//setSnapSize 方法内重新计算
-				self.operatorW = self.$wrap.width() || self.opts.operatorW;
-				self.operatorH = self.$wrap.height() || self.opts.operatorH;
+				self.operatorW = self.opts.operatorW || self.$wrap.width();
+				self.operatorH = self.opts.operatorH || self.$wrap.height();
 
 				self.contentDim = {
-					fw: self.$fixed.width() || self.opts.contentDim.fw,
-					fh: self.$fixed.height() || self.opts.contentDim.fh
+					fw: self.opts.contentDim.fw || self.$fixed.width(),
+					fh: self.opts.contentDim.fh || self.$fixed.height()
 				};
 				//setSnapSize 方法内重新计算
 				self.zoomRatio = self.opts.zoomRatio;
@@ -105,6 +105,11 @@
 				self.objX = self.opts.objX;
 				self.objY = self.opts.objY;
 
+				self.samllIsFixedSize = self.opts.samllIsFixedSize;
+				self.largeIsFixedSize = self.opts.largeIsFixedSize;
+				self.loaded = [];
+				self.BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+
 				self.ra = self.rh = self.ow = self.oh = self.na = self.timer = self.timer1 = null;
 
 			},
@@ -113,7 +118,6 @@
 				var self = this;
 
 				self.$viewImg.on("load.zoom error.zoom", function(e) {
-
 					self.setSnapSize(this, e.type === 'load');
 
 				}).each(function(idx, el) {
@@ -123,32 +127,32 @@
 						return self.setSnapSize(el, true);
 					}
 					if (el.readyState === undefined || el.complete) {
-						el.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+						el.src = self.BLANK;
 						el.src = src;
 					}
 				});
 
 				self.$snapHandle.on({
 
-					mouseenter: function() {
-						self.$fixed.animate({
-							top: self.opts.posFixedTop,
-							left: self.opts.posFixedLeft,
-							width: self.contentDim.fw,
-							height: self.contentDim.fh,
-							opacity: 1
-						});
-					},
+					// mouseenter: function() {
+					// 	self.$fixed.animate({
+					// 		top: self.opts.posFixedTop,
+					// 		left: self.opts.posFixedLeft,
+					// 		width: self.contentDim.fw,
+					// 		height: self.contentDim.fh,
+					// 		opacity: 1
+					// 	});
+					// },
 
-					mouseleave: function(e) {
-						self.$fixed.animate({
-							top: e.pageY,
-							left: e.pageX,
-							width: 0,
-							height: 0,
-							opacity: 0
-						});
-					},
+					// mouseleave: function(e) {
+					// 	self.$fixed.animate({
+					// 		top: e.pageY,
+					// 		left: e.pageX,
+					// 		width: 0,
+					// 		height: 0,
+					// 		opacity: 0
+					// 	});
+					// },
 
 					mousedown: function(e) {
 						self.drag(this, self.$wrap, e, {
@@ -222,7 +226,7 @@
 							}
 							var tickZoom = easeOutQuart(step, curperc, perc - curperc, 20);
 
-							var ratio = tickZoom / perc;
+							var ratio = perc ? (tickZoom / perc) : 0;
 
 							self.$viewImg.css({
 								width: vw * ratio,
@@ -231,7 +235,8 @@
 								top: vt * ratio
 							});
 
-							var str = '<p>' + tickZoom + '</p>'
+							var st = step + "--" + curperc + "--" + perc + "--" + curperc;
+							var str = '<p>' + tickZoom + '</p><p>' + st + '</p>'
 							$("#srl").append(str).scrollTop(99999);
 
 							self.preZoom = tickZoom;
@@ -248,31 +253,54 @@
 
 			setSnapSize: function(that, success) {
 				var self = this;
+
+				if (that.src == self.BLANK || $.inArray(that, self.loaded) > -1) return;
+
+				self.loaded.push(that);
+
 				if (success) {
-					var iratio = that.width / that.height;
-					//reset size
-					self.operatorW = self.$wrap.width();
-					self.operatorH = self.$wrap.height();
+					var iratio = that.width / that.height,
+						fw = self.contentDim.fw,
+						fh = self.contentDim.fh,
+						wiw = self.operatorW,
+						wih = self.operatorH;
 
-					var fw = self.contentDim.fw,
-						fh = self.contentDim.fh;
-
-					self.contentDim.fw = iratio * fh > fw ? fw : iratio * fh;
-					self.contentDim.fh = fw / iratio;
+					if (!self.samllIsFixedSize) {
+						self.operatorW = iratio * wih > wiw ? wiw : iratio * wih;
+						self.operatorH = wiw / iratio;
+					}
+					if (!self.largeIsFixedSize) {
+						self.contentDim.fw = iratio * fh > fw ? fw : iratio * fh;
+						self.contentDim.fh = fw / iratio;
+					}
 
 					self.$viewImg.css({
 						width: self.contentDim.fw / self.zoomRatio,
 						height: self.contentDim.fh / self.zoomRatio
 					});
 
+					self.$wrap.children("img").css({
+						width: self.operatorW,
+						height: self.operatorH
+					});
+
 					self.$fixed.css({
-						height: self.$fixed.width() / iratio
+						width: self.contentDim.fw,
+						height: self.contentDim.fh
 					});
 
 					self.$snapHandle.css({
 						width: self.contentDim.fw / that.width * self.operatorW, // zoomRatio*operatorW,
 						height: self.contentDim.fh / that.height * self.operatorH // zoomRatio*operatorH
 					});
+
+					if (self.opts.onAfterLoad) {
+						self.opts.onAfterLoad.call(self, {
+							iratio: iratio,
+							contentDim_fw: self.contentDim.fw,
+							contentDim_fh: self.contentDim.fh
+						});
+					}
 
 				}
 			},
@@ -301,15 +329,17 @@
 					var tickZoom = easeOutQuart(step, curperc, perc - curperc, 60);
 					var tickZoomY = easeOutQuart(step, curpercY, topperc - curpercY, 60);
 
-					var ratio = tickZoom / perc;
-					var ratioY = tickZoomY / topperc;
+					var ratio = perc ? (tickZoom / perc) : 0;
+					var ratioY = topperc ? (tickZoomY / topperc) : 0;
 
 					self.$viewImg.css({
 						left: -ox * ratio,
 						top: -oy * ratioY
 					});
 
-					var str = "<p>" + tickZoom + '=====' + ratio + "</p>";
+					var str = "<p>" + tickZoom + '=====' + ratio + "</p><p>" + perc + "</p>";
+
+
 					$("#srl").append(str).scrollTop(99999);
 
 					self.objX = tickZoom;
@@ -397,11 +427,14 @@
 			fixed: "fixed",
 			wrap: "wrap",
 			viewImg: "view_img",
-			operatorW: 360,
-			operatorH: 200,
+			operatorW: 0,
+			operatorH: 0,
+			//是否固定尺寸
+			smallIsFixedSize: false,
+			largeIsFixedSize: false,
 			contentDim: {
-				fw: 500,
-				fh: 280
+				fw: 0,
+				fh: 0
 			},
 			zoomRatio: 0.4,
 			zoomMin: 0.2,
@@ -410,6 +443,7 @@
 			objX: 0,
 			objY: 0,
 			posFixedTop: 200,
-			posFixedLeft: 200
+			posFixedLeft: 200,
+			onAfterLoad: function() {}
 		};
 	});

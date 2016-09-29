@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="Scripts/jquery-1.9.0.js"></script>
+	<script>
+
+	$(function() {
+		var count = 0,
+			timer, timer1;
+		$("#btn").on("mousedown", function(e) {
+			$("#txt").val(count++);
+
+			var later = function() {
+				timer = setTimeout(function() {
+					$("#txt").val(count++);
+					later();
+				}, 16);
+				console.log('sf')
+			};
+			timer1 = setTimeout(function() {
+				later();
+			}, 1 * 1000);
+
+			e.stopPropagation();
+		});
+		$("#btn").on("mouseup", function(e) {
+			clearTimeout(timer);
+			clearTimeout(timer1);
+
+		});
+
+		var $sltbox = $("#slt_box"),
+			x, y;
+
+		$(document).on({
+			mousedown: function(e) {
+				x = e.pageX;
+				y = e.pageY;
+				$sltbox.css({
+					top: y,
+					left: x,
+					width: 0,
+					height: 0
+				}).show();
+				$(document.body).css({
+					cursor: 'text'
+				});
+				console.log(x + '====' + y)
+				e.preventDefault();
+
+			},
+			mousemove: function(e) {
+				if (!x) return;
+				var x1 = e.pageX - x,
+					y1 = e.pageY - y,
+					l = x1 > 0 ? x : e.pageX,
+					t = y1 > 0 ? y : e.pageY,
+					w = x1 > 0 ? x1 : x - e.pageX,
+					h = y1 > 0 ? y1 : y - e.pageY;
+
+				$sltbox.css({
+					top: t,
+					left: l,
+					width: w,
+					height: h
+				});
+				console.log(e.target.id+'==='+e.toElement.id)
+				if (/INPUT/.test($(e.target).prop("tagName"))) {
+					$(e.target).val("i am come in " + (count++));
+				}else if($(e.target).attr("id")=='inner'){
+					$(e.target).html("i am come in " + (count++));
+				}
+
+			},
+			mouseup: function(e) {
+				x = y = 0;
+				$sltbox.css({
+					width: x,
+					height: x
+				}).hide();
+
+				$(document.body).css({
+					cursor: 'default'
+				});
+				e.preventDefault();
+			}
+		});
+
+		$(document).on("touchmove","ul",function(e){
+			var p=e.originalEvent.changedTouches[0];
+			var tag = document.elementFromPoint(p.pageX,p.pageY);
+			console.log(tag.id)
+		})
+
+	});
+	</script>
+	<style>
+html,body{height:100%;}
+.absolute-center {  
+  display:none;
+  width:0;
+  height:0;
+  border:1px solid #BDD7F4;
+  background:#BDD7F4;
+  position: absolute;  
+  opacity:.65;
+  top:0;left:0;
+  z-index:2;
+}
+.wrap{position:relative;height:80%;border:1px solid #555;}
+.inner{ position:absolute;margin:auto;height:300px;top:0;left:100px;right:100px;bottom:0;background:#ccc;}
+ul {list-style: none;}
+ul li{display: inline-block;width:50px;height:200px;background: #ccc;}
+	</style>
+</head>
+<body>
+	<!-- <input type="button" id="btn" value="number累加">
+	<input type="text" id='txt'>
+		<div id="slt_box" class="absolute-center"></div>
+		<div class="wrap">
+			<div id='inner' class="inner"></div>
+		</div> -->
+
+
+	<ul>
+		<li id="1">1----1</li>
+		<li id="2">2----2</li>
+		<li id="3">3----3</li>
+		<li id="4">4----4</li>
+		<li id="5">5----5</li>
+		<li id="6">6----6</li>
+		<li id="7">7----7</li>
+		<li id="8">8----8</li>
+		<li id="9">9----9</li>
+		<li id="10">10----10</li>
+	</ul>
+	</body>
+</html>

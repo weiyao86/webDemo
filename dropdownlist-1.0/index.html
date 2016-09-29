@@ -1,0 +1,75 @@
+﻿<html>
+    <head>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/dropDownList.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/dropDownList.css" />
+        <script type="text/javascript">
+            $(function(){
+               $("#select1").DropDownList({
+                    header : false,
+                    multiple : false
+               });
+
+               $("#select2").DropDownList({
+                    header : false,
+                    multiple : false
+               });
+
+               $("#select3").DropDownList({
+                    multiple : false,
+               });
+               $("#select4").DropDownList({
+                    multiple : true,
+               });
+               $("#select5").DropDownList({
+                    multiple : true,
+                    header : false,
+               });
+            })
+        </script>
+        <style type="text/css">
+            .select{
+                width: 180px;
+                height: 30px;
+                margin: 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <select id="select1" class="select">
+            <option value="1">A</option>
+            <option value="2">b</option>
+            <option value="3">c</option>
+            <option value="4" >d</option>
+        </select>
+        
+        <select id="select2" class="select" multiple="multiple">
+            <option value="1">A</option>
+            <option value="2">b</option>
+            <option value="3">c</option>
+            <option value="4" >d</option>
+        </select>
+
+        <select id="select3" class="select" multiple="multiple">
+            <option value="1">A</option>
+            <option value="2">b</option>
+            <option value="3">c</option>
+            <option value="4" >d</option>
+        </select>
+
+        <select id="select4" class="select" multiple="multiple">
+            <option value="1">A</option>
+            <option value="2">b</option>
+            <option value="3">c</option>
+            <option value="4" >d</option>
+        </select>
+
+        <select id="select5" class="select" multiple="multiple">
+            <option value="1">A</option>
+            <option value="2">b</option>
+            <option value="3">c</option>
+            <option value="4">d</option>
+        </select>
+
+    </body>
+</html>

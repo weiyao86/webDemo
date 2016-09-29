@@ -32,6 +32,20 @@
 	<script>
 		
 		$(function(){
+			//简单实现
+			// var $container= $('.d');
+			// $("#btn").on("click",function(){
+			// 	var idx = $("#txt").val(),
+			// 		$item = $container.find('tr:eq("'+idx+'")');
+			// 		$item.addClass('ck').siblings().removeClass();
+			// 	if($item.position().top <=0){
+			// 		var h = $item.position().top+$container.scrollTop();
+			// 		$container.animate({'scrollTop':h});
+			// 	}else if($item.position().top + $item.outerHeight()+$container.scrollTop() > $container.height()){
+			// 		var h = $item.position().top+ $item.outerHeight()+$container.scrollTop()-$container.height();
+			// 		$container.animate({'scrollTop':h});
+			// 	}
+			// });
 
 			var $container=$(".container");
 			$("#btn").on("click",function(){

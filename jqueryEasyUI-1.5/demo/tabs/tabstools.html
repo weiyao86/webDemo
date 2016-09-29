@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Tabs Tools - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+</head>
+<body> 
+	<h2>Tabs Tools</h2>
+	<p>Click the buttons on the top right of tabs header to add or remove tab panel.</p>
+	<div style="margin:20px 0;"></div>
+	<div id="tt" class="easyui-tabs" data-options="tools:'#tab-tools'">
+	<!-- <div title="custom">adasdf</div> -->
+	<div title="custom 1">custom 1 <br>custom 1</div>
+		<div title="custom 2" disabled>custom 2<br>custom<br>custom</div>
+		<div title="custom 3">custom 3<br>custom<br>custom<br>custom</div>
+	</div>
+	<div id="tab-tools">
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'" onclick="addPanel()"></a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'" onclick="removePanel()"></a>
+	</div>
+	<script type="text/javascript">
+		var index = 0;
+		function addPanel(){
+			index++;
+			var titles=["新增项-","新增项-新增项-","新增项-新增项-新增项-","新增项-新增项-新增项-新增项-"];
+			var s=titles.sort(function(a,b){return Math.random()>0.5});
+			console.log(s)
+			$('#tt').tabs('add',{
+				title:s[0]+ 'Tab'+index,
+				content: '<div style="padding:10px">Content'+index+'</div>',
+				closable: true
+			});
+		}
+		function removePanel(){
+			var tab = $('#tt').tabs('getSelected');
+			if (tab){
+				var index = $('#tt').tabs('getTabIndex', tab);
+				$('#tt').tabs('close', index);
+			}
+		}
+	</script>
+</body>
+</html>
