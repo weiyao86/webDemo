@@ -1,18 +1,4 @@
 	/**
-																																																																																																			 * 	example:
-																																																																																																			 *  $.MouseZoom({
-																																																																																																		            //拖动容器
-																																																																																																		            snapHandle: "snap_handle",
-																																																																																																		            //显示容器
-																																																																																																		            fixed: "fixed",
-																																																																																																		            //源容器
-																																																																																																		            wrap: "wrap",
-																																																																																																		            //大图id
-																																																																																																		            viewImg: "view_img",
-																																																																																																		            //显示容器位置
-																																																																																																		            posFixedLeft:500
-																																																																																																		        });
-																																																																																																			 */
 	/**
 	 * [description]requestAnimationFrame 兼容
 	 * @return {[type]} [description]
@@ -354,60 +340,60 @@
 				window.cancelAnimationFrame(self.timer1);
 			},
 
-			drag: function(target, $parent, e, callback) {
-				var self = this,
-					$target = $(target),
-					pos = {
-						top: e.pageY - $target.position().top,
-						left: e.pageX - $target.position().left
-					},
-					maxX = $parent && $parent.width() - $target.width(),
-					maxY = $parent && $parent.height() - $target.height();
-				if (window.attachEvent) {
-					$target.one('selectstart', function() {
-						return false;
-					});
-				} else {
-					$target.css({
-						"-moz-user-select": 'none',
-						"-webkit-user-select": 'none'
-					});
-				}
-				$(document).on({
-					"mousemove.drag": function(evt) {
-						var px = evt.pageX,
-							py = evt.pageY,
-							moveDisX = px - pos.left,
-							moveDisY = py - pos.top;
-
-						if ($parent) {
-							moveDisX < 0 && (moveDisX = 0);
-							moveDisX > maxX && (moveDisX = maxX);
-							moveDisY < 0 && (moveDisY = 0);
-							moveDisY > maxY && (moveDisY = maxY);
-						}
-
-						$target.css({
-							top: moveDisY,
-							left: moveDisX
-						});
-						if (callback && typeof callback.move == "function") {
-							callback.move.call(null, evt, {
-								moveDisX: moveDisX + $target.width(),
-								moveDisY: moveDisY + $target.height(),
-								disX: moveDisX,
-								disY: moveDisY
-							});
-						}
-
-						evt.preventDefault();
-					},
-					"mouseup.drag": function(e) {
-						$(document).off(".drag");
-						e.preventDefault();
-					}
+		drag: function(target, $parent, e, callback) {
+			var self = this,
+				$target = $(target),
+				pos = {
+					top: e.pageY - $target.position().top,
+					left: e.pageX - $target.position().left
+				},
+				maxX = $parent && $parent.width() - $target.width(),
+				maxY = $parent && $parent.height() - $target.height();
+			if (window.attachEvent) {
+				$target.one('selectstart', function() {
+					return false;
 				});
-			},
+			} else {
+				$target.css({
+					"-moz-user-select": 'none',
+					"-webkit-user-select": 'none'
+				});
+			}
+			$(document).on({
+				"mousemove.drag": function(evt) {
+					var px = evt.pageX,
+						py = evt.pageY,
+						moveDisX = px - pos.left,
+						moveDisY = py - pos.top;
+
+					if ($parent) {
+						moveDisX < 0 && (moveDisX = 0);
+						moveDisX > maxX && (moveDisX = maxX);
+						moveDisY < 0 && (moveDisY = 0);
+						moveDisY > maxY && (moveDisY = maxY);
+					}
+
+					$target.css({
+						top: moveDisY,
+						left: moveDisX
+					});
+					if (callback && typeof callback.move == "function") {
+						callback.move.call(null, evt, {
+							moveDisX: moveDisX + $target.width(),
+							moveDisY: moveDisY + $target.height(),
+							disX: moveDisX,
+							disY: moveDisY
+						});
+					}
+
+					evt.preventDefault();
+				},
+				"mouseup.drag": function(e) {
+					$(document).off(".drag");
+					e.preventDefault();
+				}
+			});
+		},
 
 			destroy: function() {
 				var self = this;

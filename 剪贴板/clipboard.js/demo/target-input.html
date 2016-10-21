@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>target-input</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <!-- 1. Define some markup -->
+    <input id="foo" type="text" value="hello">
+    <button class="btn" data-clipboard-action="copy" data-clipboard-target="#foo">Copy</button>
+<span class="btn" data-clipboard-action="copy" data-clipboard-target="#foo">Copy2</span>
+    <!-- 2. Include library -->
+    <script src="../dist/clipboard.min.js"></script>
+
+    <!-- 3. Instantiate clipboard -->
+    <script>
+var copy="";
+    
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        alert('success---------'+e.text);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+
+    document.querySelectorAll('.btn')[1].addEventListener("click",function(){
+        alert(copy)
+    })
+    </script>
+</body>
+</html>
