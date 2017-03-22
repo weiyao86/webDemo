@@ -6,19 +6,43 @@
 	<script src="Scripts/jquery-1.9.0.js"></script>
 
 	<!-- <script src="Scripts/jquery-3.0.0-beta1.js"></script> -->
+	
+	
 
 	<style>
-	.cc{width:50px;border:1px solid;}
-	.custom{border:3px solid;width:300px;height:400px;background: #fea;overflow: hidden;}
-	
-	.cls-2{width:500px;border:13px solid #f00;height:50px;}
-	.cls-3{width:200px;border:3px solid #000;height:50px;}.cls-1{width:300px;border:13px solid #ccc;height:50px;}
+		.wrap{width:300px;height:200px;overflow: scroll;border:1px solid;}
 	</style>
+
+	<script>
+	$(function(){
+		$(".wrap").on("scroll",function(){
+			console.log('ssss')
+		})
+		$(window).on("beforeunload",function(e){
+
+			e.returnValue="离开页面";
+		});
+	});
+	</script>
 </head>
 <body>
-<div class="cls-1 cls-2 cls-3">asdasasf</div>
-	<!-- <div class="custom" id="custom" tabindex="-1">
-	<div class="cc">asdfasdfasdfafdasfa</div>
-	</div> -->
+
+<div id="test" tabindex="-1">TEST</div>
+<div class="wrap" tabindex='-1'>
+<ul style="width:100px;">
+<li>1----1</li>
+<li>2----2</li>
+<li>3----3</li>
+<li>4----4</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+</ul>
+</div>
 </body>
 </html>

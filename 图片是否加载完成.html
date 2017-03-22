@@ -7,6 +7,20 @@
 	<script src="Scripts/Plugin/imageLoaded.js"></script>
 	<script>
 	$(function() {
+			var src = $("img").attr("src"),
+				fn=function(img){};
+			var img = new Image();
+			img.src=src;
+			img.onload = function() {
+				return fn(this);
+			};
+			if (img.complete) {
+				fn(img);
+			} else if (img.readyState == "complete" || img.readyState == "loaded") {
+				fn(img);
+			}
+		});
+	$(function() {
 
 		
 
