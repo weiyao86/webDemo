@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Page-Enter" content="revealTrans(duration=5, transition=0)"> 
+	<title>Document</title>
+	<script src="Scripts/jquery-1.9.0.js"></script>
+
+	<!-- <script src="Scripts/jquery-3.0.0-beta1.js"></script> -->
+	
+	
+
+	<style>
+		.wrap{width:300px;height:200px;overflow: scroll;border:1px solid;}
+	</style>
+
+	<script>
+
+	$(function(){
+		function extendObj(o){
+			if(Object.create){
+				return Object.create(o.prototype);
+			}
+			var f=function(){};
+			f.prototype=o;
+			return new f();
+		}
+		if(typeof Object.create != 'function'){
+			Object.create=function(){
+				var temp=function(){};
+				return function(o){
+					if(typeof o != "object"){
+						throw TypeError('Object prototype may only be an object or null');
+					}
+					var hasOwn=Object.prototype.hasOwnProperty;
+					temp.prototype=o;
+					var obj = new temp();
+					temp.prototype=null;
+					if(arguments.length>1){
+						var p = Object(arguemnts[1]);
+						for(var prop in p){
+							if(hasOwn.call(p,prop)){
+								obj[prop]=p[prop];
+							}
+						}
+					}
+					return obj;
+				};
+			};
+		}
+	});
+
+	//
+	var _st = window.setTimeout;
+	window.setTimeout = function(cb,second) {
+		var args = [].slice.call(arguments,2);
+		return _st(function(){
+			cb.apply(null,args);
+		},second);
+	};
+
+	function test(a,b,c){
+		console.log(a.n+'---'+b+'---'+c);
+	}
+
+	setTimeout(test,3*1000,{n:'hello'},4,5);
+	</script>
+</head>
+<body>
+
+<input type="button" id='btn' value="viewSource"/>
+<div id="test" tabindex="-1">TEST</div>
+<div class="wrap" tabindex='-1'>
+<ul style="width:100px;">
+<li>1----1</li>
+<li>2----2</li>
+<li>3----3</li>
+<li>4----4</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+<li>5----5</li>
+</ul>
+<input type="text">
+</div>
+</body>
+</html>

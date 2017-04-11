@@ -58,8 +58,8 @@
 			var $nav = $("#nav"),
 				$menu = $("#menu"),
 				$drag = $("#drag"),
-				$arrowfront=$("#arrow_front"),
-				$arrowrear=$("#arrow_rear"),
+				$arrowfront = $("#arrow_front"),
+				$arrowrear = $("#arrow_rear"),
 				$pageView = $("#page_view"),
 				pageFrame = $.trim($("#page_frame").html()),
 				preload = function() {
@@ -99,13 +99,13 @@
 				}
 
 				var iframe = document.createElement("iframe");
-				iframe.onload= function() {
+				iframe.onload = function() {
 
 					var ibody = this.contentDocument ? this.contentDocument.documentElement :
 						this.contentWindow ? this.contentWindow.document.body : null;
 
 					var sh = ibody && (ibody.scrollHeight);
-					sh = Math.max(0, $pageView.height()-4, sh);
+					sh = Math.max(0, $pageView.height() - 4, sh);
 
 					$pageFrame.height(sh);
 
@@ -139,21 +139,21 @@
 				}
 			});
 
-			var clearD=null;
+			var clearD = null;
 			$nav.on({
-				mousemove:function(e){
-					var x=e.pageX,
-					y=e.pageY;
+				mousemove: function(e) {
+					var x = e.pageX,
+						y = e.pageY;
 
-					clearD = setTimeout(function(){
+					clearD = setTimeout(function() {
 						$drag.css({
-							top:y+15,
-							left:x+10
+							top: y + 15,
+							left: x + 10
 						}).show();
-					},200);
+					}, 200);
 				},
-				mouseleave:function(e){
-					if($(e.relatedTarget).prop("id") !== "drag"){
+				mouseleave: function(e) {
+					if ($(e.relatedTarget).prop("id") !== "drag") {
 						$drag.fadeOut();
 					}
 					clearTimeout(clearD);
@@ -162,51 +162,51 @@
 			});
 
 			$drag.on({
-				mouseleave:function(e){
-					if($(e.relatedTarget).prop("id") !== "nav"){
+				mouseleave: function(e) {
+					if ($(e.relatedTarget).prop("id") !== "nav") {
 						$drag.fadeOut();
 						clearTimeout(clearD);
 					}
 					e.preventDefault();
 				},
-				click:function(e){
+				click: function(e) {
 					var $target = $(e.target),
-						dataId =$target.attr("data-id");
-					switch(dataId){
+						dataId = $target.attr("data-id");
+					switch (dataId) {
 						case "expand":
 							$menu.find("li dt").removeData("toggle").nextAll().slideDown();
 							break;
 						case "collapse":
 							$menu.find("li dt").data("toggle", true).nextAll().slideUp();
 							break;
-						defalut:
-							alert('d')
+							defalut:
+								alert('d')
 							break;
 					}
 				}
 			});
 
-			$arrowfront.on("click",function(){
+			$arrowfront.on("click", function() {
 				$arrowfront.toggleClass("rotate");
 
-				if($nav.data('front') == undefined){
+				if ($nav.data('front') == undefined) {
 					$nav.removeClass().addClass("nav-menu front-dis");
-					$nav.data('front',true);
+					$nav.data('front', true);
 					$arrowrear.hide();
-				}else{
+				} else {
 					$nav.removeClass().addClass("nav-menu front-dis-o");
 					$nav.removeData('front');
 					$arrowrear.show();
 				}
 			});
-			$arrowrear.on("click",function(){
+			$arrowrear.on("click", function() {
 				$arrowrear.toggleClass("rotate");
 
-				if($nav.data('rear') == undefined){
+				if ($nav.data('rear') == undefined) {
 					$nav.removeClass().addClass("nav-menu rear-dis");
-					$nav.data('rear',true);
+					$nav.data('rear', true);
 					$arrowfront.hide();
-				}else{
+				} else {
 					$nav.removeClass().addClass("nav-menu rear-dis-o");
 					$nav.removeData('rear');
 					$arrowfront.show();
