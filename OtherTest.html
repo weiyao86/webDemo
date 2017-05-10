@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="Scripts/jquery-1.9.0.js"></script>
+	<style>
+	body{
+  
+    text-shadow: #111 0 0 0px;
+}
+	.container{width:100%;height:auto;border:1px solid red;}
+	.container iframe{
+		width: 100%;height: 100%;border: none;position: absolute;
+	}
+	.wrap{width:400px;height:300px;border:1px solid red;background: url("Res/car.jpg") no-repeat;}
+	table{border-collapse: collapse;}
+	table td{border:1px solid #ccc;}
+	@media screen and (max-width:1600px) {
+		table td:before{
+			content: attr(data-label);
+			float: left;
+			font-weight: bolder;
+		}
+	}
+	</style>
+
+	<script>
+	$(function(){
+		// 获取光标位置
+		function getCursortPosition (textDom) {
+		    var cursorPos = 0;
+		    if (document.selection) {
+		        // IE Support
+		        textDom.focus ();
+		        var selectRange = document.selection.createRange();
+		        selectRange.moveStart ('character', -textDom.value.length);
+		        cursorPos = selectRange.text.length;
+		    }else if (textDom.selectionStart || textDom.selectionStart == '0') {
+		        // Firefox support
+		        cursorPos = textDom.selectionStart;
+		    }
+		    return cursorPos;
+		}
+		$("#test,#test1").on('focus',function(){
+			console.log(getCursortPosition(this));
+		})
+
+		$(".wrap").css({
+			"background-position":(400-1920-20)+"px"
+		});
+
+		setInterval(function(){
+			var s =$("#txt").val();
+			//$("#txt").next("p").html(s);
+		}, 3*1000);
+		
+		$("#txt").on("propertychange",function(){
+			$("#txt").next("p").html('propertychange'+this.value);
+		})
+
+		$("#txt").on("input",function(){
+			$("#txt").next("p").html('input'+this.value);
+		})
+
+
+	});
+
+
+	
+	</script>
+</head>
+<body>
+<input type="text" id='txt' value="value">
+<p></p>
+<marquee>这里是输入文字的地方，还可以放图片代码、Flash动画代码和gif动态小图代码。</marquee>
+	<div class="container">
+	<!-- <iframe id="iframeId" src="5种css实现垂直水平居中.html" frameborder="0"></iframe> -->
+	</div>
+	<input id="test" type="text" value="1234564645654">
+	<input id="test1" type="text" value="1234564645654">
+	<table>
+  <thead>
+    <tr>
+      <th>支付</th>
+      <th>日期</th>
+      <th>金额</th>
+      <th>周期</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="支付">支付 #1</td>
+      <td data-label="日期">02/01/2015</td>
+      <td data-label="金额">$2,311</td>
+      <td data-label="周期">01/01/2015 - 01/31/2015</td>
+    </tr>
+    <tr>
+      <td data-label="支付">支付 #2</td>
+      <td data-label="日期">03/01/2015</td>
+      <td data-label="金额">$3,211</td>
+      <td data-label="周期">02/01/2015 - 02/28/2015</td>
+    </tr>
+  </tbody>
+</table>
+<div class="wrap"></div>
+</body>
+</html>
