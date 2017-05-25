@@ -1,127 +1,112 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <style type="text/css">
+    <head>
+        <title></title>
+        <style type="text/css">
         #divTest {
-            width: 50px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            border: 1px solid red;
+        width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border: 1px solid red;
         }
-    </style>
-    <script src="Scripts/jquery-1.4.1.js"></script>
-    <script type="text/javascript">
-
-
+        </style>
+        <script src="Scripts/jquery-1.4.1.js"></script>
+        <script type="text/javascript">
         var str = "aa bb  c  ";
         
-
         $(function () {
-            
-
-
-            var fun = function () {
-                this.test = function () { alert("11"); };
-                this.tt = "f";
-            };
-            fun.prototype = {
-                test: function () { alert("33"); }
-            };
-            
-            var f = new fun();
-
-            if ("test" in f) {
-                alert("true");
-            }
-
-            if(f.hasOwnProperty("tt")){
-            alert("f");
-            }
-
-
-            $("#divTest").html(str);
-            var name = "Javascript";
-            var s = name.search(/[Jj]avascript/);
-            console.log(s);
-            var testStr = "'Hello',\"World\"";
-            
-            console.log(testStr.replace(/('|")(.*?)(\1)/g,'a'));
-            $("#txtTest").bind("blur", function () {
-
-                var test_ = /[a-zA-Z]/g;   //
-                //alert(test_.test($(this).val()));
-                //1.数字
-                test_ = /\d/g;
-                //2.英文
-                //test_ = /([a-zA-Z]*){5,18}$/;
-                //3.包含中文
-                //test_ = /[^\x00-\xff]/g;   //--/^[\u4e00-\u9fa5]+$/; 全角:/[^\uFF00-\uFFFF]/g
-                //test_ = /.*[!,@,#,$,%,^,&,*,?,_,~]|\w{3,5}$/; ///.*[!,@,#,$,%,^,&,*,?,_,~];
-                var aa = $(this).val().match(test_);
-                if (aa)
-                    alert(aa + "----len=" + aa[0].length);
-                //$("#lbTest").html(test_.test($(this).val()));
-                // $(this).val().match(test_)--针对字符串
-               //贪婪模式---非贪婪= 在所有的次数符后跟上?都属于非贪婪模式,尽可能少的匹配
-            });
-
-          
-
+        
+        var fun = function () {
+        this.test = function () { alert("11"); };
+        this.tt = "f";
+        };
+        fun.prototype = {
+        test: function () { alert("33"); }
+        };
+        
+        var f = new fun();
+        if ("test" in f) {
+        alert("true");
+        }
+        if(f.hasOwnProperty("tt")){
+        alert("f");
+        }
+        $("#divTest").html(str);
+        var name = "Javascript";
+        var s = name.search(/[Jj]avascript/);
+        console.log(s);
+        var testStr = "'Hello',\"World\"";
+        
+        console.log(testStr.replace(/('|")(.*?)(\1)/g,'a'));
+        $("#txtTest").bind("blur", function () {
+        var test_ = /[a-zA-Z]/g;   //
+        //alert(test_.test($(this).val()));
+        //1.数字
+        test_ = /\d/g;
+        //2.英文
+        //test_ = /([a-zA-Z]*){5,18}$/;
+        //3.包含中文
+        //test_ = /[^\x00-\xff]/g;   //--/^[\u4e00-\u9fa5]+$/; 全角:/[^\uFF00-\uFFFF]/g
+        //test_ = /.*[!,@,#,$,%,^,&,*,?,_,~]|\w{3,5}$/; ///.*[!,@,#,$,%,^,&,*,?,_,~];
+        var aa = $(this).val().match(test_);
+        if (aa)
+        alert(aa + "----len=" + aa[0].length);
+        //$("#lbTest").html(test_.test($(this).val()));
+        // $(this).val().match(test_)--针对字符串
+        //贪婪模式---非贪婪= 在所有的次数符后跟上?都属于非贪婪模式,尽可能少的匹配
+        });
+        
         })
-    </script>
-</head>
-<body>
-    <!--首要条件：5-15位不能是纯数字或者纯字母使用3种类型的超过5个的到8个是中，8个以上是强使用两个英文字母与数字 5-8弱，9-15中-->
-    <div>
-        <input id="txtTest" type="text" value="" />
-        <label id="lbTest"></label>
-
-    </div>
-    <div id="divTest"></div>
-
-
-    <table cellpadding="0" cellspacing="0" class="templeat_tb">
-                <tbody>
-                    <tr>
-                        <td id="Ttd1" class="T" colspan="2">
-                            <div type="T" title="T1" class="T_top">
-                                顶部</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="Ttd2" class="L">
-                        </td>
-                        <td id="Ttd3" class="P">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="Ttd4" class="B" colspan="2">
-                            <div type="B" title="B1" class="T_bottom">
-                                底部
-                                <table class="style1">
-                                    <tr>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-</body>
+        </script>
+    </head>
+    <body>
+        <!--首要条件：5-15位不能是纯数字或者纯字母使用3种类型的超过5个的到8个是中，8个以上是强使用两个英文字母与数字 5-8弱，9-15中-->
+        <div>
+            <input id="txtTest" type="text" value="" />
+            <label id="lbTest"></label>
+        </div>
+        <div id="divTest"></div>
+        <table cellpadding="0" cellspacing="0" class="templeat_tb">
+            <tbody>
+                <tr>
+                    <td id="Ttd1" class="T" colspan="2">
+                        <div type="T" title="T1" class="T_top">
+                        顶部</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="Ttd2" class="L">
+                    </td>
+                    <td id="Ttd3" class="P">
+                    </td>
+                </tr>
+                <tr>
+                    <td id="Ttd4" class="B" colspan="2">
+                        <div type="B" title="B1" class="T_bottom">
+                            底部
+                            <table class="style1">
+                                <tr>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
 </html>

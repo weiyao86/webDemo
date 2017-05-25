@@ -1,236 +1,353 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>两侧列固定中间列变宽2</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script type="text/javascript" src="Scripts/jquery-1.9.0.js"></script>
-    <script type="text/javascript" src="Scripts/jquery.blockUI.js"></script>
-    <script type="text/javascript">
+<title>两侧列固定中间列变宽2</title>
+<meta http-equiv="Content-Type"content="text/html; charset=utf-8"/>
+<script type="text/javascript"src="Scripts/jquery-1.9.0.js"></script>
+<script type="text/javascript"src="Scripts/jquery.blockUI.js"></script>
+<script type="text/javascript">
 
-    $(function(){
+$(function() {
+    console.log(top.parent.document.body.scrollHeight);
+    console.log(document.body.scrollHeight);
 
-        console.log(top.parent.document.body.scrollHeight);
-        console.log(document.body.scrollHeight);
-
-        $("#btn").on("click",function(){
-            $(".left").toggleClass("w")
-        });
-    })
-    </script>
-    <style type="text/css">
-        body {
-            font: 12px/18px Arial;
-            margin: 0;
-        }
-
-        .w{margin-left:-180px !important;}
-        .w1{width:200px;}
-
-        #header, #footer {
-            background: #CCCCFF;
-            width: 85%;
-            margin: 0 auto;
-        }
-
-        #Nav {
-            background: #dfC0FF;
-            width: 85%;
-            margin: 0 auto;
-        }
-
-        h2 {
-            margin: 0;
-            padding: 20px;
-        }
-
-        p {
-            padding: 15px 20px;
-            text-indent: 2em;
-            margin: 0;
-        }
-
-        #container {
-            width: 85%;
-            margin: 0 auto;
-            background: url(images/background-right.gif) repeat-y top right;
-            position: relative;
-        }
-
-        #innerContainer {
-            background: url(images/background-left.gif) repeat-y top left;
-        }
-
-        #navi {
-            width: 200px;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-        }
-
-        #content {
-            margin-right: 200px;
-            margin-left: 200px;
-        }
-
-        #side {
-            width: 200px;
-            position: absolute;
-            right: 0px;
-            top: 0px;
-        }
-        #box{ float:left; width:800px;border:1px solid black;}  #left{ float:left; width:50%;border:1px solid red;}  #right{width:10%;float:left;border:1px solid yellow;}   #tt{ margin-right:-3px;width:30%; } 
-        .clearfix:after,.clearfix:before{content:"";display:table;}
-        .clearfix{clear:both;}
-        .clearfix:after{zoom:1;}
-        .test{
-             padding: 25px 0;
-             vertical-align:middle;/*对行内元素有效*/
-             text-align:center;
-             border:1px solid green;
-            color:red; /* For IE8+ */
-            color:gray\0; /* For IE8+ */
-            *color:yellow;  /* For IE7 and earlier */
-            _color:green;  /* For IE6 and earlier */
-        }
-    </style>
+    $("#btn").on("click", function() {
+        $(".left").toggleClass("w")
+    }
+    );
+}
+)
+</script>
+<style type="text/css">
+body {
+    font: 12px/18px Arial;
+    margin: 0;
+}
+.w {
+    margin-left: -180px !important;
+}
+.w1 {
+    width: 200px;
+}
+#header, #footer {
+    background: #CCCCFF;
+    width: 85%;
+    margin: 0 auto;
+}
+#Nav {
+    background: #dfC0FF;
+    width: 85%;
+    margin: 0 auto;
+}
+h2 {
+    margin: 0;
+    padding: 20px;
+}
+p {
+    padding: 15px 20px;
+    text-indent: 2em;
+    margin: 0;
+}
+#container {
+    width: 85%;
+    margin: 0 auto;
+    background: url(images/background-right.gif) repeat-y top right;
+    position: relative;
+}
+#innerContainer {
+    background: url(images/background-left.gif) repeat-y top left;
+}
+#navi {
+    width: 200px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+#content {
+    margin-right: 200px;
+    margin-left: 200px;
+}
+#side {
+    width: 200px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+#box {
+    float: left;
+    width: 800px;
+    border: 1px solid black;
+}
+#left {
+    float: left;
+    width: 50%;
+    border: 1px solid red;
+}
+#right {
+    width: 10%;
+    float: left;
+    border: 1px solid yellow;
+}
+#tt {
+    margin-right: -3px;
+    width: 30%;
+}
+.clearfix:after, .clearfix:before {
+    content: "";
+    display: table;
+}
+.clearfix {
+    clear: both;
+}
+.clearfix:after {
+    zoom: 1;
+}
+.test {
+    padding: 25px 0;
+    vertical-align: middle;/*对行内元素有效*/
+    text-align: center;
+    border: 1px solid green;
+    color: red; /* For IE8+ */
+    color: gray\0; /* For IE8+ */
+    *color: yellow;  /* For IE7 and earlier */
+    _color: green;  /* For IE6 and earlier */
+}
+</style>
 
 </head>
 <body>
 
-    <div id="header">
-        <h2>Page Header</h2>
-    </div>
+<div id="header">
+<h2>Page Header</h2>
+</div>
 
-    <div id="container">
-        <div id="innerContainer">
-            <div id="navi">
-                <h2>Navi Bar</h2>
-                <ul>
-                    <li>Home</li>
-                    <li>Web Design</li>
-                    <li>Web Dev</li>
-                    <li>Map</li>
-                    <li>Contact Us</li>
-                    <li>Home</li>
-                    <li>Web Design</li>
-                </ul>
-            </div>
-            <div id="content">
-                <h2>Page Content</h2>
-                <p>
-                    1 块级元素：div  , p  , form,   ul,  li ,  ol, dl, address,  fieldset,  hr, menu,  table
-                </p>
-                <p>
-                    2 行内元素：span,   strong,   em,  br,  img ,  input,  label,  select,  textarea,  cite
-                </p>
-            </div>
-            <div id="side">
-                <h2>Side Bar</h2>
-                <ul>
-                    <li>Web Dev</li>
-                    <li>Map</li>
-                    <li>Contact Us</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div id="footer">
-        <h2>Page Footer</h2>
-    </div>
+<div id="container">
+<div id="innerContainer">
+<div id="navi">
+<h2>Navi Bar</h2>
+<ul>
+<li>Home</li>
+<li>Web Design</li>
+<li>Web Dev</li>
+<li>Map</li>
+<li>Contact Us</li>
+<li>Home</li>
+<li>Web Design</li>
+</ul>
+</div>
+<div id="content">
+<h2>Page Content</h2>
+<p>
+1 块级元素：div, p, form, ul, li, ol, dl, address, fieldset, hr, menu, table
+</p>
+<p>
+2 行内元素：span, strong, em, br, img, input, label, select, textarea, cite
+</p>
+</div>
+<div id="side">
+<h2>Side Bar</h2>
+<ul>
+<li>Web Dev</li>
+<li>Map</li>
+<li>Contact Us</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="footer">
+<h2>Page Footer</h2>
+</div>
 
-    <style type="text/css">
-            *{ margin:0; padding:0px;}
-            .header{ background:#666; text-align:center;}
-            .body{ overflow:hidden;*zoom:1;}
-            .wrap-2{ margin-top:30px;}
-            .wrap-2 .main-2{ float:left; width:100%;margin-bottom:-3000px; padding-bottom:3000px;background:#F90;}
-            .wrap-2 .main-wrap-2{  margin:0 200px 0 150px;  }
-            .wrap-2 .sub-2{ float:left; margin-left:-100%; width:150px; background:#6C0; margin-bottom:-3000px; padding-bottom:3000px;}
-            .wrap-2 .extra-2{ float:left; margin-left:-200px; width:200px; background:#F9F; margin-bottom:-3000px; padding-bottom:3000px;}
-            .footer{ background:#666; text-align:center;}
-        </style>
-
-    <div class="wrap-2">
-        <div class="header">Header</div>
-        <div class="body">
-            <div class="main-2">
-                <div class="main-wrap-2">
-                    <p>main-wrap</p>
-                    <p>main-wrap</p>
-                    <p>main-wrap</p>
-                    <p>main-wrap</p>
-                </div>
-            </div>
-            <div class="sub-2">
-                <p>sub</p>
-                <p>sub</p>
-                <p>sub</p>
-            </div>
-            <div class="extra-2">
-                <p>extra</p>
-                <p>
-                    margin-left:350px; background:#CC0;margin-left:350px; background:#CC0;
-                </p>
-            </div>
-        </div>
-        <div class="footer">Footer</div>
-    </div>
-    adf
-    <style type="text/css">
-    .wrap{width:100%;height:200px;border:1px solid red;color:#fff;}
-    .left{width:200px;background:#8c8c8c;float:left;height:100%;overflow: hidden;position:relative;}
-    .right{background:#333;height:100%;text-align:left;overflow: hidden;}
-
-    .left-1{background:#000;height:100%;float:right;width:200px;}
-    .right-1{background:#666;height:100%;word-wrap:break-word;}
-    
-    .left-p{float:left;width:200px;height: 150px;background: #f00;margin-left:-100%;}
-    .right-p{float:left;margin-left:-200px; width:200px;height: 150px;background: #66f;}
-    .middle{width:100%;height:150px;background: gray;float:left;}
-    .m{margin:0 200px;}
-
-    body{margin: 0;padding: 0;overflow:hidden;overflow-y:auto;}
+<style type="text/css">
+* {
+    margin: 0;
+    padding: 0px;
+}
+.header {
+    background: #666;
+    text-align: center;
+}
+.body {
+    overflow: hidden;
+    *zoom: 1;
+}
+.wrap-2 {
+    margin-top: 30px;
+}
+.wrap-2 .main-2 {
+    float: left;
+    width: 100%;
+    margin-bottom: -3000px;
+    padding-bottom: 3000px;
+    background: #F90;
+}
+.wrap-2 .main-wrap-2 {
+    margin: 0 200px 0 150px;
+}
+.wrap-2 .sub-2 {
+    float: left;
+    margin-left: -100%;
+    width: 150px;
+    background: #6C0;
+    margin-bottom: -3000px;
+    padding-bottom: 3000px;
+}
+.wrap-2 .extra-2 {
+    float: left;
+    margin-left: -200px;
+    width: 200px;
+    background: #F9F;
+    margin-bottom: -3000px;
+    padding-bottom: 3000px;
+}
+.footer {
+    background: #666;
+    text-align: center;
+}
 </style>
-    <div class="wrap">
-        <div class="left">左边</div>
-        <div style="float:left;width:50px;height:100%;background:blue;">我要去左边</div>
-        <div class="right">右边的自适应 </div>
-    </div>
 
-    <div class="wrap">
-        <div class="left-1">
-            <div>我是右侧部分</div>
-        </div>
-        <div class="right-1" style="height:100%;overflow:auto;">
-            <div>
-                我是自适应的左侧部分
-            </div>
-        </div>
-    </div>
+<div class="wrap-2">
+<div class="header">Header</div>
+<div class="body">
+<div class="main-2">
+<div class="main-wrap-2">
+<p>main-wrap</p>
+<p>main-wrap</p>
+<p>main-wrap</p>
+<p>main-wrap</p>
+</div>
+</div>
+<div class="sub-2">
+<p>sub</p>
+<p>sub</p>
+<p>sub</p>
+</div>
+<div class="extra-2">
+<p>extra</p>
+<p>
+margin-left: 350px;
+background: #CC0;
+margin-left: 350px;
+background: #CC0;
 
-    <div class="wrap">
-        <div class="middle">
-            <div class="m">
-                <div>我是中间部分</div>
-            </div>
-        </div>
-        <div class="left-p">左侧部分</div>
-        <div class="right-p">右侧部分</div>
+</p>
+</div>
+</div>
+<div class="footer">Footer</div>
+</div>
+adf
+<style type="text/css">
+.wrap {
+    width: 100%;
+    height: 200px;
+    border: 1px solid red;
+    color: #fff;
+}
+.left {
+    width: 200px;
+    background: #8c8c8c;
+    float: left;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.right {
+    background: #333;
+    height: 100%;
+    text-align: left;
+    overflow: hidden;
+}
+.left-1 {
+    background: #000;
+    height: 100%;
+    float: right;
+    width: 200px;
+}
+.right-1 {
+    background: #666;
+    height: 100%;
+    word-wrap: break-word;
+}
+.left-p {
+    float: left;
+    width: 200px;
+    height: 150px;
+    background: #f00;
+    margin-left: -100%;
+}
+.right-p {
+    float: left;
+    margin-left: -200px;
+    width: 200px;
+    height: 150px;
+    background: #66f;
+}
+.middle {
+    width: 100%;
+    height: 150px;
+    background: gray;
+    float: left;
+}
+.m {
+    margin: 0 200px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overflow-y: auto;
+}
+#left1, #right1 { float: left; margin: 0 0 0 -271px; width: 50% }
+#main { width: 540px; float: left; background: green }
+.inner { padding: 20px }
+#left1 .inner, #right1 .inner { margin: 0 0 0 271px; background: orange }
+</style>
+<div class="wrap">
+<div class="left">左边</div>
+<div style="float:left;width:50px;height:100%;background:blue;">我要去左边</div>
+<div class="right">右边的自适应 </div>
+</div>
 
-    </div>
-    <input id='btn' type="button" value="我要去左边"/>
+<div class="wrap">
+<div class="left-1">
+<div>我是右侧部分</div>
+</div>
+<div class="right-1"style="height:100%;overflow:auto;">
+<div>
+我是自适应的左侧部分
+</div>
+</div>
+</div>
 
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAABkCAYAAACRiYAFAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMjYyNzYyNTlCNDExRTRBNTBGODg1QzY3QUVBNzZCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMjYyNzYzNTlCNDExRTRBNTBGODg1QzY3QUVBNzZCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyNjI3NjA1OUI0MTFFNEE1MEY4ODVDNjdBRUE3NkIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyNjI3NjE1OUI0MTFFNEE1MEY4ODVDNjdBRUE3NkIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6eEGoIAAACRklEQVR42uzaTygEcRQH8NmfbGn3hLjhoJQDSblQREpxdKKc5MRJJJH/2nDcixwUObsQJcVJKSchlOKE4qDdRIn32NEYs/b3Zt/OlN6r79bkt+/j1878ftv2C4xPzuQZhvFgpKix0WFDpyamZnWG1Sl4KTC8r3KEq32AqxHu9AGuR7gFEvIQrYGUqcRFr4fwAL6YcARS4gHaAWm3wljHkNIMoj2QZfPCCochl5ApSDYjiJPZhSxCgk6wWSOQR0hrmiAic5ATSKP9jyrJm3D2G5CFNNCtxI0UdBqgUjTodznzaadZUmCsFUiAgObqPJ5Ks1ExAcYFKYcDxmoiwM06g3ThWgJcxglXEOAiTpiyZ4c54UK/4CABzuKE2UtggQUWWGCBBRZYYIH/IxwOh7R/r6QW9sX+jnAsFv/8AZQbx37YF/v/gq0YJ26i1usfsB3jwJ1Q67VKhqWDp0J/wDqDdUtnEoob1cW/P2NO9C/ccQHhRFPdK8o+KBPl1Fc2CYEFFlhggQUWWGCBBfYOfiX0fOOE7whwjBO+9ws+I8A3nPAeAT7nhHcJ8A4XjMdvrgnwNuSZA+6CvBNg/Eej6cJLkE0X6wMeVDpwA+Mj0WZ8ncFyU7jgNEDmky0+TjAeEMp3OVM7Pgipguz/BeMs8dTKKOSFcVk+Tcy+zzp7K1wJucjgvoA3XLcdHoJcebAprULWrXDU8K4iJowPfNxD+BCXVYTXfPgesI/wkQ/wkSLutWyPGMJPPsC3Svc7EnPFFHHn4arnDwEGAExSqEz+vhwuAAAAAElFTkSuQmCC" alt="" />
+<div class="wrap">
+<div class="middle">
+<div class="m">
+<div>我是中间部分</div>
+</div>
+</div>
+<div class="left-p">左侧部分</div>
+<div class="right-p">右侧部分</div>
 
-<a href="" style="width:200px;display:inline-block;border:1px solid gray;">
-    <span style="width:50px;border:1px solid gray; word-wrap:break-word;">79888888888a模压是田</span>
-    <span style="width:50px;border:1px solid red;display:inline-block;word-wrap:break-word;">我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边</span>
+</div>
+<input id='btn'type="button"value="我要去左边"/>
 
-    </a>
-    <div style="width:100%;overflow: hidden;height:400px;border:1px solid;">
-     <div style="width:100%;background:red;height:300px;padding:0 200px;">2</div>
-     <div style="float:left;width:200px;background:yellow;height:300px;margin-left:-100%;">1</div>
-     <div style="float:left;width:200px;background:blue;height:300px;margin-left:-200px;">3</div>
-    </div>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAABkCAYAAACRiYAFAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMjYyNzYyNTlCNDExRTRBNTBGODg1QzY3QUVBNzZCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMjYyNzYzNTlCNDExRTRBNTBGODg1QzY3QUVBNzZCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyNjI3NjA1OUI0MTFFNEE1MEY4ODVDNjdBRUE3NkIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyNjI3NjE1OUI0MTFFNEE1MEY4ODVDNjdBRUE3NkIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6eEGoIAAACRklEQVR42uzaTygEcRQH8NmfbGn3hLjhoJQDSblQREpxdKKc5MRJJJH/2nDcixwUObsQJcVJKSchlOKE4qDdRIn32NEYs/b3Zt/OlN6r79bkt+/j1878ftv2C4xPzuQZhvFgpKix0WFDpyamZnWG1Sl4KTC8r3KEq32AqxHu9AGuR7gFEvIQrYGUqcRFr4fwAL6YcARS4gHaAWm3wljHkNIMoj2QZfPCCochl5ApSDYjiJPZhSxCgk6wWSOQR0hrmiAic5ATSKP9jyrJm3D2G5CFNNCtxI0UdBqgUjTodznzaadZUmCsFUiAgObqPJ5Ks1ExAcYFKYcDxmoiwM06g3ThWgJcxglXEOAiTpiyZ4c54UK/4CABzuKE2UtggQUWWGCBBRZYYIH/IxwOh7R/r6QW9sX+jnAsFv/8AZQbx37YF/v/gq0YJ26i1usfsB3jwJ1Q67VKhqWDp0J/wDqDdUtnEoob1cW/P2NO9C/ccQHhRFPdK8o+KBPl1Fc2CYEFFlhggQUWWGCBBfYOfiX0fOOE7whwjBO+9ws+I8A3nPAeAT7nhHcJ8A4XjMdvrgnwNuSZA+6CvBNg/Eej6cJLkE0X6wMeVDpwA+Mj0WZ8ncFyU7jgNEDmky0+TjAeEMp3OVM7Pgipguz/BeMs8dTKKOSFcVk+Tcy+zzp7K1wJucjgvoA3XLcdHoJcebAprULWrXDU8K4iJowPfNxD+BCXVYTXfPgesI/wkQ/wkSLutWyPGMJPPsC3Svc7EnPFFHHn4arnDwEGAExSqEz+vhwuAAAAAElFTkSuQmCC"alt=""/>
+
+<a href=""style="width:200px;display:inline-block;border:1px solid gray;">
+<span style="width:50px;border:1px solid gray; word-wrap:break-word;">79888888888a模压是田</span>
+<span style="width:50px;border:1px solid red;display:inline-block;word-wrap:break-word;">我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边我要去左边</span>
+
+</a>
+<div style="float:left;overflow: hidden;width:100%;">
+<div id="left1">
+<div class="inner">两边自适应</div>
+</div>
+<div id="main">
+<div class="inner">中间定宽,两边自适应</div>
+</div>
+<div id="right1">
+<div class="inner">两边自适应</div>
+</div>
+</div>
 </body>
 </html>
