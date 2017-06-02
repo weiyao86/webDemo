@@ -1,7 +1,7 @@
    (function() {
 
    	var heads = document.getElementsByTagName("head");
-   	var lurl = location.protocol + '//' + location.host + '/WebTest/';
+   	var lurl = location.protocol + '//' + location.host + '/Work-git/WebTest/';
    	var sarr = ["网页嵌入代码/syntaxhighlighter_3.0.83/scripts/shCore.js", "网页嵌入代码/syntaxhighlighter_3.0.83/scripts/shAutoloader.js"];
    	var jsct = 0;
    	for (var i = 0; i < sarr.length; i++) {

@@ -57,3 +57,15 @@ Toos>编译系统>EpcSass
     $project_name       当前项目文件的名称.
     $project_extension  当前项目文件的扩展部分.
     $project_base_name  当前项目仅包括名的部分.
+
+一台电脑上有多个公钥时在.ssh文件内建config文件并编辑如下(本人pc上配置):
+=======================================
+    Host me.github.com
+    HostName github.com
+    User weiyao86
+    IdentityFile  ~/.ssh/id_rsa
+
+    Host work.github.com
+    HostName github.com
+    User ServisionFrontend
+    IdentityFile  ~/.ssh/id_rsa.servision
