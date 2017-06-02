@@ -49,6 +49,19 @@
                     rng.select();
                 }
             }
+
+            function dispatch(el,type){
+                var evt = document.createEvent("HTMLEvents");
+                evt.initEvent(type,true,true);
+                el.dispatchEvent(evt);
+
+            }
+            $("#btn").on("alert",function(){
+                alert('change')
+            });
+
+
+            dispatch( $("#btn")[0],'alert')
         })
     </script>
     <style>
@@ -105,6 +118,7 @@
 
     <input type="button" id="btn" value="全选">
     <div id="translate"></div>
+    <div style="font-size:12px;line-height: 2em;"><div style="line-height: -10px;">我的要人地戈辊械BK</div></div>
 </body>
 
 </html>
