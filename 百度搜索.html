@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="Scripts/jquery-1.9.0.js"></script>
+	<script>
+	$(function() {
+
+		var $rst = $("#rst"),
+			$msg = $("#s_txt"),
+			$search = $("#s_btn"),
+			burl = 'https://www.baidu.com/s?wd=';
+
+		function testFun() {
+			alert('abcd')
+		}
+
+		$msg.on("keyup", function() {
+			search($(this).val());
+		});
+
+		$search.on("click", function() {
+			var str = $msg.val();
+			search(str);
+		});
+
+
+		function search(str) {
+			$.ajax({
+				url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+				dataType: 'jsonp',
+				data: {
+					wd: str
+				},
+				type: 'get',
+				jsonp: 'cb',
+				// jsonpCallback:'testFun',
+				beforeSend: function() {
+					$rst.empty();
+				},
+				success: function(rst) {
+					var t;
+					$.each(rst.s, function(idx, item) {
+
+						t = burl + item;
+						$rst.append($("<p><a href='" + t + "' target='_blank'>" + item + "</a><p>"));
+					});
+				},
+				error: function() {
+					alert('error');
+				}
+			});
+		}
+	});
+		</script>
+</head>
+<body>
+	<input type="text" id="s_txt">
+	<input type="button" id="s_btn" value="web搜索"></body>
+	<div id="rst"></div>
+</html>
