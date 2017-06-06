@@ -1,124 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <script src="Scripts/jquery-1.9.0.js"></script>
-    <script>
-        $(function() {
-            $("#btn").on("click", function() {
-                copycode($("#translate")[0]);
-            });
-
-            $.get("data/translate.txt", function(data, success, opt) {
-                var arr = $.parseJSON(data).data || [],
-                    rst = {},
-                    rstArr = [];
-
-                for (var i = 0; i < arr.length; i++) {
-                    var v = $.trim(arr[i]);
-                    if (v) {
-                        rst[v] = v;
-                    }
-                }
-
-                var $t = $("#translate");
-
-                for (var key in rst) {
-                    rstArr.push(key);
-                    $t.append("<p>" + key + "</p>");
-                }
-
-            });
-
-            function copycode(obj) {
-                if (window.getSelection) {
-                    var sel = window.getSelection();
-                    var rng = document.createRange();
-                    rng.selectNodeContents(obj);
-                    sel.removeAllRanges();
-                    sel.addRange(rng);
-
-                    // if (sel.setBaseAndExtent) {
-                    //     sel.setBaseAndExtent(obj,0, obj, 1); //chrome ???
-                    // }
-                } else {
-                    var rng = document.body.createTextRange();
-                    rng.moveToElementText(obj);
-                    rng.select();
-                }
-            }
-
-            function dispatch(el,type){
-                var evt = document.createEvent("HTMLEvents");
-                evt.initEvent(type,true,true);
-                el.dispatchEvent(evt);
-
-            }
-            $("#btn").on("alert",function(){
-                alert('change')
-            });
-
-
-            dispatch( $("#btn")[0],'alert')
-        })
-    </script>
-    <style>
-        html,
-        body {
-            height: 100%;
-            overflow: auto;
-            padding: 0;
-            margin: 0
-        }
-        
-        body {
-            position: relative
-        }
-        
-        #left,
-        #right {
-            float: left;
-            margin: 0 0 0 -271px;
-            width: 50%
-        }
-        
-        #main {
-            width: 540px;
-            float: left;
-            background: green
-        }
-        
-        .inner {
-            padding: 20px
-        }
-        
-        #left .inner,
-        #right .inner {
-            margin: 0 0 0 271px;
-            background: orange
-        }
-        #translate p{padding-left:200px;}
-    </style>
-    <script></script>
-</head>
-
+<html>
 <body>
+    <script type="text/javascript">
 
-    <div id="left">
-        <div class="inner">this is left sidebar content</div>
-    </div>
-    <div id="main">
-        <div class="inner">this is main content</div>
-    </div>
-    <div id="right">
-        <div class="inner">this is right siderbar content</div>
-    </div>
+try {
+var curD = new Date();
+curD.setDate(curD.getDate()+5);
+debugger;
+} catch (er) {
 
-    <input type="button" id="btn" value="全选">
-    <div id="translate"></div>
-    <div style="font-size:12px;line-height: 2em;"><div style="line-height: -10px;">我的要人地戈辊械BK</div></div>
-</body>
-
+}
+</script></body>
 </html>
