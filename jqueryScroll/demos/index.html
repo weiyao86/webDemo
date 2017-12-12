@@ -425,12 +425,17 @@ $(function () {
   });
   $('#demo5').scrollbox({
     direction: 'h',
+    linear:true,
+    infiniteLoop:false,
+    autoPlay:false,
+    switchAmount:1,
     distance: 134
   });
   $('#demo5-backward').click(function () {
     $('#demo5').trigger('backward');
   });
   $('#demo5-forward').click(function () {
+    
     $('#demo5').trigger('forward');
   });
   $('#demo6').scrollbox({

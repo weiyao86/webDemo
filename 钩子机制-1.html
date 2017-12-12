@@ -1,38 +1,36 @@
-<html>
+﻿<html>
 <head>
 <title>看我钩住某个实例对象</title>
     <script type="text/javascript">
-        window.onload = function() {
-            var btn = document.querySelector('#btn');
-            btn.addEventListener('click', function() {
-                c.init();
-            });
-        }
-        var ctime = setInterval(function() {
-            console.log(c instanceof m)
-            if (c) {
-                clearInterval(ctime);
-                var oldC = c.init;
-                c.init = function() {
-                    alert('hook');
-                    oldC();
-                }
+       var c, m;
+       var ctime = setInterval(function() {
+        console.log(c instanceof m)
+        if (c) {
+            clearInterval(ctime);
+            var oldC = c.init;
+            c.init = function() {
+                alert('我在每次调用实例对象方法init前调用');
+                oldC();
             }
-        }, 300);
+        }
+       }, 300);
+       window.onload = function() {
+        var btn = document.querySelector('#btn');
+        btn.addEventListener('click', function() {
+            c.init();
+            alert(Object.isExtensible(c));
+        });
 
-
-        var m = function() {};
+        m = function() {};
 
         m.prototype = {
             init: function() {
                 alert('init');
             }
         };
-        var c;
-        setTimeout(function(){
-            c = new m();
-            c.init();
-        }, 3*1000);
+        c = new m();
+        //  c.init();
+       }
 </script>
 </head>
 <body>
