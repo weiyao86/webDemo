@@ -110,6 +110,7 @@ var s= ["t1.jpg","t2.jpg",'t3.jpg'];
             color:#f00;
             word-wrap:break-word;
             word-break:break-all;
+
         }
         #demo:after,#demo span{
             display:inline-block;
@@ -128,10 +129,21 @@ var s= ["t1.jpg","t2.jpg",'t3.jpg'];
             *zoom:1;
             vertical-align:middle;
             font-size:16px;
+
+            background: #fff;
+        box-shadow: 0px 0px 66px 5px rgba(0,0,0,.5);
+        border:1px solid #ccc;
+        width:400px;
+        height:400px;
+        margin:-1px 0 0 -1px;
+        line-height: 400px;
+        text-align:center;
+        font-weight: bold;
+        overflow: hidden;
         }
 
 
-            .middle{float:left;width:200px;height:300px;background:#ccc;}
+    .middle{float:left;width:200px;height:300px;background:#ccc;}
     .middle:after,.middle .inline{display:inline-block;height:100%;width:0;vertical-align:middle; *display:inline;*zoom:1;}
     .middle:after{content:'';}
     .middle .inner{display:inline-block;vertical-align:middle; *display:inline;*zoom:1;}
@@ -154,7 +166,6 @@ var s= ["t1.jpg","t2.jpg",'t3.jpg'];
             <span class="rear">ssssssssssa</span>
         </div>
          <!--[if lt IE 8]><span></span><![endif]-->
-
     </div>
 <div id="div">aaaaaaaaaaaaaaaaaa</div>
 </body>

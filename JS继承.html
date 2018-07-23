@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>继承</title>
+	<script>
+		//1. 寄生式继承,是对原型的二次封装
+		function inherit(obj){
+			function F(){};
+			F.prototype=obj;
+			return new F();
+		}
+
+		var book={
+			name:'js book',
+			likeBook:['CSS','JS']
+		};
+
+		function create(obj){
+			var o=new inherit(obj);
+			o.getName=function(){
+				return this.name;
+			};
+			return o;
+		}
+		var tempBook=create(book);
+		console.log(tempBook.getName()); //js book
+
+		//2.寄生式组合继承,形成一个通用的继承
+		function inheritPrototype(subCls,supperCls){
+			// 复制一份父类的原型副本保存在变量
+			var o = inherit(supperCls.prototype);
+			//修正因为重写子类原型导致子类的constructor指向父类
+			o.constructor=subCls;
+			//设置子类的原型
+			subCls.prototype=o;
+		}
+		function supper(name){
+			this.name=name;
+			this.colors=['red','yellow'];
+		}
+		supper.prototype.getName=function(){return this.name;}
+
+		function sub(name,time){
+			//构造函数继承
+			supper.call(this,name);
+			this.time=time;
+		}
+
+		inheritPrototype(sub,supper);
+		debugger;
+		sub.prototype.getTime=function(){return this.time;}
+		// sub.prototype={
+		// 	getTime:function(){alert(this.name)}
+		// }
+
+		var subT1=new sub('subT1',2018);
+		var subT2=new sub('subT2',2019);
+		subT1.colors.push('black');
+
+		console.log(subT1.colors);
+		console.log(subT2.colors);
+		// console.log(subT1.getName());
+		console.log(subT2.getTime());
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

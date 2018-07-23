@@ -3,31 +3,44 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<script src="Scripts/jquery-1.9.0.js"></script>
+	<script src="../../Scripts/jquery-1.9.0.js"></script>
 	<script>
 
 	$(function() {
 		var count = 0,
-			timer, timer1;
+			timer, timer1,timer2;
+		setCount=(function(){
+			var count=0;
+			return function(){
+				return count++;
+			}
+		})();
 		$("#btn").on("mousedown", function(e) {
-			$("#txt").val(count++);
+			$("#txt").val(setCount());
 
-			var later = function() {
-				timer = setTimeout(function() {
-					$("#txt").val(count++);
-					later();
-				}, 16);
-				console.log('sf')
-			};
-			timer1 = setTimeout(function() {
-				later();
-			}, 1 * 1000);
+			// var later = function() {
+			// 	timer = setTimeout(function() {
+			// 		$("#txt").val(count++);
+			// 		later();
+			// 	}, 16);
+			// 	console.log('sf')
+			// };
+			// timer1 = setTimeout(function() {
+			// 	later();
+			// }, 1 * 1000);
+
+			timer=setTimeout(function(){
+				timer2=setInterval(function(){
+				$("#txt").val(setCount());
+			}, 16);
+			}, 800);
 
 			e.stopPropagation();
 		});
 		$("#btn").on("mouseup", function(e) {
 			clearTimeout(timer);
-			clearTimeout(timer1);
+			// clearTimeout(timer1);
+			clearTimeout(timer2);
 
 		});
 
@@ -116,12 +129,12 @@ ul li{display: inline-block;width:50px;height:200px;background: #ccc;}
 	</style>
 </head>
 <body>
-	<!-- <input type="button" id="btn" value="number累加">
+	<input type="button" id="btn" value="number累加">
 	<input type="text" id='txt'>
 		<div id="slt_box" class="absolute-center"></div>
 		<div class="wrap">
 			<div id='inner' class="inner"></div>
-		</div> -->
+		</div>
 
 
 	<ul>

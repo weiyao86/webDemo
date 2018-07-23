@@ -1,0 +1,24 @@
+{
+  "name": "bower-test",
+  "description": "desc",
+  "main": "main",
+  "authors": [
+    "wei.yao"
+  ],
+  "license": "1.0.0",
+  "keywords": [
+    "main"
+  ],
+  "homepage": "other.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}

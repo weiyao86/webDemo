@@ -4,18 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style type="text/css">
-/* 
- * @name: 
- * @time: 2013/1/24
- * @author: sole
- * @url: http://www.imsole.net/
- * @directiona: 瀑布流实列css
- * @html5+css3+jQuery+响应式设计布局: http://www.imsole.net/html5/
- *
- * 
- *
-*/
- 
+
 /* basic */
 body { background:#f9f9f9; margin:0 auto; font:12px/24px tahoma, Helvetica, Arial; text-align:center; }
 body,iframe,div,p,h1,h2,h3,h4,h5,h6,fieldset,ul,dl,dt,dd,form,input,button,textarea,select,i { margin:0px; padding:0px; font-weight:normal; }
@@ -285,51 +274,6 @@ img { border:none; }
 
 			$cases.parent().css("height", rst_height[0]);
 
-
-			// ------------------------------------------
-			// var contentW = $("#case-list").width(),
-			// 	li_w=$cases.outerWidth(true),
-			// 	cell = Math.ceil(contentW / li_w),
-			// 	colarr = new Array(cell);
-
-			// var step, rows_h = [];
-
-			// $.each($cases, function(i) {
-			// 	 var $that_li = $(this),
-			// 		m = i % cell,
-			// 		li_h = $that_li.outerHeight(true);
-			// 	step = Math.floor(i / cell);
-			// 	$that_li.css({
-			// 		"width": li_w
-			// 	});
-			// 	if (!step) {
-			// 		$that_li.css({
-			// 			"top": "0",
-			// 			"left": li_w * m
-			// 		});
-			// 		rows_h.push(li_h);
-			// 	} else {
-			// 		//取上一行图片的最小高度
-			// 		var min_height = Math.min.apply(rows_h, rows_h);
-			// 		//取出最小高度的图片索引
-			// 		var min_index = rows_h.indexOf(min_height);
-
-			// 		$that_li.animate({
-			// 			"top": min_height,
-			// 			"left": li_w*min_index
-			// 		});
-			// 		rows_h[min_index] = min_height + li_h;
-			// 	}
-
-			// });
-
-
-			// var rst_height = rows_h.sort(function(a, b) {
-			// 	return a < b ? a : -1;
-			// });
-
-			// $cases.parent().css("height", rst_height[0]);
-
 			$.Loupe(".case-list", {
 				large: "#large",
 				fixed: "#showImg",
@@ -352,7 +296,7 @@ img { border:none; }
 				}
 				$(".fixed-bottom").html("Loading...").addClass("fixed-bg-self");
 				$(".made").add($(".loading")).add($(barpanel)).fadeIn();
-				timer = window.setTimeout(function() {
+				timer = window.setTimeout(function() { 
 					var $clone;
 					var later = function() {
 						var deferred = $.Deferred();

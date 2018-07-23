@@ -74,6 +74,7 @@
  				if (paused) {
  					return;
  				}
+
  				var curLi,
  					i,
  					newScrollOffset,
