@@ -39,20 +39,30 @@
 			this.name=name;
 			this.colors=['red','yellow'];
 		}
-		supper.prototype.getName=function(){return this.name;}
+		supper.prototype.getName=function(){
+			return this.name;
+		};
 
 		function sub(name,time){
 			//构造函数继承
 			supper.call(this,name);
 			this.time=time;
+
+			inheritPrototype(this,supper);
 		}
 
-		inheritPrototype(sub,supper);
-		debugger;
-		sub.prototype.getTime=function(){return this.time;}
-		// sub.prototype={
-		// 	getTime:function(){alert(this.name)}
-		// }
+		var protoFunc={
+			getTime:function(){
+				return this.time;
+			}
+		};
+
+		//此步骤是为了简写以sub.prototype.getTime 方式扩展方法
+		for(var item in protoFunc){
+			sub.prototype[item]=protoFunc[item];
+		}
+
+		//sub.prototype.getTime=function(){return this.time;}
 
 		var subT1=new sub('subT1',2018);
 		var subT2=new sub('subT2',2019);
@@ -60,7 +70,7 @@
 
 		console.log(subT1.colors);
 		console.log(subT2.colors);
-		// console.log(subT1.getName());
+		console.log(subT1.getName());
 		console.log(subT2.getTime());
 
 	</script>
