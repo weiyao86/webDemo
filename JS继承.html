@@ -48,8 +48,9 @@
 			supper.call(this,name);
 			this.time=time;
 
-			inheritPrototype(this,supper);
 		}
+		
+		inheritPrototype(sub,supper);
 
 		var protoFunc={
 			getTime:function(){
@@ -73,9 +74,33 @@
 		console.log(subT1.getName());
 		console.log(subT2.getTime());
 
+		//3.改进的extend
+		function extend(sub,supper){
+			var F=function(){};
+			F.prototype=supper.prototype;
+			sub.prototype=new F();
+			sub.prototype.constructor=sub;
+			sub.supperCls=supper.prototype;
+			if(!supper.prototype.constructor == Object.prototype.constructor){
+				supper.prototype.constructor=supper;
+			}
+		}
+
+		function A(name){
+			this.name=name;
+		}
+		function B(name){
+			//构造函数继承
+			B.supperCls.constructor.call(this,name);
+		}
+
+		extend(B,A);
+
+		var b = new B('i am B');
+		alert(b.name); //i am B
 	</script>
 </head>
 <body>
-	
+	THIS IS A TEST PAGE
 </body>
 </html>
