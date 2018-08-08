@@ -15,40 +15,19 @@
 <body>
 <style>
 html{font-size:24px;}
-nav{
-    display: flex;
-    flex-flow: row;
-border: 1px solid;}
-nav > div {
-border: 1px solid red;
-padding: 10px;
-text-align: center;
- font-size: .75rem;
+.test{
+  border: 1px solid red;
 }
-#l{
-  flex: 1;
-  font-size: 1rem;
+.test::after{
+  position: absolute;
+    top: 10px;
+    border: 5px solid #000;
+    display: block;
+    height: 20px;
+    width: 20px;
 }
 </style>
-<script>
 
-$(function(){
-  var $t=$("#t").clone();
-  $t.css("position","absolute");
-$t.animate({
-  top: '300px',
-  left: '400px'},
-  'slow', function() {
-  alert('finish')
-}).appendTo("body");
-})
-</script>
-<nav>
-  <div><a id="t" href=/about >登入3asfdsfdaasfdasfdfdasasfdfdasafdsdsa</a></div>
-  <div><a href=/projects>项目项目项目项目项目项目项目项目项目项目项目项目项目项目项目项目</a></div>
-  <div id="l"><a href=/interact >交互</a></div>
-  
-</nav>
-<span>我要是复制的</span>
+<div class="test">adfasfdasdfsa</div>
 </body>
 </html>
