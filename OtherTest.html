@@ -11,24 +11,39 @@
   .item{border:1px solid;flex:1;}
   .i7{order:3;}
 </style>
+
+<script>
+  $(function(){
+  var str = "hah";
+  var arr = str.split("");
+  var obj = {};
+  var objArr = [];
+debugger;
+  for (var i = 0, j; j = arr[i]; i++) {
+    if (!obj[j]) obj[j] = 0;
+    objArr[++obj[j]] = j;
+    console.log(objArr);
+  }
+
+
+})
+</script>
 </head>
 <body>
 <style>
 html{font-size:24px;}
 .test{
   border: 1px solid red;
-}
-.test::after{
-  position: absolute;
-    top: 10px;
-    border: 5px solid #000;
-    display: block;
-    height: 20px;
-    width: 20px;
+  width: 500px;
+  height: 508px;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>
 
-<div class="test">adfasfd     
+<div class="test">
+<iframe id="iframe" src="http://www.baidu.com" frameborder="0"></iframe>     
 asdfsa</div>
 </body>
 </html>
