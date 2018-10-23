@@ -9,7 +9,7 @@
     <script src="bootSyntaxHigh.js"></script>
     <script type="text/javascript">
         $(function () {
-            var txtName = $("#txtName");
+            var txtName = $("#txtName"),txtglobe;
 
             $("#txtName").keyup(function () {
                 fun(4);
@@ -24,7 +24,7 @@
                 else
                     txtglobe = txtName.val();
 
-                $("#spanMsg").html("输入   " + vl + "  字符!");
+                $("#spanMsg").html("输入   " +  getChooseChar(txtglobe)+ "  字符!");
                 return false;
             }
 

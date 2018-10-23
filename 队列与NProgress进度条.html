@@ -18,54 +18,63 @@
 
   $(function(){
   
-    setTimeout(function(){
-      NProgress.done();
-    }, 5*1000);
+      setTimeout(function() {
+        NProgress.done();
+      }, 5 * 1000);
 
-  //队列
-  var queue=(function(){
-    var pending=[];
-    function next(p){
-      var fn=pending.shift();
-      if(fn){
-        // next['arguments']=arguments;
-        fn(next);
-      }
-    }
+      //队列
+      var queue = (function() {
+        var pending = [];
 
-    return function(fn){
-      if(typeof fn === "function"){
-        pending.push(fn);
-      }else if(typeof fn === "string" && fn === "execute"){
-        next();
-      }
-    };
-  })();
+        function next(p) {
+          var fn = pending.shift();
+          if (fn) {
+            fn(next);
+          }
+        }
 
-      queue(function(next) {
-        setTimeout(function(){
-          console.log(1);
+        return {
+          add: function(fn) {
+            if (typeof fn === "function") pending.push(fn);
+          },
+
+          getQueue: function() {
+            return pending;
+          },
+
+          clear: function() {
+            pending.length = 0;
+          },
+
+          trigger: function() {
+            next();
+          }
+        };
+      })();
+
+      function fun(next,i) {
+
+        var r=Math.floor(Math.random()*100+1);
+        setTimeout(function() {
+          console.log(r+'================'+i);
           next();
-        }, 1000);
-      })
+        }, r*10);
+     }
 
-       queue(function(next) {
-        setTimeout(function(){
-          console.log(2);
-          next(12);
-        }, 800);
-      })
+     queue.add(function(next){
+      fun(next,1);
+     });
+     queue.add(function(next){
+      fun(next,2);
+     });
 
-        queue(function(next) {
-        setTimeout(function(){
-          console.log(3);
+    queue.add(function(next){
+       console.log(3+'================'+3);
           next();
-        }, 500);
-      })
+    });
 
-      queue("execute")
-
-})
+     queue.trigger();
+});
 </script>
 </head>
 <body>

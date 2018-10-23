@@ -29,11 +29,13 @@ body {
 .w1 {
     width: 200px;
 }
+
 #header, #footer {
     background: #CCCCFF;
     width: 85%;
     margin: 0 auto;
 }
+
 #Nav {
     background: #dfC0FF;
     width: 85%;
@@ -97,10 +99,10 @@ p {
     display: table;
 }
 .clearfix {
-    clear: both;
+    zoom: 1;
 }
 .clearfix:after {
-    zoom: 1;
+    clear: both;
 }
 .test {
     padding: 25px 0;
@@ -319,7 +321,7 @@ body {
 </div>
 </div>
 
-<div class="wrap">
+<div class="wrap clearfix">
 <div class="middle">
 <div class="m">
 <div>我是中间部分</div>
