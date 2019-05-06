@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>全景展示</title>
+ 
+    <script src="./three.js"></script>
+    <script>
+       
+    </script>
+    <script src="./tpanorama.js"></script>
+    <script src="./index.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #panoramaConianer {
+            overflow: hidden;
+            position: absolute;
+            height: 100%;
+            width: 90%;
+        }
+
+        #tool {
+            position: absolute;
+            right: 0px;
+            width: 10%;
+            height: 100%;
+            background-color: cadetblue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="panoramaConianer"></div>
+
+    <div id="tool">
+        </br>
+        </br>
+        <button onclick="changeImg('p1')">图1</button>
+        </br>
+        </br>
+        <button onclick="changeImg('p2')">图2</button>
+        </br>
+        </br>
+        <button onclick="changeImg('p4')">图4</button>
+        </br>
+        </br>
+    </div>
+
+</body>
+
+</html>

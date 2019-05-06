@@ -1,6 +1,7 @@
 <html class=""><head><meta charset="UTF-8">        <script type="text/javascript" style="display: none !important;">        function cleanJS(js) {          js = js.replace(/location(s+)?=/mi, '');          js = js.replace(/top.location.+=('|")/mi, '');          js = js.replace(/location.replace/mi, '');          js = js.replace(/window(s+)?\[(s+)?("|')l/mi, '');          js = js.replace(/self(s+)?\[(s+)?("|')loc/mi, '');          return js;        }        _ogEval        = window.eval;        window.eval    = function(text) {_ogEval(cleanJS(text));};        window.open    = function(){};        window.print   = function(){};        window.innerWidth = window.outerWidth; // Fixes browser bug with it innerWidth reports 0        window.innerHeight = window.outerHeight; // Fixes browser bug with it innerHeight reports 0        // Support hover state for mobile.        window.ontouchstart = function(){};        </script>
 
-<style>* {
+<style>
+  * {
      margin: 0;
   overflow:hidden;
   -webkit-user-select: none;

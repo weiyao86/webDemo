@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script>
+		window.onload=function(){
 		function flashChecker() {
 			var hasFlash = 0; //是否安装了flash
 			var flashVersion = 0; //flash版本
@@ -34,8 +35,8 @@
 		}
 		var fls = flashChecker();
 		var s = "";
-		if (fls.f) document.write("您安装了flash,当前flash版本为: " + fls.v + ".x");
-		else document.write("您没有安装flash");
+		if (fls.f) document.body.append("您安装了flash,当前flash版本为: " + fls.v + ".x");
+		else document.body.append("您没有安装或禁用flash<a href='http://www.adobe.com/go/getflashplayer/'>点击启用</a>");
 
 		//如果不需要检查版本的话，代码可以精简一下：
 		// var hasFlash = false;
@@ -44,11 +45,11 @@
 		// } catch (exception) {
 		// 	hasFlash = ('undefined' != typeof navigator.mimeTypes['application/x-shockwave-flash']);
 		// }
-
+}
 	</script>
 </head>
 <body>
 
-
+	
 </body>
 </html>

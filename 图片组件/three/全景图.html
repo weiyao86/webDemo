@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>全景图</title>
+	<script src="./js/three.min.js"></script>
+	<script src="../../Scripts/jquery-1.9.0.js"></script>
+	<script>
+		$(function() {
+			var _lon,_lat;
+			_scene = new THREE.Scene();
+			initCamera();
+			initRenderer();
+			animate();
+
+			// 初始化相机
+			function initCamera() {
+				_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1100);
+				_camera.position.set(0, 0, 2000);
+				_camera.lookAt(new THREE.Vector3(0, 0, 0));
+			}
+
+			// 初始化渲染器
+			function initRenderer() {
+				_renderer = new THREE.WebGLRenderer();
+				_renderer.setSize(window.innerWidth, window.innerHeight);
+				_container = document.getElementById('panoramaConianer');
+				_container.appendChild(_renderer.domElement);
+			}
+
+			// 实时渲染
+			function animate() {
+				requestAnimationFrame(animate);
+				_renderer.render(_scene, _camera);
+			}
+
+			var mesh = new THREE.Mesh(new THREE.SphereGeometry(1000, 100, 100),
+				new THREE.MeshBasicMaterial({
+					map: THREE.ImageUtils.loadTexture('../../Res/car1.gif')
+				}));
+			_scene.add(mesh);
+			mesh.scale.x=-1;
+			_camera.position.set(0,0,0);
+
+			_container.addEventListener('mousedown', (event)=>{
+			  event.preventDefault();
+			  _isUserInteracting = true;
+			  _onPointerDownPointerX = event.clientX;
+			  _onPointerDownPointerY = event.clientY;
+			  _onPointerDownLon = _lon;
+			  _onPointerDownLat = _lat;
+			});
+
+			_container.addEventListener('mousemove', (event)=>{
+			  if (_isUserInteracting) {
+			    _lon = (_onPointerDownPointerX - event.clientX) * 0.1 + _onPointerDownLon;
+			    _lat = (event.clientY - _onPointerDownPointerY) * 0.1 + _onPointerDownLat;
+			  }
+			});
+
+			_container.addEventListener('mouseup', (event)=>{
+			 _isUserInteracting = false;
+			});
+
+			function animate() {
+			  requestAnimationFrame(animate);
+			  calPosition();
+			  _renderer.render(_scene, _camera);
+			  _renderer.render(_sceneOrtho, _cameraOrtho);
+			}
+
+			function calPosition() {
+			  _lat = Math.max(-85, Math.min(85, _lat));
+			  var phi = tMath.degToRad(90 - _lat);
+			  var theta = tMath.degToRad(_lon);
+			  _camera.target.x = _pRadius * Math.sin(phi) * Math.cos(theta);
+			  _camera.target.y = _pRadius * Math.cos(phi);
+			  _camera.target.z = _pRadius * Math.sin(phi) * Math.sin(theta);
+			  _camera.lookAt(_camera.target);
+			}
+
+			_container.addEventListener('mousewheel', (event)=>{
+			  var ev = ev || window.event;
+			  var down = true;
+			  var m = _camera.getFocalLength();
+			  down = ev.wheelDelta ? ev.wheelDelta < 0 : ev.detail > 0;
+			  if (down) {
+			    if (m > minFocalLength) {
+			      m -= m * 0.05
+			      _camera.setFocalLength(m);
+			    }
+			  } else {
+			    if (m < maxFocalLength) {
+			      m += m * 0.05
+			      _camera.setFocalLength(m);
+			    }
+			  }
+			});
+
+		})
+	</script>
+</head>
+<body>
+	<div id="panoramaConianer"></div>
+</body>
+</html>
