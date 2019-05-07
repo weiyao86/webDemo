@@ -26,34 +26,41 @@ $(function() {
 				$(this).addClass("active");
 				self.previoursObj.treeNode = $(this);
 
-				var url = ['../../res/门板加序号-调整02.obj', '../../res/32_1172_N3082.obj', '../../res/20160704-加序号.obj', '../../res/20160707-01.obj'];
+				var url = ['../../res/P1.obj', '../../res/P3.obj', '../../res/bumper test.obj', '../../res/20160707-01.obj'];
+				var id = self.previoursObj.treeNode.attr("data-code");
+				switch (id) {
+					case "EC35-101":
+						url = '../../res/door.obj';
+						break;
+					case "EC35-102":
+						url = '../../res/body.obj';
+						break;
+					default:
+						url = '../../res/5306001-8101-1.obj';
+						break;
+				}
 
-				self.hotpoint3D.loadOutMaterial(url[self.objCount]);
+				self.hotpoint3D.loadOutMaterial(url);
 
 				self.objCount++;
-				self.objCount > 2 && (self.objCount = 0);
+				self.objCount > 1 && (self.objCount = 0);
 			});
 
 			self.$partBody.on("click", 'tr', function() {
 				var callout = $(this).attr("data-callout");
 				if (!self.previoursObj.partNode) {
-					self.previoursObj.partNode = [];
+					self.previoursObj.partNode = $();
 				}
 
-				$.each(self.previoursObj.partNode, function(idx, val) {
-					$(val).removeClass("active");
-				});
-
+				self.previoursObj.partNode.removeClass("active");
 
 				var $trlist = self.$partBody
 					.find("tr[data-callout='" + callout + "']")
 					.addClass("active");
 
-				self.previoursObj.partNode.length = 0;
 				self.previoursObj.partNode = $trlist;
 
-
-				self.hotpoint3D.click(callout);
+				self.hotpoint3D.trrigerSetCls(callout ? ('' + callout) : '');
 			});
 
 		},
@@ -74,12 +81,16 @@ $(function() {
 				data.Data = data.Data.filter(function(val) {
 					return !!val.PId;
 				});
+				data.Data.length = 3;
 				var view = Mustache.render(self.template, data);
 				self.$tree.html(view);
+
+				// self.previoursObj.treeNode = self.$tree.find("li:first>a").addClass("active");
 
 			});
 
 			$.getJSON('../../data/part.json', function(data) {
+
 				var view = Mustache.render(self.templateP, data.Data);
 				self.$partBody.html(view);
 
@@ -88,13 +99,13 @@ $(function() {
 
 		clickPart: function(callout) {
 			var self = this,
-				$trlist = self.$partBody
+				$trlist;
+
+			self.$partBody.find(".active").removeClass("active");
+
+			$trlist = self.$partBody
 				.find("tr[data-callout='" + callout + "']")
 				.addClass("active");
-
-			self.$partBody
-				.find("tr[data-callout!='" + callout + "']")
-				.removeClass("active");
 
 			self.previoursObj.partNode = $trlist;
 		}

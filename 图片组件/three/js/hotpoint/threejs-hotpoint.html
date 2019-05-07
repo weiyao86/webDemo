@@ -11,18 +11,18 @@
 
 	<div class="container">
 		<header>
-			<div id="info">右车门</div>
+			<h3 id="info">Demo</h3>
 			<div class="header"></div>
 		</header>
 		<div class="body">
 			<div class="menu-tree">
-				<p class="m-title">Title</p>
+				<p class="m-title">图</p>
 				<div class="m-content">
 					<ul id='tree' class="tree">
 						<script type="text/template" id="template_tree">
 							{{#Data}}
 								<li>
-									<a href="javascript:;" title="{{Name}}">
+									<a href="javascript:;" title="{{Name}}" data-code="{{Id}}">
 										<span class="icon icon-doc"></span>
 										<span class="n-content">{{Name}}</span>
 									</a>
@@ -82,8 +82,9 @@
 		</div>
 		<div class="wrap-hot-img">
 			<section class="fixed">
-				<input type="button" class="btn btn-primary" id='zoomIn' value="zoomIn">
-				<input type="button" class="btn btn-primary" id='reset' value="reset"></section>
+				<!-- <input type="button" class="btn btn-primary" id='zoomIn' value="zoomIn">
+				<input type="button" class="btn btn-primary" id='reset' value="reset"> -->
+			</section>
 			<div class="hot-img" id="hot_img_wrap"></div>
 		</div>
 	</div>
@@ -104,7 +105,9 @@
 <script src="../threex.domevents.js"></script>
 <script src="../TweenMax.min.js"></script>
 <script src="../jquery-1.9.0.js"></script>
+<script src="../jquery.blockUI.js"></script>
 <script src="../mustache.js"></script>
+
 <script src="main.js"></script>
 <script src="operator.js"></script>
 </body>

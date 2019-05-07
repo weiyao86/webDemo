@@ -56,10 +56,14 @@ Hotpoint3D.prototype = {
 
 		var self = this;
 
+		self.childrenList = [];
 		self.cacheObjects = [];
 		self.clickCls = 0xff0000;
+		self.clickTextCls = 0xffffff;
 		self.overCls = 0xffff00;
+		self.overTextCls = 0x000000;
 		self.outCls = 0xffffff;
+		self.outTextCls = 0x000000;
 		self.container = document.getElementById('hot_img_wrap');
 		self._width = self.container.clientWidth;
 		self._height = self.container.clientHeight;
@@ -85,23 +89,25 @@ Hotpoint3D.prototype = {
 	},
 
 	meshMouseover: function(e) {
-		var self = this;
+		var self = this,
+			target = e.target,
+			meshs = self.getMeshlistByName(target.name);
 
-		e.target.material.color.set(self.overCls);
+		self.setCls(meshs, self.overTextCls, self.overCls);
+
 		e.stopPropagation();
 	},
 
 	meshMouseout: function(e) {
-		var self = this;
-		var target = e.target,
-			idx = self.cacheObjects.indexOf(target);
+		var self = this,
+			target = e.target,
+			arr = self.getMeshlistByName(target.name, self.cacheObjects);
 
-		if (idx > -1) {
-			target.material.color.set(self.clickCls);
-			//target.material.materials[0].color.set(self.clickCls);
+		if (arr.length) {
+			self.setCls(self.cacheObjects, self.clickTextCls, self.clickCls);
 		} else {
-			target.material.color.set(self.outCls);
-			// target.material.materials[0].color.set(self.outCls);
+			var meshs = self.getMeshlistByName(target.name);
+			self.setCls(meshs, self.outTextCls, self.outCls);
 		}
 		e.stopPropagation();
 	},
@@ -112,27 +118,70 @@ Hotpoint3D.prototype = {
 			name = target.name;
 
 		self.click(name);
+		e.stopPropagation();
 	},
 
 	click: function(name) {
-		var self = this,
-			children = self.recursiveChild(self.scene); //TODO  need recursive
+		var self = this;
 
-		name = name.replace('Text', 'Cylinder');
-		self.cacheObjects.forEach(function(val) {
-			val.material.color.set(self.outCls);
-		});
-		var arr = children.filter(function(val, idx) {
-			var flag = val.name.indexOf(name) > -1;
-			if (flag) {
-				val.material.color.set(self.clickCls);
-			}
-			return flag;
-		});
-		self.cacheObjects = arr;
-		if (arr.length && typeof self.opts.callbacks.AfterClick === "function") {
+		self.trrigerSetCls(name);
+
+		name = name.replace(/(Text|Cylinder|)/, '');
+
+		if (self.cacheObjects.length && typeof self.opts.callbacks.AfterClick === "function") {
 			self.opts.callbacks.AfterClick.call(null, name);
 		}
+	},
+
+	trrigerSetCls: function(name) {
+		var self = this,
+			meshs = self.getMeshlistByName(name),
+			cls;
+
+		if (!meshs.length) {
+			return self.setCls(self.cacheObjects, self.outTextCls, self.outCls);
+		}
+
+		self.setCls(self.cacheObjects, self.outTextCls, self.outCls);
+		self.setCls(meshs, self.clickTextCls, self.clickCls);
+		self.cacheObjects = meshs;
+	},
+
+	setCls: function(arr, txtcls, circlecls) {
+		var self = this,
+			cls;
+
+		arr.forEach(function(val) {
+			if (val.name.indexOf("Text") > -1) {
+				cls = txtcls;
+			} else if (val.name.indexOf("Cylinder") > -1) {
+				cls = circlecls;
+			} else {
+				cls = circlecls;
+			}
+			val.material.color.set(cls);
+		});
+
+		return arr;
+	},
+
+	getMeshlistByName: function(name, list) {
+		if (!name) return [];
+		var self = this,
+			rst = [],
+			name = name.replace(/(Text|Cylinder)/, ''),
+			list = list || self.childrenList;
+
+		list.forEach(function(item) {
+			var iname;
+			if (item.type === 'Mesh' && /(Text|Cylinder)/.test(item.name)) {
+				iname = item.name.replace(/(Text|Cylinder)/, '');
+				if (name == iname) {
+					rst.push(item);
+				}
+			}
+		});
+		return rst;
 	},
 
 	recursiveChild: function(obj) {
@@ -173,14 +222,14 @@ Hotpoint3D.prototype = {
 		self.container.appendChild(self.renderer.domElement);
 
 		self.clock = new THREE.Clock();
-		self.stats = new Stats();
-		self.stats.dom.style.position = 'absolute';
-		self.stats.dom.style.top = 'auto';
-		self.stats.dom.style.bottom = '0';
-		self.stats.dom.style.left = '40%';
-		self.stats.dom.style.zIndex = 10;
+		// self.stats = new Stats();
+		// self.stats.dom.style.position = 'absolute';
+		// self.stats.dom.style.top = 'auto';
+		// self.stats.dom.style.bottom = '0';
+		// self.stats.dom.style.left = '40%';
+		// self.stats.dom.style.zIndex = 10;
 
-		self.container.appendChild(self.stats.dom);
+		// self.container.appendChild(self.stats.dom);
 
 	},
 
@@ -234,23 +283,30 @@ Hotpoint3D.prototype = {
 
 		if (self.previous) {
 			//在不刷新页面的情况下清除上一次加载的模型对象
-			var len = self.previous.children.length;
-			while (--len > -1) {
-				self.previous.children[len].geometry.dispose();
-				//self.previous.children[len].material.dispose();
+			// var len = self.previous.children.length;
+			// while (--len > -1) {
+			// 	self.previous.children[len].geometry.dispose();
+			// 	//self.previous.children[len].material.dispose();
 
-				self.previous.remove(self.previous.children[len]);
-			}
+			// 	self.previous.remove(self.previous.children[len]);
+			// }
 
+			//移除上个元素并复位相机与鼠标控制原点
 			self.scene.remove(self.previous);
-			self.camera.position.set(0, 0, 500);
+			self.camera.position.set(0, 0, 300);
+			self.controls.target.set(0, 0, 0);
 		};
 
-		url = url || '../../res/20160707-01.obj';
+		url = url;
+		if (!url) return;
+		$.blockUI();
+
 		loader.load(url, function(obj) {
 
+			$.unblockUI();
+
 			obj.position.set(0, 0, 0);
-			//obj.rotation.set(20* Math.PI / 180,0,20* Math.PI / 180);
+			// obj.rotation.set(20 * Math.PI / 180, 0, 20 * Math.PI / 180);
 			obj.scale.set(30, 30, 30);
 
 			// var colors = [0x9900cc, 0x00ff00, 0x55555f, 0xffffff];
@@ -279,10 +335,10 @@ Hotpoint3D.prototype = {
 
 			// 		// meshR.updateMatrix();
 			// 		meshR.matrixAutoUpdate = true;
-			// 		domEvents.addEventListener(meshR, "mouseover", over, false);
-			// 		domEvents.addEventListener(meshR, "mouseout", out, false);
-			// 		domEvents.addEventListener(meshR, "click", click, false);
-			// 		scene.add(meshR);
+			// 		self.domEvents.addEventListener(meshR, "mouseover", over, false);
+			// 		self.domEvents.addEventListener(meshR, "mouseout", out, false);
+			// 		self.domEvents.addEventListener(meshR, "click", click, false);
+			// 		self.scene.add(meshR);
 			// 		meshList.push(meshR);
 			// 		meshPos.push({
 			// 			x: meshR.position.x,
@@ -293,12 +349,19 @@ Hotpoint3D.prototype = {
 			// }
 
 			obj.traverse(function(child) {
-				if (child instanceof THREE.Mesh) {
+
+				if (child instanceof THREE.Mesh && /Text/.test(child.name)) {
+					self.setCls([child], 0x000000, 0xffffff);
+				}
+
+				if (child instanceof THREE.Mesh && /Cylinder/.test(child.name)) {
 					self.domEvents.addEventListener(child, "mouseover", over, false);
 					self.domEvents.addEventListener(child, "mouseout", out, false);
 					self.domEvents.addEventListener(child, "click", click, false);
 				}
 			});
+
+			self.childrenList = obj.children;
 
 			function over(e) {
 				self.meshMouseover(e);
@@ -309,10 +372,9 @@ Hotpoint3D.prototype = {
 			}
 
 			function click(e) {
+
 				self.meshClick(e);
 			}
-
-
 
 			self.scene.add(obj);
 
@@ -358,12 +420,13 @@ Hotpoint3D.prototype = {
 		var self = this;
 		window.requestAnimationFrame(self.animate.bind(self));
 		self.controls.update(self.clock.getDelta());
-		self.stats.update();
+		//self.stats.update();
 		self.render();
 	},
 
 	render: function() {
 		var self = this;
+		self.renderer.clear();
 		self.renderer.render(self.scene, self.camera);
 	}
 
