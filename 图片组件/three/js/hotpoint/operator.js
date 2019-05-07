@@ -26,19 +26,20 @@ $(function() {
 				$(this).addClass("active");
 				self.previoursObj.treeNode = $(this);
 
-				var url = ['../../res/P1.obj', '../../res/P3.obj', '../../res/bumper test.obj', '../../res/20160707-01.obj'];
+				//var url = ['../../res/P1.obj', '../../res/P3.obj', '../../res/bumper test.obj', '../../res/20160707-01.obj'];
 				var id = self.previoursObj.treeNode.attr("data-code");
-				switch (id) {
-					case "EC35-101":
-						url = '../../res/door.obj';
-						break;
-					case "EC35-102":
-						url = '../../res/body.obj';
-						break;
-					default:
-						url = '../../res/5306001-8101-1.obj';
-						break;
-				}
+				var url = self.previoursObj.treeNode.attr("data-url");
+				// switch (id) {
+				// 	case "EC35-101":
+				// 		url = '../../res/door.obj';
+				// 		break;
+				// 	case "EC35-102":
+				// 		url = '../../res/body.obj';
+				// 		break;
+				// 	default:
+				// 		url = '../../res/5306001-8101-1.obj';
+				// 		break;
+				// }
 
 				self.hotpoint3D.loadOutMaterial(url);
 
@@ -78,10 +79,7 @@ $(function() {
 		load: function() {
 			var self = this;
 			$.getJSON('../../data/tree.json', function(data) {
-				data.Data = data.Data.filter(function(val) {
-					return !!val.PId;
-				});
-				data.Data.length = 3;
+				
 				var view = Mustache.render(self.template, data);
 				self.$tree.html(view);
 
