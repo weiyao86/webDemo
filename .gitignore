@@ -2,7 +2,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+*.obj
 *.zip
 *.rar
 *.bak
