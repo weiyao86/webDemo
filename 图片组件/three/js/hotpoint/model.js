@@ -50,6 +50,8 @@ Hotpoint3D.prototype = {
 		self.initDomEvent();
 
 		self.loadOutMaterial();
+
+		self.animate();
 	},
 
 	buildDom: function() {
@@ -78,10 +80,6 @@ Hotpoint3D.prototype = {
 			interval: [],
 			animation: []
 		};
-
-		//在3D空间中表示一个盒子或立方体。这个的主要目的是表示对象的最小边界框
-		self.modelBox = new THREE.Box3();
-		self.meshBox = new THREE.Box3();
 
 		//播放/暂停
 		self.playObj = {
@@ -203,8 +201,6 @@ Hotpoint3D.prototype = {
 
 		self.scene.add(directionalLight);
 
-
-return;
 		var grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
 		grid.material.opacity = 0.2;
 		grid.material.transparent = true;
@@ -658,11 +654,12 @@ return;
 
 			self.previous = obj;
 
-			self.animate();
-
 			self.childrenList = obj.children;
 			// obj.rotation.set(20 * Math.PI / 180, 0, 20 * Math.PI / 180);
 
+			//在3D空间中表示一个盒子或立方体。这个的主要目的是表示对象的最小边界框
+			self.modelBox = new THREE.Box3();
+			self.meshBox = new THREE.Box3();
 			self.modelBox.expandByObject(obj);
 
 			//设置模型中心点
@@ -687,7 +684,7 @@ return;
 					child.userData['oldPs'] = child.getWorldPosition(new THREE.Vector3());
 
 					self.sortChild.push(child);
-					
+
 				}
 			});
 		});
