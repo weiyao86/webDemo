@@ -76,6 +76,12 @@ Hotpoint3D.prototype = {
 		self.renderer = null;
 		self.controls = null;
 		self.manager = null;
+
+		self.modelBox = new THREE.Box3();
+		self.meshBox = new THREE.Box3();
+
+		self.mouseX = 0;
+		self.mouseY = 0;
 	},
 
 	onWindowResize: function() {
@@ -101,13 +107,14 @@ Hotpoint3D.prototype = {
 	meshMouseout: function(e) {
 		var self = this,
 			target = e.target,
-			arr = self.getMeshlistByName(target.name, self.cacheObjects);
+			arr = self.getMeshlistByName(target.name, self.cacheObjects),
+			outCls;
 
 		if (arr.length) {
 			self.setCls(self.cacheObjects, self.clickTextCls, self.clickCls);
 		} else {
 			var meshs = self.getMeshlistByName(target.name);
-			self.setCls(meshs, self.outTextCls, self.outCls);
+			self.setCls(meshs, self.outTextCls);
 		}
 		e.stopPropagation();
 	},
@@ -126,7 +133,7 @@ Hotpoint3D.prototype = {
 
 		self.trrigerSetCls(name);
 
-		name = name.replace(/(Text|Cylinder|)/, '');
+		name = name.replace(/(Text|Cylinder|DirectConnectNode)/, '');
 
 		if (self.cacheObjects.length && typeof self.opts.callbacks.AfterClick === "function") {
 			self.opts.callbacks.AfterClick.call(null, name);
@@ -139,10 +146,10 @@ Hotpoint3D.prototype = {
 			cls;
 
 		if (!meshs.length) {
-			return self.setCls(self.cacheObjects, self.outTextCls, self.outCls);
+			return self.setCls(self.cacheObjects, self.outTextCls);
 		}
 
-		self.setCls(self.cacheObjects, self.outTextCls, self.outCls);
+		self.setCls(self.cacheObjects, self.outTextCls);
 		self.setCls(meshs, self.clickTextCls, self.clickCls);
 		self.cacheObjects = meshs;
 	},
@@ -152,13 +159,12 @@ Hotpoint3D.prototype = {
 			cls;
 
 		arr.forEach(function(val) {
+			cls = circlecls || val.userData['originColor'];
+
 			if (val.name.indexOf("Text") > -1) {
 				cls = txtcls;
-			} else if (val.name.indexOf("Cylinder") > -1) {
-				cls = circlecls;
-			} else {
-				cls = circlecls;
 			}
+
 			val.material.color.set(cls);
 		});
 
@@ -169,13 +175,13 @@ Hotpoint3D.prototype = {
 		if (!name) return [];
 		var self = this,
 			rst = [],
-			name = name.replace(/(Text|Cylinder)/, ''),
+			name = name.replace(/(Text|Cylinder|DirectConnectNode)/, ''),
 			list = list || self.childrenList;
 
 		list.forEach(function(item) {
 			var iname;
-			if (item.type === 'Mesh' && /(Text|Cylinder)/.test(item.name)) {
-				iname = item.name.replace(/(Text|Cylinder)/, '');
+			if (item.type === 'Mesh' && /(Text|Cylinder|DirectConnectNode)/.test(item.name)) {
+				iname = item.name.replace(/(Text|Cylinder|DirectConnectNode)/, '');
 				if (name == iname) {
 					rst.push(item);
 				}
@@ -211,25 +217,31 @@ Hotpoint3D.prototype = {
 	initCamera: function() {
 		var self = this;
 		self.camera = new THREE.PerspectiveCamera(45, self._width / self._height, 0.1, 1000);
-		self.camera.position.set(0, 0, 300);
+		self.camera.position.set(50, 50, 100);
+		self.camera.lookAt(self.scene.position);
+		// self.camera.position.set(0, 0, 300);
+		// // self.camera.rotation.set(-50, 50, -50);
 	},
 
 	initRenderer: function() {
 		var self = this;
-		self.renderer = new THREE.WebGLRenderer();
+		self.renderer = new THREE.WebGLRenderer({
+			antialias: true,
+			alpha: true
+		});
 		self.renderer.setClearColor(0x464646, 1);
 		self.renderer.setSize(self._width, self._height);
 		self.container.appendChild(self.renderer.domElement);
 
 		self.clock = new THREE.Clock();
-		// self.stats = new Stats();
-		// self.stats.dom.style.position = 'absolute';
-		// self.stats.dom.style.top = 'auto';
-		// self.stats.dom.style.bottom = '0';
-		// self.stats.dom.style.left = '40%';
-		// self.stats.dom.style.zIndex = 10;
+		self.stats = new Stats();
+		self.stats.dom.style.position = 'absolute';
+		self.stats.dom.style.top = 'auto';
+		self.stats.dom.style.bottom = '0';
+		self.stats.dom.style.left = '40%';
+		self.stats.dom.style.zIndex = 10;
 
-		// self.container.appendChild(self.stats.dom);
+		self.container.appendChild(self.stats.dom);
 
 	},
 
@@ -238,9 +250,28 @@ Hotpoint3D.prototype = {
 		//环境光
 		var ambient = new THREE.AmbientLight(0x101030);
 		self.scene.add(ambient);
+
 		//点扩散
-		var directionalLight = new THREE.DirectionalLight(0xffeedd);
+		var directionalLight = new THREE.DirectionalLight(0xffeedd, .6);
+
 		directionalLight.position.set(0, 0, 1);
+
+		directionalLight.shadowCameraNear = 50;
+
+		directionalLight.shadowCameraFar = 3000;
+
+		directionalLight.shadowCameraLeft = -1000;
+
+		directionalLight.shadowCameraRight = 1000;
+
+		directionalLight.shadowCameraTop = 1000;
+
+		directionalLight.shadowCameraBottom = -1000;
+
+		directionalLight.shadowDarkness = .2;
+
+		directionalLight.shadowCameraVisible = true;
+
 		self.scene.add(directionalLight);
 	},
 
@@ -273,13 +304,42 @@ Hotpoint3D.prototype = {
 		// self.controls.autoRotate = true;
 		// self.controls.enableZoom = false;
 
-		window.addEventListener('resize', self.onWindowResize, false);
+		window.addEventListener('resize', self.onWindowResize.bind(self), false);
 
+		//document.addEventListener("mousemove", self.onDocumentMouseMove.bind(self), false);
+	},
+
+	onDocumentMouseMove: function(event) {
+		var self = this,
+			$c = $(self.container);
+		if (!$c.length) return;
+
+		self.mouseX = (event.clientX - $c.offset().left - self._width / 2) * 2;
+
+		self.mouseY = (event.clientY - $c.offset().top - self._height / 2) * 2;
+
+	},
+
+	changeLoader: function(url) {
+		var self = this,
+			suffixs = {
+				obj: '.obj',
+				gltf: '.glb'
+			};
+		if (!url) return;
+
+		if (url.indexOf(suffixs.obj) > -1) {
+			return new THREE.OBJLoader(self.manager);
+		} else if (url.indexOf(suffixs.gltf) > -1) {
+			return new THREE.GLTFLoader(self.manager)
+		}
+		return null;
 	},
 
 	loadOutMaterial: function(url) {
 		var self = this,
-			loader = new THREE.OBJLoader(self.manager);
+			loader = self.changeLoader(url);
+		if (!loader) return;
 
 		if (self.previous) {
 			//在不刷新页面的情况下清除上一次加载的模型对象
@@ -293,21 +353,33 @@ Hotpoint3D.prototype = {
 
 			//移除上个元素并复位相机与鼠标控制原点
 			self.scene.remove(self.previous);
-			self.camera.position.set(0, 0, 300);
+			self.camera.position.set(50, 50, 100);
 			self.controls.target.set(0, 0, 0);
+			self.camera.lookAt(self.scene.position);
 		};
 
-		url = url;
 		if (!url) return;
+
 		$.blockUI();
 
 		loader.load(url, function(obj) {
 
 			$.unblockUI();
 
+			//glb 操作在scene
+			obj.scene && (obj = obj.scene);
+
 			obj.position.set(0, 0, 0);
+
+			self.scene.add(obj);
+
+			self.previous = obj;
+
+			self.animate();
+
+			self.childrenList = obj.children;
 			// obj.rotation.set(20 * Math.PI / 180, 0, 20 * Math.PI / 180);
-			obj.scale.set(30, 30, 30);
+			obj.scale.set(1, 1, 1);
 
 			// var colors = [0x9900cc, 0x00ff00, 0x55555f, 0xffffff];
 			// var geometry, material, meshR;
@@ -347,21 +419,42 @@ Hotpoint3D.prototype = {
 			// 		});
 			// 	}
 			// }
+			self.modelBox.expandByObject(obj);
+
+			//设置模型中心点
+			self.modelWorldPs = new THREE.Vector3().addVectors(self.modelBox.max, self.modelBox.min).multiplyScalar(0.5);
 
 			obj.traverse(function(child) {
 
-				if (child instanceof THREE.Mesh && /Text/.test(child.name)) {
-					self.setCls([child], 0x000000, 0xffffff);
-				}
+				if (child.isMesh) {
+					if (/Text/.test(child.name)) {
+						self.setCls([child], 0x000000, 0xffffff);
+					} else if (/Cylinder/.test(child.name) || /DirectConnectNode/.test(child.name)) {
+						self.domEvents.addEventListener(child, "mouseover", over, false);
+						self.domEvents.addEventListener(child, "mouseout", out, false);
+						self.domEvents.addEventListener(child, "click", click, false);
 
-				if (child instanceof THREE.Mesh && /Cylinder/.test(child.name)) {
-					self.domEvents.addEventListener(child, "mouseover", over, false);
-					self.domEvents.addEventListener(child, "mouseout", out, false);
-					self.domEvents.addEventListener(child, "click", click, false);
+						var tempCls = new THREE.Color().set(child.material.color);
+
+						child.userData['originColor'] = tempCls;
+					}
+
+
+					self.meshBox.setFromObject(child);
+					//获取每个mesh的中心点,爆炸方向为爆炸中心点指向mesh中心点
+					var worldPs = new THREE.Vector3().addVectors(self.meshBox.max, self.meshBox.min).multiplyScalar(0.5);
+					if (isNaN(worldPs.x)) return;
+					//计算爆炸方向
+					child.worldDir = new THREE.Vector3().subVectors(worldPs, self.modelWorldPs).normalize();
+					//保存初始点
+					child.userData['oldPs'] = child.getWorldPosition(new THREE.Vector3());
+
+
+					if (!self.sortChild) self.sortChild = [];
+					self.sortChild.push(child);
+
 				}
 			});
-
-			self.childrenList = obj.children;
 
 			function over(e) {
 				self.meshMouseover(e);
@@ -376,58 +469,179 @@ Hotpoint3D.prototype = {
 				self.meshClick(e);
 			}
 
-			self.scene.add(obj);
+			function applyScalar(scalar, dir) {
 
-			self.previous = obj;
+				obj.traverse(function(value) {
+					if (!value.isMesh || !value.worldDir) return;
 
-			self.animate();
-			return;
-
-			document.getElementById("zoomIn").addEventListener("click", function() {
-				var r1 = 1.5;
-				self.meshList.forEach(function(val, idx) {
-
-					TweenMax.to(val.position, 2, {
-						x: meshPos[idx].x * r1,
-						y: meshPos[idx].y * r1,
-						z: meshPos[idx].z * r1,
-						delay: 0,
-						ease: Back.easeIn,
-						onComplete: function() {
-							// console.log(meshPos[idx].pos.x);
-						}
-					});
+					//爆炸公式
+					value.position.copy(
+						new THREE.Vector3().copy(value.userData.oldPs)
+						.add(new THREE.Vector3().copy(value.worldDir)
+							.multiplyScalar(scalar))
+					);
 				});
-			}, false);
+			}
+
+
+			// document.getElementById("zoomIn").addEventListener("click", function() {
+			// 	var r1 = 1.5;
+			// 	self.meshList.forEach(function(val, idx) {
+
+			// 		TweenMax.to(val.position, 2, {
+			// 			x: meshPos[idx].x * r1,
+			// 			y: meshPos[idx].y * r1,
+			// 			z: meshPos[idx].z * r1,
+			// 			delay: 0,
+			// 			ease: Back.easeIn,
+			// 			onComplete: function() {
+			// 				// console.log(meshPos[idx].pos.x);
+			// 			}
+			// 		});
+			// 	});
+			// }, false);
+
 			document.getElementById("reset").addEventListener("click", function() {
-				self.meshList.forEach(function(val, idx) {
-					TweenMax.to(val.position, 2, {
-						x: meshPos[idx].x,
-						y: meshPos[idx].y,
-						z: meshPos[idx].z,
-						delay: 0,
-						ease: Back.easeIn,
-						onComplete: function() {
-							// console.log(GreenSock);
+				// self.meshList.forEach(function(val, idx) {
+				// 	TweenMax.to(val.position, 2, {
+				// 		x: meshPos[idx].x,
+				// 		y: meshPos[idx].y,
+				// 		z: meshPos[idx].z,
+				// 		delay: 0,
+				// 		ease: Back.easeIn,
+				// 		onComplete: function() {
+				// 			// console.log(GreenSock);
+				// 		}
+				// 	});
+				// });
+
+				//tempFun(100, 'down');
+
+				var queue = self.queue();
+				for (var i = 0, item; i < self.sortChild.length; i++) {
+					item = self.sortChild[i];
+
+					(function(item) {
+						queue.add(function(next) {
+							anim(item, 100, next);
+						});
+					})(item);
+
+				}
+				queue.trigger();
+
+				function anim(value, scalar, next) {
+
+					window.requestAnimationFrame(function() {
+						scalar--;
+						if (scalar < 0) return next();
+						else if (scalar == 30) {
+							var count = 0,
+								clsArr = [0xffcc00, 0x000000],
+								timer;
+
+							timer = setInterval(function() {
+								if (count > 1){ return clearInterval(timer);}
+								self.setCls([value], '', clsArr[count]);
+								count++;
+							}, 200);
+
+							setTimeout(function() {
+								console.log('当前暂停这:' + scalar);
+								anim(value, scalar, next)
+								self.setCls([value], '');
+							}, 2000);
+						} else {
+
+							//爆炸公式
+							var pos = new THREE.Vector3().copy(value.userData.oldPs)
+								.add(new THREE.Vector3().copy(value.worldDir)
+									.multiplyScalar(scalar));
+
+							value.position.copy(pos);
+							// self.camera.position.copy(pos);
+							// self.camera.lookAt(pos);
+							anim(value, scalar, next)
+
 						}
 					});
-				});
+				}
+
+
 			}, false);
+
+			document.getElementById("scatter").addEventListener("input", function() {
+				var scalar = this.value * 1;
+
+				applyScalar(scalar, 'up');
+
+			}, false);
+
+			document.getElementById("scatterBtn").addEventListener("click", function() {
+
+				tempFun(1, 'up');
+
+			}, false);
+
+
+			function tempFun(num, dir) {
+				if (dir == "up" && num > 100) return;
+				if (dir == "down" && num < 0) return;
+				dir === "up" ? num++ : num--;
+				window.requestAnimationFrame(function() {
+
+					applyScalar(num, dir);
+					tempFun(num, dir);
+				});
+			}
 		});
 	},
 
 	animate: function() {
 		var self = this;
+
 		window.requestAnimationFrame(self.animate.bind(self));
 		self.controls.update(self.clock.getDelta());
-		//self.stats.update();
+		self.stats.update();
 		self.render();
 	},
 
 	render: function() {
 		var self = this;
+		// self.camera.position.x += (self.mouseX - self.camera.position.x) * 0.05;
+		// self.camera.position.y += (-self.mouseY - self.camera.position.y) * 0.05;
+		// self.camera.lookAt(self.scene.position);
 		self.renderer.clear();
 		self.renderer.render(self.scene, self.camera);
+	},
+
+	queue: function() {
+		var pending = [];
+
+		function next() {
+			var fn = pending.shift();
+			if (fn) {
+				fn(next);
+			}
+		}
+
+		return {
+			add: function(fn) {
+				if (typeof fn === "function") pending.push(fn);
+			},
+
+			getQueue: function() {
+				return pending;
+			},
+
+			clear: function() {
+				pending.length = 0;
+			},
+
+			trigger: function() {
+				next();
+			}
+		}
 	}
 
 };

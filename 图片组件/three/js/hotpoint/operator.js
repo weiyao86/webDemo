@@ -79,7 +79,7 @@ $(function() {
 		load: function() {
 			var self = this;
 			$.getJSON('../../data/tree.json', function(data) {
-				
+
 				var view = Mustache.render(self.template, data);
 				self.$tree.html(view);
 
@@ -98,7 +98,7 @@ $(function() {
 		clickPart: function(callout) {
 			var self = this,
 				$trlist;
-
+			callout = callout && callout.name;
 			self.$partBody.find(".active").removeClass("active");
 
 			$trlist = self.$partBody

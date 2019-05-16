@@ -1,20 +1,25 @@
 {
 	"IsSuccess": true,
-	"Data": [ {
-		"Id": "400",
+	"Data": [{
+		"Id": "glb1",
 		"PId": "100",
-		"Name": "附件",
-		"Url":"../../res/5306001-8101-1.obj"
-	}, {
-		"Id": "EC35-101",
+		"Name": "测试文件GLB",
+		"Url": "../../res/5306001-8101-1.glb"
+	},{
+		"Id": "glb2",
 		"PId": "100",
-		"Name": "门",
-		"Url":"../../res/door.obj"
-	}, {
-		"Id": "EC35-102",
+		"Name": "测试文件scene.glb",
+		"Url": "../../res/scene.glb"
+	},{
+		"Id": "glb3",
 		"PId": "100",
-		"Name": "车身",
-		"Url":"../../res/body.obj"
+		"Name": "ALL-test.FBX",
+		"Url": "../../res/ALL-test.FBX"
+	},{
+		"Id": "glb4",
+		"PId": "100",
+		"Name": "Samba Dancing.fbx",
+		"Url": "../../res/Samba Dancing.fbx"
 	}],
 	"DataRecordCount": 0
 }

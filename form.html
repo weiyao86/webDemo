@@ -1,30 +1,32 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <title></title>
     <script src="Scripts/jquery-1.8.1.min.js"></script>
     <script type="text/javascript">
-        $(function () {
+    $(function() {
 
-            var $form = $("<form>", {
-                id: "export-form",
-                action:"./5种css实现垂直水平居中.html",
-                method: "post"
-            });
-            $form.appendTo("body");
-
-            $("#test").on("click", function (e) {
-                //$("#testForm").submit();
-                 $form.submit();
-                 //$("#testForm").submit(function(){})   --submit中带参数后此种方法会当做绑定事件对待
-            });
-
-            $form.submit(function(){
-                alert('sub');
-            })
+        var $form = $("<form>", {
+            id: "export-form",
+            action: "./5种css实现垂直水平居中.html",
+            method: "post"
         });
+                    $form.appendTo("body");
+
+        $("#test").on("click", function(e) {
+            //$("#testForm").submit();
+            $form.submit();
+            //$("#testForm").submit(function(){})   --submit中带参数后此种方法会当做绑定事件对待
+        });
+
+        $form.submit(function() {
+            alert('sub');
+        })
+    });
     </script>
 </head>
+
 <body>
     <form id="testForm" action="http://xxx.xx.xx" method="POST">
         <!-- <input type="submit" value="sbtn" id="sb"> -->
@@ -32,4 +34,5 @@
     </form>
     <button id="test" type="button">submit</button>
 </body>
+
 </html>

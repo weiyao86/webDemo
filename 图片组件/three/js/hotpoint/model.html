@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ship_triangle OBJloader</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="hotpoint.css">
+<style>
+	input[type=range]::-webkit-slider-runnable-track {
+    height: 15px;
+    border-radius: 10px; /*将轨道设为圆角的*/
+    box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 25px;
+    margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+    background: #ffffff; 
+    border-radius: 50%; /*外观设置为圆形*/
+    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+    box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/
+}
+	.slider{
+		    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 350px;
+    -webkit-appearance: none;
+    border-radius: 10px;
+	}
+</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<header>
+			<h3 id="info">Demo</h3>
+			<div class="header">
+			<input type="range" min="0" max="100" value="0" class="slider" id="scatter">
+			</div>
+		</header>
+		<div class="body">
+			<div class="menu-tree">
+				<p class="m-title">图</p>
+				<div class="m-content">
+					<ul id='tree' class="tree">
+						<script type="text/template" id="template_tree">
+							{{#Data}}
+								<li>
+									<a href="javascript:;" title="{{Name}}" data-code="{{Id}}" data-url="{{Url}}">
+										<span class="icon icon-doc"></span>
+										<span class="n-content">{{Name}}</span>
+									</a>
+								</li>
+							{{/Data}}
+						</script>
+					</ul>
+				</div>
+			</div>
+			<div class="main">
+				<div class="content-list">
+					<table class="tb-thead">
+						<colgroup>
+						<col width="120px"/>
+						<col width="120px"/>
+						<col width="120px"/>
+						<col width="120px"/>
+						<col/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>零件编号</th>
+							<th>描述</th>
+							<th>用法备注</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="inner-tb">
+					<table>
+						<colgroup>
+						<col width="120px"/>
+						<col width="120px"/>
+						<col width="120px"/>
+						<col width="120px"/>
+						<col/>
+					</colgroup>
+					<tbody id="part_body">
+						<script type="text/template" id="template_part">
+									{{#parts}}
+										<tr data-callout="{{Callout}}" data-partnum="{{PartNumber}}">
+											<td>{{Callout}}</td>
+											<td>
+												<a title="{{PartNumber}}">{{PartNumber}}</a>
+											</td>
+											<td title="{{Part_Desc}}">{{Part_Desc}}</td>
+											<td>{{ModelNote}}</td>
+											<td style="text-align:right;"><input type="button" class="btn btn-primary" value="购买"></td>
+										</tr>
+									{{/parts}}
+								</script>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		<div class="wrap-hot-img">
+			<section class="fixed">
+				<!-- <input type="button" class="btn btn-primary" id='zoomIn' value="zoomIn">
+				<input type="button" class="btn btn-primary" id='reset' value="reset"> -->
+				<input type="button" class="btn btn-primary" id='reset' value="Reset">
+				<input type="button" class="btn btn-primary" id='start' value="Play">
+				<input type="button" class="btn btn-primary" id='scatterBtn' value="Scatter">
+			</section>
+			<div class="hot-img" id="hot_img_wrap"></div>
+		</div>
+	</div>
+</div>
+
+<footer></footer>
+
+</div>
+
+<script src="../three.min.js"></script>
+<script src="../OBJLoader.js"></script>
+<script src="../GLTFLoader.js"></script>
+
+<script src="../inflate.min.js"></script>
+<script src="../FBXLoader.js"></script>
+
+<script src="../LoaderUtils.js"></script>
+<script src="../TrackballControls.js"></script>
+
+<script src="../Detector.js"></script>
+<script src="../stats.min.js"></script>
+<script src="../OrbitControls.js"></script>
+<!-- <script src="../Octree.js"></script>
+-->
+<script src="../threex.domevents.js"></script>
+<script src="../TweenMax.min.js"></script>
+<script src="../jquery-1.9.0.js"></script>
+<script src="../jquery.blockUI.js"></script>
+<script src="../mustache.js"></script>
+
+<script src="model.js"></script>
+<script src="operator.js"></script>
+</body>
+</html>

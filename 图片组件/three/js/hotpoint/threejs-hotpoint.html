@@ -12,7 +12,9 @@
 	<div class="container">
 		<header>
 			<h3 id="info">Demo</h3>
-			<div class="header"></div>
+			<div class="header">
+			<input type="range" min="0" max="100" value="0" class="slider" id="scatter" style="position: absolute;z-index: 2; top: 50%;left:50%;transform: translate(-50%,-50%); width: 350px">
+			</div>
 		</header>
 		<div class="body">
 			<div class="menu-tree">
@@ -84,6 +86,8 @@
 			<section class="fixed">
 				<!-- <input type="button" class="btn btn-primary" id='zoomIn' value="zoomIn">
 				<input type="button" class="btn btn-primary" id='reset' value="reset"> -->
+				<input type="button" class="btn btn-primary" id='reset' value="还原">
+				<input type="button" class="btn btn-primary" id='scatterBtn' value="分散">
 			</section>
 			<div class="hot-img" id="hot_img_wrap"></div>
 		</div>
@@ -96,6 +100,8 @@
 
 <script src="../three.min.js"></script>
 <script src="../OBJLoader.js"></script>
+<script src="../GLTFLoader.js"></script>
+<script src="../LoaderUtils.js"></script>
 
 <script src="../Detector.js"></script>
 <script src="../stats.min.js"></script>
