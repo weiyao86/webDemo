@@ -18,6 +18,11 @@
 	},{
 		"Id": "glb4",
 		"PId": "100",
+		"Name": "TEST-2.FBX",
+		"Url": "../../res/TEST-2.FBX"
+	},{
+		"Id": "glb5",
+		"PId": "100",
 		"Name": "Samba Dancing.fbx",
 		"Url": "../../res/Samba Dancing.fbx"
 	}],

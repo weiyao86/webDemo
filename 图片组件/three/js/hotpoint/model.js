@@ -60,7 +60,7 @@ Hotpoint3D.prototype = {
 
 		self.childrenList = [];
 		self.cacheObjects = [];
-		self.clickCls = "rgba(255,255,255,.6)";
+		self.clickCls = "#ff0000";
 		self.overCls = "#ffff00";
 		self.container = document.getElementById('hot_img_wrap');
 		self._width = self.container.clientWidth;
@@ -141,12 +141,13 @@ Hotpoint3D.prototype = {
 		self.scene = new THREE.Scene();
 
 		self.scene.background = new THREE.Color(0xa0a0a0);
+		//场景雾化
 		self.scene.fog = new THREE.Fog(0xa0a0a0, 200, 1000);
 	},
 
 	initCamera: function() {
 		var self = this;
-		self.camera = new THREE.PerspectiveCamera(45, self._width / self._height, 1, 1000);
+		self.camera = new THREE.PerspectiveCamera(45, self._width / self._height, 0.01, 1000);
 		self.camera.position.set(100, 200, 300);
 		self.camera.lookAt(self.scene.position);
 	},
@@ -159,6 +160,8 @@ Hotpoint3D.prototype = {
 		});
 		self.renderer.setClearColor(0x000000, 1); //0x464646
 		self.renderer.setSize(self._width, self._height);
+		//阴影
+		// self.renderer.shadowMap.enabled =true;
 		self.container.appendChild(self.renderer.domElement);
 
 		self.clock = new THREE.Clock();
@@ -181,7 +184,7 @@ Hotpoint3D.prototype = {
 		self.scene.add(axes);
 
 		//环境光
-		var ambient = new THREE.AmbientLight(0x555555);
+		var ambient = new THREE.AmbientLight(0x000000);
 		self.scene.add(ambient);
 
 		//点光源
@@ -191,15 +194,21 @@ Hotpoint3D.prototype = {
 
 		//聚光灯
 		var spotLight = new THREE.SpotLight(0xffffff, 1, 100, 0.06);
-		spotLight.position.set(0, 200, 0);
+		spotLight.position.set(0, 200, 200);
+		spotLight.castShadow = true;
 		self.scene.add(spotLight);
 
 		//平行光
 		var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-
+		directionalLight.castShadow = true;
 		directionalLight.position.set(0, 200, 0);
 
 		self.scene.add(directionalLight);
+
+		//半球光
+		var hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
+		hemiLight.position.set(0, 20, 0);
+		self.scene.add(hemiLight);
 
 		var grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
 		grid.material.opacity = 0.2;
@@ -367,8 +376,6 @@ Hotpoint3D.prototype = {
 				outObj = res.object;
 			}
 		}
-
-		// alert(outObj.name)
 
 		if (typeof self.opts.callbacks.AfterClick === "function") {
 			self.opts.callbacks.AfterClick.call(null, outObj);
@@ -672,8 +679,6 @@ Hotpoint3D.prototype = {
 
 					child.userData['originColor'] = tempCls;
 
-					// child.material.transparent = true;
-
 					self.meshBox.setFromObject(child);
 					//获取每个mesh的中心点,爆炸方向为爆炸中心点指向mesh中心点
 					var worldPs = new THREE.Vector3().addVectors(self.meshBox.max, self.meshBox.min).multiplyScalar(0.5);
@@ -684,6 +689,11 @@ Hotpoint3D.prototype = {
 					child.userData['oldPs'] = child.getWorldPosition(new THREE.Vector3());
 
 					self.sortChild.push(child);
+
+					// child.material.transparent = true;
+					//阴影
+					// child.castShadow = true;
+					// child.receiveShadow = true;
 
 				}
 			});
