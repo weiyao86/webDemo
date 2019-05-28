@@ -58,15 +58,17 @@ Hotpoint3D.prototype = {
 
 		var self = this;
 
+		self.loadLocal = true;
+
 		self.childrenList = [];
 		self.cacheObjects = [];
-		self.clickCls = "#ff0000";
+		self.clickCls = "#ffff00";
 		self.overCls = "#ffff00";
 		self.container = document.getElementById('hot_img_wrap');
 		self._width = self.container.clientWidth;
 		self._height = self.container.clientHeight;
 		self.clock = null;
-		self.previous = null;
+		self.lastObj3D = null;
 		self.domEvents = null;
 		self.stats = null;
 		self.camera = null;
@@ -102,38 +104,6 @@ Hotpoint3D.prototype = {
 		self.camera.updateProjectionMatrix();
 
 		self.renderer.setSize(self._width, self._height);
-	},
-
-	setCls: function(arr, newCls) {
-		var self = this,
-			cls;
-
-		arr.forEach(function(val) {
-			cls = newCls || val.userData['originColor'];
-			val.material.color.set(cls);
-		});
-
-		return arr;
-	},
-
-	//TODO 暂时保留
-	getMeshlistByName: function(name, list) {
-		if (!name) return [];
-		var self = this,
-			rst = [],
-			name = name.replace(/(DirectConnectNode)/, ''),
-			list = list || self.childrenList;
-
-		list.forEach(function(item) {
-			var iname;
-			if (item.isMesh) {
-				iname = item.name.replace(/(DirectConnectNode)/, '');
-				if (name == iname) {
-					rst.push(item);
-				}
-			}
-		});
-		return rst;
 	},
 
 	initScene: function() {
@@ -222,6 +192,7 @@ Hotpoint3D.prototype = {
 		mesh.rotation.x = -Math.PI / 2;
 		mesh.receiveShadow = true;
 		self.scene.add(mesh);
+
 	},
 
 	initMaterial: function() {
@@ -255,6 +226,7 @@ Hotpoint3D.prototype = {
 		};
 
 		self.manager.onError = function(url) {
+			$.unblockUI();
 			self.lastObj3D = null;
 			alert('加载模型文件!');
 			console.log('There was an error loading ' + url);
@@ -349,8 +321,13 @@ Hotpoint3D.prototype = {
 	},
 
 	mouseClick: function() {
-		var self = this,
-			outObj = self.clickObj;
+		var self = this;
+
+		if (self.clickObj) {
+			self.rmClickFlag(self.clickObj);
+		}
+
+		self.clickObj = [];
 
 		if (!self.existObj3D()) return;
 
@@ -361,25 +338,74 @@ Hotpoint3D.prototype = {
 				return res && res.object;
 			})[0];
 
-			if (res && res.object && res.object != self.clickObj) {
-
-				if (self.clickObj) {
-					var oriObj = self.clickObj;
-					var cls = oriObj.userData['originColor'];
-					oriObj.material.color.set(cls);
-					delete oriObj.userData['clickCls'];
-				}
-
-				res.object.material.color.set(self.clickCls);
-				res.object.userData['clickCls'] = self.clickCls;
-				self.clickObj = res.object;
-				outObj = res.object;
+			if (res && res.object) {
+				self.clickObj = [res.object];
+				self.addClickFlag(self.clickObj);
 			}
 		}
 
 		if (typeof self.opts.callbacks.AfterClick === "function") {
-			self.opts.callbacks.AfterClick.call(null, outObj);
+			self.opts.callbacks.AfterClick.call(null, self.clickObj[0]);
 		}
+	},
+
+
+	setCls: function(arr, newCls, fn) {
+		var self = this,
+			cls;
+
+		arr.forEach(function(val) {
+			cls = newCls || val.userData['originColor'];
+			val.material.color.set(cls);
+			if (typeof fn == "function") fn.call(self, val);
+		});
+
+		return arr;
+	},
+
+	trrigerSetCls: function(name) {
+		var self = this,
+			meshs = self.getMeshlistByName(name),
+			cls;
+
+		if (self.clickObj) {
+			self.rmClickFlag(self.clickObj);
+		}
+
+		self.addClickFlag(meshs);
+		self.clickObj = meshs;
+	},
+
+	addClickFlag: function(meshs) {
+		var self = this;
+		self.setCls(meshs, self.clickCls, function(obj) {
+			obj.userData['clickCls'] = self.clickCls;
+		});
+	},
+
+	rmClickFlag: function(meshs) {
+		var self = this;
+		self.setCls(meshs, '', function(obj) {
+			delete obj.userData['clickCls'];
+		});
+	},
+
+	getMeshlistByName: function(name) {
+		if (!name) return [];
+		var self = this,
+			rst = [],
+			list = list || self.childrenList;
+
+		list.forEach(function(item) {
+			var iname;
+			if (item.isMesh) {
+				iname = item.name;
+				if (name == iname) {
+					rst.push(item);
+				}
+			}
+		});
+		return rst;
 	},
 
 	mousemove: function(event) {
@@ -395,6 +421,7 @@ Hotpoint3D.prototype = {
 
 			ckCls && (cls = ckCls);
 			self.selectObj.material.color.set(cls);
+			self.selectObj.material.opacity = 1;
 			self.selectObj = null;
 		}
 
@@ -407,10 +434,11 @@ Hotpoint3D.prototype = {
 
 			if (res && res.object) {
 				self.selectObj = res.object;
-				var cls = self.overCls;
-				if (!self.selectObj.userData['clickCls']) {
-					self.selectObj.material.color.set(cls);
-				}
+				self.selectObj.material.opacity = .5;
+				// var cls = self.overCls;
+				// if (!self.selectObj.userData['clickCls']) {
+				// 	self.selectObj.material.color.set(cls);
+				// }
 			}
 		}
 	},
@@ -582,8 +610,6 @@ Hotpoint3D.prototype = {
 			};
 		if (!url) return;
 
-
-
 		if (new RegExp(suffixs.obj + "$", 'i').test(url)) {
 			if (!self.objsuffix) {
 				self.objsuffix = new THREE.OBJLoader(self.manager);
@@ -608,10 +634,11 @@ Hotpoint3D.prototype = {
 
 	loadOutMaterial: function(url) {
 		var self = this,
+			localData = window['localJsonData'],
 			loader = self.changeLoader(url);
 		if (!loader) return;
 
-		if (self.previous) {
+		if (self.lastObj3D) {
 
 			function deleteGroup(group) {
 				//console.log(group);
@@ -628,10 +655,10 @@ Hotpoint3D.prototype = {
 
 			//移除上个元素并复位相机与鼠标控制原点
 
-			while (self.previous.children.length > 0) {
-				deleteGroup(self.previous.children[0]);
+			while (self.lastObj3D.children.length > 0) {
+				deleteGroup(self.lastObj3D.children[0]);
 			}
-			self.scene.remove(self.previous);
+			self.scene.remove(self.lastObj3D);
 
 			self.camera.position.set(100, 200, 300);
 			self.controls.target.set(0, 0, 0);
@@ -644,9 +671,21 @@ Hotpoint3D.prototype = {
 
 		self.sortChild = [];
 
-		$.blockUI();
+		if (self.loadLocal) {
+			if (!localData) return alert("本地json文件未加载!");
+			obj = self.loadLocalObj(localData);
+			operationObj(obj);
+			console.log('加载本地文件');
+		} else {
+			$.blockUI();
 
-		loader.load(url, function(obj) {
+			loader.load(url, function(obj) {
+				operationObj(obj);
+			});
+			console.log('加载服务端文件');
+		}
+
+		function operationObj(obj) {
 
 			//glb 操作在scene
 			obj.scene && (obj = obj.scene);
@@ -655,11 +694,7 @@ Hotpoint3D.prototype = {
 
 			obj.position.set(0, 0, 0);
 
-			// obj.scale.multiplyScalar(2);
-
 			self.scene.add(obj);
-
-			self.previous = obj;
 
 			self.childrenList = obj.children;
 			// obj.rotation.set(20 * Math.PI / 180, 0, 20 * Math.PI / 180);
@@ -697,7 +732,18 @@ Hotpoint3D.prototype = {
 
 				}
 			});
-		});
+		}
+
+	},
+
+	//TODO 2019/5/20
+	loadLocalObj: function(obj) {
+		var self = this;
+
+		var objectLoader = new THREE.ObjectLoader(self.manager);
+
+
+		return objectLoader.parse(obj, function(obj) {});
 	},
 
 	animate: function() {

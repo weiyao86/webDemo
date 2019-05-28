@@ -48,7 +48,7 @@ $(function() {
 			});
 
 			self.$partBody.on("click", 'tr', function() {
-				var callout = $(this).attr("data-callout");
+				var partnum = $(this).attr("data-partnum");
 				if (!self.previoursObj.partNode) {
 					self.previoursObj.partNode = $();
 				}
@@ -56,12 +56,12 @@ $(function() {
 				self.previoursObj.partNode.removeClass("active");
 
 				var $trlist = self.$partBody
-					.find("tr[data-callout='" + callout + "']")
+					.find("tr[data-partnum='" + partnum + "']")
 					.addClass("active");
 
 				self.previoursObj.partNode = $trlist;
 
-				self.hotpoint3D.trrigerSetCls(callout ? ('' + callout) : '');
+				self.hotpoint3D.trrigerSetCls(partnum ? ('' + partnum) : '');
 			});
 
 		},
@@ -78,31 +78,32 @@ $(function() {
 
 		load: function() {
 			var self = this;
-			$.getJSON('../../data/tree.json', function(data) {
+			
+			//$.getJSON('../../data/tree.json', function(data) {
 
-				var view = Mustache.render(self.template, data);
+				var view = Mustache.render(self.template, window.tree);
 				self.$tree.html(view);
 
 				// self.previoursObj.treeNode = self.$tree.find("li:first>a").addClass("active");
 
-			});
+			//});
 
-			$.getJSON('../../data/part.json', function(data) {
+			// $.getJSON('../../data/part.json', function(data) {
 
-				var view = Mustache.render(self.templateP, data.Data);
+				var view = Mustache.render(self.templateP, window.part.Data);//data.Data
 				self.$partBody.html(view);
 
-			});
+			// });
 		},
 
-		clickPart: function(callout) {
+		clickPart: function(object3D) {
 			var self = this,
 				$trlist;
-			callout = callout && callout.name;
+			partnum = object3D && object3D.name;
 			self.$partBody.find(".active").removeClass("active");
 
 			$trlist = self.$partBody
-				.find("tr[data-callout='" + callout + "']")
+				.find("tr[data-partnum='" + partnum + "']")
 				.addClass("active");
 
 			self.previoursObj.partNode = $trlist;

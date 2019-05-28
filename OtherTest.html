@@ -1,46 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="Scripts/html5.js"></script>
+        <script>
+            // var url = "Scripts/html5.js";
+            // let workerBlob = new Blob([url], {
+            //     type: 'text/javascript'
+            // });
+            // let workurl = URL.createObjectURL(workerBlob);
+            // let worker = new Worker(url);
 
-<head>
-    <meta charset="UTF-8">
-    <title>modelLoader</title>
-</head>
-<style>
-    body {
-        color: #000;
-        font-family:Monospace;
-        font-size:13px;
-        text-align:center;
-        font-weight: bold;
+            function queue() {
+                var pending = [];
 
-        background-color: #fff;
-        margin: 0px;
-        overflow: hidden;
-    }
-</style>
+                function next() {
+                    var fn = pending.shift();
+                    if (typeof fn === "function") {
+                        fn(next);
+                    }
+                }
+                return {
+                    add: function(fn) {
+                        pending.push(fn);
+                    },
+                    start: function() {
+                        next();
+                    },
 
-<body>
-    <input type="range" min="0" max="100" value="0" class="slider" id="myRange" style="position: absolute; top: 0; width: 350px">
+                    getQueue: function() {
+                        return pending;
+                    },
+                    clear: function() {
+                        pending.length = 0;
+                    }
+                }
+            }
 
-    <script src="../libs/three.js"></script>
-    <script src="../libs/OrbitControls.js"></script>
+            var q = queue();
+            var fn1 = function(next) {
+                    setTimeout(function() {
+                        console.log(1);
+                        next();
+                    }, 3 * 1000);
+                },
+                fn2 = function(next) {
+                    setTimeout(function() {
+                        console.log(2);
+                        next();
+                    }, 2 * 1000);
+                },
+                fn3 = function(next) {
+                    setTimeout(function() {
+                        console.log(3);
+                        next();
+                    }, 1 * 1000);
+                },
+                fn4 = function(next) {
+                    setTimeout(function() {
+                        console.log(4);
+                        next();
+                    }, 5 * 1000);
+                }
+            q.add(fn1);
+            q.add(fn2);
+            q.add(fn3);
+            q.add(fn4);
+            q.start();
 
 
-    <script>
-var test=".obj";
-var p=new RegExp(test+"$","i");
-        alert(p.test("asfdaslfas.obj"));
-    var timer = null,
-        count = 0;
-    timer = setInterval(function () {
-        if (count > 1) {
-            console.log('end');
-            return clearInterval(timer);
-        }
-        count++;
-        console.log('start');
-    }, 300);
-    </script>
-</body>
+            window.onload = function() {
+                var container = document.querySelector('.container');
+                container.onscroll = function() {
+                    checkImgs();
+                }
+
+                function isInSight(el) {
+                    var sTop = container.scrollTop;
+                    var oHeight = container.offsetHeight;
+                    var oTop = el.offsetTop;
+                    return sTop + oHeight > oTop;
+                }
+
+                function checkImgs() {
+                    var imgs = document.querySelectorAll('.pic');
+                    Array.from(imgs).forEach(el => {
+                        if (isInSight(el)) {
+                            loadImg(el);
+                        }
+                    })
+                }
+
+                function loadImg(el) {
+                    var source = el.dataset.src;
+                    el.src = source;
+                }
+                checkImgs();
+            }
+
+            var a=function(){};
+            a.prototype.fire=function(){console.log("发射普通子弹")};
+            var b=function(a){this.b1=a;};
+            b.prototype.fire=function(){this.b1.fire();console.log("发射导弹")};
+            var c=function(a){this.c1=a;};
+            c.prototype.fire=function(){this.c1.fire();console.log("发射原子弹")};
+
+            var d=new a();
+            d=new b(d);
+            d=new c(d);
+
+            d.fire();
+
+            Function.prototype.before=function(beforeFn){
+                var self=this;
+                return function(t){
+                    beforeFn.call(this,t);
+                    return self.call(this,t);
+                }
+            }
+
+            var test=function(t){
+                console.log('test'+t);
+            }
+            var tempFn =test.before(function(t){
+                console.log('before'+t)
+            });
+            tempFn("lalalallalala...");
+
+
+        </script>
+    </head>
+    
+    <body>
+        <style type="text/css">
+            .container{
+                width:200px;
+                height:200px;
+                position:relative;
+                overflow-y:scroll;
+                }
+            .img-area{
+                width:100px;
+                height:100px;
+            }
+            </style>
+            <div style="width:500px;height:600px;border:1px solid red;position:relative;">
+    <div style="width:300px;border:1px solid;max-height:400px;overflow: auto; position: absolute;left:50%;top:50%;transform: translate(-50%,-50%);" contentEditable="true">aaaa</div>
+            </div>
+        <div class="container">
+            <div class="img-area">
+                <img class="pic" alt="loading" data-src="res/psb_002.jpg" src="image-placeholder-logo.svg">
+            </div>
+            <div class="img-area">
+                <img class="pic" alt="loading" data-src="res/psb_003.jpg" src="image-placeholder-logo.svg">
+            </div>
+            <div class="img-area">
+                <img class="pic" alt="loading" data-src="res/psb_004.jpg" src="image-placeholder-logo.svg">
+            </div>
+            <div class="img-area">
+                <img class="pic" alt="loading" data-src="res/psb_005.jpg" src="image-placeholder-logo.svg">
+            </div>
+            <div class="img-area">
+                <img class="pic" alt="loading" data-src="res/psb_006.jpg" src="image-placeholder-logo.svg">
+            </div>
+        </div>
+    </body>
 
 </html>
