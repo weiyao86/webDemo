@@ -1,170 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <title>Document</title>
-        <script src="Scripts/html5.js"></script>
-        <script>
-            // var url = "Scripts/html5.js";
-            // let workerBlob = new Blob([url], {
-            //     type: 'text/javascript'
-            // });
-            // let workurl = URL.createObjectURL(workerBlob);
-            // let worker = new Worker(url);
+<html>
+<head>
+<title>basic example</title>
+</head>
+<body>
+<script type="text/javascript" src="Scripts/jquery-1.9.0.js"></script>
 
-            function queue() {
-                var pending = [];
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
-                function next() {
-                    var fn = pending.shift();
-                    if (typeof fn === "function") {
-                        fn(next);
-                    }
-                }
-                return {
-                    add: function(fn) {
-                        pending.push(fn);
-                    },
-                    start: function() {
-                        next();
-                    },
+<p>Render in table</p>
+<div id="qrcodeTable"></div>
+<p>Render in canvas</p>
+<div id="qrcodeCanvas"></div>
+<script>
+    //jQuery('#qrcode').qrcode("this plugin is great");
+    jQuery('#qrcodeTable').qrcode({
+        render  : "table",
+        text    : window.location.href
+    }); 
+    jQuery('#qrcodeCanvas').qrcode({
+        text    : window.location.href
+    }); 
+</script>
 
-                    getQueue: function() {
-                        return pending;
-                    },
-                    clear: function() {
-                        pending.length = 0;
-                    }
-                }
-            }
-
-            var q = queue();
-            var fn1 = function(next) {
-                    setTimeout(function() {
-                        console.log(1);
-                        next();
-                    }, 3 * 1000);
-                },
-                fn2 = function(next) {
-                    setTimeout(function() {
-                        console.log(2);
-                        next();
-                    }, 2 * 1000);
-                },
-                fn3 = function(next) {
-                    setTimeout(function() {
-                        console.log(3);
-                        next();
-                    }, 1 * 1000);
-                },
-                fn4 = function(next) {
-                    setTimeout(function() {
-                        console.log(4);
-                        next();
-                    }, 5 * 1000);
-                }
-            q.add(fn1);
-            q.add(fn2);
-            q.add(fn3);
-            q.add(fn4);
-            q.start();
-
-
-            window.onload = function() {
-                var container = document.querySelector('.container');
-                container.onscroll = function() {
-                    checkImgs();
-                }
-
-                function isInSight(el) {
-                    var sTop = container.scrollTop;
-                    var oHeight = container.offsetHeight;
-                    var oTop = el.offsetTop;
-                    return sTop + oHeight > oTop;
-                }
-
-                function checkImgs() {
-                    var imgs = document.querySelectorAll('.pic');
-                    Array.from(imgs).forEach(el => {
-                        if (isInSight(el)) {
-                            loadImg(el);
-                        }
-                    })
-                }
-
-                function loadImg(el) {
-                    var source = el.dataset.src;
-                    el.src = source;
-                }
-                checkImgs();
-            }
-
-            var a=function(){};
-            a.prototype.fire=function(){console.log("发射普通子弹")};
-            var b=function(a){this.b1=a;};
-            b.prototype.fire=function(){this.b1.fire();console.log("发射导弹")};
-            var c=function(a){this.c1=a;};
-            c.prototype.fire=function(){this.c1.fire();console.log("发射原子弹")};
-
-            var d=new a();
-            d=new b(d);
-            d=new c(d);
-
-            d.fire();
-
-            Function.prototype.before=function(beforeFn){
-                var self=this;
-                return function(t){
-                    beforeFn.call(this,t);
-                    return self.call(this,t);
-                }
-            }
-
-            var test=function(t){
-                console.log('test'+t);
-            }
-            var tempFn =test.before(function(t){
-                console.log('before'+t)
-            });
-            tempFn("lalalallalala...");
-
-        </script>
-    </head>
-    
-    <body>
-        <style type="text/css">
-            .container{
-                width:200px;
-                height:200px;
-                position:relative;
-                overflow-y:scroll;
-                }
-            .img-area{
-                width:100px;
-                height:100px;
-            }
-            </style>
-            <div style="width:500px;height:600px;border:1px solid red;position:relative;">
-    <div style="width:300px;border:1px solid;max-height:400px;overflow: auto; position: absolute;left:50%;top:50%;transform: translate(-50%,-50%);" contentEditable="true">aaaa</div>
-            </div>
-        <div class="container">
-            <div class="img-area">
-                <img class="pic" alt="loading" data-src="res/psb_002.jpg" src="image-placeholder-logo.svg">
-            </div>
-            <div class="img-area">
-                <img class="pic" alt="loading" data-src="res/psb_003.jpg" src="image-placeholder-logo.svg">
-            </div>
-            <div class="img-area">
-                <img class="pic" alt="loading" data-src="res/psb_004.jpg" src="image-placeholder-logo.svg">
-            </div>
-            <div class="img-area">
-                <img class="pic" alt="loading" data-src="res/psb_005.jpg" src="image-placeholder-logo.svg">
-            </div>
-            <div class="img-area">
-                <img class="pic" alt="loading" data-src="res/psb_006.jpg" src="image-placeholder-logo.svg">
-            </div>
-        </div>
-    </body>
-
+</body>
 </html>
