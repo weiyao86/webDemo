@@ -57,7 +57,30 @@ Toos>编译系统>EpcSass
     $project_name       当前项目文件的名称.
     $project_extension  当前项目文件的扩展部分.
     $project_base_name  当前项目仅包括名的部分.
+    
+    更改sass编译方式
+=======================================    
+打开你的ruby中sass的安装位置
 
+D:\Software\Ruby22\Ruby24-x64\lib\ruby\gems\2.4.0\gems\sass-3.5.6\lib\sass
+找到并来用编译自器打开engine.rb
+大概2113在170行左右,  找到这行代码:
+
+DEFAULT_OPTIONS = {
+      :style => :compact,
+      :load_paths => [],
+      :cache => true,
+      :cache_location => './.sass-cache',
+      :syntax => :sass,
+      :filesystem_importer => Sass::Importers::Filesystem
+    }.freeze
+其中的:style=>:compact就是我们sass编译后css的排版样式;
+
+这里有四个5261值,分别对应四种样式,用下面这四个值中的一个替换compact就可以了
+
+nested嵌套,expanded展开,compact紧凑,compressed压缩
+
+=======================================
 一台电脑上有多个公钥时在.ssh文件内建config文件并编辑如下(本人pc上配置):
 =======================================
     Host me.github.com
