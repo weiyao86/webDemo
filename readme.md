@@ -58,7 +58,7 @@ Toos>编译系统>EpcSass
     $project_extension  当前项目文件的扩展部分.
     $project_base_name  当前项目仅包括名的部分.
     
-    更改sass编译方式
+更改sass编译方式
 =======================================    
 打开你的ruby中sass的安装位置
 
