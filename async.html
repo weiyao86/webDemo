@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		function fn(test){
+			return spawn(test);
+		}
+
+		function spawn(genF){
+			return new Promise(function(resolve,reject){
+				const gen = genF();
+
+				function step(nextF){
+					let next;
+					try{
+						next=nextF();
+					}catch(e){
+						return reject(e);
+					}
+					if(next.done){
+						return resolve(next.value);
+					}
+
+					Promise.resolve(next.value).then(function(v){
+						step(function(){
+							return gen.next(v);
+						})
+					},function(e){
+						step(function(){
+							return gen.throw(e);
+						})
+					})
+				}
+
+				step(function(){
+					return gen.next(undefined);
+				})
+			})
+		}
+
+		function* test(){
+			let r1 =yield new Promise(function(r,j){
+				return setTimeout(function(){
+					console.log(1000)
+					r(1000)
+				},1000);
+			})
+			let r2 =yield new Promise(function(r,j){
+				return setTimeout(function(){
+					console.log(2000)
+					r(2000)
+				},2000);
+			})
+			
+			console.log(r1,r2);
+		}
+		
+		fn(test);
+		// let t= test();
+		// t.next();
+		// t.next();
+		// t.next();
+
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
