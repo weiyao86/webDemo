@@ -54,7 +54,7 @@
                     _top = parseInt(e.style.top),
                     start = (new Date).getTime(),
                     style=e.currentStyle || window.getComputedStyle(e,null);
-
+console.time("time")
                  style.position === "static" && (e.style.position = "relative");
                  clearTimeout(shakeClsTiem);
                  animate();
@@ -76,7 +76,8 @@
 
                     } else {
                         e.style.cssText = nativeCss;
-                        console.log('nativeCss:=='+nativeCss)
+                        console.log('nativeCss:=='+nativeCss,'500ms完成');
+                        console.timeEnd("time");
                     }
 
                 }
