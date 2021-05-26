@@ -37,10 +37,58 @@
   border: 1px dashed transparent;
   background: linear-gradient(white, white) padding-box, repeating-linear-gradient(-45deg, red 0, #ccc .25em, white 0, white .75em);
 }
+.wrap{
+  /*height:400px;*/
+  display: block;
+  border-style: solid;
+  border-color:green; 
+  border-width: 1px 0 0 1px;
+  display: flex;
+  width: 500px;
+  flex-wrap: wrap;
+  margin:0 auto;
+}
+/*label::before{
+  display: inline-block;
+  content: '';
+  height: 100%;
+  width:0;
+}*/
+.wrap div{
+  /*padding:20px;margin:10px;border:1px solid #f00;overflow: hidden;*/
+  /*border:0px solid #f00;*/
+ /* border-bottom-width: 1px;
+  border-right-width: 1px;*/
+  box-sizing: border-box;
+  flex-basis: 25%;
+  padding-top: 25%;
+  height: 0;
+  position: relative;
+}
+.wrap div:nth-of-type(4n){
+  /*border-right-width: 0;*/
+  }
+  .wrap div:after{
+    content: '';
+    /*display: block;*/
+    position: absolute;
+    z-index: 1;
+    top:-50%;
+    left:-50%;
+    bottom:-50%;
+    right:-50%;
+    transform: scale(0.5);
+    border:0px solid #f00;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+  .wrap div:nth-of-type(2n):after{
+     /*border:1px solid #f00;*/
+  }
   </style>
 </head>
 <body>
- <ul>
+ <!-- <ul>
     <li>1</li>
     <li>2</li>
     <li>3</li>
@@ -49,5 +97,93 @@
     <li>6</li>
 </ul>
 <p class="dotted-line">庭院深深，不知有多深？杨柳依依，飞扬起片片烟雾，一重重帘幕不知有多少层</p>
+<span id='1'>1飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='2'>2飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='3'>3飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='4'>4飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='5'>5飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='6'>6飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='7'>7飞扬起片片烟雾，一重重帘幕不知有多少层</span>
+<span id='8'>8飞扬起片片烟雾，一重重帘幕不知有多少层</span> -->
+<div class="wrap">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<script>
+  var reg =/^(\w+)\:\/\/([^\/]+)\/(.*)$/;
+  var str ='https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment';
+ var t=str.match(reg);
+  var arr=document.getElementsByTagName('span');
+  console.log(t)
+  arr[0].innerHTML=t;
+
+  var obj=[];
+
+ var name='';
+ var options= Object.defineProperty({},'passive',{
+    get(target){
+      console.log(target,'get')
+      return name;
+    },
+    set(val){
+       console.log(val,'set')
+      name=val;
+    }
+  })
+
+  window.addEventListener('test',null,options);
+
+  // var test=new Proxy(obj,{
+  //   get(target, property, value, receiver){
+  //     console.log('get')
+  //     return Reflect.get(target, property, receiver);
+  //   },
+  //   set(target, property, value, receiver){
+  //     console.log('set')
+  //      return Reflect.set(target, property, value, receiver)
+  //   }
+  // })
+
+  // setTimeout(function(){
+  //   // var n =test[0].name;
+  //   console.log(test)
+  //   test.push({name:'TEST_AJAX.asmx'});
+  //   console.log(test[0])
+  // },2000);
+  // for(var i=1;i<9;i++){
+  //   var dom = document.getElementById(i);
+  //   arr.push(dom);
+  // }
+
+  // for(var i=0;i<arr.length;i++){
+  //   // arr[i].addEventListener('click',function(){
+  //   //   alert(this.innerHTML)
+  //   // })
+  //   arr[i].onclick=function(){
+  //     alert(this.innerHTML+'===='+i)
+  //   }
+  // }
+  //app交互
+
+// H5 plus事件处理  
+function plusReady() {
+  alert("IMEI: " + plus.device.imei);
+}
+if (window.plus) {
+  plusReady();
+} else {
+  document.addEventListener("plusready", plusReady, false);
+}
+
+</script>
 </body>
 </html>
