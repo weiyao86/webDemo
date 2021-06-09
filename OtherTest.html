@@ -1,63 +1,43 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>animation动画篇</title>
-    <style type="text/css">
-      #con
-      {
-        width: 100px;
-        height: 100px;
-        background: #FFA500;
-        position: relative;
-      }
-      @-moz-keyframes myanimation
-      {
-        from{left: 100px;top:0px;}
-        to{left: 200px;top: 100px;}
-      }
-      @-webkit-keyframes myanimation
-      {
-        from{left: 100px;top: 0px;}
-        to{left: 200px;top: 100px;}
-      }
-    </style>
-    
-  </head>
-  <body>
-    <div id="con" onclick="myfunction()">
-      
-    </div>
-    <script type="text/javascript">
-       var x = document.getElementById('con');    //设置全局变量x
-       function myfunction()
-       {
-         x.style.WebkitAnimation="myanimation 2s linear 3";   // Chrome, Safari 和 Opera  浏览器兼容问题
-         x.style.animation="myanimation 2s linear 3";
-       }
-       x.addEventListener("animationstart",myanimationStart);
-       x.addEventListener("animationiteration",myanimationiterration);
-       x.addEventListener("animationend",myanimationend);
-       x.addEventListener("webkitAnimationStart",myanimationStart);    // Chrome, Safari 和 Opera  浏览器兼容问题
-       x.addEventListener("webkitAnimationIteration",myanimationiterration);    // Chrome, Safari 和 Opera  浏览器兼容问题
-       x.addEventListener("webkitAnimationEnd",myanimationend);    // Chrome, Safari 和 Opera  浏览器兼容问题
-       function myanimationStart()      //动画开始运行时触发，通过addEventListener事件监听到运行函数myanimationStart
-       {
-         this.innerHTML="动画正在运行";
-         x.style.background="pink";         
-       }
-       function myanimationiterration()      //动画再次运行触发，同样也是通过事件监听
-       {
-         this.innerHTML="动画重新运行";
-         x.style.background="greenyellow";
-       }
-       function myanimationend()      //动画运行结束时触发，同样也是通过事件监听事件
-       {   this.innerHTML="动画运行结束";
-         x.style.background="blue";
-         x.style.width=200+"px";
-         x.style.height=200+"px";
-         window.alert("动画运行结束");
-       }
-    </script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      position: relative;
+      border: 1px solid #f00;
+    }
+    .wrap{
+      width: 500px;
+      height: 400px;
+      position: absolute;
+      top:0;
+      bottom:0;
+      left: 0;
+      right: 0;
+      margin:auto;
+      background: #ccc;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">asdfsasf</div>
+  <label for="country">请选择喜欢的国家:</label>
+<input list="countries" name="country" id="country">
+<datalist id="countries">
+  <option value="UK">
+  <option value="Germany">
+  <option value="USA">
+  <option value="Japan">
+  <option value="India">
+  <option value=“China”>
+</datalist>
+
+</body>
 </html>
