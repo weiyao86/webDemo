@@ -1,43 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    html,body{
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      position: relative;
-      border: 1px solid #f00;
-    }
-    .wrap{
-      width: 500px;
-      height: 400px;
-      position: absolute;
-      top:0;
-      bottom:0;
-      left: 0;
-      right: 0;
-      margin:auto;
-      background: #ccc;
-      color: #fff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="Scripts/jquery-1.9.0.js"></script>
+   
+    <style>
+      html,body{height: 100%;}
+        .wrap{
+            position: relative;
+            height: 100%;
+            perspective-origin: 50% 50%;
+            perspective: 3000px;
+        }
+        .box{
+            width: 500px;
+            height:  500px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -150px 0 0 -150px;
+            transform-style: preserve-3d;
+            perspective-origin: 50% 50%;
+            perspective: 3000px;
+            animation: box-rotate3d 30s  linear infinite;
+        }
+       
+        .ball-1{
+            width: 200px;
+            height: 200px;
+            background: #ccc;
+            position: absolute;
+             /*animation: ball3d 3s  linear infinite;*/
+            }
+        .ball-2{
+            width: 200px;
+            height: 200px;
+            background: #ccc;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }.ball-3{
+            background: #ccc;
+            transform: rotateY(72deg);
+        }.ball-4{
+            background: #ccc;
+            transform: rotateY(108deg);
+        }.ball-5{
+            background: #ccc;
+            transform: rotateY(144deg);
+        }
+        @keyframes ball3d{
+            0%{transform: rotateY(45deg);}
+            100%{transform: rotateY(360deg);}
+        }
+        @keyframes rotate3d{
+            0%{transform: rotateZ(-30deg) rotateY(0deg);}
+            100%{transform: rotateZ(-360deg) rotateY(360deg);}
+        }
+        @keyframes box-rotate3d{
+            0%{transform: rotateZ(-30deg) rotateY(0deg);}
+            100%{transform: rotateZ(-360deg) rotateY(360deg);}
+        }
+    </style>
+     <script>
+   
+    </script>
 </head>
 <body>
-  <div class="wrap">asdfsasf</div>
-  <label for="country">请选择喜欢的国家:</label>
-<input list="countries" name="country" id="country">
-<datalist id="countries">
-  <option value="UK">
-  <option value="Germany">
-  <option value="USA">
-  <option value="Japan">
-  <option value="India">
-  <option value=“China”>
-</datalist>
-
+  <div class="wrap">
+    <div class="ball-1">1</div>
+    <div class="ball-2">2</div>
+   <!--  <div class="ball-3">3</div>
+    <div class="ball-4">4</div>
+    <div class="ball-5">5</div> -->
+    </div>
 </body>
 </html>
