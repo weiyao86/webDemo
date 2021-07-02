@@ -53,7 +53,7 @@ function circle(id,R,speed,time){
             x=demo.offsetLeft,
             y=demo.offsetTop,
             step =3,
-            r=1,
+            r=300,
             c=2*Math.PI/360,
             hudu,
             max=360/speed,
@@ -69,27 +69,29 @@ function circle(id,R,speed,time){
 
                 hudu=c*speed*step;
 
-                var lr=y- r * Math.cos(hudu)+"px";
+
+                var lt=y- r * Math.cos(hudu)+"px";
                 var ll=x+ r * Math.sin(hudu)+"px";
+                console.log(lt)
                 // demo.style.left = ll;
-                // demo.style.top = lr;
+                // demo.style.top = lt;
                
                 switch(speed){
                     case 1:
-                     demo.style.transform=`translate3d(${ll},0,${lr})`;
+                     demo.style.transform=`translate3d(${ll},0,${lt})`;
                      break; case 2:
-                     demo.style.transform=`translate3d(${ll},${lr},0)`;
+                     demo.style.transform=`translate3d(${ll},${lt},0)`;
                      break; case 3:
-                     demo.style.transform=`translate3d(0,${ll},${lr})`;
+                     demo.style.transform=`translate3d(0,${ll},${lt})`;
                      break;
                 }
                 r++;
                 step++;
         },15);
 }
-circle("demo",300,1);
+// circle("demo",300,1);
 circle("demo1",300,2);
-circle("demo3",300,3);
+// circle("demo3",300,3);
 
 </script>
 

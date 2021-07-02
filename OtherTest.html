@@ -4,78 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="Scripts/jquery-1.9.0.js"></script>
-   
     <style>
-      html,body{height: 100%;}
         .wrap{
+            box-shadow: 20px 20px 60px #bebebe,
+    -20px -20px 60px #ffffff;
+            padding: 20px;
+            width: 600px;
+            margin: 0 auto;
             position: relative;
-            height: 100%;
-            perspective-origin: 50% 50%;
-            perspective: 3000px;
         }
-        .box{
-            width: 500px;
-            height:  500px;
+        .text,.text:before{
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient:vertical;
+            background: #fff;
+        }
+        .text:after{
+             content:'';
+            display: block;
+            border: 1px solid;
+            margin-bottom: -20px;
+        }
+        .text:before{
+            content: attr(title);
             position: absolute;
-            left: 50%;
-            top: 50%;
-            margin: -150px 0 0 -150px;
-            transform-style: preserve-3d;
-            perspective-origin: 50% 50%;
-            perspective: 3000px;
-            animation: box-rotate3d 30s  linear infinite;
+            left: 20px;
+            right: 20px;
+            background:inherit;
         }
-       
-        .ball-1{
-            width: 200px;
-            height: 200px;
-            background: #ccc;
-            position: absolute;
-             /*animation: ball3d 3s  linear infinite;*/
-            }
-        .ball-2{
-            width: 200px;
-            height: 200px;
-            background: #ccc;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }.ball-3{
-            background: #ccc;
-            transform: rotateY(72deg);
-        }.ball-4{
-            background: #ccc;
-            transform: rotateY(108deg);
-        }.ball-5{
-            background: #ccc;
-            transform: rotateY(144deg);
-        }
-        @keyframes ball3d{
-            0%{transform: rotateY(45deg);}
-            100%{transform: rotateY(360deg);}
-        }
-        @keyframes rotate3d{
-            0%{transform: rotateZ(-30deg) rotateY(0deg);}
-            100%{transform: rotateZ(-360deg) rotateY(360deg);}
-        }
-        @keyframes box-rotate3d{
-            0%{transform: rotateZ(-30deg) rotateY(0deg);}
-            100%{transform: rotateZ(-360deg) rotateY(360deg);}
+        .link{
+            color: #ff00ff;
         }
     </style>
-     <script>
-   
-    </script>
 </head>
 <body>
-  <div class="wrap">
-    <div class="ball-1">1</div>
-    <div class="ball-2">2</div>
-   <!--  <div class="ball-3">3</div>
-    <div class="ball-4">4</div>
-    <div class="ball-5">5</div> -->
+    <div class="wrap">
+        <div class="text" title="一直以来，Web 中想要使用矢量的彩色图标只能通过 SVG 的方式，这极大的束缚了用户的想象力，为此，我们一直在不断地探索和尝试。在解决了各种难题之后，今天，我很自豪地宣布，iconfont.cn 成为全球第一个支持彩色字体图标的生产管理平台，这使得我们目前几百万的彩色图标可以无缝切换到新的彩色字体图标技术上，同时也带来了很多">一直以来，Web 中想要使用矢量的彩色图标只能通过 SVG 的方式，这极大的束缚了用户的想象力，为此，我们一直在不断地探索和尝试。在解决了各种难题之后，今天，我很自豪地宣布，iconfont.cn 成为全球第一个支持彩色字体图标的生产管理平台，这使得我们目前几百万的彩色图标可以无缝切换到新的彩色字体图标技术上，同时也带来了很多</div>
+        <div class="link">全文</div>
     </div>
 </body>
 </html>
