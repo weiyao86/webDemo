@@ -54,8 +54,12 @@
             var canvasLine = document.getElementById("line");
             context = canvasLine.getContext("2d");
             context.moveTo(10, 10);
-            context.lineTo(150, 50);
             context.lineTo(10, 50);
+             context.lineTo(150, 50);
+            // context.lineTo(10, 50);
+            // context.lineTo(100, 50);
+            // context.lineTo(100, 10);
+            // context.lineTo(10, 10);
             context.lineCap = 'round';//square (default butt)
             context.lineJoin = 'round';// (default miter 尖角) bevel
             context.lineWidth = '6';

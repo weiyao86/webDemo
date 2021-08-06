@@ -3,102 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>TITLE</title>
+ 
   <style>
-   .wrap{
-    width: 50%;
-    height: 400px;
-    box-shadow: 0 0 20px #000;
-    
+  body{
+    background: #43ad7f7f;
   }
-  div {
-    margin: 0em;
-    padding: 2em;
-  }
-  #source {
-    color: blue;
-    border: 1px solid black;
-  }
-  #target {
-    border: 1px solid black;
-  }
-  .input{
-    height: 100px;
-    line-height: 30px;
-  }
-  </style>
-  <script>
-    window.onload=function function_name(argument) {
-      var btn = document.getElementById("btn");
-      var ele=document.documentElement;
-      btn.addEventListener("click",function(){
-          ele.requestFullscreen();
-      });
-      var wrap = document.getElementById('wrap');
-      wrap.addEventListener("dragenter",function(){
-        console.log(arguments);
-        wrap.innerHTML="请释放鼠标"
-      })
-      wrap.addEventListener("dragleave",function(){
-        console.log(arguments);
-        wrap.innerHTML="请将文件拖拽到此"
-      })
-
-       wrap.addEventListener("drop",function(e){
-        e.preventDefault();
-        var data = e.dataTransfer.files[0];
-         var file = new FileReader();
-         file.onload=function(base){
-        
-          var img = document.createElement('img');
-          img.src=base.target.result;
-          img.style.width='100%';
-          img.style.height='100%';
-           e.target.appendChild(img);
-         }
-         file.readAsDataURL(data);
-      })
-
+    .wrap{
+      width: 500px;
+      height: 600px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, .7);
     }
+    .item{
+      position: relative;
+      width: 300px;
+      height: 75px;
+      border: 3px solid #f00;
+      text-align: center;
+      color: #f00;
+    }
+    .item::after{
+      position: absolute;
+      top: -100%;
+      width: 50%;
+      content: '';
+      display: block;
+      border-style: solid;
+      border-width: 75px;
+      border-color: transparent transparent #000;
+      height: 0;
+    }
+    .text{
+      position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #f00;
+    z-index: 1223332122;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    
+  </style>
+  <script src="test.js"></script>
+  <script src="Scripts/jquery-1.9.0.js"></script>
+  <script>
+    window.onload=function(){
+      var obj={name:'test',children:[{name:'children-test'}]};
+      // var src = $.extend(true,obj,{name:'5种css实现垂直水平居中.html',children:[{name:'async.html'}]});
+      // console.log($.extend(true,[{t:'test1'}],[{t:'test2'}],[{t:'test3'}]));
+      // // console.log(src)
+      // var arr=[{name:1},{name:2},{name:10},{name:3},{name:4},{name:5},{name:6}];
+      // for(var i in arr){
+      //   console.log(i,arr[i])
+      // }
+    
 
-       function drag_handler(ev) {
-         console.log("Drag");
+
+      var cloneDeep=function (){
+        let i=1,deep=false,length=arguments.length,target=arguments[0]||{},options,name,src,copy,copyIsArray,clone;
+        if(typeof target == 'boolean'){
+          deep=target;
+          target=arguments[1]||{};
+          i=2;
         }
-
-        function dragstart_handler(ev) {
-         console.log("dragStart");
-         ev.dataTransfer.setData("text", ev.target.id);
+        if(length ===i){
+          return target;
         }
+        for(;i<length;i++){
+          if((options=arguments[i]) !=null){
+            for(name in options){
+              src=target[name];
+              copy=options[name];
 
-        function drop_handler(ev) {
-         console.log("Drop");
-         // ev.currentTarget.style.background = "lightyellow";
+              if(target === copy){
+                continue;
+              }
 
-         e.preventDefault();
+              if(deep && copy && ((copyIsArray=Array.isArray(copy)) || (Object.prototype.toString.call(copy).substr(8,6)=="Object"))){
+                if(copyIsArray){
+                  copyIsArray=false;
+                  clone=src && Array.isArray(src) ? src : [];
+                }else{
+                  clone = src && (Object.prototype.toString.call(src).substr(8,6)=="Object") ? src :{};
+                }
+                target[name]=cloneDeep(deep,clone,copy);
 
-         var data = ev.dataTransfer.files[0];
-         var file = new FileReader();
-         file.onload=function(base){
-          var img = document.createElement('img');
-          img.src=base;
-          img.style.width='100%';
-          img.style.height='100%';
-           e.target.appendChild(img);
-         }
-         file.readAsDataURL(data);
-        
+              }else if(copy != void 0){
+                target[name]=copy;
+              }
+            }
+          }
         }
-
-        function dragover_handler(ev) {
-         console.log("dragOver");
-         ev.preventDefault();
-        }
-  </script>     
+        return target;
+      }
+     console.log(cloneDeep(true,[{a:{t:2}}],[{a:{b:3,c:[1,2,3]}}],[{b:5}]));
+     console.log($.extend(true,[{a:{t:2}}],[{a:{b:3,c:[1,2,3]}}],[{b:5}]));
+      
+  }
+  </script>
 </head>
 <body>
-  <button id="btn">fullscreen</button>
-  <div class="wrap" id="wrap"  ondragover="dragover_handler(event);"></div>
-   <div id="target" ondrop="drop_handler(event);" ondragover="dragover_handler(event);">Drop Zone</div>
-   <input type="text" class="input">
+  <div class="wrap" id="wrap">
+    
+    <div class="item">
+      <span class="text">itemitemitem</span>
+    </div>
+    <div class="trapezoid"></div>
+  </div>
+   <script>
+
+        var s ='card=2'.replace(/(?:(card))=([^?&]*)/,'throws');
+        const element = document.getElementById('wrap');
+        let start;
+
+        function step(timestamp) {
+          if (start === undefined)
+            start = timestamp;
+          const elapsed = timestamp - start;
+
+          //这里使用`Math.min()`确保元素刚好停在200px的位置。
+          element.style.transform = 'translateX(' + Math.min(0.01 * elapsed, 200) + 'px)';
+
+          if (elapsed <30000) { // 在两秒后停止动画
+            // window.requestAnimationFrame(step);
+          }
+        }
+
+        window.requestAnimationFrame(step);
+  </script>
 </body>
 </html>
