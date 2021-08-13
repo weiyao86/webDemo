@@ -3,8 +3,33 @@
 <head>
 	<meta charset="UTF-8">
 	<title>html各种字符转换</title>
+	<style>
+		body{
+			background:url('res/car.jpg')repeat-x fixed 0 0/auto transparent;
+			animation: smooth 20s linear infinite;
+    		animation-play-state: running;
+			color:#5ff;
+		}
+		@keyframes smooth {
+		    to {
+		      background-position: 5000px center;
+		    }
+  		} 
+  		.article_content{
+  			position: relative;
+  		}
+  		.article_content::before{
+  			background:url('res/car.jpg')repeat-x fixed 0 0/auto transparent;
+  			content: "";
+		    position: absolute;
+		    top: 0; right: 0; bottom: 0; left: 0; 
+		    z-index: -1; 
+		    filter: blur(10px);
+		    margin: -30px;
+  		}
+	</style>
 </head>
-<body style="background:url('res/car.jpg');color:#5ff;">
+<body>
 
 <blockquote class="article_content">
 

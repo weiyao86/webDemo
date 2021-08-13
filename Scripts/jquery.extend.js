@@ -6,6 +6,16 @@ var isObject=function(obj){return Object.prototype.toString.call(obj).substr(8, 
     // Extend jquery object method
     $.fn.extend({
 
+        getParamsBySearch:function(url){
+            var params={};
+            (location.search || url).replace(/([^?&=]+)=([^&]+)/g,(_,k,v)=>{
+                params[k]=v;
+                console.log(_,k,v)
+            });
+
+            return params;
+        },
+
         //clone
         cloneDeep: function() {
             let i = 1,
