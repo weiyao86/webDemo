@@ -3,65 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>绝对底部</title>
+  <title>Document</title>
   <style>
-  /*负margin*/
-   /* html,body{
-      margin: 0;padding: 0;height: 100%;
+    
+    .pie{
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: yellowgreen;
+      background-image: linear-gradient(to right,transparent 50%,#655 0);
+      overflow: hidden;
     }
-    html{position: relative;}
-    .header{background: #0f0;height: 50px;position: fixed;width: 100%;}
-    .main{border: 1px solid #f00;min-height:100%;padding:50px 0;margin-bottom: -50px;box-sizing: border-box;}
-    .footer{height: 50px;background: #ddd;}*/
+    .pie::before{
+      content: '';
+      display: block;
+      margin-left: 50%;
+      height: 100%;
+      background-color: inherit;
+      border-radius:0 100% 100% 0/ 50%;
+      transform-origin: left;
+    }
+    .test{
+      width: 100px;
+      height: 100px;
+      /*border-radius: 50%;*/
+      background: #f00;
+      box-shadow: 0 10px 10px -5px #000;
+    }
+    img{
+      width: 400px;
+      transition: all .3s;
+      filter: none;
+          }
+    img:hover{
+      filter: grayscale(100%);
+      transition: all .3s;
+    }
+    a:after {content: " (" attr(href) ")";}
+    .scale {
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  position: relative; 
+}
+.item {
+  position: absolute; 
+  width: 100%;
+  height: 100%;
+  background-color: #499e56;
+}
+.text_signature {
+ border: 1px solid;
+    width: 320px;
+  height: 200px;
+  background: linear-gradient(to left bottom,#f00 50%,#000 0) no-repeat 100% 0 / 2em 2em;
+  border-radius: 50%;
+}
+dl{
+ background: linear-gradient(-45deg, transparent 40%, red 0, red 60%, transparent 0) 0 1em,
+              linear-gradient(45deg, transparent 40%, red 0, red 60%, transparent 0) .1em 1em;
+  background-repeat: repeat-x;
+  background-size: .2em .1em;
+  text-shadow: .05em 0 white, -.05em 0 white;
+}
+dt,dd{
+  display: inline;
+}
 
-  /*position*/
-    /* html,body{
-      margin: 0;padding: 0;min-height: 100%;
-    }
-    html{position: relative;}
-    body{margin-bottom: 50px;}
-    .header{background: #0f0;height: 50px;}
-    .main{border: 1px solid #f00;}
-    .footer{height: 50px;background: #ddd;position: absolute;bottom: 0;width: 100%;}
-*/
-     /*flex*/
-     html,body{
-      margin: 0;padding: 0;height: 100%;
-    }
-    .container{display: flex;flex-direction: column;min-height: 100%;}
-    .header{background: #0f0;height: 50px;}
-    .main{border: 1px solid #f00;flex: 1;overflow: auto;}
-    .footer{height: 50px;background: #ddd;}
+dt:not(:first-child):before{
+  content: '\A';
+  display: inline;
+  white-space: pre;
+}
+.gradient{
+  width: 50%;
+  height: 300px;
+  border: 1px solid;
+  padding: 0.5em;
+  line-height: 1.5;
+  background: #eee;
+  background-image: linear-gradient(rgba(0,0,0,.2) 50%,transparent 0);
+  background-size: auto 3em;
+  background-attachment:scroll;
+  background-origin: content-box;
+  word-break: break-all;
+  overflow: auto;
+
+  background: #58a;
+color: white;
+text-shadow: 0 1px hsl(0,0%,85%),
+ 0 2px hsl(0,0%,80%),
+ 0 3px hsl(0,0%,75%),
+ 0 4px hsl(0,0%,70%),
+ 0 5px hsl(0,0%,65%),
+ 0 5px 10px black;
+}
+.wray{
+  width: 50%;
+  height: 300px;
+   background: linear-gradient(-45deg,transparent 40%, red 0, red 60%, transparent 0) 0 1em,
+              linear-gradient(45deg, transparent 40%, red 0, red 60%, transparent 0) .1em 1em;
+  background-repeat: repeat-x;
+  background-size: .2em 5em;
+
+}
+.wray::before{
+content: '\2713';
+display: block;
+border: 1px solid;
+width: 1em;
+height: 1em;
+}
+
   </style>
 </head>
 <body>
-  <div class="container">
-  <div class="header">header</div>
-  <div class="main">
-    <p>1行记录</p>
-    <p>2行记录</p>
-    <p>3行记录</p>
-    <p>4行记录</p>
-    <p>5行记录</p>
-    <p>6行记录</p>
-    <!-- <p>7行记录</p>
-    <p>8行记录</p>
-    <p>9行记录</p>
-    <p>10行记录</p>
-    <p>11行记录</p>
-    <p>12行记录</p>
-    <p>13行记录</p>
-    <p>14行记录</p>
-    <p>15行记录</p>
-    <p>16行记录</p>
-    <p>17行记录</p>
-    <p>18行记录</p>
-    <p>19行记录</p>
-    <p>20行记录</p> -->
-  </div>
-  <div class="footer">
-    <button>底部</button>
-  </div>
-  </div>
+  <div class="pie"></div>
+  <div class="test"></div>
+  <img src="Res/aa.png" alt="">
+  <a href="//www.webqdkf.com" name="5种css实现垂直水平居中.html"> 有课前端网</a>
+  <div class="scale">
+     <div class="item">
+         这里是所有子元素的容器
+     </div>
+ </div>
+ <div class="text_signature " > 有课前端网，一个专门学习前端知识的网站</div>
+ <dl>
+   <dt>Name:</dt>
+   <dd>xtasdfaf@ds.com</dd>
+   <dd>xtasdfaf@ds.com</dd>
+    <dt>Name:</dt>
+   <dd>xtasdfaf@ds.com</dd>
+    <dt>Name:</dt>
+   <dd>xtasdfaf@ds.com</dd>
+ </dl>
+
+ <ul class="gradient">
+   <li>aaaaaaaaaaaaaa</li>
+   <li>ccccccccccccccc</li>
+   <li>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</li>
+   <li>dddddddddddd</li>
+ </ul>
+
+ <div class="wray"></div>
 </body>
 </html>

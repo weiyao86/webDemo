@@ -1,0 +1,197 @@
+CF10: ['CF1001']
+CF11: ['CF1101']
+CF12: ['CF1201']
+CF15: ['CF1501']
+CF17: ['CF1701']
+CF18: ['CF1801']
+CF20: ['CF2001']
+CF21: ['CF2101']
+CF22: ['CF2201']
+CF23: ['CF2301']
+CF24: ['CF2401']
+CF25: ['CF2501']
+accessValue: ['CD0301']
+address: "1212"
+agreeDiscountRate: "16"
+areas: "所在区域"
+companyIdentity: ['1']
+companyName: "深圳市加码能源科技有限公司"
+companyPeople: "关键人姓名"
+companyPhone: "15736194905"
+contractTypeValue: ['CD0101']
+createId: "线索所有人"
+deliveryObj: {
+    id: '20210426112851336264296902134251',
+    name: '王鑫',
+    headImage: 'http://gsg-imgpvs.oss-cn-hangzhou.aliyuncs.com/export/gs_company/20210426/1619427500554epap9d.jpeg',
+    contactPhone: '18723220584',
+    curClewCount: null,
+    …
+}
+dockingTime: Sun Sep 26 2021 20: 12: 18 GMT + 0800(中国标准时间) {}
+industry: "工商登记 行业"
+industryTypeOneValue: [13230]
+industryTypeTwoValue: [13231]
+invitationWay: [1]
+m: Array(6)
+0:
+    ref: ProxyComponent {
+        props: {…},
+        context: {…},
+        refs: {…},
+        updater: {…},
+        getSelectTags: ƒ,
+        …
+    }
+validateData: {
+        dictValue: 'CF26',
+        dictKey: '需求重点',
+        type: 1,
+        subList: Array(20)
+    }
+    [
+        [Prototype]
+    ]: Object
+1:
+    ref: ProxyComponent {
+        props: {…},
+        context: {…},
+        refs: {…},
+        updater: {…},
+        getSelectTags: ƒ,
+        …
+    }
+validateData: {
+        label: '特殊人员结算',
+        value: 'CD05',
+        isLeaf: false,
+        loading: false,
+        children: Array(3),
+        …
+    }
+    [
+        [Prototype]
+    ]: Object
+2:
+    ref: ProxyComponent {
+        props: {…},
+        context: {…},
+        refs: {…},
+        updater: {…},
+        getSelectTags: ƒ,
+        …
+    }
+validateData: {
+        label: '协议扣率',
+        value: 'CD06',
+        isLeaf: false,
+        loading: false,
+        children: Array(2),
+        …
+    }
+    [
+        [Prototype]
+    ]: Object
+3:
+    ref: ProxyComponent {
+        props: {…},
+        context: {…},
+        refs: {…},
+        updater: {…},
+        getSelectTags: ƒ,
+        …
+    }
+validateData: {
+        value: 'transfinite',
+        label: '是否超限'
+    }
+    [
+        [Prototype]
+    ]: Object
+4:
+    ref: ProxyComponent {
+        props: {…},
+        context: {…},
+        refs: {…},
+        updater: {…},
+        getSelectTags: ƒ,
+        …
+    }
+validateData: {
+        label: '客户资料准备',
+        value: 'CD11',
+        isLeaf: false,
+        loading: false,
+        children: Array(4),
+        …
+    }
+    [
+        [Prototype]
+    ]: Object
+5:
+    ignore: true
+ref: ProxyComponent {
+    props: {…},
+    context: {…},
+    refs: {…},
+    updater: {…},
+    getSelectTags: ƒ,
+    …
+}
+validateData: {
+        label: '拜访准备',
+        children: Array(9)
+    }
+    [
+        [Prototype]
+    ]: Object
+length: 6[[Prototype]]: Array(0)
+manageObj: {
+    id: '20200622170639590194864145272983',
+    name: '何林',
+    contactPhone: '15923985162'
+}
+naturalPersonValue: ['CD0401']
+params: Array(2)
+0:
+    role: {
+        guid: '538eb7d92e731',
+        value: 1,
+        label: '客户助理',
+        code: 'project',
+        remark: '项目提成配置项',
+        …
+    }
+user: {
+        id: '20210508102648831678372993691921',
+        name: '李娜',
+        headImage: null,
+        contactPhone: '15923094834',
+        curClewCount: null,
+        …
+    }
+    [
+        [Prototype]
+    ]: Object
+1: {
+    role: {…}
+}
+length: 2[[Prototype]]: Array(0)
+paySystemValue: ['CD1001']
+promoterObj: {
+    id: '20190313201130751418975885',
+    name: '朱吉斌',
+    headImage: 'http://gsg-imgpvs.oss-cn-hangzhou.aliyuncs.com/export/gs_company/20210507/1620378914794jnrrlq.jpeg',
+    contactPhone: '18623019758',
+    curClewCount: null,
+    …
+}
+protocolSelectionValue: ['CD0801']
+purchaseWayValue: ['CD0901']
+remark: "备注说明"
+serviceProductValue: ['CD0201']
+settlementAmount: "30"
+specialPersonCount: "特殊人员数量"
+termsPayValue: ['CD0701']
+transfiniteAmount: "22"
+transfinitePerson: "11"

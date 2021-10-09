@@ -6,7 +6,7 @@
 	<style>
 		body{
 			background:url('res/car.jpg')repeat-x fixed 0 0/auto transparent;
-			animation: smooth 20s linear infinite;
+			animation: smooth 25s linear infinite forwards;
     		animation-play-state: running;
 			color:#5ff;
 		}
@@ -26,6 +26,10 @@
 		    z-index: -1; 
 		    filter: blur(10px);
 		    margin: -30px;
+  		}
+  		.unicode-container{
+  			background:url('res/css_unicode.jpeg');
+
   		}
 	</style>
 </head>
@@ -1219,7 +1223,9 @@ End Function</pre>
 <p><span style="font-size:14px">mb_http_output("HTML-ENTITIES"); </span></p>
 <p><span style="font-size:14px">ob_start('mb_output_handler'); </span></p>
 </div>
-    
+    <div class="unicode-container">
+    	<img src="res/css_unicode.jpeg" alt="">
+    </div>
 </blockquote>
 </body>
 </html>
