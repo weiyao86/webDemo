@@ -272,12 +272,13 @@
         from {
             transform: rotate(0turn) translateY(-150px) translateY(50%) rotate(1turn);
         }
+
         to {
             transform: rotate(1turn) translateY(-150px) translateY(50%) rotate(0turn);
         }
     }
 
-    .path1{
+    .path1 {
         width: 300px;
         height: 300px;
         border-radius: 50%;
@@ -286,26 +287,57 @@
         align-items: center;
         justify-content: center;
     }
-    .path1>img{
-      border-radius: 50%;
+
+    .path1>img {
+        border-radius: 50%;
         width: 50px;
         height: 50px;
         object-fit: fill;
         animation: spin1 3s infinite linear;
     }
 
+    @keyframes ants {
+        to {
+            background-position: 100%
+        }
+    }
 
+    .rect {
+        width: 600px;
+        height: 300px;
+        border: 1px solid transparent;
+        background: linear-gradient(white, white) padding-box,
+            repeating-linear-gradient(-45deg,
+            black 0, black 25%, white 0, white 50%) 0 / .6em .6em;
+        animation: ants 12s linear infinite;
+    }
+
+    .border-image {
+        padding: 1em;
+        border: 10px solid transparent;
+        border-image: 10 repeating-linear-gradient(-45deg,
+            red 0, red 1em,
+            transparent 0, transparent 2em,
+            #58a 0, #58a 3em,
+            transparent 0, transparent 4em);
+    }
     </style>
 </head>
 
 <body>
+    <div class="border-image">
+        border-image
+    </div>
+    <div class="rect">
+        rect
+    </div>
     <div class="path">
         <div class="avatar">
             <img src="res/aa.png" />
         </div>
     </div>
     <div class="path1">
-            <img src="res/aa.png" />
+        <img src="res/aa.png" />
     </div>
     <div class="panoramic"></div>
     <h1>标题这是标题0</h1>
