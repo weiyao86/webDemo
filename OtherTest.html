@@ -4,143 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
     <style>
         
-    .wrapper{
-        display: flex;
-        flex-flow: wrap;
-    }
-    .wrap-bx{
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-flow: column;
-        flex-basis: 40%;
-        margin: 20px;
-        overflow: hidden;
-    }
+        .container{
+            width: 720px;
+            border: 1px solid;
+        }
+        .box{
+            padding-top: calc((9/16) * 100%);
+            background: #f00;
+        }
 
-
-    .wrap-bx img{
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
-    }
-
-    .wrap-bx .wrap-item{
-        position: absolute;
-        /*bottom: 0;*/
-        bottom: -160px;
-        width: 100%;
-        height: 160px;
-        display: flex;
-        justify-content: center;
-        flex-flow: column;
-        backdrop-filter: blur(10px);
-        opacity: 0;
-        transition:opacity .2s, bottom .2s;
-    }
-
-
-    .wrap-bx:hover .wrap-item{
-        bottom: 0;
-        opacity: 1;
-        transition:opacity .2s, bottom .2s;
-    }
-
-    .wrap-bx:hover .wrap-item h4{
-        opacity: 1;
-        transform: translateY(0);
-        transition: .3s ease .2s;
-    }
-
- 
-
-    .wrap-item h4{
-        opacity: 0;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: bold;
-        font-size: 24px;
-        color: #fff;
-        transform: translateY(-100px);
-        transition: .3s;
-
-    }
-    .wrap-item .item-bx{
-        display: flex;
-        justify-content: center;
-        list-style: none;
-    }
-    .wrap-item .item-bx li{
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        color: #fff;
-        transform: translateY(100px);
-        transition: calc(.3s * var(--i));
-    }
- 
-    .wrap-item .item-bx li:nth-child(1){
-        --i: 2;
-    }
-     .wrap-item .item-bx li:nth-child(2){
-        --i: 4;
-    }
-     .wrap-item .item-bx li:nth-child(3){
-        --i: 6;
-    }
-
-    .wrap-bx:hover .wrap-item .item-bx li{
-        opacity: 1;
-        transform: translateY(0);
-        transition: calc(.2s * var(--i)) transform;
-    }
     </style>
+    <script>
+        
+
+ this.state={
+    arr（）Cp:[]
+ }
+
+onClickCell=()=>{
+    arrCp.push(<div><button onClick={()=>{this.onClickCell()}}>aaaaa</button></div></div>);
+}
+
+ arrCp.push(<div><button onClick={()=>{this.onClickCell()}}>aaaaa</button></div></div>);
+
+ render=()=>{
+    return <div>
+    {arrCp.map()}
+    </div>
+ }
+
+    </script>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="wrap-bx">
-        <img src="https://tse1-mm.cn.bing.net/th/id/R-C.8c372fd892b3bd371eb3a1df8bd7fc88?rik=4KxekfOQD28FKA&riu=http%3a%2f%2fwww.desktx.com%2fd%2ffile%2fwallpaper%2fscenery%2f20170303%2fdfe53a7300794009a029131a062836d5.jpg&ehk=6ayU5y%2fwtGnzhu7g%2bJimm2REgEbHGczl9Mkbg3I1%2b5I%3d&risl=&pid=ImgRaw&r=0" alt="">
-        <div class="wrap-item">
-            <h4>this is a test</h4>
-            <ul class="item-bx">
-                <li class="class-1"><i class="fa fa-twitter" aria-hidden="true"></i></li>
-                <li class="class-2"><i class="fa fa-windows" aria-hidden="true"></i></li>
-                <li class="class-3"><i class="fa fa-twitter-square" aria-hidden="true"></i></li>
-            </ul>
-        </div>
-        </div>
-
-        <div class="wrap-bx">
-        <img src="https://tse1-mm.cn.bing.net/th/id/R-C.8c372fd892b3bd371eb3a1df8bd7fc88?rik=4KxekfOQD28FKA&riu=http%3a%2f%2fwww.desktx.com%2fd%2ffile%2fwallpaper%2fscenery%2f20170303%2fdfe53a7300794009a029131a062836d5.jpg&ehk=6ayU5y%2fwtGnzhu7g%2bJimm2REgEbHGczl9Mkbg3I1%2b5I%3d&risl=&pid=ImgRaw&r=0" alt="">
-        <div class="wrap-item">
-            <h4>this is a test</h4>
-            <ul class="item-bx">
-                <li class="class-1"><i class="fa fa-twitter" aria-hidden="true"></i></li>
-                <li class="class-2"><i class="fa fa-windows" aria-hidden="true"></i></li>
-                <li class="class-3"><i class="fa fa-twitter-square" aria-hidden="true"></i></li>
-            </ul>
-        </div>
-        </div>
-
-        <div class="wrap-bx">
-        <img src="https://tse1-mm.cn.bing.net/th/id/R-C.8c372fd892b3bd371eb3a1df8bd7fc88?rik=4KxekfOQD28FKA&riu=http%3a%2f%2fwww.desktx.com%2fd%2ffile%2fwallpaper%2fscenery%2f20170303%2fdfe53a7300794009a029131a062836d5.jpg&ehk=6ayU5y%2fwtGnzhu7g%2bJimm2REgEbHGczl9Mkbg3I1%2b5I%3d&risl=&pid=ImgRaw&r=0" alt="">
-        <div class="wrap-item">
-            <h4>this is a test</h4>
-            <ul class="item-bx">
-                <li class="class-1"><i class="fa fa-twitter" aria-hidden="true"></i></li>
-                <li class="class-2"><i class="fa fa-windows" aria-hidden="true"></i></li>
-                <li class="class-3"><i class="fa fa-twitter-square" aria-hidden="true"></i></li>
-            </ul>
-        </div>
-        </div>
-
+    <div class="container">
         
+        <div class="box">aaa</div>
     </div>
 </body>
 </html>
