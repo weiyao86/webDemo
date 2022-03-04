@@ -8,7 +8,7 @@
 	html,body{height:100%;padding:0;margin:0;position:relative;}
 		.x{
 			position:absolute;
-			top:300px;
+			top:600px;
 			width:100%;
 			border:1px solid;
 			border-width:0 0 1px 0;
@@ -22,7 +22,7 @@
 		}
 		.origin-ball,.move-ball{
 			position:absolute;
-			top:250px;
+			top:600px;
 			left:750px;
 			width:100px;height:100px;
 			border-radius:50%;
@@ -56,7 +56,7 @@
 		$(function() {
 			var $move = $("#move_ball"),
 				$origin = $("#origin_ball");
-			var a = 1 / 1000,
+			var a = 1 / 5000,
 				duration = 2000,
 				start, requestId, b,moveP;
 				var originP = $origin.position();
@@ -79,6 +79,7 @@
 						console.timeEnd('log');
 
 					} else {
+						// var temp=Math.min(diffx,diffy);
 						var x = (endTime - t) / duration * diffx;
 						var y = a * Math.pow(x, 2) + b * x;
 						setPosition($origin, {
