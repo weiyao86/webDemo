@@ -1,38 +1,38 @@
 <!DOCTYPE html>   
 <head>   
 <meta charset="UTF-8">  
-<title>Ê¹ÓÃcanvasÔªËØ»æÖÆÖ¸ÕëÊ½¶¯»­Ê±ÖÓ</title>  
+<title>ä½¿ç”¨canvaså…ƒç´ ç»˜åˆ¶æŒ‡é’ˆå¼åŠ¨ç”»æ—¶é’Ÿ</title>  
 <script type="text/javascript">
     var canvas;
     var context;
-    //Ò³Ãæ×°ÔØ
+    //é¡µé¢è£…è½½
     function window_onload() {
-        canvas = document.getElementById("canvas");//»ñÈ¡canvasÔªËØ
-        context = canvas.getContext('2d');//»ñÈ¡canvasÔªËØµÄÍ¼ĞÎÉÏÏÂÎÄ¶ÔÏó
-        setInterval("draw()", 1000);//Ã¿¸ôÒ»ÃëÖØ»æÊ±ÖÓ£¬ÖØĞÂÏÔÊ¾Ê±¼ä
+        canvas = document.getElementById("canvas");//è·å–canvaså…ƒç´ 
+        context = canvas.getContext('2d');//è·å–canvaså…ƒç´ çš„å›¾å½¢ä¸Šä¸‹æ–‡å¯¹è±¡
+        setInterval("draw()", 1000);//æ¯éš”ä¸€ç§’é‡ç»˜æ—¶é’Ÿï¼Œé‡æ–°æ˜¾ç¤ºæ—¶é—´
     }
-    //»æÖÆÊ±ÖÓ
+    //ç»˜åˆ¶æ—¶é’Ÿ
     function draw() {
-        var radius = Math.min(canvas.width / 2, canvas.height / 2) - 25;//Ê±ÖÓÂŞÅÌ°ë¾¶
-        var centerx = canvas.width / 2;//Ê±ÖÓÖĞĞÄºá×ø±ê
-        var centery = canvas.height / 2;//Ê±ÖÓÖĞĞÄ×İ×ø±ê
-        context.clearRect(0, 0, canvas.width, canvas.height);//²Á³ıÖ®Ç°Ëù»æÊ±ÖÓ
+        var radius = Math.min(canvas.width / 2, canvas.height / 2) - 25;//æ—¶é’Ÿç½—ç›˜åŠå¾„
+        var centerx = canvas.width / 2;//æ—¶é’Ÿä¸­å¿ƒæ¨ªåæ ‡
+        var centery = canvas.height / 2;//æ—¶é’Ÿä¸­å¿ƒçºµåæ ‡
+        context.clearRect(0, 0, canvas.width, canvas.height);//æ“¦é™¤ä¹‹å‰æ‰€ç»˜æ—¶é’Ÿ
 
-        context.save();//±£´æµ±Ç°»æÖÆ×´Ì¬
+        context.save();//ä¿å­˜å½“å‰ç»˜åˆ¶çŠ¶æ€
 
-        //»æÖÆÊ±ÖÓÔ²ÅÌ
-        context.fillStyle = '#efefef';//Ê±ÖÓ±³¾°É«
-        context.strokeStyle = '#c0c0c0';//Ê±ÖÓ±ß¿òÑÕÉ«
-        context.beginPath();//¿ªÊ¼´´½¨Â·¾¶
-        context.arc(centerx, centery, radius, 0, Math.PI * 2, 0);//´´½¨Ô²ĞÎÂŞÅÌÂ·¾¶
-        context.fill();//ÓÃ±³¾°É«Ìî³äÂŞÅÌ
-        context.stroke();//ÓÃ±ß¿òÑÕÉ«»æÖÆÂŞÅÌ±ß¿ò
-        context.closePath();//¹Ø±ÕÂ·¾¶
-        context.restore();//»Ö¸´Ö®Ç°±£´æµÄ»æÖÆ×´Ì¬
+        //ç»˜åˆ¶æ—¶é’Ÿåœ†ç›˜
+        context.fillStyle = '#efefef';//æ—¶é’ŸèƒŒæ™¯è‰²
+        context.strokeStyle = '#c0c0c0';//æ—¶é’Ÿè¾¹æ¡†é¢œè‰²
+        context.beginPath();//å¼€å§‹åˆ›å»ºè·¯å¾„
+        context.arc(centerx, centery, radius, 0, Math.PI * 2, 0);//åˆ›å»ºåœ†å½¢ç½—ç›˜è·¯å¾„
+        context.fill();//ç”¨èƒŒæ™¯è‰²å¡«å……ç½—ç›˜
+        context.stroke();//ç”¨è¾¹æ¡†é¢œè‰²ç»˜åˆ¶ç½—ç›˜è¾¹æ¡†
+        context.closePath();//å…³é—­è·¯å¾„
+        context.restore();//æ¢å¤ä¹‹å‰ä¿å­˜çš„ç»˜åˆ¶çŠ¶æ€
 
-        //»æÖÆÊ±ÖÓÉÏ±íÊ¾Ğ¡Ê±µÄÎÄ×Ö
-        var r = radius - 10;//ËõĞ¡°ë¾¶£¬ÒòÎªÒª½«ÎÄ×Ö»æÖÆÔÚÊ±ÖÓÄÚ²¿
-        context.font = 'bold 16px ËÎÌå';//Ö¸¶¨ÎÄ×Ö×ÖÌå
+        //ç»˜åˆ¶æ—¶é’Ÿä¸Šè¡¨ç¤ºå°æ—¶çš„æ–‡å­—
+        var r = radius - 10;//ç¼©å°åŠå¾„ï¼Œå› ä¸ºè¦å°†æ–‡å­—ç»˜åˆ¶åœ¨æ—¶é’Ÿå†…éƒ¨
+        context.font = 'bold 16px å®‹ä½“';//æŒ‡å®šæ–‡å­—å­—ä½“
         Drawtext('1', centerx + (0.5 * r), centery - (0.88 * r));
         Drawtext('2', centerx + (0.866 * r), centery - (0.5 * r));
         Drawtext('3', centerx + radius - 10, centery);
@@ -46,39 +46,39 @@
         Drawtext('11', centerx - (0.51 * r), centery - (0.88 * r));
         Drawtext('12', centerx, 35);
 
-        //»æÖÆÊ±ÖÓÖ¸Õë    
-        var date = new Date();//»ñÈ¡ĞèÒª±íÊ¾µÄÊ±¼ä
-        var h = date.getHours();//»ñÈ¡µ±Ç°Ğ¡Ê±
-        var m = date.getMinutes();//»ñÈ¡µ±Ç°·ÖÖÓ
-        var s = date.getSeconds();//»ñÈ¡µ±Ç°Ãë
-        var a = ((h / 12) * Math.PI * 2) - 1.57 + ((m / 60) * 0.524);//¸ù¾İµ±Ç°Ê±¼ä¼ÆËãÖ¸Õë½Ç¶È
+        //ç»˜åˆ¶æ—¶é’ŸæŒ‡é’ˆ    
+        var date = new Date();//è·å–éœ€è¦è¡¨ç¤ºçš„æ—¶é—´
+        var h = date.getHours();//è·å–å½“å‰å°æ—¶
+        var m = date.getMinutes();//è·å–å½“å‰åˆ†é’Ÿ
+        var s = date.getSeconds();//è·å–å½“å‰ç§’
+        var a = ((h / 12) * Math.PI * 2) - 1.57 + ((m / 60) * 0.524);//æ ¹æ®å½“å‰æ—¶é—´è®¡ç®—æŒ‡é’ˆè§’åº¦
 
-        context.save();//±£´æµ±Ç°»æÖÆ×´Ì¬      
-        context.fillStyle = 'black'; //Ö¸¶¨Ö¸ÕëÖĞĞÄµãµÄÑÕÉ«
-        context.beginPath();//¿ªÊ¼´´½¨Â·¾¶
-        context.arc(centerx, centery, 3, 0, Math.PI * 2, 0);//´´½¨Ö¸ÕëÖĞĞÄµãµÄÂ·¾¶
-        context.closePath();//¹Ø±ÕÂ·¾¶
-        context.fill();//Ìî³äÖ¸ÕëÖĞĞÄµã
+        context.save();//ä¿å­˜å½“å‰ç»˜åˆ¶çŠ¶æ€      
+        context.fillStyle = 'black'; //æŒ‡å®šæŒ‡é’ˆä¸­å¿ƒç‚¹çš„é¢œè‰²
+        context.beginPath();//å¼€å§‹åˆ›å»ºè·¯å¾„
+        context.arc(centerx, centery, 3, 0, Math.PI * 2, 0);//åˆ›å»ºæŒ‡é’ˆä¸­å¿ƒç‚¹çš„è·¯å¾„
+        context.closePath();//å…³é—­è·¯å¾„
+        context.fill();//å¡«å……æŒ‡é’ˆä¸­å¿ƒç‚¹
 
-        context.lineWidth = 3;//Ö¸¶¨Ö¸Õë¿í¶È   
-        context.fillStyle = 'darkgray';//Ö¸¶¨Ö¸ÕëÌî³äÑÕÉ«
-        context.strokeStyle = 'darkgray';//Ö¸¶¨Ö¸Õë±ß¿òÑÕÉ«
-        context.beginPath();//¿ªÊ¼´´½¨Â·¾¶
-        //»æÖÆĞ¡Ê±Ö¸Õë
+        context.lineWidth = 3;//æŒ‡å®šæŒ‡é’ˆå®½åº¦   
+        context.fillStyle = 'darkgray';//æŒ‡å®šæŒ‡é’ˆå¡«å……é¢œè‰²
+        context.strokeStyle = 'darkgray';//æŒ‡å®šæŒ‡é’ˆè¾¹æ¡†é¢œè‰²
+        context.beginPath();//å¼€å§‹åˆ›å»ºè·¯å¾„
+        //ç»˜åˆ¶å°æ—¶æŒ‡é’ˆ
         context.arc(centerx, centery, radius - 55, a + 0.01, a, 1);
         context.lineTo(centerx, centery);
-        //»æÖÆ·ÖÖÓÖ¸Õë
+        //ç»˜åˆ¶åˆ†é’ŸæŒ‡é’ˆ
         context.arc(centerx, centery, radius - 40, ((m / 60) * 6.27) - 1.57, ((m / 60) * 6.28) - 1.57, 0);
         context.lineTo(canvas.width / 2, canvas.height / 2);
-        //»æÖÆÃëÖÓÖ¸Õë
+        //ç»˜åˆ¶ç§’é’ŸæŒ‡é’ˆ
         context.arc(centerx, centery, radius - 30, ((s / 60) * 6.27) - 1.57, ((s / 60) * 6.28) - 1.57, 0);
         context.lineTo(centerx, centery);
-        context.closePath();//¹Ø±ÕÂ·¾¶
-        context.fill();//Ìî³äÖ¸Õë
-        context.stroke();//»æÖÆÖ¸Õë±ß¿ò
-        context.restore();//»Ö¸´Ö®Ç°±£´æµÄ»æÖÆ×´Ì¬
+        context.closePath();//å…³é—­è·¯å¾„
+        context.fill();//å¡«å……æŒ‡é’ˆ
+        context.stroke();//ç»˜åˆ¶æŒ‡é’ˆè¾¹æ¡†
+        context.restore();//æ¢å¤ä¹‹å‰ä¿å­˜çš„ç»˜åˆ¶çŠ¶æ€
 
-        //Ö¸¶¨Ê±ÖÓÏÂ²¿µ±Ç°Ê±¼äËùÓÃµÄ×Ö·û´®£¬ÎÄ×Ö¸ñÊ½Îªhh:mm:dd
+        //æŒ‡å®šæ—¶é’Ÿä¸‹éƒ¨å½“å‰æ—¶é—´æ‰€ç”¨çš„å­—ç¬¦ä¸²ï¼Œæ–‡å­—æ ¼å¼ä¸ºhh:mm:dd
         var hours = String(h);
         var minutes = String(m);
         var seconds = String(s);
@@ -88,20 +88,20 @@
         if (seconds.length == 1) s = '0' + s;
 
         var str = h + ':' + m + ':' + s;
-        //»æÖÆÊ±ÖÓÏÂ²¿µÄµ±Ç°Ê±¼ä
+        //ç»˜åˆ¶æ—¶é’Ÿä¸‹éƒ¨çš„å½“å‰æ—¶é—´
         Drawtext(str, centerx, centery + radius + 12);
 
     }
     function Drawtext(text, x, y) {
-        //ÒòÎªĞèÒªÊ¹ÓÃµ½×ø±êÆ½ÒÆ£¬ËùÒÔÔÚÆ½ÒÆÇ°Ïß±£´æµ±Ç°»æÖÆ×´Ì¬
+        //å› ä¸ºéœ€è¦ä½¿ç”¨åˆ°åæ ‡å¹³ç§»ï¼Œæ‰€ä»¥åœ¨å¹³ç§»å‰çº¿ä¿å­˜å½“å‰ç»˜åˆ¶çŠ¶æ€
         context.save();
 
-        x -= (context.measureText(text).width / 2);//ÎÄ×ÖÆğµãºá×ø±ê
-        y += 9;//ÎÄ×ÖÆğµã×İ×ø±ê
+        x -= (context.measureText(text).width / 2);//æ–‡å­—èµ·ç‚¹æ¨ªåæ ‡
+        y += 9;//æ–‡å­—èµ·ç‚¹çºµåæ ‡
 
-        context.beginPath();//¿ªÊ¼´´½¨Â·¾¶
-        context.translate(x, y);//Æ½ÒÆ×ø±ê
-        context.fillText(text, 0, 0);//Ìî³äÎÄ×Ö 
+        context.beginPath();//å¼€å§‹åˆ›å»ºè·¯å¾„
+        context.translate(x, y);//å¹³ç§»åæ ‡
+        context.fillText(text, 0, 0);//å¡«å……æ–‡å­— 
         context.restore();
     }
 
@@ -120,7 +120,7 @@ canvas{
 </style> 
 </head>  
 <body onload="window_onload()">  
-<div><h1>Ê¹ÓÃcanvasÔªËØ»æÖÆÖ¸ÕëÊ½¶¯»­Ê±ÖÓ</h1></div>
+<div><h1>ä½¿ç”¨canvaså…ƒç´ ç»˜åˆ¶æŒ‡é’ˆå¼åŠ¨ç”»æ—¶é’Ÿ</h1></div>
 <div><canvas id="canvas" width="500px" height="500px"></canvas><div>
 </body>  
 </html>
