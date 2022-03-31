@@ -356,7 +356,7 @@
       var ctx = document.getElementById('createPatern').getContext('2d');
 
      var img = new Image();
-     img.src="Res/arrow.jpg";
+     img.src="../Res/arrow.jpg";
      img.onload=function(){
         var pattern= ctx.createPattern(img,'repeat');
         ctx.fillStyle=pattern;
@@ -378,7 +378,7 @@
         ctx =cavs .getContext('2d');
 
     var img = new Image();
-    img.src = "Res/aa.png";
+    img.src = "../Res/aa.png";
     function imageloaded() {
 
       ctx.drawImage(img, 0, 0,cavs.width,cavs.height);
@@ -415,7 +415,7 @@
         ctx =cavs .getContext('2d');
 
     var img = new Image();
-    img.src = "Res/default.png";
+    img.src = "../Res/default.png";
     function imageloaded() {
 
       ctx.drawImage(img, 0,0);
@@ -507,6 +507,37 @@
 
   }
 
+  march();
+
+  function march(){
+    var marchCavs = document.getElementById('march'),
+      mctx = marchCavs.getContext('2d');
+    var offset=0;
+
+    var drawMarch=function(){
+      mctx.clearRect(0,0,marchCavs.width,marchCavs.height);
+      mctx.setLineDash([4,2]);
+      mctx.lineDashOffset=-offset;
+      mctx.strokeRect(10,10,100,100);
+
+      mctx.setLineDash([]);
+      mctx.font = "30px Microsoft Yahei";
+      mctx.fillStyle="#000";
+      mctx.fillText('蚂蚁线',20,140);
+      mctx.strokeStyle = "#f00";
+      mctx.lineDashOffset=0;
+      mctx.strokeText("save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数", 0, 220);
+    }
+    var start=function(){
+      offset++;
+      offset>16 && (offset=0);
+      drawMarch();
+      setTimeout(start,20);
+    }
+
+    start();
+  }
+
   };
 
 
@@ -534,5 +565,6 @@
 <canvas id="useImg_slicing" width="700" height="500">不支持canvas标签</canvas>
 <canvas id="save_restore" width="700" height="500">不支持canvas标签</canvas>
 <canvas id="translate" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="march" width="700" height="500">不支持canvas标签</canvas>
 </body>
 </html>

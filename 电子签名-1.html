@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		html,body{margin: 0;padding: 0;height: 100%;overflow: hidden;}
+		body{overflow: auto;}
+		.signature-wrap{
+			border: 1px solid;
+			/*padding: 20px;*/
+			border-radius: 20px;
+		}
+		.btn-wrap{
+			border: 1px solid;
+			padding: 20px;
+		}
+	</style>
+	<script>
+
+		window.onload=function(){
+			let canvas = document.getElementById('canvas');
+			if(!canvas)return;
+
+			window.onresize = () => {
+          canvas.width=document.body.clientWidth;
+			    canvas.height=document.body.clientWidth;
+    }
+
+			canvas.width=document.body.clientWidth;
+			canvas.height=document.body.clientWidth;
+
+			let ctx = canvas.getContext('2d');
+			ctx.fillStyle="#ddd";
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+
+			let beginX=0,beginY=0,isSignature=false,isMouseDown=false;
+
+			canvas.addEventListener('touchstart',function(e){
+				e.preventDefault();
+				let evt = e.touches[0];
+				let point =windowToCanvas(evt.pageX,evt.pageY);
+				beginX=point.x;
+				beginY=point.y;
+				isMouseDown=true;
+
+			});
+
+			canvas.addEventListener('touchmove',function(e){
+				if(!isMouseDown)return;
+				e.preventDefault();
+				let evt = e.touches[0];
+				let point =windowToCanvas(evt.pageX,evt.pageY);
+				let stopX=point.x;
+				let stopY=point.y;
+
+				painting(beginX,beginY,stopX,stopY,ctx);
+				beginX=stopX;
+				beginY=stopY;
+ 				isSignature=true;
+ 				console.log(document.body.scrollHeight,document.body.scrollTop)
+			});
+
+			canvas.addEventListener("touchend",function(e){
+        e.preventDefault();  
+        isMouseDown=false;
+   		});
+
+			function painting(bx,by,sx,sy,ctx){
+				ctx.beginPath();
+				ctx.globalAlpha=1;
+				ctx.lineWidth=6;
+				// ctx.strokeStyle="#f00";
+				ctx.moveTo(bx,by);
+				ctx.lineTo(sx,sy);
+				ctx.closePath();
+				ctx.stroke();
+			}
+
+			function save(){
+				let img = document.getElementById("img");
+				img.src=canvas.toDataURL('image/png',1);
+			}
+			
+			function rewrite(){
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				ctx.fillStyle="#ddd";
+				ctx.fillRect(0,0,canvas.width,canvas.height);
+				ctx.fill();
+				isSignature=false;
+
+			}
+
+		//获取canvas 坐标 x，y 分别代表相对window内的xy  
+		    function windowToCanvas(x,y){  
+		        //canvas提供的方法返回canvas 距 他外围包围盒子的距离left,top值  
+		        var bbox = canvas.getBoundingClientRect();  
+		        //返回的就是canvas 内的坐标值  
+		        return {x : Math.round(x - bbox.left),y : Math.round(y - bbox.top)}  
+		    }   
+
+		    function dataURLtoFile(dataurl, filename) {
+		      let arr = dataurl.split(',')
+		      let data = arr[0].match(/:(.*?);/)[1]
+		      let bstr = atob(arr[1])
+		      let n = bstr.length
+		      let u8arr = new Uint8Array(n)
+		      while (n--) {
+		        u8arr[n] = bstr.charCodeAt(n)
+		      }
+		      return new File([u8arr], filename, { type: data })
+    	 }
+
+
+    	 document.getElementById("save").addEventListener('click',save);
+    	 document.getElementById("rewrite").addEventListener('click',rewrite);
+
+		}
+
+
+	</script>
+</head>
+<body>
+	<div class="signature-wrap" >
+    <canvas id="canvas"></canvas>
+    <div class="btn-wrap">
+      <button id="save">提 交</button>
+      <button id="rewrite">重 写</button>
+      <image id="img"></image>
+    </div>
+  </div>
+</body>
+</html>

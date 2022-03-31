@@ -3,41 +3,41 @@
     <head>
         <meta charset="utf-8">
         <style>
-        body,html{  
-            margin: 0;  
-            padding: 0;  
-            height: 100%;  
-        } 
-        #canvas {
-            border:0.01rem solid #f30;
-        }
-        #canvas-btn{  
-            display: block;  
-            margin: 0;  
-            padding: 0.13rem;  
-        }  
-        #clear_btn{  
-            width: 80%;  
-            background: #ca4341;  
-            margin: auto;  
-            text-align: center;  
-            line-height: 1rem;  
-            margin-top: 0.27rem;  
-            color: #fff;  
-            border-radius: 1.31rem;   
-            clear: both;  
-        } 
-        #save_btn{  
-            width: 80%;  
-            background: #4cd964;  
-            margin: auto;  
-            text-align: center;  
-            line-height: 1rem;  
-            margin-top: 0.27rem;  
-            color: #fff;  
-            border-radius: 1.31rem;   
-            clear: both;  
-        }
+		body,html{  
+		    margin: 0;  
+		    padding: 0;  
+		    height: 100%;  
+		} 
+		#canvas {
+		    border:0.01rem solid #f30;
+		}
+		#canvas-btn{  
+		    display: block;  
+		    margin: 0;  
+		    padding: 0.13rem;  
+		}  
+		#clear_btn{  
+		    width: 80%;  
+		    background: #ca4341;  
+		    margin: auto;  
+		    text-align: center;  
+		    line-height: 1rem;  
+		    margin-top: 0.27rem;  
+		    color: #fff;  
+		    border-radius: 1.31rem;   
+		    clear: both;  
+		} 
+		#save_btn{  
+		    width: 80%;  
+		    background: #4cd964;  
+		    margin: auto;  
+		    text-align: center;  
+		    line-height: 1rem;  
+		    margin-top: 0.27rem;  
+		    color: #fff;  
+		    border-radius: 1.31rem;   
+		    clear: both;  
+		}
     </style>
     </head>
     
@@ -48,14 +48,14 @@
         <div id="save_btn" class="save_btn">保存</div> 
         <div class="cleaerfix"></div>  
     </div>  
-    <script type="text/javascript" src="js/flexible.debug.js"></script>
+    <!-- <script type="text/javascript" src="js/flexible.debug.js"></script>
     <script type="text/javascript" src="js/zepto.js"></script>
     <script type="text/javascript" src="js/touch.js"></script>
     <script type="text/javascript" src="js/flexible.debug.js"></script>
-    <script type="text/javascript" src="js/flexible_css.debug.js"></script>
-    
+    <script type="text/javascript" src="js/flexible_css.debug.js"></script> -->
+    <script type="text/javascript" src="Scripts/jquery-1.9.0.js"></script>
     <script>
-    //获取页面尺寸  
+   	//获取页面尺寸  
     var canvasWidth = document.body.clientWidth;  
     var canvasHeight = canvasWidth;  
     //声明canvas  
@@ -92,8 +92,8 @@
     });
     //保存画图
     $('#save_btn').on('click',function (e){
-        var image = canvasToImage(canvas);
-        console.log(image);
+    	var image = canvasToImage(canvas);
+    	console.log(image);
     });
     //获取canvas 坐标 x，y 分别代表相对window内的xy  
     function windowToCanvas(x,y){  
@@ -130,7 +130,7 @@
         context.moveTo(lastLoc.x ,lastLoc.y);  
         context.lineTo(curLoc.x , curLoc.y);  
         context.strokeStyle = strokeColor;  
-        context.lineWidth = lineWidth;  
+        context.lineWidth =lineWidth;  
         context.lineCap = "round";  
         context.lineJoin = "round";  
         context.stroke();     
@@ -201,9 +201,9 @@
     }
     // 将canvas转换成画布
     function canvasToImage(canvas){
-        var image = new Image();
-        image.src = canvas.toDataURL("image/png");
-        return image;
+    	var image = new Image();
+    	image.src = canvas.toDataURL("image/png");
+    	return image;
     }
     </script>
     </body>
