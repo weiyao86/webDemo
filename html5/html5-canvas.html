@@ -141,7 +141,7 @@
         roundedRect(ctx, 135, 119, 25, 49, 10);
 
         ctx.beginPath();
-        ctx.arc(37, 37, 13,-Math.PI /5, Math.PI /5, true);
+        ctx.arc(37, 37, 13, -Math.PI / 5, Math.PI / 5, true);
         ctx.lineTo(31, 37);
         ctx.fill();
 
@@ -248,7 +248,7 @@
           for (var j = 0; j < 6; j++) {
             ctx.strokeStyle = "rgb(" + Math.floor(255 - 255 / 6 * i) + ',' + Math.floor(255 - 255 / 6 * j) + ",0)";
             ctx.beginPath();
-            ctx.arc(12.5+j * 25, 12.5+i * 25,10,0,Math.PI*2,true);
+            ctx.arc(12.5 + j * 25, 12.5 + i * 25, 10, 0, Math.PI * 2, true);
             ctx.stroke();
           }
         }
@@ -262,282 +262,386 @@
       if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
 
-        var lineCap = ['butt','round','square'],
-            lineJoin =['round','bevel','miter'];
+        var lineCap = ['butt', 'round', 'square'],
+          lineJoin = ['round', 'bevel', 'miter'];
         //最左边的线用了默认的 butt 。可以注意到它是与辅助线齐平的。中间的是 round 的效果，端点处加上了半径为一半线宽的半圆。右边的是 square 的效果，端点处加上了等宽且高度为一半线宽的方块。
-        ctx.font="20px Times New Roman";
-        ctx.fillText("最左边的线用了默认的 butt 。可以注意到它是与辅助线齐平的。 中间的是",20,150);
-        ctx.fillText(" round 的效果，端点处加上了半径为一半线宽的半圆。右边的是",20,170);
-        ctx.fillText(" square 的效果，端点处加上了等宽且高度为一半线宽的方块。",20,190);
+        ctx.font = "20px Times New Roman";
+        ctx.fillText("最左边的线用了默认的 butt 。可以注意到它是与辅助线齐平的。 中间的是", 20, 150);
+        ctx.fillText(" round 的效果，端点处加上了半径为一半线宽的半圆。右边的是", 20, 170);
+        ctx.fillText(" square 的效果，端点处加上了等宽且高度为一半线宽的方块。", 20, 190);
         for (var i = 0; i < lineCap.length; i++) {
-            ctx.lineWidth=15;
-            ctx.lineCap=lineCap[i];
-            ctx.beginPath();
-            ctx.moveTo(20+i*30,20);
-            ctx.lineTo(20+i*30,100);
-            ctx.stroke();
-          }
+          ctx.lineWidth = 15;
+          ctx.lineCap = lineCap[i];
+          ctx.beginPath();
+          ctx.moveTo(20 + i * 30, 20);
+          ctx.lineTo(20 + i * 30, 100);
+          ctx.stroke();
+        }
 
         for (var i = 0; i < lineJoin.length; i++) {
-            ctx.lineWidth=10;
-            ctx.lineJoin=lineJoin[i];
+          ctx.lineWidth = 10;
+          ctx.lineJoin = lineJoin[i];
 
-            ctx.beginPath();
-            ctx.moveTo(140,10+i*40);
-            ctx.lineTo(150,30+i*40);
-            ctx.lineTo(160,10+i*40);
-            ctx.lineTo(170,30+i*40);
-            ctx.lineTo(180,10+i*40);
-            ctx.lineTo(190,30+i*40);
-            ctx.lineTo(200,10+i*40);
-            ctx.stroke();
-          }
+          ctx.beginPath();
+          ctx.moveTo(140, 10 + i * 40);
+          ctx.lineTo(150, 30 + i * 40);
+          ctx.lineTo(160, 10 + i * 40);
+          ctx.lineTo(170, 30 + i * 40);
+          ctx.lineTo(180, 10 + i * 40);
+          ctx.lineTo(190, 30 + i * 40);
+          ctx.lineTo(200, 10 + i * 40);
+          ctx.stroke();
+        }
       }
     }
 
     gradient();
+
     function gradient() {
       var canvas = document.getElementById('gradient');
       if (canvas.getContext) {
         var ctx = canvas.getContext('2d'),
-            linegradient=ctx.createLinearGradient(20,100,300,100),
-            linegradient2=ctx.createLinearGradient(500,100,300,100),
-            radialgradient=ctx.createRadialGradient(80,300,20,80,300,40),
-            radialgradient2=ctx.createRadialGradient(260,320,30,250,320,50),
-            radialgradient3=ctx.createRadialGradient(150,380,40,150,400,90);
-        
-        ctx.font="20px Times New Roman";
-        ctx.fillText("渐变的背景",20,80);
-        linegradient.addColorStop(0,"#fff");
-        linegradient.addColorStop(0.4,"#ff0");
-        linegradient.addColorStop(0.6,"#000");
-        linegradient.addColorStop(0.8,"#f00");
-        linegradient.addColorStop(1,"#f80");
-        ctx.fillStyle=linegradient;
-        ctx.fillRect(20,100,300,100);
+          linegradient = ctx.createLinearGradient(20, 100, 300, 100),
+          linegradient2 = ctx.createLinearGradient(500, 100, 300, 100),
+          radialgradient = ctx.createRadialGradient(80, 300, 20, 80, 300, 40),
+          radialgradient2 = ctx.createRadialGradient(260, 320, 30, 250, 320, 50),
+          radialgradient3 = ctx.createRadialGradient(150, 380, 40, 150, 400, 90);
 
-        ctx.fillText("渐变的边框",350,80);
-        linegradient2.addColorStop(0,"#f80");
-        linegradient2.addColorStop(0.5,"#ff0");
-        linegradient2.addColorStop(1,"#fc0");
-        ctx.strokeStyle=linegradient2;
-        ctx.strokeRect(350,100,300,100);
+        ctx.font = "20px Times New Roman";
+        ctx.fillText("渐变的背景", 20, 80);
+        linegradient.addColorStop(0, "#fff");
+        linegradient.addColorStop(0.4, "#ff0");
+        linegradient.addColorStop(0.6, "#000");
+        linegradient.addColorStop(0.8, "#f00");
+        linegradient.addColorStop(1, "#f80");
+        ctx.fillStyle = linegradient;
+        ctx.fillRect(20, 100, 300, 100);
 
-
-         radialgradient.addColorStop(0,"#A7D30C");
-         radialgradient.addColorStop(0.9,"#019F62");
-         radialgradient.addColorStop(1,"rgba(1,159,98,0)");
-         ctx.fillStyle=radialgradient;
-         ctx.fillRect(0,250,500,300);
-
-         radialgradient2.addColorStop(0,"#FF5F98");
-         radialgradient2.addColorStop(0.75,"#FF0188");
-         radialgradient2.addColorStop(1,"rgba(255,1,136,0)");
-         ctx.fillStyle=radialgradient2;
-         ctx.fillRect(0,250,500,300);
+        ctx.fillText("渐变的边框", 350, 80);
+        linegradient2.addColorStop(0, "#f80");
+        linegradient2.addColorStop(0.5, "#ff0");
+        linegradient2.addColorStop(1, "#fc0");
+        ctx.strokeStyle = linegradient2;
+        ctx.strokeRect(350, 100, 300, 100);
 
 
+        radialgradient.addColorStop(0, "#A7D30C");
+        radialgradient.addColorStop(0.9, "#019F62");
+        radialgradient.addColorStop(1, "rgba(1,159,98,0)");
+        ctx.fillStyle = radialgradient;
+        ctx.fillRect(0, 250, 500, 300);
 
-         radialgradient3.addColorStop(0,"#ccc");
-         radialgradient3.addColorStop(0.9,"#E4C700");
-         radialgradient3.addColorStop(1,"rgba(228,199,0,0)");
-         ctx.fillStyle=radialgradient3;
-         ctx.fillRect(20,250,500,300);
+        radialgradient2.addColorStop(0, "#FF5F98");
+        radialgradient2.addColorStop(0.75, "#FF0188");
+        radialgradient2.addColorStop(1, "rgba(255,1,136,0)");
+        ctx.fillStyle = radialgradient2;
+        ctx.fillRect(0, 250, 500, 300);
 
-         ctx.fillStyle="#000";
-         ctx.fillText("createRadialGradient的第二个圆(参数后三个)一定要比第一个圆大!!!",0,220);
-         ctx.fillText("并且两个圆不能相交,不然鬼知道会成什么样子",0,240);
+
+
+        radialgradient3.addColorStop(0, "#ccc");
+        radialgradient3.addColorStop(0.9, "#E4C700");
+        radialgradient3.addColorStop(1, "rgba(228,199,0,0)");
+        ctx.fillStyle = radialgradient3;
+        ctx.fillRect(20, 250, 500, 300);
+
+        ctx.fillStyle = "#000";
+        ctx.fillText("createRadialGradient的第二个圆(参数后三个)一定要比第一个圆大!!!", 0, 220);
+        ctx.fillText("并且两个圆不能相交,不然鬼知道会成什么样子", 0, 240);
       }
     }
 
     createPatern();
-    
+
     function createPatern() {
       var ctx = document.getElementById('createPatern').getContext('2d');
 
-     var img = new Image();
-     img.src="../Res/arrow.jpg";
-     img.onload=function(){
-        var pattern= ctx.createPattern(img,'repeat');
-        ctx.fillStyle=pattern;
-        ctx.fillRect(0,0,300,300);
-        ctx.font="40px Microsoft Yahei";
-        ctx.shadowOffsetX=2;
-        ctx.shadowOffsetY=2;
-        ctx.shadowBlur=2;
-        ctx.shadowColor="rgba(0,0,0,.5)";
-        ctx.strokeStyle="#f00";
-        ctx.strokeText("createPattern 图片文字带上阴影效果",0,220);
-     };
+      var img = new Image();
+      img.src = "../Res/arrow.jpg";
+      img.onload = function() {
+        var pattern = ctx.createPattern(img, 'repeat');
+        ctx.fillStyle = pattern;
+        ctx.fillRect(0, 0, 300, 300);
+        ctx.font = "40px Microsoft Yahei";
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.shadowBlur = 2;
+        ctx.shadowColor = "rgba(0,0,0,.5)";
+        ctx.strokeStyle = "#f00";
+        ctx.strokeText("createPattern 图片文字带上阴影效果", 0, 220);
+      };
     }
 
 
     useImg();
-  function useImg() {
-    var cavs=document.getElementById('useImg'),
-        ctx =cavs .getContext('2d');
 
-    var img = new Image();
-    img.src = "../Res/aa.png";
-    function imageloaded() {
+    function useImg() {
+      var cavs = document.getElementById('useImg'),
+        ctx = cavs.getContext('2d');
 
-      ctx.drawImage(img, 0, 0,cavs.width,cavs.height);
-      ctx.beginPath();
-      ctx.moveTo(30, 96);
-      ctx.lineTo(70, 66);
-      ctx.lineTo(103, 76);
-      ctx.lineTo(170, 15);
-      ctx.strokeStyle = "#f00";
-      ctx.stroke();
-      ctx.font = "40px Microsoft Yahei";
-      ctx.shadowOffsetX = 2;
-      ctx.shadowOffsetY = 2;
-      ctx.shadowBlur = 2;
-      ctx.shadowColor = "rgba(0,0,0,.5)";
-      ctx.strokeStyle = "#f00";
-      ctx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
-      ctx.fillStyle = "#fff";
-      ctx.fillText("图片渲染到canvas中时缩放", 0, 280);
-    };
+      var img = new Image();
+      img.src = "../Res/aa.png";
 
-    if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
-      imageloaded();
-    } else {
-      img.onload = function() {
-        imageloaded();
+      function imageloaded() {
+
+        ctx.drawImage(img, 0, 0, cavs.width, cavs.height);
+        ctx.beginPath();
+        ctx.moveTo(30, 96);
+        ctx.lineTo(70, 66);
+        ctx.lineTo(103, 76);
+        ctx.lineTo(170, 15);
+        ctx.strokeStyle = "#f00";
+        ctx.stroke();
+        ctx.font = "40px Microsoft Yahei";
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.shadowBlur = 2;
+        ctx.shadowColor = "rgba(0,0,0,.5)";
+        ctx.strokeStyle = "#f00";
+        ctx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
+        ctx.fillStyle = "#fff";
+        ctx.fillText("图片渲染到canvas中时缩放", 0, 280);
       };
-    }
-  }
 
-    useImgSlicing();
-  function useImgSlicing() {
-    var cavs=document.getElementById('useImg_slicing'),
-        ctx =cavs .getContext('2d');
-
-    var img = new Image();
-    img.src = "../Res/default.png";
-    function imageloaded() {
-
-      ctx.drawImage(img, 0,0);
-      ctx.drawImage(img, 110, 105,150,120,500,10,200,150);
-      ctx.strokeStyle = "#f00";
-      ctx.stroke();
-      ctx.font = "20px Microsoft Yahei";
-      ctx.shadowOffsetX = 2;
-      ctx.shadowOffsetY = 2;
-      ctx.shadowBlur = 2;
-      ctx.shadowColor = "rgba(0,0,0,.5)";
-      ctx.strokeStyle = "#f00";
-      ctx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
-      ctx.strokeText("切片,组合图片", 0, 260);
-       ctx.strokeText("drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)", 0, 300)
-    };
-
-    if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
-      imageloaded();
-    } else {
-      img.onload = function() {
+      if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
         imageloaded();
-      };
-    }
-  }
-
-  saveRestore();
-  function saveRestore() {
-    var cavs = document.getElementById('save_restore'),
-      ctx = cavs.getContext('2d');
-
-    ctx.fillRect(0, 0, 150, 150); // Draw a rectangle with default settings
-    ctx.save(); // Save the default state
-
-    ctx.fillStyle = '#09F' // Make changes to the settings
-    ctx.fillRect(15, 15, 120, 120); // Draw a rectangle with new settings
-
-    ctx.save(); // Save the current state
-    ctx.fillStyle = '#FFF' // Make changes to the settings
-    ctx.globalAlpha = 0.5;
-    ctx.fillRect(30, 30, 90, 90); // Draw a rectangle with new settings
-
-    ctx.restore(); // Restore previous state
-    ctx.fillRect(45, 45, 60, 60); // Draw a rectangle with restored settings
-
-    ctx.restore(); // Restore original state
-    ctx.fillRect(60, 60, 30, 30); // Draw a rectangle with restored settings
-    ctx.strokeStyle = "#f00";
-    ctx.strokeText("save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数", 0, 220);
-
-  }
-  translate();
-
-  function translate() {
-    var cavs = document.getElementById('translate'),
-      ctx = cavs.getContext('2d');
-
-    ctx.fillRect(0, 0, 300, 300);
-    for (var i = 0; i < 3; i++) {
-      for (var j = 0; j < 3; j++) {
-        ctx.save();
-        ctx.strokeStyle = "#9CFF00";
-        ctx.translate(50 + j * 100, 50 + i * 100);
-        drawSpirograph(ctx, 20 * (j + 2) / (j + 1), -8 * (i + 3) / (i + 1), 10);
-        ctx.restore();
+      } else {
+        img.onload = function() {
+          imageloaded();
+        };
       }
     }
 
-    function drawSpirograph(ctx, R, r, O) {
-      var x1 = R - O;
-      var y1 = 0;
-      var i = 1;
+    useImgSlicing();
 
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      do {
-        if (i > 20000) break;
-        var x2 = (R + r) * Math.cos(i * Math.PI / 72) - (r + O) * Math.cos(((R + r) / r) * (i * Math.PI / 72))
-        var y2 = (R + r) * Math.sin(i * Math.PI / 72) - (r + O) * Math.sin(((R + r) / r) * (i * Math.PI / 72))
-        ctx.lineTo(x2, y2);
-        x1 = x2;
-        y1 = y2;
-        i++;
-      } while (x2 != R - O && y2 != 0);
-      ctx.stroke();
-    }
-    ctx.strokeStyle = "#f00";
-    ctx.strokeText("我在画螺旋形通过save,restore保存并恢复状态", 0, 220);
+    function useImgSlicing() {
+      var cavs = document.getElementById('useImg_slicing'),
+        ctx = cavs.getContext('2d');
 
-  }
+      var img = new Image();
+      img.src = "../Res/default.png";
 
-  march();
+      function imageloaded() {
 
-  function march(){
-    var marchCavs = document.getElementById('march'),
-      mctx = marchCavs.getContext('2d');
-    var offset=0;
+        ctx.drawImage(img, 0, 0);
+        ctx.drawImage(img, 110, 105, 150, 120, 500, 10, 200, 150);
+        ctx.strokeStyle = "#f00";
+        ctx.stroke();
+        ctx.font = "20px Microsoft Yahei";
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.shadowBlur = 2;
+        ctx.shadowColor = "rgba(0,0,0,.5)";
+        ctx.strokeStyle = "#f00";
+        ctx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
+        ctx.strokeText("切片,组合图片", 0, 260);
+        ctx.strokeText("drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)", 0, 300)
+      };
 
-    var drawMarch=function(){
-      mctx.clearRect(0,0,marchCavs.width,marchCavs.height);
-      mctx.setLineDash([4,2]);
-      mctx.lineDashOffset=-offset;
-      mctx.strokeRect(10,10,100,100);
-
-      mctx.setLineDash([]);
-      mctx.font = "30px Microsoft Yahei";
-      mctx.fillStyle="#000";
-      mctx.fillText('蚂蚁线',20,140);
-      mctx.strokeStyle = "#f00";
-      mctx.lineDashOffset=0;
-      mctx.strokeText("save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数", 0, 220);
-    }
-    var start=function(){
-      offset++;
-      offset>16 && (offset=0);
-      drawMarch();
-      setTimeout(start,20);
+      if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
+        imageloaded();
+      } else {
+        img.onload = function() {
+          imageloaded();
+        };
+      }
     }
 
-    start();
-  }
+    saveRestore();
 
+    function saveRestore() {
+      var cavs = document.getElementById('save_restore'),
+        ctx = cavs.getContext('2d');
+
+      ctx.fillRect(0, 0, 150, 150); // Draw a rectangle with default settings
+      ctx.save(); // Save the default state
+
+      ctx.fillStyle = '#09F' // Make changes to the settings
+      ctx.fillRect(15, 15, 120, 120); // Draw a rectangle with new settings
+
+      ctx.save(); // Save the current state
+      ctx.fillStyle = '#FFF' // Make changes to the settings
+      ctx.globalAlpha = 0.5;
+      ctx.fillRect(30, 30, 90, 90); // Draw a rectangle with new settings
+
+      ctx.restore(); // Restore previous state
+      ctx.fillRect(45, 45, 60, 60); // Draw a rectangle with restored settings
+
+      ctx.restore(); // Restore original state
+      ctx.fillRect(60, 60, 30, 30); // Draw a rectangle with restored settings
+      ctx.strokeStyle = "#f00";
+      ctx.strokeText("save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数", 0, 220);
+
+    }
+    translate();
+
+    function translate() {
+      var cavs = document.getElementById('translate'),
+        ctx = cavs.getContext('2d');
+
+      ctx.fillRect(0, 0, 300, 300);
+      for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+          ctx.save();
+          ctx.strokeStyle = "#9CFF00";
+          ctx.translate(50 + j * 100, 50 + i * 100);
+          drawSpirograph(ctx, 20 * (j + 2) / (j + 1), -8 * (i + 3) / (i + 1), 10);
+          ctx.restore();
+        }
+      }
+
+      function drawSpirograph(ctx, R, r, O) {
+        var x1 = R - O;
+        var y1 = 0;
+        var i = 1;
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        do {
+          if (i > 20000) break;
+          var x2 = (R + r) * Math.cos(i * Math.PI / 72) - (r + O) * Math.cos(((R + r) / r) * (i * Math.PI / 72))
+          var y2 = (R + r) * Math.sin(i * Math.PI / 72) - (r + O) * Math.sin(((R + r) / r) * (i * Math.PI / 72))
+          ctx.lineTo(x2, y2);
+          x1 = x2;
+          y1 = y2;
+          i++;
+        } while (x2 != R - O && y2 != 0);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = "#f00";
+      ctx.strokeText("我在画螺旋形通过save,restore保存并恢复状态", 0, 220);
+
+    }
+
+    march();
+
+    function march() {
+      var marchCavs = document.getElementById('march'),
+        mctx = marchCavs.getContext('2d');
+      var offset = 0;
+
+      var drawMarch = function() {
+        mctx.clearRect(0, 0, marchCavs.width, marchCavs.height);
+        mctx.setLineDash([4, 2]);
+        mctx.lineDashOffset = -offset;
+        mctx.strokeRect(10, 10, 100, 100);
+
+        mctx.setLineDash([]);
+        mctx.font = "30px Microsoft Yahei";
+        mctx.fillStyle = "#000";
+        mctx.fillText('蚂蚁线', 20, 140);
+        mctx.strokeStyle = "#f00";
+        mctx.lineDashOffset = 0;
+        mctx.strokeText("save 和 restore 方法是用来保存和恢复 canvas 状态的，都没有参数", 0, 220);
+      }
+      var start = function() {
+        offset++;
+        offset > 16 && (offset = 0);
+        drawMarch();
+        setTimeout(start, 20);
+      }
+
+      start();
+    }
+
+    imagemap();
+
+    function imagemap() {
+      var imagemapCavs = document.getElementById('imagemap'),
+        ictx = imagemapCavs.getContext('2d');
+      var img = new Image();
+      img.src = "../Res/canvas-face.png";
+
+      function imageloaded() {
+
+        ictx.drawImage(img, 0, 0, imagemapCavs.width, imagemapCavs.height);
+        // ictx.strokeStyle="#f00";
+        // ictx.strokeRect(30,40,30,20);
+        ictx.beginPath();
+        ictx.strokeStyle = "#f00";
+        ictx.stroke();
+        ictx.font = "40px Microsoft Yahei";
+        ictx.shadowOffsetX = 2;
+        ictx.shadowOffsetY = 2;
+        ictx.shadowBlur = 2;
+        ictx.shadowColor = "rgba(0,0,0,.5)";
+        ictx.strokeStyle = "#f00";
+        ictx.strokeText("drawImage 图片文字带上阴影效果,", 0, 220);
+        ictx.fillStyle = "#fff";
+        ictx.fillText("图片渲染到canvas中时缩放", 0, 280);
+        ictx.restore();
+        draw();
+      };
+
+      if (img.complete && (typeof img.naturalWidth === 'undefined' || img.naturalWidth !== 0)) {
+        imageloaded();
+      } else {
+        img.onload = function() {
+          imageloaded();
+        };
+      }
+
+      let {
+        width,
+        height
+      } = imagemapCavs;
+      var balls = [];
+      for (var i = 0; i < 10; i++) {
+        var ball = {
+          X: 32,
+          Y: 42 + i * 42,
+        }
+        balls[i] = ball;
+      }
+
+      function draw() {
+        ictx.shadowOffsetX = 0;
+        ictx.shadowOffsetY = 0;
+        ictx.shadowBlur = 0;
+        ictx.shadowColor = "rgba(0,0,0,0)";
+        ictx.strokeStyle = "#f00";
+        ictx.lineWidth = 1;
+        for (var i = 0; i < balls.length; i++) {
+          ictx.beginPath();
+          ictx.rect(balls[i].X, balls[i].Y, 30, 20);
+          ictx.stroke();
+        }
+      }
+
+      var checkedList = [];
+
+      imagemapCavs.addEventListener("click", function(event) {
+        //标准的获取鼠标点击相对于canvas画布的坐标公式
+        var x = event.pageX - this.offsetLeft;
+        var y = event.pageY - this.offsetTop;
+
+        for (var i = 0; i < balls.length; i++) {
+          var {X,Y}=balls[i];
+          ictx.beginPath();
+          ictx.rect(X, Y, 30, 20);
+          if (ictx.isPointInPath(x, y)) {
+
+            console.log('come in',checkedList)
+            var idx = checkedList.findIndex(item => (item.x == X && item.y == Y));
+            if (idx > -1) {
+              ictx.clearRect(X, Y, 30, 20);
+              checkedList.splice(idx, 1);
+            } else {
+              ictx.fillStyle = "red";
+              ictx.fill();
+              checkedList.push({
+                x:X,
+                y:Y
+              });
+            }
+
+          }
+        }
+         console.log('选中点是：',checkedList)
+
+
+      })
+    }
   };
 
 
@@ -566,5 +670,6 @@
 <canvas id="save_restore" width="700" height="500">不支持canvas标签</canvas>
 <canvas id="translate" width="700" height="500">不支持canvas标签</canvas>
 <canvas id="march" width="700" height="500">不支持canvas标签</canvas>
+<canvas id="imagemap" width="700" height="500">不支持canvas标签</canvas>
 </body>
 </html>
