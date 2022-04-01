@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    const isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1;
+    const isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+if (isAndroid) {
+    window.addEventListener('resize', () => {
+        if (document.activeElement.tagName == 'INPUT') {
+            window.setTimeout(() => {
+                document.activeElement.scrollIntoViewIfNeeded()
+            }, 0)
+        }
+    })
+} else if (isIos) {
+    window.addEventListener('focusin', () => {
+        document.body.scrollTop = document.body.scrollHeight;
+        })
+    window.addEventListener('focusout', () => {
+        window.scrollTo(0,0);
+    })
+}
+</script>
+</head>
+<body>
+<input type="text">    针对移动端安卓、ios手机键盘遮挡输入框方法处理
+</body>
+</html>

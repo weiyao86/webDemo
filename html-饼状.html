@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.constellation {
+    margin: 0 auto;
+    position: relative;
+    width: 40rem;
+    height: 40rem;
+    border-radius: 50%;
+    background-color: orange;
+    overflow: hidden;
+}
+
+.constellation-part {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    transform-origin: 0 100%;
+}
+
+.part-1 {
+    transform: rotate(0deg) skewY(-60deg);
+    background-color: orangered;
+}
+
+.part-2 {
+    transform: rotate(30deg) skewY(-60deg);
+    background-color: cyan;
+}
+
+.part-3 {
+    transform: rotate(60deg) skewY(-60deg);
+    background-color: blueviolet;
+}
+</style>
+
+</head>
+<body>
+<div class="constellation">
+                <div class="part-1 constellation-part"></div>
+                <div class="part-2 constellation-part"></div>
+                <div class="part-3 constellation-part"></div>
+                <div class="part-3 constellation-part"></div>
+                <div class="part-4 constellation-part"></div>
+                <div class="part-5 constellation-part"></div>
+                <div class="part-6 constellation-part"></div>
+                <div class="part-7 constellation-part"></div>
+                <div class="part-8 constellation-part"></div>
+                <div class="part-9 constellation-part"></div>
+                <div class="part-10 constellation-part"></div>
+                <div class="part-11 constellation-part"></div>
+                <div class="part-12 constellation-part"></div>
+            </div>
+            <canvas id="canvas" width="300" height="150"></canvas>
+            <script>
+  var canvas = document.getElementById("canvas");
+  if(canvas.getContext){
+    var ctx = canvas.getContext('2d');
+     ctx.clearRect(0, 0, 300, 300);//擦除之前所绘时钟
+    canvas.style.width="300px";
+    canvas.style.height="150px";
+    canvas.style.border="2px solid #000";
+    ctx.fillStyle="#f00";
+    // ctx.strokeStyle="#888";
+    // ctx.fillRect(10,10,150,150);
+    // ctx.clearRect(55,55,60,60);
+    // ctx.strokeRect(30,30,50,50);
+    // ctx.fill();
+    // ctx.save();
+    // ctx.fillStyle="#000";
+    // ctx.beginPath();
+    // ctx.moveTo(15,50);
+    // ctx.lineTo(100,0);
+    // ctx.lineTo(100,75);
+    // ctx.fill();
+    // ctx.clearRect(0,0,300,300);
+    ctx.beginPath();
+    ctx.arc(75,75,50,0,Math.PI*2,true);
+    // ctx.moveTo(110,75);
+    ctx.arc(75,75,35,0,Math.PI,false);
+    // ctx.moveTo(65,65);
+    ctx.arc(60,65,5,0,Math.PI*2,true);
+    // ctx.moveTo(95,65);
+    ctx.arc(90,65,5,0,Math.PI*2,true);
+    // ctx.closePath();
+    ctx.stroke();
+    ctx.clearRect(0,0,300,300);
+    ctx.beginPath();
+    ctx.moveTo(75,25);
+    ctx.quadraticCurveTo(25, 25, 25, 62.5);
+    ctx.quadraticCurveTo(25, 100, 50, 100);
+    ctx.quadraticCurveTo(50, 120, 30, 125);
+    ctx.quadraticCurveTo(60, 120, 65, 100);
+    ctx.quadraticCurveTo(125, 100, 125, 62.5);
+    ctx.quadraticCurveTo(125, 25, 75, 25);
+    ctx.stroke();
+  }
+</script>
+</body>
+</html>

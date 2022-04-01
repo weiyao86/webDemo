@@ -47,8 +47,10 @@
             context.beginPath();
             context.arc(15, 15, 15, 0, 2 * Math.PI, true);
             context.fillStyle = "#00f";
+            context.strokeStyle="#f00";
             context.closePath();
             context.fill();
+            context.stroke();
 
             //线条
             var canvasLine = document.getElementById("line");
