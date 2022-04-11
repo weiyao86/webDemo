@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,body{margin: 0;padding: 0;height: 100%;}
+    body{
+      overflow: hidden;
+    }
+    .body{
+      overflow: auto;
+      height: 100%;
+      border: 3px solid;
+    }
+    .top{
+      height: 1000px;
+      border: 1px solid;
+    }
+    .fix-wrap{
+      height: 300px;
+      overflow: auto;
+    }
+    .wrap{
+      position: relative;
+      height: 400px;
+      width: 700px;
+      top: 100px;
+      left: 300px;
+      border: 1px solid #fee;
+    }
+    .bottom {
+      position: absolute;
+      top: 30px;
+      left: 60px;
+      width: 400px;
+      height: 200px;
+      padding: 20px;
+      background: purple;
+      border: 1px solid #f00;
+      box-sizing: border-box;
+    }
+    .circle{
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #f00;
+      box-sizing: border-box;
+      margin: 0;
+    }
+  </style>
+  <script>
+    
+    window.onload=()=>{
+      let elem = document.querySelector('.bottom');
+      let isDown=false;
+      let isMove=false;
+      let dis = {
+        x:0,y:0
+      };
+      let pos={
+        x:0,y:0
+      }
+      let getRect=(el)=>el.getBoundingClientRect();
+      elem.addEventListener('mousedown',e=>{
+        e.preventDefault();
+
+        let rect = getRect(elem);
+         let {offsetLeft,offsetTop}=elem;
+        dis = {
+        x:0,y:0
+        };
+        isDown=true;
+        isMove=false;
+        pos={
+          x:e.clientX-offsetLeft,
+          y:e.clientY-offsetTop
+        }
+      })
+
+      document.addEventListener('mousemove',e=>{
+         e.preventDefault();
+        if(!isDown)return;
+
+        let rect = getRect(elem);
+        let {offsetLeft,offsetTop}=elem;
+        dis={
+          x:e.clientX-pos.x,
+          y:e.clientY-pos.y
+        };
+        let nowPos={
+          x:dis.x,
+          y:dis.y
+        };
+        let {x,y}=nowPos;
+        x<=0 && (x=0);
+        x>=300 && (x=300);
+        y<=0&&(y=0);
+        y>=200&&(y=200);
+
+        nowPos={
+          x,
+          y
+        }
+
+        elem.style.left=`${nowPos.x}px`;
+        elem.style.top=`${nowPos.y}px`;
+        isMove=true;
+      })
+
+      document.addEventListener('mouseup',e=>{
+        e.preventDefault();
+        if(!isMove){
+            console.log('click');
+            let rect = elem.getBoundingClientRect();
+            let p = document.createElement('p');
+            p.classList.add('circle');
+            let x = `${e.clientX-rect.x-40/2}px`;
+            let y = `${e.clientY-rect.y-40/2}px`;
+            p.style.left=x;
+            p.style.top=y;
+            elem.append(p);
+            console.log(x,y,e.clientX,e.clientY)
+        }
+
+        isDown=false;
+        isMove=false;
+      })
+    }
+  </script>
+</head>
+<body>
+  <div class="body">
+  <div class="top"></div>
+  <div class="fix-wrap">
+  <div class="wrap">
+  <div class="bottom">test</div>
+  </div>
+  </div>
+  </div>
+</body>
+</html>
