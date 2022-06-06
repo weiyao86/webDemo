@@ -7,11 +7,11 @@
   <style>
     html,body{margin: 0;padding: 0;height: 100%;}
     body{
-      overflow: hidden;
+      overflow: auto;
     }
     .body{
-      overflow: auto;
-      height: 100%;
+    /*  overflow: auto;
+      height: 100%;*/
       border: 3px solid;
     }
     .top{
@@ -64,6 +64,10 @@
         x:0,y:0
       }
       let getRect=(el)=>el.getBoundingClientRect();
+      document.getElementsByClassName('body')[0].addEventListener('click',e=>{
+        console.info(e.pageY,e.clientY,'******')
+        console.info(this.scrollTop)
+      })
       elem.addEventListener('mousedown',e=>{
         e.preventDefault();
 
