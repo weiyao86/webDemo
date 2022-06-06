@@ -29,18 +29,59 @@ if (isAndroid) {
             输入框聚焦输入文本
      * 
      * */
-    const input = document.getElementById("input");
-    let scrollTop = 0;
-    input.addEventListener("focus", () => {
-        scrollTop = document.scrollingElement.scrollTop;
-    });
-    input.addEventListener("blur", () => {
-        document.scrollingElement.scrollTo(0, scrollTop);
-    });
+     window.onload=()=>{
+    // const inputArr = document.getElementsByTagName("input");
 
+    // console.log(inputArr)
+    // let scrollTop = 0;
+    // [...inputArr].forEach(input=>{
+
+    //     input.addEventListener("focus", () => {
+    //         scrollTop = document.scrollingElement.scrollTop;
+    //          document.activeElement.value='in'+scrollTop+'***'+Math.floor(Math.random())
+    //     });
+    //     input.addEventListener("blur", () => {
+    //         console.log('blur')
+    //         // document.scrollingElement.scrollTo(0, scrollTop);
+    //          document.activeElement.value='out'+scrollTop+'***'+Math.floor(Math.random())
+    //     });
+
+    // })
+
+    window.addEventListener('focusin',(e)=>{
+        if(e.target.tagName=='INPUT'){
+            scrollTop = document.scrollingElement.scrollTop;
+        }
+      
+    })
+    window.addEventListener('focusout',(e)=>{
+        if(e.target.tagName=='INPUT'){
+             document.scrollingElement.scrollTo(0, scrollTop);
+        }
+      
+    })
+
+
+    // window.addEventListener('focusin', () => {
+    //     if (document.activeElement.tagName == 'INPUT') {
+    //         scrollTop = document.scrollingElement.scrollTop;
+    //         document.activeElement.value='in'+scrollTop+'***'+Math.floor(Math.random())
+    //         console.log('focusin',scrollTop)
+    //     }
+    // })
+    // window.addEventListener('focusout', () => {
+    //         console.log('t',document.activeElement.tagName)
+    //     if (document.activeElement.tagName == 'INPUT') {
+    //         // document.scrollingElement.scrollTo(0, scrollTop);
+    //          document.activeElement.value='out'+scrollTop+'***'+Math.floor(Math.random())
+    //         console.log('focusout',scrollTop)
+    //     }
+    // })
+}
 </script>
 </head>
 <body>
-<input type="text">    针对移动端安卓、ios手机键盘遮挡输入框方法处理
+<input type="text" style="padding-top:1000px;">    针对移动端安卓、ios手机键盘遮挡输入框方法处理
+<input type="text">
 </body>
 </html>
