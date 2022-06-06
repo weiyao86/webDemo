@@ -62,6 +62,22 @@ if (isAndroid) {
     })
 
 
+
+/**
+ * iOS上拉边界下拉出现白色空白
+ * */
+    // document.body.addEventListener('touchmove', (e) => {
+    //       if (e._isScroller) return;
+
+    //       e.preventDefault()
+    //     }, {
+    //       passive: false
+    // })
+    //  document.getElementById("wrap").addEventListener('touchmove', (e) => {
+    //       e._isScroller = true
+    //     })
+
+
     // window.addEventListener('focusin', () => {
     //     if (document.activeElement.tagName == 'INPUT') {
     //         scrollTop = document.scrollingElement.scrollTop;
@@ -81,7 +97,9 @@ if (isAndroid) {
 </script>
 </head>
 <body>
+    <div id="wrap">
 <input type="text" style="padding-top:1000px;">    针对移动端安卓、ios手机键盘遮挡输入框方法处理
 <input type="text">
+</div>
 </body>
 </html>
